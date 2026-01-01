@@ -1,0 +1,88 @@
+%% AMS Theorem Environments
+\theoremstyle{plain}% default
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{lemma}[prop]{Lemma}
+\newtheorem{corollary}[prop]{Corollary}
+\newtheorem{theorem}[prop]{Theorem}
+
+\theoremstyle{definition}
+\newtheorem{definition}[prop]{Definition}
+\newtheorem{example}[prop]{Example}
+\newtheorem{assumption}[prop]{Assumption}
+
+\theoremstyle{remark}
+\newtheorem{remark}[prop]{Remark}
+
+%%
+
+\newcommand*{\dims}{d}
+
+% spaces
+\newcommand*{\real}{\mathbb{R}}
+\newcommand*{\nat}{\mathbb{N}}
+\newcommand*{\integer}{\mathbb{Z}}
+\newcommand*{\complex}{\mathbb{C}}
+\newcommand*{\rational}{\mathbb{Q}}
+
+% Topology
+\newcommand*{\closure}[1]{\overline{#1}}
+
+% Probability
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\Pr}{\mathbb{P}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand*{\normal}{\mathcal{N}}
+\newcommand*{\density}{\varphi}
+\DeclareMathOperator{\iid}{iid}
+
+% random functions
+\newcommand*{\rf}{\mathbf{f}}
+
+% Linear Algebra
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Span}{span}
+\newcommand{\identity}{\mathbb{I}}
+\newcommand*{\transpose}{T}
+
+% Optimization
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% Machine Learning
+\newcommand*{\cost}{J}
+\newcommand*{\Cost}{\mathbf{J}}
+\newcommand*{\loss}{\ell}
+\newcommand*{\noise}{\varsigma}
+\newcommand*{\param}{w}
+\newcommand*{\model}{\phi}
+\newcommand*{\X}{X}
+\newcommand*{\Y}{Y}
+
+
+% Numerical Analysis
+\newcommand*{\bigO}{\mathcal{O}}
+
+
+%% =========== Color (use RGB for digital, CMYK for print) ==========
+
+% ----- Uni Mannheim Corporate Design -----
+\definecolor{primary}{RGB}{0,48,86}
+% \definecolor{primary}{cmyk}{1,0.6,0.1,0.6}
+
+\colorlet{primary10}{primary!10}
+\colorlet{primary25}{primary!25}
+\colorlet{primary40}{primary!40}
+\colorlet{primary55}{primary!55}
+\colorlet{primary70}{primary!70}
+\colorlet{primary85}{primary!85}
+
+\definecolor{accent}{RGB}{179,182,185}
+% \definecolor{accent}{cmyk}{35,25,25,0}
+
+% ------------------------------------------
+
+% --- convenient color access ---
+\newcommand*{\colorPrimary}[2][]{{\color{primary#1} #2}}
+\newcommand*{\colorAccent}[1]{{\color{accent} #1}}
+
