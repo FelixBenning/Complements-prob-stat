@@ -19,6 +19,9 @@
 
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 \DeclarePairedDelimiter{\Set}{\{}{\}}
+\DeclarePairedDelimiterXPP{\Exp}[1]{\E}{[}{]}{}{#1}
+\DeclarePairedDelimiterXPP{\Var}[1]{\mathrm{Var}}{[}{]}{}{#1}
+\DeclarePairedDelimiterXPP{\Prob}[1]{\Pr}{[}{]}{}{#1}
 \NewDocumentCommand{\Indicator}{s m}{%
   \IfBooleanTF{#1}
     {\mathbf{1}_{\left\{#2\right\}}} % starred: wrap in braces
@@ -38,7 +41,7 @@
 % Probability
 \newcommand{\E}{\mathbb{E}}
 \renewcommand{\Pr}{\mathbb{P}}
-\DeclareMathOperator{\Var}{Var}
+% \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\Cov}{Cov}
 % \newcommand*{\normal}{\mathcal{N}}
 \newcommand{\normal}[1]{{\color{blue}\boldsymbol{\mathcal{N}}}\left(#1\right)}
