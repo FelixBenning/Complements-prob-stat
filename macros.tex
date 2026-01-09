@@ -1,21 +1,29 @@
 %% AMS Theorem Environments
 \theoremstyle{plain}% default
-\newtheorem{prop}{Proposition}[section]
-\newtheorem{lemma}[prop]{Lemma}
-\newtheorem{corollary}[prop]{Corollary}
-\newtheorem{theorem}[prop]{Theorem}
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{lemma}[proposition]{Lemma}
+\newtheorem{corollary}[proposition]{Corollary}
+\newtheorem{theorem}[proposition]{Theorem}
+\newtheorem{fact}[proposition]{Fact}
 
 \theoremstyle{definition}
-\newtheorem{definition}[prop]{Definition}
-\newtheorem{example}[prop]{Example}
-\newtheorem{assumption}[prop]{Assumption}
+\newtheorem{definition}[proposition]{Definition}
+\newtheorem{example}[proposition]{Example}
+\newtheorem{assumption}[proposition]{Assumption}
 
 \theoremstyle{remark}
-\newtheorem{remark}[prop]{Remark}
-
+\newtheorem{remark}[proposition]{Remark}
 %%
 
 \newcommand*{\dims}{d}
+
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\Set}{\{}{\}}
+\NewDocumentCommand{\Indicator}{s m}{%
+  \IfBooleanTF{#1}
+    {\mathbf{1}_{\left\{#2\right\}}} % starred: wrap in braces
+    {\mathbf{1}_{#2}}                 % unstarred: simple subscript
+}
 
 % spaces
 \newcommand*{\real}{\mathbb{R}}
@@ -32,9 +40,14 @@
 \renewcommand{\Pr}{\mathbb{P}}
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\Cov}{Cov}
-\newcommand*{\normal}{\mathcal{N}}
+% \newcommand*{\normal}{\mathcal{N}}
+\newcommand{\normal}[1]{{\color{blue}\boldsymbol{\mathcal{N}}}\left(#1\right)}
 \newcommand*{\density}{\varphi}
 \DeclareMathOperator{\iid}{iid}
+\newcommand*{\given}{\mid}
+
+\newcommand*{\Binomial}{\mathrm{Bin}}
+\newcommand*{\Poisson}{\mathrm{Poi}}
 
 % random functions
 \newcommand*{\rf}{\mathbf{f}}

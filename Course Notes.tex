@@ -1,0 +1,2073 @@
+\documentclass[11pt]{report}
+\input{packages.tex}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{decorations.pathreplacing}
+\usepackage{subcaption}
+\input{macros.tex}
+
+\newcommand{\J}[2]{\frac{\partial x_{#1}}{\partial y_{#2}}}
+
+\begin{document}
+
+\pagestyle{plain}
+
+% First Page - Centered
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+
+    % \includegraphics[width=0.3\textwidth]{Figures/Logo.png}\\[2cm]
+
+    \MakeUppercase{\Large \textbf{Compl\'ements de probabilit\'es et statistiques 2}}\\[1.5ex]
+    \MakeUppercase{\LARGE Course Notes}\\[2cm]
+
+
+    {\Large Ujan Gangopadhyay}\\[5cm]
+
+\textbf{    {\Large Bachelor in Mathematics Program}\\[2cm]
+}
+    {\Large Summer Semester, Academic Year 2024-25}\\[1cm]
+
+\textbf{    {\Large Department of Mathematics}\\[3cm]
+}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\renewcommand*{\listtheoremname}{List of Theorems}
+\listoftheorems[ignoreall,show={theorem},numwidth=30pt]
+\renewcommand*{\listtheoremname}{List of Defintions}
+\listoftheorems[ignoreall,show={definition},numwidth=30pt]
+\renewcommand*{\listtheoremname}{List of Propositions}
+\listoftheorems[ignoreall,show={proposition},numwidth=30pt]
+\renewcommand*{\listtheoremname}{List of Facts}
+\listoftheorems[ignoreall,show={fact},numwidth=30pt]
+\renewcommand*{\listtheoremname}{List of Examples}
+\listoftheorems[ignoreall,show={example},numwidth=30pt]
+\newpage
+
+\pagestyle{fancy}
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 1. February 17, 2025.}}
+
+\chapter{The Simple Symmetric Random Walk}
+
+\section{The Model}
+
+Let $X_1,X_2,X_3,\ldots$ be i.i.d.\ random variables such that
+\begin{equation}
+X_i = \begin{cases}
+1 & \mbox{with probability } \frac{1}{2} \;,\\
+-1 & \mbox{with probability } \frac{1}{2} \;.
+\end{cases}
+\end{equation}
+The sequence of random variables $\left(S_n\right)_{n=0}^\infty$ defined as $S_0\equiv 0$ and for $n\geq 1$
+\begin{equation}
+S_n \coloneqq X_1+\cdots+X_n \;,
+\end{equation}
+is called the one-dimensional Simple Symmetric Random Walk (SSRW).
+
+\section{Descriptive Statistics}
+
+\textbf{Question:} What is the maximum value of $S_n$?\\
+\textbf{Answer:} $n$.\\
+
+\medskip
+
+\noindent\textbf{Question:} What is the minimum value of $S_n$?\\
+\textbf{Answer} $-n$.\\
+
+\medskip 
+
+\noindent\textbf{Question:} What is the average value (i.e., the expectation) of $S_n$?\\
+\textbf{Answer:} Average value of $S_n$ is $0$ as the following calculation shows:
+\begin{equation}
+\E{S_n}=\E{X_1+\cdots+X_n}=\E{X_1}+\cdots+\E{X_n}=0+\cdots+0=0\;.
+\end{equation}
+Here we do not need the assumption that $X_i$s are independent. We use that $\E{X_i}=0$ for each $i$:
+\begin{equation}
+\E{X_i}=1\cdot\frac{1}{2}+(-1)\cdot\frac{1}{2}=0\;.
+\end{equation}
+
+\medskip
+
+\noindent\textbf{Question:} What is the variance of $S_n$?\\
+\textbf{Answer:}
+\begin{equation}
+\Var(S_n)=\Var(X_1)+\cdots+\Var(X_n)=1+\cdots+1=n\;.
+\end{equation}
+Here we use the assumption that $X_i$s are independent; otherwise there would be the covariance terms. 
+
+\begin{tcolorbox}[title={Skip on first reading}]
+Technically speaking, we are only using that pairwise covariances are $0$, which follows from the assumption of independence, but is a much weaker condition. 
+\tcblower
+\begin{itemize}
+    \item Example of two random variables which are not independent but their covariance is $0$: $X$ and $X^2$ where $X\sim\mathcal{N}(0,1)$.
+    \item Example of three random variables which pairwise independent but not independent jointly: $XY,YZ,ZX$ where
+    $X,Y,Z$ are i.i.d.\ with $\Pr(X=1)=\Pr(X=-1)=1/2$. 
+\end{itemize}
+\end{tcolorbox}
+
+Above we used $\Var(X_i)=1$ as the following calculation shows:
+\begin{equation}
+\Var(X_i)=\E{X_i^2}-\Bigl(\E{X_i}\Bigr)^2=\E{1}-0^2=1\;.
+\end{equation}
+
+\begin{tcolorbox}[title={Skip on first reading}]
+Consider two random variables 
+$X$ and $Y$. Assume $\E{X^2}<\infty$
+and $\E{Y^2}<\infty$.
+\tcblower
+If $X$ and $Y$ are independent then 
+$\Cov*{X,Y}=0$. But the converse is
+not true. The converse is true in a
+very important situation: when $(X,Y)$
+is multivariate-normal. In this situation,
+$\Cov{X,Y}=0$ implies $X$ and $Y$ are independent. 
+\end{tcolorbox}
+
+\section{Exact Distribution}
+
+\textbf{Question:} $X_i$s are similar to Bernoulli random variables. $S_n$ should be similar to a Binomial random variable. Can we make it precise?\\
+\noindent\textbf{Answer}: 
+\begin{equation}
+\frac{n+S_n}{2}\sim\mathrm{Binomial}(n,\frac{1}{2})\;.
+\end{equation}
+We observe that
+\begin{equation}
+\frac{1+X_i}{2}=
+\begin{cases}
+1 & \mbox{with probability } \frac{1}{2} \;,\\
+0 & \mbox{with probabiluty } \frac{1}{2} \;.
+\end{cases}
+\end{equation}
+Therefore $(1+X_i)/2$ is a $\mathrm{Bernoulli}(1/2)$
+random variable. Therefore
+\begin{equation}
+\frac{1+X_1}{2} + 
+\frac{1+X_2}{2} +
+\cdots +
+\frac{1+X_n}{2}
+=\frac{n+S_n}{2}
+\sim\mathrm{Binomial}(n,1/2)\;.
+\end{equation}
+
+\section{Approximate Distribution}
+
+From SLLN we get
+\begin{equation}
+\frac{S_n}{n}\to 0 
+\end{equation}
+almost surely. From CLT we get
+\begin{equation}
+\frac{S_n}{\sqrt{n}}\to N(0,1)
+\end{equation}
+in distribution i.e., for all $x\in\real$
+\begin{equation}
+\Pr(S_n\leq x\sqrt{n)}\to\int_{-\infty}^x
+\frac{1}{\sqrt{2\pi}}e^{-t^2/2}dt.
+\end{equation}
+
+\section{Path Counting}
+
+A path from $(0,0)$ to $(n,x)$ is a sequence $s_0,s_1,\ldots,s_n$ such that $s_0=0$, $s_n=x$, and for each $i$, $|s_{i+1}-s_{i}|=1$. Note that $n$ and $x$ must have same parity for there to be any path from $(0,0)$ to $(n,x)$.
+
+\noindent \textbf{Question:} How many paths are there from $(0,0)$ to $(n,x)$?\\
+\noindent\textbf{Answer:} Let us denote the number of paths from $(0,0)$ to $N_{n,x}$ by $N_{n,x}$. Thus $N_{n,x}=0$ if $n$ 
+and $x$ are of opposite parity. Now suppose $n$ and $x$ have the same parity. Suppose a path from $(0,0)$ to $(n,x)$ consists of $p$ moves which are $+1$s ($i+1$'th move is $+1$ if $s_{i+1}-s_i=1$ ) and $q$ moves which are $-1$s ($i+1$'th move is $-1$ if $s_{i+1}-s_i=-1$). Then 
+\begin{equation}
+n = p+q.
+\end{equation}
+and
+\begin{equation}
+x = p-q.
+\end{equation}
+Solving for $p$ and $q$ yields $p=(n+x)/2$ and $q=(n-x)/2$. Clearly there is a bijection between paths from $(0,0)$ to $(n,x)$ and arrangements of $p$ $+1$s and $q$ $-1$s. Therefore
+\begin{equation}
+N_{n,x} 
+= \binom{p+q}{p} 
+= \binom{p+q}{q} 
+= \binom{n}{\frac{n+x}{2}}
+= \binom{n}{\frac{n-x}{2}}\;.
+\end{equation}
+
+\begin{proposition}[Formula for the Number of Simple Random Walk Paths]
+Let $N_{n,x}$ denote the number of paths from $(0,0)$ to $(n,x)$. Then for $n$ and $x$ having the same parity and $x\in[-n,n]$ we have
+\begin{equation}
+N_{n,x} 
+= \binom{n}{\frac{n+x}{2}}
+= \binom{n}{\frac{n-x}{2}}\;.
+\end{equation}
+\end{proposition}
+
+\newpage
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 2. February 24, 2025}}
+
+\section{The Reflection Principle}
+
+\begin{theorem}[The Reflection Principle]
+$b>a\geq 0$. $\alpha>0$. $\beta>0$. $A=(a,\alpha)$. $B=(b,\beta)$. $A^\prime=(a,-\alpha)$. The number of paths from $A$ to $B$ which touch or cross the $x$-axis equals number of all paths from $A^\prime$ to $B$.
+\end{theorem}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  % Axes
+  \draw[thick,->] (-1,0) -- (9,0) node[right] {$x$};
+  \draw[thick,->] (0,-4) -- (0,5) node[above] {$y$};
+
+  % Grid points for better understanding
+  \foreach \x in {0,...,8}
+    \foreach \y in {-3,...,4}
+      \fill[black!60] (\x,\y) circle (1pt);
+
+  % Original path: up-up-down-up-down
+  \draw[thick, blue] (0,2) -- (1,1) -- (2,0) -- (3,1) -- (4,2) -- (5,1);
+
+  % Reflected path: up-up-down-down-up (touches x-axis)
+  \draw[thick, red, dashed] (0,-2) -- (1,-1) -- (2,0) -- (3,1) -- (4,2) -- (5,1);
+  
+  % Reflected portion shown flipped below x-axis
+  %\draw[thick, red, dashed] (3,1) -- (4,0) -- (5,1);
+  %\draw[thick, red] (3,-1) -- (4,0) -- (5,1);
+
+  % Dotted line showing reflection
+  %\draw[dashed, gray] (3,1) -- (3,-1);
+
+  % Labels
+  \node[blue] at (2.0,1.5) {Original path};
+  \node[red] at (2.5,-1.2) {Reflected path};
+
+  % Mark start and end points
+  \filldraw[black] (0,0) circle (2pt) node[below left] {$(0,0)$};
+  \filldraw[black] (5,1) circle (2pt) node[above right] {$B=(5,1)$};
+  \filldraw[black] (0,2) circle (2pt) node[above right] {$A=(0,2)$};
+  \filldraw[black] (0,-2) circle (2pt) node[below right] {$A^\prime=(0,-2)$};
+  
+\end{tikzpicture}
+\end{center}
+
+\section{The Ballot Problem}
+
+\begin{theorem}[The Ballot Problem]
+Let $n$ and $x$ be positive integers. There are exactly $\frac{x}{n}N_{n,x}$ paths $(s_1,\ldots,s_n=x)$ from the origin to the point $(n,x)$ such that $s_1>0,\ldots,s_n>0$.
+\end{theorem}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.7]
+    \draw[->] (0,0) -- (11,0) node[below] {};
+    \draw[->] (0,-2) -- (0,6) node[left] {};
+    % Grid points
+    \foreach \x in {0,...,11}
+        \foreach \y in {-2,...,6}
+            \fill[black!60] (\x,\y) circle (1pt);
+    % Example good path
+    \coordinate (P0) at (0,0);
+    \coordinate (P1) at (1,1);
+    \coordinate (P2) at (2,2);
+    \coordinate (P3) at (3,1);
+    \coordinate (P4) at (4,2);
+    \coordinate (P5) at (5,3);
+    \coordinate (P6) at (6,2);
+    \coordinate (P7) at (7,3);
+    \coordinate (P8) at (8,4);
+    \coordinate (P9) at (9,5);
+    \coordinate (P10) at (10,4);
+
+    \draw[thick,blue] (P0) -- (P1) -- (P2) -- (P3) -- (P4) -- (P5) -- (P6) -- (P7) -- (P8) -- (P9) -- (P10) node[above right] {\small never hits $Y=0$ except at the start};
+
+    % Example bad path (crosses below 0)
+    \coordinate (Q0) at (0,0);
+    \coordinate (Q1) at (1,1);
+    \coordinate (Q2) at (2,0);
+    \coordinate (Q3) at (3,-1);
+    \coordinate (Q4) at (4,0);
+    \coordinate (Q5) at (5,1);
+    \coordinate (Q6) at (6,0);
+    \coordinate (Q7) at (7,1);
+    \coordinate (Q8) at (8,2);
+    \coordinate (Q9) at (9,1);
+    \coordinate (Q10) at (10,0);
+
+    \draw[thick,red] (Q0) -- (Q1) -- (Q2) -- (Q3) -- (Q4) -- (Q5) -- (Q6) -- (Q7) -- (Q8) -- (Q9) -- (Q10) node[above right] {\small dips below $Y=0$};
+
+    % Example bad path (touches 0)
+    \coordinate (R0) at (0,0);
+    \coordinate (R1) at (1,1);
+    \coordinate (R2) at (2,2);
+    \coordinate (R3) at (3,1);
+    \coordinate (R4) at (4,0);
+    \coordinate (R5) at (5,1);
+    \coordinate (R6) at (6,2);
+    \coordinate (R7) at (7,3);
+    \coordinate (R8) at (8,4);
+    \coordinate (R9) at (9,3);
+    \coordinate (R10) at (10,2);
+
+    \draw[thick,green!60!black] (R0) -- (R1) -- (R2) -- (R3) -- (R4) -- (R5) -- (R6) -- (R7) -- (R8) -- (R9) -- (R10) node[above right] {\small touches $Y=0$};
+
+    \draw[thick,blue] (0.5,-1.5) -- (1,-1.5) node[right] {valid path};
+    \draw[thick,red] (4,-1.5) -- (4.5,-1.5) node[right] {invalid path};
+    \draw[thick,green!60!black] (8,-1.5) -- (8.5,-1.5) node[right] {invalid path};
+\end{tikzpicture}
+\end{figure}
+
+\begin{proof}
+From all paths from $(1,1)$ to $(n,x)$ 
+subtract paths from $(1,1)$ to $(n,x)$
+that touch or cross $Y=0$. Number of paths
+from $(1,1)$ to $(n,x)$ that touch or cross $Y=0$ is equal to number of paths from $(1,-1)$ to $(n,x)$.
+\begin{align*}
+& N_{n-1,x-1}-N_{n-1,x+1} \\[1em]
+={} & \binom{n-1}{\frac{n+x}{2}-1}
+- \binom{n-1}{\frac{n+x}{2}} \\[1em]
+={} & \frac{(n-1)!}{(\frac{n+x}{2}-1)!(n-\frac{n+x}{2})!}
+- \frac{(n-1)!}{(\frac{n+x}{2})!(n-\frac{n+x}{2})!}\\[1em]
+={} & \frac{(n-1)!}{(\frac{n+x}{2}-1)!(n-\frac{n+x}{2}-1)!}
+\Bigl(\frac{1}{\frac{n+x}{2}}
+-\frac{1}{n-\frac{n+x}{2}}\Bigr)\\[1em]
+={} & \frac{(n-1)!}{(\frac{n+x}{2}-1)!(n-\frac{n+x}{2}-1)!}
+\frac{x}{\frac{n+x}{2}\bigl(n-\frac{n+x}{2}\bigr)}\\[1em]
+={} & \frac{(n-1)!}{(\frac{n+x}{2})!(n-\frac{n+x}{2})!}
+x\\[1em]
+={} & \frac{n!}{(\frac{n+x}{2})!(n-\frac{n+x}{2})!}
+\frac{x}{n}\\[1em]
+={} & N_{n,x}\frac{x}{n}\;.\\[1em]
+\end{align*}
+\end{proof}
+
+\section{Catalan Numbers}
+
+How many paths are there from $(0,0)$ to $(2n,0)$ that do not go below the $X$-axis? 
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.6, line width=1pt]
+% Draw grid (optional)
+  \foreach \x in {0,...,8}
+    \draw[gray!30] (\x,-3) -- (\x,4);
+  \foreach \y in {-3,...,4}
+    \draw[gray!30] (0,\y) -- (8,\y);
+
+  % Draw axes
+  \draw[->] (0,0) -- (9,0) node[right] {\(x\)};
+  \draw[->] (0,-3) -- (0,5) node[above] {\(y\)};
+  
+  % Draw Catalan path steps
+  \draw[blue!60!black, thick]
+    (0,0) -- (1,1)
+    -- (2,2)
+    -- (3,1)
+    -- (4,0)
+    -- (5,1)
+    -- (6,0)
+    -- (7,1)
+    -- (8,0);
+\begin{scope}[shift={(0,-0.05)}]
+\draw[green!60!black, thick]
+    (0,0) -- (1,1)
+    -- (2,0)
+    -- (3,-1)
+    -- (4,0)
+    -- (5,1)
+    -- (6,0)
+    -- (7,1)
+    -- (8,0);
+\end{scope}
+\begin{scope}[shift={(0,-0.1)}]
+\draw[red!60!black, thick]
+    (0,-2) -- (1,-3)
+    -- (2,-2)
+    -- (3,-1)
+    -- (4,0)
+    -- (5,1)
+    -- (6,0)
+    -- (7,1)
+    -- (8,0);
+\end{scope}
+\draw[thick,blue!60!black] (0.5,-5.5) -- (1,-5.5) node[right] {valid path};
+\draw[thick,green!60!black] (4,-5.5) -- (4.5,-5.5) node[right] {invalid path};
+\draw[thick,red!60!black] (0.5,-7.5) -- (1,-7.5) node[right] {reflection of the invalid path};
+\end{tikzpicture}
+\end{figure}
+Number of paths from $(0,0)$ to $(2n,0)$ is
+\[
+\binom{2n}{n}.
+\]
+From this we need to subtract paths that touch or cross the $X=-1$ line. We can calculate this using reflection principle. By reflection principle this is same as number of paths from $(0,-2)$ to $(2n,0)$, which is
+\[
+\binom{2n}{n-1}.
+\]
+The difference is
+\begin{align*}
+& \binom{2n}{n}-\binom{2n}{n-1} \\
+={} & \frac{(2n)!}{n!n!}-\frac{(2n)!}{(n+1)!(n-1)!} \\
+={} & \frac{(2n)!}{n!(n-1)!}\left(\frac{1}{n}-\frac{1}{n+1}\right)\\
+={} & \frac{(2n)!}{n!(n-1)!}\frac{1}{n(n+1)}\\
+={} & \frac{(2n)!}{n!n!}\frac{1}{n+1}\\
+={} & \frac{1}{n+1}\binom{2n}{n}\;.
+\end{align*}
+
+\section{The Main Lemma}
+
+\begin{theorem}[The "Main Lemma" from \citeauthor{Feller1}]
+
+Number of paths of length $2n$ starting from $(0,0)$ that do not touch the $X$-axis is equal to the number of paths that start from $(0,0)$ and end at $(2n,0)$. Equivalently,
+\[
+\Pr(S_1\neq 0, S_2\neq 0,\ldots, S_{2n)\neq 0} = \Pr(S_{2n)=0}\;.
+\]    
+\end{theorem}
+
+\begin{proof}
+Number of paths from $(0,0)$ to $(2n,0)$ is 
+\[
+N_{2n,0}=\binom{2n}{n}\;.
+\]
+We have to show that number of paths $(s_0,s_1,\ldots,s_{2n})$ such that $s_1\neq 0,s_2\neq 0,\ldots,s_{2n}\neq 0$ is also $\binom{2n}{n}$. So let us count the number of such paths. By symmetry the number of paths with $s_1\neq 0,\ldots,s_{2n-1}\neq 0,s_{2n}>0$ is same as number of paths with $s_1\neq 0,\ldots,s_{2n-1}\neq 0,s_{2n}<0$. So it is enough to show that number of paths with $s_1\neq 0,\ldots,s_{2n-1}\neq 0,s_{2n}>0$ is $\frac{1}{2}\binom{2n}{n}$. If $s_{2n}>0$, then $s_{2n}=2r$ for some $r=1,\ldots,n$. We will count number of paths $s_1\neq 0,\ldots,s_{2n-1}\neq 0,s_{2n}=2r$ and then sum over $r=1,\ldots,n$. For a path satisfying $s_1\neq 0,\ldots,s_{2n-1}\neq 0,s_{2n}=2r$ we must have $s_1=1$ and $s_2>0,s_3>0,\ldots,s_{2n-1}>0$. Using the reflection principle as we did in the Ballot problem, number of paths from $(1,1)$ to $(2n,2r)$ that do not touch or cross the time axis is 
+\[
+N_{2n-1,2r-1}-N_{2n-1,2r+1}.
+\]
+Now if we sum over $r=1,\ldots,n$ we get a telescoping sum:
+\begin{align*}
+& \sum_{r=1}^{n} \Bigl( N_{2n-1,2r-1}-N_{2n-1,2r+1} \Bigr) \\[1em]
+={} & \Bigl(N_{2n-1,1}-N_{2n-1,3}\Bigr)
++ \Bigl(N_{2n-1,3}-N_{2n-1,5}\Bigr)
++ \cdots + 
+\Bigl( N_{2n-1,2n-1} - \underbrace{N_{2n-1,2n+1}}_{=0}\Bigr) \\[1em]
+={} & N_{2n-1,1} \\[1em]
+={} & \binom{2n-1}{\frac{2n-1+1}{2}} \\[1em]
+={} & \binom{2n-1}{n} \\[1em]
+={} & \frac{(2n-1)!}{n!(n-1)!} \\[1em]
+={} & \frac{1}{2}\frac{(2n)!}{n!n!}\\[1em]
+={} & \frac{1}{2}\binom{2n}{n}\;.
+\end{align*}
+\end{proof}
+
+\newpage
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 3. March 3, 2025}}
+
+\section{Last Visit to $0$}
+
+For $n\geq 1$, define
+\[
+L_n \coloneqq \max\Set*{  k \in\Set*{0,1,2,\ldots,n } \given S_k = 0}\;.
+\]
+Thus $L_n$ denotes the last time the random walk visits $0$ by time $n$. The minimum possible value of $L_n$ is $0$. The maximum possible value of $L_n$ is $n$ if $n$ is even, and $n-1$ if $n$ is odd. $L_n$ is always even.
+
+
+\begin{theorem}[The Arc-Sine Law for Last Visits]\label{thm:arcsinelaw}
+$L_n/n$ converges in distribution to the arc-sine law:
+\[
+\Pr(\frac{L_n}{n}\leq x)\to\frac{2}{\pi}\arcsin(\sqrt{x})\;.
+\]
+This distribution function has density
+\[
+f(x)=\frac{1}{\pi}\frac{1}{\sqrt{x(1-x)}}
+\]
+\end{theorem}
+
+\begin{figure}[h]
+\centering
+% \includegraphics[width=0.7\linewidth]{Figures/arcsine.png}
+\caption{Arc-sine law - illustration.}
+\label{fig:arc-sine-law-illustration}
+\end{figure}
+
+% \begin{lstlisting}
+% N = 2000
+% T = 300
+% X = matrix(0,nr=N,nc=T)
+% S = matrix(0,nr=N,nc=T)
+% LastVisit = matrix(0,nr=N,nc=1)
+% for(i in 1:N){
+%   X[i,1] = 2*rbinom(1,1,0.5)-1
+%   S[i,1] = X[i,1]
+%   LastVisit[i] = 0
+%   for(j in 2:T){
+%     X[i,j] = 2*rbinom(1,1,0.5)-1
+%     S[i,j] = S[i,j-1] + X[i,j]
+%     if(S[i,j]==0){
+%       LastVisit[i] = j
+%     }
+%   }
+% }
+% ScaledLastVisit = LastVisit[,1]/T
+
+% fun <- function(t){
+%   return((1/pi)*(t*(1-t))^(-0.5)) 
+% }
+
+% hist(ScaledLastVisit,breaks=40,freq=FALSE,
+% main="Histogram of Last Visit",asp=1,ylim=c(0,2))
+% curve(fun, add = TRUE, col = 2, lwd = 3)
+% \end{lstlisting}
+
+\begin{proposition}[Exact Distribution of $L_n$]    
+Let $N=n/2$ if $n$ is even. Let $N=(n-1)/2$ if $n$ is odd. Then
+\[
+\Pr(L_n=2m) = \frac{1}{2^{2N}}\binom{2m}{m}\binom{2N-2m}{N-m}\;.
+\]    
+\end{proposition}
+
+\begin{proof}
+Consider the case that $n$ is even, so $n=2N$.
+We want the probability that for a path of length $2N$,
+the last visit occurs at $2m$. Number of paths from $(0,0)$ to $(2m,0)$ is 
+\[
+\binom{2m}{m}.
+\]
+Number of paths from $(2m,0)$ to $(2n,0)$ that do not touch the $X$-axis is
+\[
+\binom{2n-2m}{n-m}.
+\]
+Hence we get the result. For the case $n$ is odd, we can say $\Pr(L_n=2m)=\Pr(L_{n-1)=2m}$ and we can apply the case of even $n$ as now $n-1$ is even.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  % Axes
+  \draw[->] (-1,0) -- (15,0) node[right] {$X$};
+  \draw[->] (0,-1) -- (0,5) node[above] {$Y$};
+
+  % Parameters
+  % Define the walk: sequence of (up, down) steps
+  \coordinate (A0) at (0,0);
+  \coordinate (A1) at (1,1);
+  \coordinate (A2) at (2,0);
+  \coordinate (A3) at (3,-1);
+  \coordinate (A4) at (4,0); % last time hitting x-axis (2m = 4)
+  \coordinate (B4) at (4,4);
+  \coordinate (A5) at (5,1);
+  \coordinate (A6) at (6,2);
+  \coordinate (A7) at (7,3);
+  \coordinate (A8) at (8,4);
+  \coordinate (A9) at (9,3);
+  \coordinate (A10) at (10,2);
+  \coordinate (A11) at (11,3);
+  \coordinate (A12) at (12,4);
+  \coordinate (B12) at (12,0); 
+
+  % Original path
+  \draw[thick, blue] (A0) -- (A1) -- (A2) -- (A3) -- (A4);
+
+  % Path after last return to x-axis
+  \draw[thick, red] (A4) -- (A5) -- (A6) -- (A7) -- (A8) -- (A9) -- (A10) -- (A11) -- (A12);
+
+  % Points
+  \foreach \pt in {A0,A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12,B12}
+    \filldraw (\pt) circle (2pt);
+
+  % Label the key point
+  \node[below right] at (A4) {$(2m, 0)$};
+
+  % Braces to indicate walk segments
+  \draw[decorate,decoration={brace,mirror,amplitude=10pt}]
+    (A0) -- (A4) node[pos=1.5,below=20pt] {Hits $X$-axis for last time};
+
+  \draw[decorate,decoration={brace,amplitude=10pt}]
+    (B4) -- (A12) node[midway,above=6pt] {Stays above $X$-axis};
+
+\end{tikzpicture}
+\end{center}
+
+This result yields a nice, not-so-obvious combinatorial identity, which we record in the appendix.
+
+\begin{proposition}[Approximate Distribution of $L_n$]    
+\[
+\Pr(L_n=2m) \approx \frac{1}{\pi}\frac{1}{\sqrt{m(N-m)}}\;.
+\]    
+\end{proposition}
+
+\begin{proof}
+This follows by applying Stirling's approximation
+\[
+n! \approx \sqrt{2\pi n} \left( \frac{n}{e} \right)^n
+\]
+\end{proof}
+
+Now we can give a proof of Theorem~\ref{thm:arcsinelaw}. Skip this for first reading. Come back to this after reading convergence in distribution.
+
+\begin{proof}[Proof of Theorem~\ref{thm:arcsinelaw}]    
+Consider $0<a<b<1$.
+\begingroup
+%\addtolength{\jot}{1em}
+\begin{align*}
+& \Pr(\frac{L_n}{n}\in(a,b]) \\
+={} & \Pr(na<L_n\leq nb) \\
+={} & \Pr([na]+1\leq L_n\leq[nb]) \\
+={} & \sum_{\ell = [na]+1}^{[nb]}
+\Pr(L_n = \ell)\\
+={} & \sum_{\substack{\ell = [na]+1\\ \ell \mbox{ even}}}^{[nb]}
+\Pr(L_n = \ell)\\
+={} & \sum_{m = [na/2]+1}^{[nb/2]}
+\Pr(L_n = 2m)\\
+\approx{} & \sum_{m = [na/2]+1}^{[nb/2]} 
+\frac{1}{\pi}\frac{1}{\sqrt{m([n/2]-m)}}\\
+\approx{} & \sum_{m=[na/2]+1}^{[nb/2]} 
+\frac{1}{\pi}\frac{1}{\sqrt{m(n/2-m)}}\\
+={} & \sum_{m=[na/2]+1}^{[nb/2]} 
+\frac{1}{\pi}\frac{1}{\sqrt{(m/n)(1-2m/n)}}\frac{1}{n}\sqrt{2}\\
+\approx{} & \int_{a/2}^{b/2}\frac{\sqrt{2}}{\pi}\frac{1}{\sqrt{t(1-2t)}}dt\\
+={} & \int_{a}^{b}\frac{1}{\pi}\frac{1}{\sqrt{x(1-x)}}dx
+\end{align*}
+\endgroup
+\end{proof}
+
+
+\newpage
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 4. March 10, 2025}}
+
+\chapter{The Simple Asymmetric Random Walk}
+
+\section{The Model}
+
+$X_1,X_2,X_3,\ldots$ i.i.d.\ random variables with
+\begin{equation}
+X_i = \begin{cases}
+1 & \mbox{with probability } p\\
+-1 & \mbox{with probability } q=1-p
+\end{cases}
+\end{equation}
+We assume $p\neq 1/2$.
+\begin{equation}
+S_n = X_1+\cdots+X_n.
+\end{equation}
+
+\section{Descriptive Statistics}
+
+\textbf{Question:} What is the maximum value of $S_n$?\\
+\textbf{Answer:} $n$.\\
+
+\medskip
+
+\noindent\textbf{Question:} What is the minimum value of $S_n$?\\
+\textbf{Answer} $-n$.\\
+
+\medskip 
+
+\noindent\textbf{Question:} What is the average value (i.e., the expectation) of $S_n$?\\
+\textbf{Answer:} Average value of $S_n$ is $0$ as the following calculation shows:
+\begin{equation}
+\E{S_n}=
+\E{X_1+\cdots+X_n}=
+\E{X_1}+\cdots+\E{X_n}=
+(p-q)+\cdots+(p-q)=
+n(p-q)\;.
+\end{equation}
+Here we do not need the assumption that $X_i$s are independent. We use that $\E{X_i}=p-q$ for each $i$:
+\begin{equation}
+\E{X_i} = 1 \cdot p + (-1) \cdot (1-p) = p-q\;.
+\end{equation}
+
+\medskip
+
+\noindent\textbf{Question:} What is the variance of $S_n$?\\
+\textbf{Answer:}
+\begin{equation}
+\Var(S_n)=\Var(X_1)+\cdots+\Var(X_n)=4pq+\cdots+4pq=4npq\;.
+\end{equation}
+Here we use the assumption that $X_i$s are independent, otherwise there would be the covariance terms. Technically speaking, we are only using that pairwise covariances are $0$, which follows from the assumption of independence, but is a much weaker condition. Above we also used $\Var(X_i)=1$ as the following calculation shows:
+\begin{equation}
+\Var(X_i)=\E{X_i^2}-\Bigl(\E{X_i}\Bigr)^2=\E{1}-(p-q)^2=4pq\;.
+\end{equation}
+
+\filbreak
+
+\section{Exact Distribution}
+
+\textbf{Question:} $X_i$s are similar to Bernoulli random variables. $S_n$ should be similar to a Binomial random variable. Can we make it precise?\\
+\noindent\textbf{Answer}: 
+\begin{equation}
+\frac{n+S_n}{2}\sim\mathrm{Binomial}(n,p)\;.
+\end{equation}
+We observe that
+\begin{equation}
+\frac{1+X_i}{2}=
+\begin{cases}
+1 & \mbox{with probability } p\\
+0 & \mbox{with probabiluty } 1-p
+\end{cases}
+\end{equation}
+Therefore $(1+X_i)/2$ is a Bernoulli $1/2$ random variable. Therefore
+\begin{equation}
+\frac{1+X_1}{2} + 
+\frac{1+X_2}{2} +
+\cdots +
+\frac{1+X_n}{2}
+=\frac{n+S_n}{2}
+\end{equation}
+has $\mathrm{Binomial}(n,p)$ distribution. Another way to describe the exact distribution is the following: if $n$ and $r$ have different parity then $\Pr(S_n=r)=0$, if $n$ and $r$ have the same parity then 
+\[
+\Pr(S_n=r) = \binom{n}{\frac{n+r}{2}}p^{\frac{n+r}{2}}(1-p)^{n-\frac{n+r}{2}}.
+\]
+
+\section{Approximate Distribution}
+
+From SLLN we get
+\begin{equation}
+\frac{S_n}{n}\to p-q
+\end{equation}
+almost surely. From CLT we get
+\begin{equation}
+\frac{S_n-n(p-q)}{\sqrt{4npq}}\to N(0,1)
+\end{equation}
+in distribution i.e., for all $x\in\real$
+\begin{equation}
+\Pr(S_n\leq n(p-q)+x\sqrt{4npq)}\to\int_{-\infty}^x
+\frac{1}{\sqrt{2\pi}}e^{-t^2/2}dt\;.
+\end{equation}
+
+\section{Hitting Time}
+
+Consider integers $a,b>0$. Let $T_a$ be the first time that the random walk hits $a$ i.e.,
+\[
+T_a \coloneqq \min\{  n \given S_n = a \}\;.
+\]
+If the random walk does not hit $a$, 
+we let $T_a=\infty$. If $p>1/2$ i.e., $p-q>0$, then $S_n\to\infty$ almost surely; hence $T_a<\infty$ with probability $1$. Let $T_{-b}$ be the first time that the random walk hits $-b$ i.e.,
+\[
+T_{-b} \coloneqq \min\{  n \given S_n = -b \}\;.
+\]
+If the random walk does not hit $-b$, we let $T_{-b}=\infty$. If $p<1/2$ i.e., $p-q<0$, then $S_n\to-\infty$ almost surely; hence $T_{-b}<\infty$ with probability $1$.
+
+\newpage
+We want to find an expression for $\Pr(T_a<T_{-b})$. The event 
+$E\coloneqq\{ T_a<T_{-b }\}$ means:
+\begin{itemize}
+\item either, the random walk hits $a$ but never hits $-b$; or
+\item the random walk hits both $a$ and $-b$, and hits $a$ before $-b$.
+\end{itemize}
+
+Let $F$ be the event $\{T_{-b}<T_a\}$. It means
+\begin{itemize}
+\item either, the random walk hits $-b$ but never hits $a$; or
+\item the random walk hits both $a$ and $-b$, and hits $-b$ before $a$.
+\end{itemize}
+
+Note that, $E$ and $F$ are mutually exclusive i.e., $E\cap F=\emptyset$.
+
+Also note that, $\Pr(E\cup F)=1$ i.e., with probability $1$, either $E$ or $F$ must happen:
+\begin{itemize}
+    \item if the random walk hits $a$ but not $-b$, then $E$ happens;
+    \item if the random walk hits $-b$ but not $a$, then $F$ happens;
+    \item if the random walk hits both $a$ and $-b$, and hits $a$ before $-b$ then $E$ happens;
+    \item if the random walk hits both $a$ and $-b$, and hits $-b$ before $a$ then $F$ happens;
+    \item the probability that the random walk hits neither $a$ nor $-b$ is $0$; if $p>1/2$ then the random walk hits all positive $a$; if $p<1/2$ then the random walk hits $-b$ for all positive $b$.
+\end{itemize}
+
+Therefore 
+\[
+\Pr(E) + \Pr(F) = 1\;.
+\]
+
+For $x\in\{ -b,-b+1,\ldots,-1,0,1,\ldots,a-1,a \}$, let $f(x)$ denote the probability of the event $E$ if the random walk starts from $x$ (instead of $0$). Thus, we want $f(0)$. Conditioning on the first step yields the following recursion for $f$:
+\[
+f(x) = p \cdot f(x+1) + q \cdot f(x-1)\;.
+\]
+We need two additional conditions to solve this recursion. These are given by
+the boundary values: $f(a)=1$ and $f(-b)=0$. To solve this recursion, we first solve the characteristic polynomial:
+\[
+t = p t^2 + q\;.
+\]
+The roots are $t=1$ and $t=q/p$. Since $p\neq q$, these two roots are different. Thus $f$ must be of the form
+\[
+f(x) = A + B \cdot (q/p)^x \;.
+\]
+Using $f(a)=1$ and $f(-b)=0$ yields
+\[
+f(x) = \frac{(q/p)^x-(q/p)^{-b}}{(q/p)^a-(q/p)^{-b}}\;.
+\]
+Plugging in $x=0$ yields
+\begin{equation}\label{eq:assrw.main}
+\Pr(T_a<T_{-b}) = \frac{1-(q/p)^{-b}}{(q/p)^a-(q/p)^{-b}}\;.
+\end{equation}
+\newpage
+
+Let us now fix our attention to the case $p>q$. In this case $(q/p)^{-b}>1$. Thus the numerator and the denominator of the fractional expression at the r.h.s.\ of \eqref{eq:assrw.main} is negative. So we rewrite \eqref{eq:assrw.main} in several alternative ways such that the numerator and the denominator are positive:
+\[
+\Pr(T_a<T_{-b}) = \frac{(q/p)^{-b}-1}{(q/p)^{-b}-(q/p)^{a}} 
+= \frac{(p/q)^{b}-1}{(p/q)^{b}-(p/q)^{-a}}
+= \frac{1-(q/p)^{b}}{1-(q/p)^{a+b}} \;.
+\]
+Let us now fix $b$, and denote the event $\{T_a<T_{-b}\}$ by $E_a$. Note that, since we have assumed $p>q$, $T_a$ is finite with probability $1$. Consider the sequence of events $E_1,E_2,\ldots$. Note that
+\[
+E_1\supset E_2\supset\cdots
+\]
+This is because if $T_{a+1}<T_{-b}$ then $T_a<T_{-b}$. Let 
+\[
+E_\infty = \cap_{a=1}^\infty E_a\;.
+\]
+Thus 
+\[
+E_a \downarrow E_\infty\;,
+\]
+and 
+\[
+\Pr(E_\infty) 
+= \lim_{a\to\infty} \Pr(E_a) 
+= \lim_{a\to\infty} \frac{(p/q)^{b}-1}{(p/q)^{b}-(p/q)^{-a}} 
+= \frac{(p/q)^{b}-1}{(p/q)^{b}} 
+= 1 - (q/p)^b\;. 
+\]
+But what does the event $E_\infty$ mean? If $E_\infty$ happens, that means $T_{-b}$ is bigger than all $T_a$. And we know all the $T_a$s are finite and definitely $T_1<T_2<T_3<\cdots$. Thus $E_\infty$ is just the event $\{T_{-b}=\infty\}$. Therefore
+\[
+\Pr(T_{-b}=\infty) = 1 - (q/p)^b
+\]
+or 
+\[
+\Pr(T_{-b}<\infty) = (q/p)^b\;.
+\]
+Another way of describing the event $T_{-b}<\infty$ is that $-\min_n S_n \geq b$.
+Thus
+\[
+\Pr(-\min_n S_n\geq b) = (q/p)^b\;.
+\]
+Thus $X \coloneqq -\min_n S_n$ is a Geometric random variable. For $k=0,1,2,\ldots$
+\[
+\Pr(X = k) = (q/p)^{k} - (q/p)^{k+1} = (1-q/p)(q/p)^k\;.
+\]
+In particular,
+\[
+\E{X} = \frac{1-q/p}{q/p} = p/q - 1\;,
+\]
+and 
+\[
+\Var(X) = \frac{1-q/p}{(q/p)^2} = (p/q)^2 - (p/q)\;.
+\]
+
+\newpage
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 6. March 24, 2025}}
+
+\chapter{Order Statistics}
+
+\section{Definition}
+
+Let $X_1,X_2,\ldots,X_n$ be a sequence of i.i.d.\ random variables. 
+Suppose their distribution function is continuous.
+Then there cannot be any ties i.e., for any $i\neq j$
+\[
+\Pr(X_i = X_j ) = 0 \;.
+\]
+Then the $i$'th value among $X_1,\ldots,X_n$ in increasing order is
+denoted by $X_{(i)}$ and is called the $i$'th \textbf{order statistic}. 
+Thus 
+\[
+X_{(1)} < X_{(2)} < \cdots < X_{(n)}\;.
+\]
+In particular, $X_{(1)}$ is the minimum and $X_{(n)}$ is the maximum among $X_1,\ldots,X_n$. 
+
+\section{Distribution of the Maximum}
+
+Suppose $X_1$ has distribution function $F$ and density function $f$. Let $G$ denote the distribution function of $X_{(n)}$.
+\[
+G(x)=\Pr(X_{(n))\leq x} = \Pr(\cap_{m=1)^n\{X_m\leq x\}} = \prod_{m=1}^n \Pr(X_m\leq x) = (F(x))^m\;.
+\]
+Let $g$ denote the distribution function of $X_{(n)}$. Then
+\[
+g(x) = G^\prime(x) = m (F(x))^{m-1} f(x) \;.
+\]
+For example suppose $X_1\sim\mathrm{Uniform}[0,1]$. Then $F(x)=x$ and $f(x)=1$. Therefore 
+\[
+g(x)=m x^{m-1} \;,
+\]
+which is the density function of $\mathrm{Beta}(m,1)$.
+
+\section{Distribution of the Minimum}
+
+Suppose $X_1$ has distribution function $F$ and density function $f$. Let $G$ denote the distribution function of $X_{(1)}$.
+\[
+G(x)=\Pr(X_{(1)}\leq x) = 1-\Pr(X_{(1)}>x) = 1-\Pr(\cap_{m=1}^n\{X_m>x\}) = 1-\prod_{m=1}^n \Pr(X_m>x) = 1-(1-F(x))^m\;.
+\]
+Let $g$ denote the distribution function of $X_{(n)}$. Then
+\[
+g(x) = G^\prime(x) = m (1-F(x))^{m-1} f(x) \;.
+\]
+For example suppose $X_1\sim\mathrm{Exponential}(1)$. Then $F(x)=1-e^{-x}$ and $f(x)=e^{-x}$. Therefore 
+\[
+g(x)=m e^{-mx} \;,
+\]
+which is the density function of $\mathrm{Exponential}(m)$ (mean $1/m$).
+
+\section{Joint Distribution of $X_{(1)},\ldots,X_{(n)}$}
+
+If $X_i$s have density $f$, then the joint density of $X_{(1)},\ldots,X_{(n)}$ is 
+\[
+n! f(x_1,x_2,\ldots,x_n) = n! f(x_1) f(x_2) \cdots f(x_n)
+\]
+where $x_1\leq x_2\leq \ldots\leq x_n$.
+
+For example, suppose $X_1,X_2$ are i.i.d.\ $\mathrm{Uniform}[0,1]$ random variables. The distribution of $(X_1,X_2)$ is supported on $[0,1]\times[0,1]$ i.e., the unit square (figure on the right below). But the distribution of $(X_{(1)},X_{(2)})$ is supported on half of the unit square (figure on the left below) because $X_{(2)}$ has to be bigger than $X_{(1)}$.
+\begin{figure}[h]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\begin{tikzpicture}[scale=2]
+  \fill[yellow] (0,0) -- (1,1) -- (0,1) -- cycle;
+  \draw[thick] (0,0) rectangle (1,1);
+  \draw[thick] (0,0) -- (1,1);
+\end{tikzpicture}
+\end{subfigure}%
+\begin{subfigure}{0.5\textwidth}
+\centering
+\begin{tikzpicture}[scale=2]
+  \draw[thick] (0,0) rectangle (1,1);
+  \draw[thick] (0,0) -- (1,1);
+\end{tikzpicture}    
+\end{subfigure}
+\end{figure}
+\noindent Consider a point in the yellow region, say $(0.4,0.8)$. If $(X_{(1)},X_{(2)})=(0.4,0.8)$ then we have two options for $(X_1,X_2)$, it can be either $(0.4,0.8)$ or $(0.8,0.4)$.
+\begin{figure}[h]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\begin{tikzpicture}[scale=2]
+  \fill[yellow] (0,0) -- (1,1) -- (0,1) -- cycle;
+  \draw[thick] (0,0) rectangle (1,1);
+  \draw[thick] (0,0) -- (1,1);
+  \fill[red] (0.4,0.8) circle [radius=0.05];
+\end{tikzpicture}
+\end{subfigure}%
+\begin{subfigure}{0.5\textwidth}
+\centering
+\begin{tikzpicture}[scale=2]
+  \draw[thick] (0,0) rectangle (1,1);
+  \draw[thick] (0,0) -- (1,1);
+  \fill[green] (0.4,0.8) circle [radius=0.05];
+  \fill[green] (0.8,0.4) circle [radius=0.05];
+\end{tikzpicture}
+\end{subfigure}
+\end{figure}
+\noindent Suppose we take a small set around $(0.4,0.8)$, let us denote it by $B$, in the figure it is depicted by a red ball. Corresponding to $B$ we get two regions $B_1$ and $B_2$, where $B_1$ is $B$ itself, $B_2$ is reflection of $B$. If $(X_{(1)},X_{(2)})$ belongs to $B$ then $(X_1,X_2)$ must belong to either $B_1$ or $B_2$.
+\[
+\Pr((X_{(1)},X_{(2)})\in B) = 
+\Pr((X_{1},X_{2})\in B_1) + 
+\Pr((X_{1},X_{2})\in B_2) \;. 
+\]
+Both terms on the right are approximately
+\[
+A \times f(0.4)f(0.8).
+\]
+If $g$ is the density of $(X_{(1)},X_{(2)})$ then the term on the left is 
+\[
+A \times g(0.4,0.8).
+\]
+This shows that $g(0.4,0.8)=2 f(0.4)f(0.8)$.
+
+\section{Joint Distribution of $X_{(i)}$ and $X_{(j)}$}
+
+The joint density of $X_{(i)}$ and $X_{(j)}$ will be
+\[
+f(x_i,x_j) = \frac{n!}{(i-1)!(n-j)!} F(x_i)^{i-1} f(x_i) (F(x_i)-F(x_j))^{j-i-1} f(x_j) (1-F(x_j))^{n-j}\;.
+\]
+This is obtained by integrating 
+\[
+n!f(x_1)\cdots f(x_n)
+\]
+where range $x_k$ is as follows: 
+if $k<i$, then $x_k$ takes values in $(-\infty,x_i]$,
+if $i<k<j$, then $x_k$ takes values in $[x_i,x_j]$,
+if $K>j$, then $x_k$ takes values in $[x_j,\infty)$.
+
+For example, for $n=5,i=3,j=4$:
+\begin{align*}
+& 5! \int_{-\infty}^{x_3}\int_{x_1}^{x_3}\int_{x_4}^{\infty} f(x_1)f(x_2)f(x_3)f(x_4)f(x_5) dx_5dx_2dx_1  \\ 
+={} & 5! f(x_3)f(x_4)\int_{-\infty}^{x_3}\int_{x_1}^{x_3}\int_{x_4}^{\infty} f(x_1)f(x_2)f(x_5) dx_1dx_2dx_5  \\
+={} & 5! f(x_3)f(x_4)(1-F(x_4))\int_{-\infty}^{x_3}\int_{x_1}^{x_3} f(x_1)f(x_2) dx_1dx_2  \\
+={} & 5! f(x_3)f(x_4)(1-F(x_4))\int_{-\infty}^{x_3} f(x_1)(F(x_3)-F(x_1)) dx_1  \\
+={} & 5! f(x_3)f(x_4)(1-F(x_4))\int_{-F(x_3)}^{0}(-y)dy\\
+\intertext{\hfill $y=F(x_3)-F(x_1)$}
+={} & \frac{5!}{2} f(x_3)f(x_4)(1-F(x_4))F(x_3)^2\;.
+\end{align*}
+
+\newpage
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 7. March 31, 2025}}
+
+\chapter{Borel-Cantelli Lemmas}
+
+\section{Experiments, Outcomes, Events}
+
+\section{Increasing and Decreasing Sequences of Events}
+
+A sequence of events $A_1,A_2,A_3,\ldots$ is called increasing if 
+\[
+A_1\subset A_2\subset A_3\subset \ldots.
+\]
+In this case we write $A_n\uparrow \cup_m A_m$. 
+
+A sequence of events $A_1,A_2,A_3,\ldots$ is called decreasing if 
+\[
+A_1\supset A_2\supset A_3\supset \ldots.
+\]
+In this case we write $A_n\downarrow \cap_m A_m$. 
+
+\section{Infinitely Often}
+
+Let $A_1,A_2,A_3,\ldots$ be a sequence of events. Consider the event that infinitely many of the events $A_n$ happen. We can represent this event as
+\[
+\cap_{i=1}^\infty\cup_{j=i}^\infty A_j \;.
+\]
+Thus, we are saying that for every $u$, there is some $j\geq i$ such that $A_j$ happens. This just means that infinitely many of the events $A_n$ happen. We denote this event by $\limsup A_n$ or $[A_n \mbox{ i.o. }]$.
+
+Similarly we can define the $\liminf$ of a sequence of events.
+\[
+\liminf A_n = \cup_{i=1}^\infty\cap_{j=i}^\infty A_j \;.
+\]
+Thus, we are saying that there is some $i$ such that all the events $A_i,A_{i+1},A_{i+2},\ldots$ happens.
+
+So if $\limsup A_n$ does not happen, then $\liminf A_n^c$ happens and vice versa. So $(\limsup A_n)^c = \liminf A_n^c$.
+
+\section{Borel-Cantelli Lemma 1}
+
+\begin{theorem}[Borel-Cantelli Lemma 1]
+Let $\left(A_n\right)_{n=1}^\infty$ be sequence of events. If $\sum_{n=1}^\infty \Pr(A_n)<\infty$ then $\Pr(\limsup A_n)=0$.
+\end{theorem}
+
+\section{Borel-Cantelli Lemma 2}
+
+\begin{theorem}[Bore-Cantelli Lemma 2]
+Let $\left(A_n\right)_{n=1}^\infty$ be sequence of \textbf{independent} events. If $\sum_{n=1}^\infty \Pr(A_n)=\infty$, then $\Pr(\limsup A_n)=1$.
+\end{theorem}
+
+\newpage
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 8. April 7, 2025}}
+
+\section{Drunk Men and Drunk Birds}
+
+There is a saying, attributed to  Japanese-American mathematician Shizuo
+Kakutani: ``A drunk man will find his way home, but a drunk bird may get lost
+forever." Let us try to understand this. A drunk birds can be modeled by three
+dimensional random walk. Suppose the bird starts at the origin of the three
+dimensional integer lattice $\integer^3$. It moves only at integer time points. For
+$n=0,1,2,3,\ldots$ let $S_n=(S_n^x,S_n^y,S_n^z)\in\integer^3$ denote its location.
+If at a certain time the bird is at location $(x,y,z)$, then at the next time
+point it can be at one of the $8$ locations given by $(x\pm 1,y\pm 1,z\pm 1)$.
+Thus we can say
+
+\begin{align*}
+S_n^x ={} & S_{n-1}^x + X_n\;,\\
+S_n^y ={} & S_{n-1}^y + Y_n\;,\\
+S_n^z ={} & S_{n-1}^z + Z_n\;,
+\end{align*}
+where
+\[
+X_n = \begin{cases}
+1 & \mbox{ with probability } 1/2\;,\\
+-1 & \mbox{ with probability } 1/2\;,
+\end{cases}
+\]
+\[
+Y_n = \begin{cases}
+1 & \mbox{ with probability } 1/2\;,\\
+-1 & \mbox{ with probability } 1/2\;,
+\end{cases}
+\]
+\[
+Z_n = \begin{cases}
+1 & \mbox{ with probability } 1/2\;,\\
+-1 & \mbox{ with probability } 1/2\;,
+\end{cases}
+\]
+and $(X_1,X_2,X_3,\ldots,Y_1,Y_2,Y_3,\ldots,Z_1,Z_2,Z_3,\ldots)$ are independent.
+\[
+\Pr(S_n=(0,0,0)) 
+= \Pr(S_n^x=0)\Pr(S_n^y=0)\Pr(S_n^z=0)
+\]
+For $n$ odd, 
+\[
+\Pr(S_n^x=0)=
+\Pr(S_n^y=0)=
+\Pr(S_n^z=0)=0\;.
+\]
+For $n$ even, say $n=2N$
+\[
+\Pr(S_n^x=0)=
+\Pr(S_n^y=0)=
+\Pr(S_n^z=0)=\left(2^{-2N}\binom{2N}{N}\right)^3\;.
+\]
+By Stirling's approximation
+\[
+2^{-2N}\binom{2N}{N} \approx \frac{C}{N^{1/2}} 
+\approx \frac{C}{n^{1/2}}.
+\]
+Thus, for $n$ even
+\[
+\Pr(S_n=0) \approx C n^{-3/2}\;.
+\]
+Thus, the probability that $S_n=0$ happens infinitely often is $0$. Thus, a drunk bird may get lost forever. But for two dimensional or one dimensional random walk with probability $1$ $S_n=0$ happens infinitely often. Thus a drunk man will find his way home. Note that, to prove this we cannot use the second Borel-Cantelli Lemma. Because the second Borel-Cantelli Lemma requires the events to be independent, but the events $\{S_n=0\}$ are not independent. But the result is true and can be proved in different ways, generally you will learn this in a course on Markov Chains.
+
+\newpage
+
+\section{Borel-Cantelli Lemma 1 Proof}
+
+Let $(A_n)_{n=1}^\infty$ be a sequence of events.\\
+Suppose
+\[
+\sum_{n=1}^\infty \Pr(A_n) < \infty \;.
+\]
+Let $A$ denote the event that infinitely many $A_n$s happen. Thus
+\[
+A = [A_n \mbox{ i.o. }] =
+\bigcap_{i=1}^\infty \bigcup_{j=i}^\infty A_i \;.
+\]
+We need to show that 
+\[
+\Pr(A)=0\;.
+\]
+For $i=1,2,3,\ldots$ let
+\[
+B_i \coloneqq \cup_{j=i}^\infty A_j\;.
+\]
+The events $B_i$s are decreasing: $B_{i}$ involves union of more events than $B_{i+1}$. Thus
+\[
+B_1\supset B_2\supset \cdots \downarrow A\;.
+\]
+Therefore
+\[
+\Pr(A) = \lim_{i\to\infty} \Pr(B_i)\;.
+\]
+We have
+\[
+\Pr(B_i)\leq\sum_{j=i}^\infty\Pr(A_j)\;.
+\]
+Since $\sum_{n=1}^\infty\Pr(A_n)<\infty$,
+we have
+\[
+\lim_{i\to\infty}\sum_{j=i}^\infty\Pr(A_j)=0\;.
+\]
+Therefore,
+\[
+\lim_{i\to\infty}\Pr(B_i)=0\;.
+\]
+
+\newpage
+
+\section{Borel-Cantelli Lemma 2 Proof}
+
+Let $(A_n)_{n=1}^\infty$ be a sequence of independent events.\\
+This means, for any set of integers $\{n_1,n_2,\cdots,n_k\}$ we have
+\[
+\Pr(A_{n_1)\cap A_{n_2}\cap \cdots A_{n_k}}
+= \Pr(A_{n_1)} \cdot \Pr(A_{n_2)} \cdot \cdots \Pr(A_{n_k)} \;.
+\]
+Let $A$ denote the event that infinitely many $A_n$s happen. Thus
+\[
+A = [A_n \mbox{ i.o. }] = \bigcap_{i=1}^\infty \bigcup_{j=i}^\infty A_i \;.
+\]
+Suppose 
+\[
+\sum_{n=1}^\infty \Pr(A_n) = \infty\;.
+\]
+We want to show that 
+\[
+\Pr(A) = 1\;.
+\]
+For $i=1,2,3,\ldots$ let
+\[
+B_i \coloneqq \cup_{j=i}^\infty A_i\;.
+\]
+Therefore
+\[
+B_1\supset B_2\supset \cdots \downarrow A\;.
+\]
+To show $\Pr(A)=1$ we will show that $\Pr(A^c)=0$. We observe that
+\[
+A^c = \bigcup_{i=1}^\infty \bigcap_{j=i}^\infty A_i^c\;.
+\]
+We also
+\[
+B_i^c = \cap_{j=i}^\infty A_i^c\;,
+\]
+and 
+\[
+B_1^c\subset B_2^c\subset \cdots \uparrow A^c\;.
+\]
+Therefore
+\[
+\Pr(B_i^c)\uparrow\Pr(A^c)\;.
+\]
+Therefore, it is enough to show that 
+$\Pr(B_i^c)=0$ for all $i$. We fix an $i$. 
+For $m=i,i+1,i+2,\ldots$ let 
+\[
+C_m \coloneqq \cap_{j=i}^m A_i^c\;.
+\]
+Thus
+\[
+C_i \supset C_{i+1} \supset \cdots \downarrow B_i^c\;.
+\]
+Thus 
+\[
+\Pr(B_i^c) = \lim_{m\to\infty} \Pr(C_m)\;.
+\]
+By independence of the events $A_i$s we have
+\[
+\Pr(C_m) = \prod_{j=i}^m \Pr(A_i^c) \;.
+\]
+\begin{tcolorbox}
+We are using $A_i^c$s are independent. This follows from the fact that $A_i$s are independent.
+\end{tcolorbox}
+We observe that
+\[
+\Pr(A_i^c) = 1-\Pr(A_i) \leq e^{-\Pr(A_i)}\;.
+\]
+Therefore,
+\[
+\Pr(C_m)\leq\exp\left(-\sum_{j=i}^m \Pr(A_i)\right)\;.
+\]
+Since $\sum_{n=1}^\infty \Pr(A_n) = \infty$,
+\[
+\lim_{m\to\infty}\sum_{j=i}^m\Pr(A_i)=\infty\;.
+\]
+Therefore,
+\[
+\lim_{m\to\infty} \Pr(C_m) = 0\;.
+\]
+Therefore, 
+\[
+\Pr(B_i^c)=0
+\;.
+\]
+
+\newpage
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 9. April 28, 2025}}
+
+\chapter{Modes of Convergence}
+
+\section{Almost Sure Convergence}
+
+\begin{definition}[Almost Sure Convergence]
+A sequence of random variables $(X_n)_{n=1}^\infty$ is 
+said to converge almost surely to a random variable $X$
+if 
+\[
+\Pr(\lim_{n\to\infty} X_n=X)=1\;.
+\]
+In other words, the event
+\[
+\{\omega\in\Omega:\lim_{n\to\infty} X_n(\omega)=X(\omega)\}
+\]
+has probability $1$.
+\end{definition}
+
+The most important example of almost sure convergence is the Strong Law of Large Numbers (SLLN).
+
+\begin{theorem}[Strong Law of Large Numbers]
+If $X_1,X_2,X_3,\ldots$ are i.i.d.\ random variables with finite first moment $\mu$, then 
+\[
+\frac{X_1+\cdots+X_n}{n}\rightarrow\mu\mbox{ almost surely}\;.
+\]
+\end{theorem}
+
+\newpage
+
+% \begin{lstlisting}
+% SLLN <- function(n,rep) {
+%   X = matrix(0,nr=rep,nc=n)
+%   S = matrix(0,nr=rep,nc=n)
+%   M = matrix(0,nr=rep,nc=n)
+%   p = ggplot() +
+%         xlim(0, n) +
+%         ylim(-1, 1) +
+%         xlab("n") +
+%         ylab(TeX("$\\frac{S_n}{n}$")) +
+%         ggtitle("Plot of Sample Average") +
+%         theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+%         theme(plot.title = element_text(hjust = 0.5))
+%   for(i in 1:rep){
+%    X[i,] = sample(c(-1,1),n,replace=TRUE)
+%    S[i,] = cumsum(X[i,])
+%    M[i,] = S[i,]/(1:n)
+%    df = data.frame(x=1:n,y=M[i,])
+%    p = p + 
+%        geom_line(data=df, aes(x=x,y=y), color=i)
+%    }
+%   return(p)
+% }    
+% \end{lstlisting}
+
+\begin{figure}[h]
+\centering
+% \includegraphics[width=\linewidth]{Figures/Rplot01.png}
+\caption{Plot of $(X_1+\cdots+X_n)/n$ for $n=1,2,\ldots,1000$. Here the random variables are $1$ with probability $1/2$ and $-1$ with probability $1/2$. $10$ simulations are shown. In all cases the sample average gets close to $0$.}
+\end{figure}
+
+\newpage
+
+In the strong law of large numbers, the random variable at the limit is a degenerate random variable. A more interesting example is the Polya's urn model. Consider an urn containing $R_0$ red balls and $G_0$ green balls initially. A ball is drawn at random. Thus the drawn ball is red with probability $R_0/(R_0+G_0)$, and is green with probability $G_0/(R_0+G_0)$. The drawn ball is replaced and a ball of the same color is added to the urn. Thus if we denote by $R_1$ and $G_1$ the number of red balls and green balls in the urn after this, $\{R_1=R_0+1,G_1=G_0\}$ with probability $R_0/(R_0+G_0)$, and $\{R_1=R_0,G_1=G_0+1\}$ with probability $G_0/(R_0+G_0)$. It can be shown that as this procedure is repeated, the proportion of red balls converge almost surely and the limiting random variable, say $X$, has distribution $\mathrm{Beta}(R_0,G_0)$. The proportion of green balls converge to $1-X$ and $1-X$ has distribution $\mathrm{Beta}(G_0,R_0)$. Thus in this situation the limit is non-degenerate.
+
+% \begin{lstlisting}
+% Polya <- function(N,M){
+% r = 1
+% g = 1
+% p = ggplot() +
+%   xlim(0, N) +
+%   ylim(0, 1) +
+%   xlab("n") +
+%   ylab(TeX("$\\frac{R_n}{R_n+G_n}$")) +
+%   ggtitle("Plot of Proportion of Red Balls") +
+%   theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+%   theme(plot.title = element_text(hjust = 0.5))
+% for(m in 1:M){
+%   g.seq = numeric(N)
+%   r.seq = numeric(N)
+%   r.seq[1] = r
+%   g.seq[1] = g
+%   for(i in 2:N){
+%     U = runif(1)
+%     if(U<r.seq[i-1]/(r.seq[i-1]+g.seq[i-1])){
+%       r.seq[i] = r.seq[i-1]+1
+%       g.seq[i] = g.seq[i-1]
+%     }
+%     else
+%     {
+%       r.seq[i] = r.seq[i-1]
+%       g.seq[i] = g.seq[i-1] + 1
+%     }
+%   }
+%   r.prop.seq = r.seq/(r.seq+g.seq)
+%   df = data.frame(x=1:N,y=r.prop.seq)
+%   p = p + geom_line(data=df, aes(x=x,y=y), color=m)
+%   }
+%   return(p)
+% }
+% \end{lstlisting}
+
+\begin{figure}[h]
+    \centering
+    % \includegraphics[width=\linewidth]{Figures/Rplot02.png}
+    \caption{Plot of $R_n/(R_n+G_n)$ for $n=1,2,\ldots,1000$. Here $R_0=1,G_0=1$. $10$ simulations are shown. In all cases the proportions approach a limit, and the limiting random variable
+    is non-degenerate. The limit is clearly different for the different simulations.}
+    \label{fig:enter-label}
+\end{figure}
+
+
+\newpage
+
+\section{Convergence in Probability}
+
+\begin{definition}[Convergence in Probability]
+A sequence of random variables $(X_n)_{n=1}^\infty$ is 
+said to converge in probability to a random variable $X$
+if for all $\epsilon>0$
+\[
+\lim_{n\to\infty} \Pr(|X_n-X|>\epsilon)=0\;.
+\]
+\end{definition}
+
+The difference between convergence in probability and almost sure convergence can be understood by the following example.
+
+\begin{example}[Convergence in probability but not almost surely] 
+Let $U$ be a standard Uniform random variable. We will use $U$ to construct a sequence of random variables. Let $X_1$ be just the constant random variable $1$. Let $X_2$ be $\Indicator{U\leq 1/2}$. Let $X_3$ be
+$\Indicator{U>1/2}$. Let $X_4$ be $\Indicator{U\leq 1/4}$, $X_5$ be $\Indicator{1/4<U\leq 1/2}$, and so on. Thus if $U=0.3$ then we will have
+\[
+X_1=1,X_2=1,X_3=0,X_4=0,X_5=1,X_6=0,X_7=0,\ldots
+\]
+Thus the sequence $X_1(\omega),X_2(\omega),\ldots$ clearly doesn't converge for any $\omega$. Most of the terms are $0$, but $1$s keep coming back infinitely often. But the sequence of random variables 
+does converge to the constant $0$ random variable in probability. Fix any $\epsilon>0$. Here $X\equiv 0$. Thus $|X_n-X|>\epsilon$ is only possible if $X_n=1$. But what is $\Pr(X_n=1)$? 
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c}
+$n$  & $\Pr(X_n=1)$ \\
+$1$  & $1$\\
+$1$  & $1/2$\\
+$2$  & $1/2$\\
+$3$  & $1/4$\\
+$4$  & $1/4$\\
+$5$  & $1/4$\\
+$6$  & $1/4$\\
+$7$  & $1/8$\\
+\end{tabular}
+\end{table}
+Thus the probability that $X_n=1$ does go to $0$. Hence $X_n$
+converges in probability to $0$ but not almost surely.
+\end{example}
+
+\newpage
+
+\section{Convergence in Distribution}
+
+\begin{definition}[Convergence in Distribution]
+A sequence of random variables $(X_n)_{n=1}^\infty$ is said to converge in distribution to a random variable $X$ if 
+\[
+\lim_{n\to\infty} \Pr(X_n\leq x) = \Pr(X\leq x)
+\]
+for all $x\in\real$ satisfying $\Pr(X=x)=0$.
+\end{definition}
+
+The most important example of convergence in distribution is
+the central limit theorem:
+
+\begin{theorem}[The Central Limit Theorem]
+Let $X_1,X_2,\ldots$ are i.i.d.\ random variables with $\E{X_1}=\mu$, $\Var(X_1)=\sigma^2$. Then
+\[
+\frac{S_n - n\mu}{\sqrt{n} \sigma} \rightarrow \mathcal{N}(0,1) \mbox{
+in distribution}\;.
+\]
+\end{theorem}
+
+\begin{figure}[h]
+\centering
+% \includegraphics[width=\linewidth]{Figures/RplotCLT.png}
+ \caption{Plot of $(S_n-n\mu)/(\sqrt{n}\sigma)$ for $n=1,2,\ldots,1000$ for $10$ simulations. Here the random variables are $1$ with probability $1/2$ and $-1$ with probability $1/2$.}
+\end{figure}
+
+Note that, here there is no limiting random variable. The sequences do not converge, they oscillate a lot for there to be convergence. But instead of just $10$ if we did a lot of simulations and draw the histogram of $(S_n-n\mu)/(\sqrt{n}\sigma)$ for some large but fixed $n$, we will get the usual Normal density curve.
+
+\newpage
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 10. May 5, 2025}}
+
+\section{$L^p$ Convergence}
+
+\begin{definition}[$L^p$ Convergence]
+A sequence of random variables $(X_n)_{n=1}^\infty$ is said to converge to a random variable $X$ in $L^p$ if 
+\[
+\lim_{n\to\infty} \E{|X_n-X|^p} \to 0 \;.
+\]
+\end{definition}
+
+\section{Hierarchy Between the Various Modes of Convergence}
+
+\subsection{$L^1$ Implies ``In Probability"}
+
+This follows by Markov's Inequality.
+\[
+\Pr(\abs*{X_n-X}\geq\epsilon)\leq\frac{\E{\abs*{X_n-X}}}{\epsilon}\;.
+\]
+
+\begin{theorem}[Markov's Inequality]
+Let $X$ be a non-negative random variable with finite mean. Then, for any $\epsilon>0$
+\[
+\Pr(X>\epsilon)
+\leq 
+\frac{\E{X}}{\epsilon}\;.
+\]
+\end{theorem}
+
+\begin{proof}
+First let us do a short proof. 
+We observe that
+\[
+\epsilon\cdot\Indicator{X>\epsilon}
+\leq X\;.
+\]
+To see this, consider two cases: if $X\leq\epsilon$ then l.h.s.\ is $0$ and r.h.s.\ is nonnegative anyways, hance the inequality is valid; if $X>\epsilon$ then l.h.s.\ is $\epsilon$ whereas r.h.s.\ is $X$, and hence the inequality is valid. Now, taking expectation both sides yields
+\begin{alignat*}{3}
+&& \epsilon\cdot\Pr(X>\epsilon)\leq{} & \E{X}\\
+\Leftrightarrow{} && \Pr(X>\epsilon)\leq{} & \frac{\E{X}}{\epsilon}\;.
+\end{alignat*}
+Note that, we are using $\E{\Indicator*{X>\epsilon}}=\Pr(X>\epsilon)$. This is true because $\Indicator*{X>\epsilon}=1$ with probability $\Pr(X>\epsilon)$ and $0$ with probability $1-\Pr(X>\epsilon)$. Thus,
+\[
+\E{\Indicator*{X>\epsilon}} = 1\cdot\Pr(X>\epsilon) + 0\cdot(1-\Pr(X>\epsilon)) = \Pr(X>\epsilon)\;.
+\]
+Now let us do a proof which might be a bit more intuitive. Suppose $X$ has a density $f$. Then
+\[
+\E{X} 
+= \int_0^\infty x f(x) \mathrm{d}x
+\geq \int_\epsilon^\infty x f(x) \mathrm{d}x
+\geq \int_\epsilon^\infty \epsilon f(x) \mathrm{d}x
+= \epsilon \int_\epsilon^\infty f(x) \mathrm{d}x
+= \epsilon \cdot \Pr(X>\epsilon)\;.
+\]
+A similar proof will also work in the case $X$ has a probability mass function. But there are random variables which neither have a density nor has a mass function. For such random variables the first proof works.
+\end{proof}
+
+\newpage
+
+\subsection{$L^p$ Implies ``In Probability"}
+
+This also follows from Markov's Inequality.
+\[
+\Pr(\abs*{X_n-X}\geq\epsilon) =
+\Pr(\abs*{X_n-X}^p\geq\epsilon^p) \leq 
+\frac{\E{\abs*{X_n-X}^p}}{\epsilon^p} \;.
+\]
+
+\subsection{$L^p$ Implies $L^q$ if $q<p$}
+
+This follows from inequality between moments of random variables.
+\[
+\left(\E{\abs*{X_n-X}^q}\right)^{1/q}
+\leq 
+\left(\E{\abs*{X_n-X}^p}\right)^{1/p} \;.
+\]
+
+\subsection{``In Distribution" Does Not Imply ``In Probability"}
+
+Let $X\sim N(0,1)$. Let $X_1=X,X_2=-X,X_3=X,X_4=-X,\ldots$. Then the sequence of random variables $(X_n)_{n=1}^\infty$ converges in distribution, because each $X_n$ has the same $N(0,1)$ distribution. But the sequence does not converge in probability.
+
+\subsection{``In probability" Does Not Imply $L^p$}
+
+Let $X_n$ be a random variable that is $n$ with probability $1/n$ and $0$ with probability $1-1/n$. Then the sequence $X_n$ converges to $0$ in probability but not in $L^1$.
+
+\newpage
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 11. May 12, 2025}}
+
+\chapter{Normal Distribution}
+
+\section{The Density Function}
+
+The Normal Distribution has density
+\[
+f(x) = \frac{1}{\sqrt{2\pi}} \exp\left(-\frac{x^2}{2}\right) \;.
+\]
+We want to show that this is indeed a density function. Thus, we have to show that
+\[
+\int_{-\infty}^{\infty} f(x) \mathrm{d}x = 1 \;. 
+\]
+Let
+\[
+I \coloneqq \int_{-\infty}^{\infty} \exp\left(-\frac{x^2}{2}\right) \mathrm{d}x\;.
+\]
+Thus we have to show that $I=\sqrt{2\pi}$. We will show that $I^2=2\pi$. We observe that
+\begin{align*}
+I\times I ={} & 
+\left(\int_{-\infty}^{\infty} \exp\left(-\frac{x^2}{2}\right) \mathrm{d}x \right)
+\left(\int_{-\infty}^{\infty} \exp\left(-\frac{y^2}{2}\right) \mathrm{d}y \right)\\
+={} & 
+\int_{-\infty}^{\infty}
+\int_{-\infty}^{\infty}
+\exp\left(-\frac{x^2+y^2}{2}\right) \mathrm{d}x\mathrm{d}y \\
+\end{align*}
+We will evaluate this integral by using polar coordinates. We change variables from $(x,y)$ to $(r,\theta)$ by using the transformation
+\[
+x = r \cos\theta \;, y = r \sin\theta  \;.
+\]
+The Jacobian determinant of this transformation is
+\[
+\left|\begin{pmatrix}
+\frac{\partial x}{\partial r} & \frac{\partial y}{\partial r} \\
+\frac{\partial x}{\partial \theta} & \frac{\partial y}{\partial \theta} \\
+\end{pmatrix}\right| 
+= \left|\begin{pmatrix}
+\cos\theta & \sin\theta \\
+-r\sin\theta & r\cos\theta \\
+\end{pmatrix}\right| = r(\cos^2\theta + \sin^2\theta) = r\;.
+\]
+Therefore,
+\[
+I\times I = 
+\int_{0}^\infty \int_{0}^{2\pi} e^{-\frac{r^2}{2}} \, r \, \mathrm{d}\theta \mathrm{d}r = 
+2\pi \int_0^\infty e^{-\frac{r^2}{2}} \, r \, \mathrm{d}r =  2\pi \;.
+\]
+\newpage
+
+\section{The Moment Generating Function}
+
+Suppose $X\sim\mathcal{N}(0,1)$. We want to show that the moment generating function of $X$ is the function $\phi:\real\to\real$ given by $\phi(t)=e^{t^2/2}$.
+\begin{alignat*}{3}
+&& \E{e^{tX}} ={} & e^{\frac{t^2}{2}} \;. \\[1em]
+\Leftrightarrow{} && \frac{1}{\sqrt{2\pi}} \int e^{tx} \, e^{-\frac{x^2}{2}} \, \mathrm{d}x ={} & e^{\frac{t^2}{2}} \;. \\[1em]
+\Leftrightarrow{} && \frac{1}{\sqrt{2\pi}} \int e^{tx - \frac{x^2}{2} - \frac{t^2}{2} } \, \mathrm{d}x ={} & 1 \;.\\[1em]
+\Leftrightarrow{} && \frac{1}{\sqrt{2\pi}} \int e^{-\frac{(t-x)^2}{2}} \, \mathrm{d}x ={} & 1 \;.\\[1em]
+\Leftrightarrow{} && \frac{1}{\sqrt{2\pi}} \int e^{-\frac{y^2}{2}} \, \mathrm{d}y ={} & 1 \;.
+\end{alignat*}
+We have already seen the last assertion is true.
+
+\section{The Characteristic Function}
+
+Suppose $X\sim\mathcal{N}(0,1)$. We want to show that the characteristic function of $X$ is the function $\phi:\real\to\complex$ given by $\phi(t)=e^{-t^2/2}$. Thus, we want to show
+\[
+\E{ e^{-itX} } = e^{ - \frac{t^2}{2} } \;.
+\]
+The l.h.s.\ is by definition $\E{\cos(tX)}+i \, \E{\sin(tX)}$. So we want to show that
+\[
+\E{\cos(tX)}+i\E{\sin(tX)} = e^{ - \frac{t^2}{2} } \;.
+\]
+Since $X$ is symmetric, and $\sin$ is an odd function, we have
+\[
+\E{\sin(tX)} = 0 \;.
+\]
+Thus we just need to show
+\[
+\E{\cos(tX)} =  e^{ - \frac{t^2}{2} } \;.
+\]
+Let us denote the l.h.s.\ by $g(t)$ i.e., 
+\[
+g(t) = \E{\cos(tX)} = \int_{-\infty}^{\infty} \cos(tx)\, e^{-\frac{x^2}{2}}\, \mathrm{d}x \;.
+\]
+We differentiate $g(t)$ with respect to $t$ and use integration by parts formula to get
+\[
+\frac{\mathrm{d}g}{\mathrm{d}t} = - \int_{-\infty}^{\infty} x\sin(tx)e^{-\frac{x^2}{2}} \mathrm{d}x = - \int_{-\infty}^{\infty} t \cos(tx) e^{-\frac{x^2}{2}} dx = -t g(t).
+\]
+Thus we have the differential equation 
+\[
+\frac{\mathrm{d}g}{\mathrm{d}t} = -t \, g(t) \;.
+\]
+Solving it we get
+\[
+g(t) = e^{-\frac{t^2}{2}} C\;,
+\]
+where $C$ is a constant. Since $g(0) = 1$, we get $C=1$. Thus
+\[
+g(t) = e^{-\frac{t^2}{2}} \;.
+\]
+
+\section{Linear Combinations}
+
+\begin{proposition}[Distribution of Linear Combination of Independent Normal Random Variables]
+If $X$ and $Y$ are independent normal then liner combinations of $X$ and $Y$ are normal.     
+\end{proposition}
+
+\begin{proof}
+Suppose $X\sim\mathcal{N}(\mu_x,\sigma_x^2)$, 
+$Y\sim\mathcal{N}(\mu_y,\sigma_y^2)$, and
+$X\perp Y$. Hence,
+\[
+\E{e^{itX}}=e^{i\mu_x t - t^2\sigma_x^2/2}\,\quad
+\E{e^{itY}}=e^{i\mu_y t - t^2\sigma_y^2/2}\;.
+\]
+Now, consider a linear combination of $X$ and $Y$, say $aX+bY$. Then
+\begin{align*}
+& \E{e^{it(aX+bY)}} \\
+={} & \E{e^{itaX}}\E{e^{itbY}} \\
+={} & e^{i \mu_x t a + i \mu_y t b} 
+e^{ - t^2 a^2 \sigma_x^2/2 - t^2 b^2 \sigma_y^2 / 2} \\
+={} & e^{i (\mu_x a + \mu_y b) t - t^2/2 (a^2\sigma_x^2+b^2\sigma_y^2)} \;.
+\end{align*}
+This shows $aX+bY\sim\mathcal{N}(a\mu_x+b\mu_y,a_2\sigma_x^2+b^2\sigma_y^2)$.
+\end{proof}
+
+\begin{example}[$X$ and $Y$ are normal, but a linear combination of $X$ and $Y$ is not normal.]
+Take $X\sim\mathcal{N}(0,1)$.\\
+Take $R$, which is $1$ with probability $1/2$ and $-1$ with probability $1/2$, which is independent of $X$\\
+Take $Y = RX$.\\
+Thus when $R=1$, $Y=X$.\\\
+Then $R=-1$, $Y=-X$.\\
+Distribution of $Y$ is $\mathcal{N}(0,1)$.\\
+But $X+Y$ is not normal, as $\Pr(X+Y=0)=1/2$.
+\end{example}
+
+
+\section{Sample Mean and Deviations}
+
+Suppose $X_1,\ldots,X_n$ are i.i.d.\ 
+$\normal{\mu,\sigma^2}$. The sample mean 
+$
+\Bar{X} = \frac{X_1+\cdots+X_n}{n}
+$
+is a linear combinations of $X_1,\cdots,X_n$. Hence it is normally distributed. It can be easily seen that $\Bar{X}\sim\normal{\mu,\sigma^2/n}$. Similarly the deviation $X_1-\Bar{X}$ is also a linear combination of $X_1,\ldots,X_n$ and hence is normally distributed. It can be easily seen that $X_1-\Bar{X}\sim\normal{0,\sigma^2(1-\frac{1}{n})}$. We can also calculate the covariance between $\Bar{X}$ and $X_1-\Bar{X}$ and see that it is $0$. But, this does not imply they are independent. But since both of them are linear combination of the same set of independent normal variables, we can say that they are jointly normal and hence they are independent.
+
+
+\newpage
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 12. May 19, 2025}}
+
+\section{Bivariate Normal Distribution}
+
+\begin{proposition}[Independence Implies Covariance $0$] 
+If $X$ and $Y$ are two independent random variables
+then $\Cov*{X,Y}=0$.
+\end{proposition}
+
+\begin{proof}
+$\Cov*{X,Y} = \E{XY}-\E{X}\E{Y}$.\\
+$\E{XY} = \E{X}\E{Y}$.\\
+$\Cov*{X,Y} = 0$.
+\end{proof}
+
+\begin{example}[$\Cov*{X,Y}=0$ does not imply independence.]
+$X\sim\mathrm{N}(0,1)$.\\
+$Y=X^2$.\\
+$\Cov*{X,Y}=0$.\\
+$X,Y$ not independent.
+\end{example}
+
+\begin{definition}[Bivariate Normal Distribution]
+$(X,Y)\sim\mathcal{N}(\mu_x,\mu_y,\sigma_x^2,\sigma_y^2,\rho)$ if
+\begin{align*}
+& f(x,y) \\
+={} & \frac{1}{2\pi\sigma_x\sigma_y\sqrt{1-\rho^2}}\\
+& \times \exp\left(-\frac{1}{2(1-\rho^2)}
+\left\{ 
+\left(\frac{x-\mu_x}{\sigma_x}\right)^2
++\left(\frac{y-\mu_y}{\sigma_y}\right)^2
+-2\rho\left(\frac{x-\mu_x}{\sigma_x}\right)
+\left(\frac{y-\mu_y}{\sigma_y}\right)
+\right\}
+\right)\;.
+\end{align*}
+\end{definition}
+
+\begin{proposition}[Covariance $0$ Implies Independence for Jointly Normal Random Variables]
+$(X,Y)$ Bivariate normal. If $\Cov*{X,Y}=0$ then $X\perp Y$.    
+\end{proposition}
+
+\begin{proof}
+If we plug in $\rho=0$ in the formula of the density then we get a product of densities of $\mathcal{N}(\mu_x,\sigma_x^2)$ and $\mathcal{N}(\mu_y,\sigma_y^2)$.
+\end{proof}
+
+\begin{example}[$X,Y$ marginally normal does not imply they are jointly normal.]
+Take $X\sim\mathcal{N}(0,1)$.\\
+Take $R$, which is $1$ with probability $1/2$ and $-1$ with probability $1/2$, and independent of $X$.\\
+Take $Y = RX$.\\
+Thus when $R=1$, $Y=X$.\\\
+Then $R=-1$, $Y=-X$.\\
+Distribution of $Y$ is $\mathcal{N}(0,1)$.\\
+$X,Y$ are not jointly normal.\\
+$\Cov*{X,Y}=0$.\\
+If they were jointly normal, they would be independent, but they are not independent as $X/Y$ is always $\pm 1$.
+\end{example}
+
+\newpage
+
+\section{Multivariate Normal}
+
+\begin{definition}[Multivariate Normal]
+\[
+f(x) = \frac{1}{2\pi|\Sigma|^{1/2}}
+\exp\left(-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right)\;.
+\]    
+\end{definition}
+
+\begin{example}[Non-invertible covariance matrix.]
+The variance-covariance matrix of some random variables is non-invertible iff they satisfy some linear constraint. For example variance covariance matrix of $X$ and $2X+3$ will be non-invertible, no matter what the random variable $X$ is. If $X$ has variance $\sigma^2$ then the variance covariance matrix is
+\[
+\begin{pmatrix}
+\sigma^2 & 2\sigma^2\\
+2\sigma^2 & 4\sigma^2
+\end{pmatrix},
+\]
+which is non-invertible. If three random variables $X,Y,Z$ satisfy $X+Y+Z=3$, which is a linear constraint, then the variance covariance matrix will be non-invertible.
+\end{example}
+
+\newpage
+\section{Chi-squared Distribution}
+
+\begin{definition}[Chi-squared Distribution]
+If $X_1,\ldots,X_n$ i.i.d.\ $\mathrm{N}(0,1)$. Then the distribution of $X_1^2+\cdots+X_n^2$ is called $\chi^2$ distribution with $n$ degrees of freedom:
+\[
+X_1^2 + \cdots + X_n^2 \sim \chi^2(n) \;.
+\]
+It has density
+\[
+f(x) = \frac{1}{2^{n/2}\Gamma(n/2)}x^{n/2-1}e^{-x/2}\;.
+\]
+It is a Gamma distribution: $\Gamma(n/2,1/2)$ where we use the convention that $\Gamma(\alpha,\beta)$ has density
+\[
+\frac{\beta^\alpha}{\Gamma(\alpha)}
+e^{-x\beta}x^{\alpha-1}\;.
+\]
+\end{definition}
+
+\begin{theorem}[Distribution of Normal Sample Standard Deviation]
+If $X_1,X_2,\ldots,X_n$ are i.i.d.\ $\normal{\mu,\sigma^2}$ then 
+\[
+(X_1-\Bar{X_1})^2+\cdots+(X_n-\Bar{X_n})^2  
+\sim \sigma^2 \cdot \chi^2(n-1)\;.
+\]
+\end{theorem}
+
+\begin{proof} 
+The standardized variables 
+\[
+\frac{X_1-\mu}{\sigma}, \ldots, \frac{X_n-\mu}{\sigma}
+\]
+are i.i.d.\ $\normal{0,1}$. Therefore,
+\[
+\sum_{i=1}^n (X_i-\mu)^2 \sim \sigma^2 \cdot \chi^2(n) \;.
+\]
+We know $\Bar{X}\sim\normal{\mu,\sigma^2/n}$. Therefore
+\[
+n (\Bar{X}-\mu)^2 \sim \sigma^2 \cdot \chi^2(1) \;.
+\]
+We observe that
+\[
+\sum_{i=1}^n (X_i-\mu)^2 
+= n(\Bar{X}-\mu)^2 
++ \sum_{i=1}^n (X_i-\Bar{X})^2 \;.
+\]
+The variables $n(\Bar{X}-\mu)^2$ and $\sum_{i=1}^n (X_i-\Bar{X})^2$ are independent (see the next theorem). Hence 
+\[
+\sum_{i=1}^n (X_i-\Bar{X})^2 \sim \sigma^2 \cdot \chi^2(n-1).
+\]    
+\end{proof}
+
+\newpage
+
+\section{Independence of Normal Sample Mean and Standard Deviation}
+
+\begin{theorem}[Independence of Normal Sample Mean and Standard Deviation]
+If $X_1,X_2,\ldots,X_n$ are i.i.d.\ $\mathcal{N}(\mu,\sigma^2)$ then the sample mean
+\[
+\Bar{X} = \frac{X_1+\cdots+X_n}{n}
+\]
+and the sample standard deviation
+\[
+s = \left(\frac{(X_1-\Bar{X_1})^2+\cdots+(X_n-\Bar{X_n})^2}{n-1}\right)^{1/2}
+\]
+are independent.
+\end{theorem}
+
+\begin{proof}
+First we rewrite the joint density
+\begin{align*}
+f(x_1,\ldots,x_n) ={} & \frac{1}{(2\pi)^{n/2}\sigma^n}
+\exp\left(-\frac{1}{2\sigma^2}\sum_{i=1}^n(x_i-\mu)^2\right)\\
+={} & \frac{1}{(2\pi)^{n/2}\sigma^n}
+\exp\left(-\frac{1}{2\sigma^2}
+\sum_{i=1}^n(x_i-\Bar{x})^2+n(\Bar{x}-\mu)^2\right).
+\end{align*}
+Next, we do a change of variables.
+\[
+y_1 = x_1 - \Bar{x}\,,\, \ldots \,,\, y_{n-1} = x_{n-1} - \Bar{x} \,,\, y_n = \Bar{x} \;.
+\]
+The inverse transformation is
+\[
+x_1 = y_1+y_n \,,\, \ldots \;,\, x_{n-1}=y_{n-1}+y_n \,,\,, \ldots \,,\, x_n=y_n \;.
+\]
+Taking $n=4$ as an example, the Jacobian matrix is
+{
+\renewcommand{\arraystretch}{1.5}
+\setlength{\arraycolsep}{10pt}
+\[
+\begin{pmatrix}
+\J{1}{1} & \J{1}{2} & \J{1}{3} & \J{1}{4} \\  
+\J{2}{1} & \J{2}{2} & \J{2}{3} & \J{2}{4} \\  
+\J{3}{1} & \J{3}{2} & \J{3}{3} & \J{3}{4} \\  
+\J{4}{1} & \J{4}{2} & \J{4}{3} & \J{4}{4} \\  
+\end{pmatrix}
+= 
+\begin{pmatrix}
+1 & 0 & 0 & 1\\
+0 & 1 & 0 & 1\\
+0 & 0 & 1 & 1\\
+0 & 0 & 0 & 1
+\end{pmatrix}
+\]
+}
+This matrix has determinant $1$. This is true for general $n$. Thus the joint density of the new variables is
+\[
+g(y_1,\ldots,y_n) = \frac{1}{(2\pi)^{n/2}\sigma^n}
+\exp\left(-\frac{1}{2\sigma^2}(y_1^2+\cdots+y_{n-1}^2+(y_1+\cdots+y_{n-1})^2 + n(y_n-\mu)^2\right)
+\]
+The density splits as a product of a function of $(y_1,\ldots,y_{n-1})$ and a function of $y_n$. Thus, $\Bar{X}$ is independent of $(X_1-\Bar{X},\ldots,X_{n-1}-\Bar{X})$. Note that, $X_n-\Bar{X}$ is determined by $(X_1-\Bar{X},\ldots,X_{n-1}-\Bar{X})$ because $(X_1-\Bar{X})+\cdots+(X_n-\Bar{X})=0$.
+\end{proof}
+
+\newpage
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 13. May 26, 2025}}
+
+\section{Conditional Distribution}
+
+\begin{fact}[Generating Correlated Normal Random Variables from Independent Normal Random Variables]
+Suppose $Z_1,Z_2$ are i.i.d.\ $N(0,1)$.\\
+Let $-1\leq\rho\leq 1$.\\
+Let 
+\[
+X_1 = Z_1 \quad \mbox{and} \quad X_2 = \rho Z_1 + \sqrt{1-\rho^2} Z_2 \;.
+\]
+Then $(X_1,X_2)\sim N(0,0,1,1,\rho)$.
+\end{fact}
+
+\begin{fact}[Conditional Distribution of Correlated Standard Normal Random Variables]
+Suppose $(X_1,X_2)\sim\normal{0,0,1,1,\rho}$. Then we can write $X_1=Z_1$ and $X_2=\rho Z_1+\sqrt{1-\rho^2} Z_2$ where $(Z_1,Z_2)\sim\normal{0,0,1,1,0}$. Therefore,
+\begin{align*}
+\E{X_2\given X_1} ={} & \E{\rho Z_1+\sqrt{1-\rho^2}Z_2\given Z_1} = \rho Z_1 = \rho X_1\;.\\
+\Var(X_2\given X_1) ={} & \Var(\rho Z_1+\sqrt{1-\rho^2}Z_2\given Z_1) = 1-\rho^2 \;.\\
+X_2|X_1 \sim{} & \normal{\rho X_1, 1-\rho^2}\;.
+\end{align*}
+\end{fact}
+
+\begin{proposition}[Conditional Distribution of Jointly Normal Random Variables]
+Suppose $(X,Y)\sim\normal{\mu_x,\mu_y,\sigma_x^2,\sigma_y^2,\rho}$.
+Then
+\begin{align*}
+\E{X\given Y} ={} & \mu_x + \rho \frac{\sigma_x}{\sigma_y}(Y-\mu_y) \\
+\Var(X\given Y) ={} & (1-\rho^2) \sigma_x \\
+\E{Y\given X} ={} & \mu_y + \rho\frac{\sigma_y}{\sigma_x} (X-\mu_x) \\
+\Var(Y\given X) ={} & (1-\rho^2) \sigma_y^2 \\
+X|Y \sim{} & \normal{\mu_x + \rho \frac{\sigma_x}{\sigma_y}(Y-\mu_y),(1-\rho^2) \sigma_x^2} \\
+Y|X \sim{} & \normal{\mu_y + \rho \frac{\sigma_y}{\sigma_x}(X-\mu_x),(1-\rho^2) \sigma_y^2} \;.
+\end{align*}
+\end{proposition}
+
+\begin{proposition}[Linear Combination of Jointly Normal Random Variables]
+If $(X,Y)\sim\normal{\mu_x,\mu_y,\sigma_x^2,\sigma_y^2,\rho}$ then any linear combination of $X$ and $Y$ is normally distributed.    
+\end{proposition}
+
+\begin{proof}
+$X$ and $Y$ can be written as a linear combination of
+$Z_1,Z_2$ which are i.i.d.\ $\normal{0,1}$. We have already seen that a linear combination of independent $\normal{0,1}$ random variables is normal.
+\end{proof}
+
+\bibliographystyle{unsrtnat}
+\bibliography{ref.bib}
+
+\appendix
+
+\newpage
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 4. March 17, 2025}}
+
+\chapter{Some Facts about the Binomial and Poisson Distributions}
+
+\section{Poisson Distribution}
+
+\begin{fact}[Sum of Independent Poisson is Poisson]\label{Fact:poissonsum}
+If $X_1\sim\mathrm{Poisson}(\lambda_1)$,
+$X_2\sim\mathrm{Poisson}(\lambda_2)$,
+and $X_1\perp X_2$, then 
+$X_1+X_2\sim\Poisson(\lambda_1+\lambda_2)$.
+\end{fact}
+
+\begin{proof}
+We compute the probability mass function of $X_1+X_2$:
+\begin{align*}
+   & \Pr(X_1+X_2=n)\\    
+={}& \sum_{k=0}^n \Pr(X_1=k,X_2=n-k)\\
+={}& \sum_{k=0}^n \Pr(X_1=k)\Pr(X_2=n-k)\\
+={}& \sum_{k=0}^n e^{-\lambda_1}\frac{\lambda_1^k}{k!}
+e^{-\lambda_2}\frac{\lambda_2^{n-k}}{(n-k)!}\\
+={}& 
+\frac{e^{-(\lambda_1+\lambda_2)}}{n!}
+\sum_{k=0}^n \frac{n!}{k!(n-k)!}\lambda_1^k\lambda_2^{n-k}\\
+={}&\frac{e^{-(\lambda_1+\lambda_2)}}{n!}
+(\lambda_1+\lambda_2)^k\;.
+\end{align*}
+\end{proof}
+
+\begin{fact}[Characteristic Function of Poisson Random Variables]
+The characteristic function of $\mathrm{Poisso}(\lambda)$ distribution is the function $\phi:\real\to\complex$ given by 
+\[
+\phi(t) = \exp\left(\lambda(e^{it}-1)\right) \;.
+\]
+\end{fact}
+
+\begin{proof}
+Let $X$ denote a $\mathrm{Poisson}(\lambda)$ random variable. Then, for any $t\in\real$ we have
+\begin{align*}
+\phi(t) ={} & \E{e^{itX}}\\
+={} & \sum_{k=0}^\infty e^{itk} \, \Pr(X=k)\\
+={} & \sum_{k=0}^\infty e^{itk} \, e^{-\lambda} \, \frac{\lambda^k}{k!}\\
+={} & e^{-\lambda} \sum_{k=0}^\infty \frac{(\lambda e^{it})^k}{k!}\\
+={} & e^{-\lambda} \, e^{\lambda e^{itk}}\\
+={} & e^{\lambda (e^{it}-1)}\;.
+\end{align*}
+\end{proof}
+
+\begin{fact}[Characteristic Function of Sum of Independent Random Variables]
+If $X_1$ has ch.f. $\phi_1$, $X_2$ has ch.f. $\phi_2$, and $X_1\perp X_2$. Then
+$X_1+X_2$ has ch.f. $\phi_1\times\phi_2$.
+\end{fact}
+
+\begin{fact}[Characteristic Function Characterize Distribution Function]
+If $X$ and $Y$ have the same characteristic functions, then they must have the same distribution.    
+\end{fact}
+
+\begin{proof}[Alternative proof of Fact~\ref{Fact:poissonsum}]\;
+\begin{itemize}
+\item $X_1$ has characteristic function $\phi_1(t)=e^{\lambda_1(e^{it}-1)}$.
+\item $X_2$ has characteristic function $\phi_2(t)=e^{\lambda_2(e^{it}-1)}$.
+\item $X_1+X_2$ has characteristic function $\phi(t)=\phi_1(t)\phi_2(t)=e^{(\lambda_1+\lambda_2)(e^{it}-1)}$. 
+\item Thus $X_1+X_2\sim\mathrm{Poisson}(\lambda_1+\lambda_2)$.
+\end{itemize}
+\end{proof}
+
+\section{Binomial Distribution}
+
+\begin{fact}[Sum of Independent Binomial]\label{Fact:binsum}
+If $X\sim\Binomial(n,p)$, $Y\sim\Binomial(m,p)$, and $X\perp Y$, then $X+Y\sim\Binomial(n+m,p)$.
+\end{fact}
+
+\begin{proof}
+We compute the probability mass function of $X+Y$:
+\begin{align*}
+& \Pr(X+Y=k)\\
+={} & \sum_{i=0}^{k} \Pr(X=i,Y=k-i)\\
+={} & \sum_{i=0}^{k} \Pr(X=i)\Pr(Y=k-i)\\
+={} & \sum_{i=0}^{k} \binom{n}{i}p^i(1-p)^{n-i}
+\binom{m}{k-i}p^{k-i}(1-p)^{m-k+i}\\
+={} & p^k(1-p)^{n+m-k}\sum_{i=0}^{k} \binom{n}{i}\binom{m}{k-i}\\
+={} & p^k(1-p)^{n+m-k}\binom{n+m}{k}\;.
+\end{align*}
+\end{proof}
+
+\filbreak
+
+\begin{fact}[Characteristic Function of Binomial]
+The characteristic function of $\Binomial(n,p)$ distribution is the function $\phi:\real\to\complex$ given by  
+Then    
+\[
+\phi(t) = \left(1-p+pe^{it}\right)^n\;.
+\]
+\end{fact}
+
+\begin{proof}
+\begin{align*}
+ &  \E{e^{itX}}\\
+={}&\sum_{k=0}^n e^{itk} \Pr(X=k)\\
+={}&\sum_{k=0}^n e^{itk} \binom{n}{k} p^k (1-p)^{n-k}\\
+={}&\sum_{k=0}^n \binom{n}{k} (e^{it}p)^k (1-p)^{n-k}\\
+={}&(1-p+pe^{it})^n\;.
+\end{align*}
+\end{proof}
+
+
+\begin{proof}[Alternative proof of Fact~\ref{Fact:binsum}]
+\;
+\begin{itemize}
+\item Characteristic function of $X$: $\phi_1(t)=(e^{it}p+1-p)^n$.
+\item Characteristic function of $Y$: $\phi_2(t)=(e^{it}p+1-p)^m$.
+\item Characteristic function of $X+Y$: $\phi(t)=\phi_1(t) \phi_2(t) = (e^{it}p+1-p)^{n+m}$.
+\item So $X+Y\sim\Binomial(n+m,p)$.
+\end{itemize}
+\end{proof}
+
+\filbreak
+
+\section{A Connection Between Poisson and Binomial}
+
+\begin{fact}[A Connection Between Poisson and Binomial]
+If $X_1\sim\Poisson(\lambda_1)$, $X_2\sim\Poisson(\lambda_2)$, and $X_1\perp X_2$, then the conditional distribution of $X_1$ given $X_1+X_2=n$ is $\Binomial(n,\lambda_1/(\lambda_1+\lambda_2))$.
+\end{fact}
+
+\begin{proof}
+We compute the conditional probability mass function of $X_1$ given $X_1+X_2$:
+\begingroup
+\addtolength{\jot}{1em}
+\begin{align*}
+    & \Pr(X_1=k\given X_1+X_2=n)\\
+={} & \frac{\Pr(X_1=k,X_1+X_2=n)}{\Pr(X_1+X_2=n)}\\
+={} & \frac{\Pr(X_1=k,X_2=n-k)}{\Pr(X_1+X_2=n)}\\
+={} & \frac{\Pr(X_1=k)\Pr(X_2=n-k)}{\Pr(X_1+X_2=n)}\\
+={} & \frac{\displaystyle
+e^{-\lambda_1}\frac{\lambda_1^{k  }}{k!    } 
+e^{-\lambda_2}\frac{\lambda_2^{n-k}}{(n-k)!}
+}
+{\displaystyle
+e^{-(\lambda_1+\lambda_2)}\frac{(\lambda_1+\lambda_2)^n}{n!}
+} \\
+={} & \frac{n!}{k!(n-k)!}\frac{\lambda_1^k\lambda_2^{n-k}}{(\lambda_1+\lambda_2)^{n}} \\
+={} & \binom{n}{k}\Bigl(\frac{\lambda_1}{\lambda_1+\lambda_2}\Bigr)^k
+\Bigl(\frac{\lambda_2}{\lambda_1+\lambda_2}\Bigr)^{n-k}\\
+={} & \binom{n}{k}\Bigl(\frac{\lambda_1}{\lambda_1+\lambda_2}\Bigr)^k
+\Bigl(1-\frac{\lambda_1}{\lambda_1+\lambda_2}\Bigr)^{n-k}\;.
+\end{align*}    
+\endgroup
+\end{proof}
+
+\chapter{Combinatorial Identities}
+
+\begin{fact}[A Combinatorial Identity]
+For non-negative integers $n$, $m$, $k$
+\[
+\sum_{i=0}^{k} \binom{n}{i}\binom{m}{k-i} = \binom{n+m}{k} \;.
+\]
+\end{fact}
+
+\begin{fact}[Another Combinatorial Identity]
+\[
+\sum_{m=0}^{N} \binom{2m}{m}\binom{2N-2m}{N-m} = 2^{2N}\;.
+\]    
+\end{fact}
+
+
+\end{document}
+
