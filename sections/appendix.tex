@@ -1,0 +1,161 @@
+\chapter{Some Facts about the Binomial and Poisson Distributions}
+
+\section{Poisson Distribution}
+
+\begin{fact}[Sum of Independent Poisson is Poisson]\label{Fact:poissonsum}
+If $X_1\sim\mathrm{Poisson}(\lambda_1)$,
+$X_2\sim\mathrm{Poisson}(\lambda_2)$,
+and $X_1\perp X_2$, then 
+$X_1+X_2\sim\Poisson(\lambda_1+\lambda_2)$.
+\end{fact}
+
+\begin{proof}
+We compute the probability mass function of $X_1+X_2$:
+\begin{align*}
+   & \Prob*{X_1+X_2=n}\\    
+={}& \sum_{k=0}^n \Prob*{X_1=k,X_2=n-k}\\
+={}& \sum_{k=0}^n \Prob*{X_1=k}\Prob*{X_2=n-k}\\
+={}& \sum_{k=0}^n e^{-\lambda_1}\frac{\lambda_1^k}{k!}
+e^{-\lambda_2}\frac{\lambda_2^{n-k}}{(n-k)!}\\
+={}& 
+\frac{e^{-(\lambda_1+\lambda_2)}}{n!}
+\sum_{k=0}^n \frac{n!}{k!(n-k)!}\lambda_1^k\lambda_2^{n-k}\\
+={}&\frac{e^{-(\lambda_1+\lambda_2)}}{n!}
+(\lambda_1+\lambda_2)^k\;.
+\end{align*}
+\end{proof}
+
+\begin{fact}[Characteristic Function of Poisson Random Variables]
+The characteristic function of $\mathrm{Poisso}(\lambda)$ distribution is the function $\phi:\real\to\complex$ given by 
+\[
+\phi(t) = \exp\left(\lambda(e^{it}-1)\right) \;.
+\]
+\end{fact}
+
+\begin{proof}
+Let $X$ denote a $\mathrm{Poisson}(\lambda)$ random variable. Then, for any $t\in\real$ we have
+\begin{align*}
+\phi(t) ={} & \Exp*{e^{itX}}\\
+={} & \sum_{k=0}^\infty e^{itk} \, \Prob*{X=k}\\
+={} & \sum_{k=0}^\infty e^{itk} \, e^{-\lambda} \, \frac{\lambda^k}{k!}\\
+={} & e^{-\lambda} \sum_{k=0}^\infty \frac{(\lambda e^{it})^k}{k!}\\
+={} & e^{-\lambda} \, e^{\lambda e^{itk}}\\
+={} & e^{\lambda (e^{it}-1)}\;.
+\end{align*}
+\end{proof}
+
+\begin{fact}[Characteristic Function of Sum of Independent Random Variables]
+If $X_1$ has ch.f. $\phi_1$, $X_2$ has ch.f. $\phi_2$, and $X_1\perp X_2$. Then
+$X_1+X_2$ has ch.f. $\phi_1\times\phi_2$.
+\end{fact}
+
+\begin{fact}[Characteristic Function Characterize Distribution Function]
+If $X$ and $Y$ have the same characteristic functions, then they must have the same distribution.    
+\end{fact}
+
+\begin{proof}[Alternative proof of Fact~\ref{Fact:poissonsum}]\;
+\begin{itemize}
+\item $X_1$ has characteristic function $\phi_1(t)=e^{\lambda_1(e^{it}-1)}$.
+\item $X_2$ has characteristic function $\phi_2(t)=e^{\lambda_2(e^{it}-1)}$.
+\item $X_1+X_2$ has characteristic function $\phi(t)=\phi_1(t)\phi_2(t)=e^{(\lambda_1+\lambda_2)(e^{it}-1)}$. 
+\item Thus $X_1+X_2\sim\mathrm{Poisson}(\lambda_1+\lambda_2)$.
+\end{itemize}
+\end{proof}
+
+\section{Binomial Distribution}
+
+\begin{fact}[Sum of Independent Binomial]\label{Fact:binsum}
+If $X\sim\Binomial(n,p)$, $Y\sim\Binomial(m,p)$, and $X\perp Y$, then $X+Y\sim\Binomial(n+m,p)$.
+\end{fact}
+
+\begin{proof}
+We compute the probability mass function of $X+Y$:
+\begin{align*}
+& \Prob*{X+Y=k}\\
+={} & \sum_{i=0}^{k} \Prob*{X=i,Y=k-i}\\
+={} & \sum_{i=0}^{k} \Prob*{X=i}\Prob*{Y=k-i}\\
+={} & \sum_{i=0}^{k} \binom{n}{i}p^i(1-p)^{n-i}
+\binom{m}{k-i}p^{k-i}(1-p)^{m-k+i}\\
+={} & p^k(1-p)^{n+m-k}\sum_{i=0}^{k} \binom{n}{i}\binom{m}{k-i}\\
+={} & p^k(1-p)^{n+m-k}\binom{n+m}{k}\;.
+\end{align*}
+\end{proof}
+
+\filbreak
+
+\begin{fact}[Characteristic Function of Binomial]
+The characteristic function of $\Binomial(n,p)$ distribution is the function $\phi:\real\to\complex$ given by  
+Then    
+\[
+\phi(t) = \left(1-p+pe^{it}\right)^n\;.
+\]
+\end{fact}
+
+\begin{proof}
+\begin{align*}
+ &  \Exp*{e^{itX}}\\
+={}&\sum_{k=0}^n e^{itk} \Prob*{X=k}\\
+={}&\sum_{k=0}^n e^{itk} \binom{n}{k} p^k (1-p)^{n-k}\\
+={}&\sum_{k=0}^n \binom{n}{k} (e^{it}p)^k (1-p)^{n-k}\\
+={}&(1-p+pe^{it})^n\;.
+\end{align*}
+\end{proof}
+
+
+\begin{proof}[Alternative proof of Fact~\ref{Fact:binsum}]
+\;
+\begin{itemize}
+\item Characteristic function of $X$: $\phi_1(t)=(e^{it}p+1-p)^n$.
+\item Characteristic function of $Y$: $\phi_2(t)=(e^{it}p+1-p)^m$.
+\item Characteristic function of $X+Y$: $\phi(t)=\phi_1(t) \phi_2(t) = (e^{it}p+1-p)^{n+m}$.
+\item So $X+Y\sim\Binomial(n+m,p)$.
+\end{itemize}
+\end{proof}
+
+\filbreak
+
+\section{A Connection Between Poisson and Binomial}
+
+\begin{fact}[A Connection Between Poisson and Binomial]
+If $X_1\sim\Poisson(\lambda_1)$, $X_2\sim\Poisson(\lambda_2)$, and $X_1\perp X_2$, then the conditional distribution of $X_1$ given $X_1+X_2=n$ is $\Binomial(n,\lambda_1/(\lambda_1+\lambda_2))$.
+\end{fact}
+
+\begin{proof}
+We compute the conditional probability mass function of $X_1$ given $X_1+X_2$:
+\begingroup
+\addtolength{\jot}{1em}
+\begin{align*}
+    & \Prob*{X_1=k\given X_1+X_2=n}\\
+={} & \frac{\Prob*{X_1=k,X_1+X_2=n}}{\Prob*{X_1+X_2=n}}\\
+={} & \frac{\Prob*{X_1=k,X_2=n-k}}{\Prob*{X_1+X_2=n}}\\
+={} & \frac{\Prob*{X_1=k}\Prob*{X_2=n-k}}{\Prob*{X_1+X_2=n}}\\
+={} & \frac{\displaystyle
+e^{-\lambda_1}\frac{\lambda_1^{k  }}{k!    } 
+e^{-\lambda_2}\frac{\lambda_2^{n-k}}{(n-k)!}
+}
+{\displaystyle
+e^{-(\lambda_1+\lambda_2)}\frac{(\lambda_1+\lambda_2)^n}{n!}
+} \\
+={} & \frac{n!}{k!(n-k)!}\frac{\lambda_1^k\lambda_2^{n-k}}{(\lambda_1+\lambda_2)^{n}} \\
+={} & \binom{n}{k}\Bigl(\frac{\lambda_1}{\lambda_1+\lambda_2}\Bigr)^k
+\Bigl(\frac{\lambda_2}{\lambda_1+\lambda_2}\Bigr)^{n-k}\\
+={} & \binom{n}{k}\Bigl(\frac{\lambda_1}{\lambda_1+\lambda_2}\Bigr)^k
+\Bigl(1-\frac{\lambda_1}{\lambda_1+\lambda_2}\Bigr)^{n-k}\;.
+\end{align*}    
+\endgroup
+\end{proof}
+
+\chapter{Combinatorial Identities}
+
+\begin{fact}[A Combinatorial Identity]
+For non-negative integers $n$, $m$, $k$
+\[
+\sum_{i=0}^{k} \binom{n}{i}\binom{m}{k-i} = \binom{n+m}{k} \;.
+\]
+\end{fact}
+
+\begin{fact}[Another Combinatorial Identity]
+\[
+\sum_{m=0}^{N} \binom{2m}{m}\binom{2N-2m}{N-m} = 2^{2N}\;.
+\]    
+\end{fact}

@@ -1,0 +1,700 @@
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 9. April 28, 2025}}
+
+\chapter{Modes of Convergence}
+
+\begin{definition}[Types of Convergence]
+    We say that a sequence of random variables $(X_n)_{n=1}^\infty$ converges to
+    a random variable $X$,
+    \begin{enumerate}
+        \item \textbf{almost surely}, denoted by \(X_n \xrightarrow{a.s.} X\), if
+        \[
+            \Prob[\Big]{\lim_{n \to \infty} X_n = X} = 1.
+        \]
+
+        \item \textbf{in \(L^p\)} for \(p \geq 1\), denoted by \(X_n \xrightarrow{L^p} X\), if
+        \(X_n, X \in L^p\) for all \(n\) and
+        \[
+            \lim_{n \to \infty} \Exp[\Big]{|X_n - X|^p} = 0.
+        \]
+
+        \item \textbf{in probability}, denoted by \(X_n \xrightarrow{p} X\), if for all \(\epsilon > 0\)
+        \[
+            \lim_{n \to \infty} \Prob[\big]{|X_n - X| > \epsilon} = 0.
+        \]
+
+        \item \textbf{in distribution}, denoted by \(X_n \xrightarrow{d} X\), if
+        for all \(x \in \real\) satisfying \(\Prob{X = x} = 0\),
+        \[
+            \lim_{n \to \infty} \Prob{X_n \leq x} = \Prob{X \leq x}.
+        \]
+    \end{enumerate}
+    
+\end{definition}
+
+\begin{figure}
+    \centering
+    \begin{tikzcd}[
+        % 1. Global Node Styling
+        cells={nodes={
+            draw, 
+            rectangle, 
+            rounded corners, 
+            align=center, 
+            minimum width=2.5cm, 
+            inner sep=6pt
+        }},
+        % 2. Spacing between nodes
+        row sep=0.6cm,
+        column sep=0.7cm,
+        % 3. Global Arrow Styling
+    ]
+        % --- Row 1 ---
+        \parbox{2.1cm}{Almost sure convergence} \arrow[r, Rightarrow]{}{\text{\ref{it: as to p}}}
+        & \parbox{2.3cm}{Convergence in probability} \arrow[r, Rightarrow] {}{\ref{it: p to d}}
+        & \parbox{2.4cm}{Convergence in distribution} \\
+        
+        % --- Row 2 ---
+        % The loop is defined here on the Lp node
+        $L_p$-convergence, $p \ge 1$
+        \arrow[r, Rightarrow] {}{\text{\ref{it: Lq to Lp}}}
+        \arrow[loop below, Rightarrow, looseness=4, out=220, in=290,xshift=-10]{}[xshift=15,yshift=-3]{L_q \overset{\ref{it: Lq to Lp}}\implies L_p \; (p \le q)}
+        & $L_1$ \text{ convergence} \arrow[u, Rightarrow] {} {\text{\ref{it: L1 to p}}}
+    \end{tikzcd}
+    \caption{Implications among different modes of convergence (Thm.~\ref{thm: convergence implications})}
+\end{figure}
+
+\begin{theorem}[Convergence implications]
+    \label{thm: convergence implications}
+    The following implications hold:
+    \begin{enumerate}[label=(\alph*)]
+        \item\label{it: as to p}
+        If \(X_n \xrightarrow{a.s.} X\), then \(X_n \xrightarrow{p} X\).
+        \item\label{it: Lq to Lp}
+        If \(X_n \xrightarrow{L^q} X\) for some \(q \ge p \ge 1\), then \(X_n \xrightarrow{L^p} X\).
+        \item\label{it: L1 to p}
+        If \(X_n \xrightarrow{L^1} X\), then \(X_n \xrightarrow{p} X\).
+        \item\label{it: p to d}
+        If \(X_n \xrightarrow{p} X\), then \(X_n \xrightarrow{d} X\).
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    \begin{enumerate}[wide]
+        \item[\ref{it: as to p}] The set of point-wise convergence is given by
+        \begin{align*}
+            \Set{X_n \to X}
+            &= \Set[\Big]{\omega \in \Omega : \lim_{n \to \infty} X_n(\omega) = X(\omega)}
+            \\
+            \overset{\text{def.}}&= \Set[\Big]{\omega \in \Omega: \forall \epsilon > 0, \exists N\in \nat, \forall n \ge N : |X_n(\omega) - X(\omega)| \le \epsilon}.
+            \\
+            &= \bigcap_{\epsilon > 0} \bigcup_{N \in \nat} \bigcap_{n \ge N} \Set[\Big]{\omega \in \Omega : |X_n(\omega) - X(\omega)| \le \epsilon}.
+        \end{align*}
+        By de Morgan's laws for set complements and almost sure
+        convergence we therefore have
+        \begin{align*}
+            0 &= \Prob[\big]{X_n \not\to X}
+            \\
+            &= \Prob[\bigg]{\bigcup_{\epsilon > 0} \bigcap_{N \in \nat} \bigcup_{n \ge N} \Set[\Big]{\omega \in \Omega : |X_n(\omega) - X(\omega)| > \epsilon}}
+            \\
+            \overset{\text{fix } \epsilon}&\ge \Prob[\bigg]{\bigcap_{N \in \nat} \bigcup_{n \ge N} \Set[\Big]{\omega \in \Omega : |X_n(\omega) - X(\omega)| > \epsilon}}
+            \\
+            &= \lim_{N \to \infty} \Prob[\Big]{\bigcup_{n \ge N} \Set[\Big]{\omega \in \Omega : |X_n(\omega) - X(\omega)| > \epsilon}}
+            \\
+            \overset{\text{fix } n=N}&\ge \lim_{N\to \infty} \Prob[\big]{|X_N - X| > \epsilon},
+        \end{align*}
+        where the penultimate equality follows from \(\lim_{N\to \infty} \Prob{A_N} = \Prob[\big]{\bigcap_{N\in \nat} A_N}\).
+        for a decreasing sequence of events \(A_1 \supseteq A_2 \supseteq \ldots\).
+
+        \item[\ref{it: Lq to Lp}] Without loss of generality assume \(q > p\).
+        With \(r_0 \coloneq \frac{q}p>1\) and \(r_1 \coloneq \frac{q}{q-p}>1\)
+        we have \(\frac1{r_0} + \frac1{r_1} = 1\). Consequently we may apply
+        Hölder's inequality to get
+        \[
+            \Exp[\Big]{|X_n - X|^p}
+            \le \Exp[\Big]{|X_n - X|^{p r_0}}^{\frac1{r_0}} \E[1^{r_1}]^{\frac1{r_1}}
+            = \Exp[\Big]{|X_n - X|^q}^{\frac{p}{q}}
+            \to 0.
+        \]
+
+        \item[\ref{it: L1 to p}] By Markov's inequality, we have for every \(\epsilon > 0\)
+        \[
+            \Prob[\big]{|X_n - X| > \epsilon}
+            \le \frac{\Exp[\big]{|X_n - X|}}{\epsilon}
+            \to 0.
+        \]
+
+        \item[\ref{it: p to d}] Let \(x\in \real\) be such that \(\Prob{X=x}=0\).
+        If \(X_n \le x\), then either \(X\) is further from \(X_n\) than
+        \(\epsilon>0\) or it is also smaller than \(x+\epsilon\).  More
+        specifically,
+        \begin{equation}
+            \label{eq: upper bound for p to d}
+            \Set{X_n \le x}
+            \subseteq \Set{X \le x + \epsilon}
+            \cup \Set[\big]{|X_n - X| > \epsilon}.
+        \end{equation}
+        With similar arguments we have
+        \begin{equation}
+            \label{eq: lower bound for p to d}
+            \Set{X \le x - \epsilon}
+            \subseteq \Set{X_n \le x}
+            \cup \Set[\big]{|X_n - X| > \epsilon}
+        \end{equation}
+        Consequently, we have
+        \begin{align*}
+            \Prob{X \le x - \epsilon} - \smash{\underbrace{\Prob[\big]{|X_n - X| > \epsilon}}_{\to 0}}
+            \overset{\eqref{eq: lower bound for p to d}}&\le \Prob{X_n \le x}
+            \\
+            \overset{\eqref{eq: upper bound for p to d}}&\le
+            \Prob{X \le x + \epsilon} + \underbrace{\Prob[\big]{|X_n - X| > \epsilon}}_{\to 0}.
+        \end{align*}
+        This implies for all \(\epsilon > 0\)
+        \[
+            \Prob{X \le x - \epsilon}
+            \le \liminf_{n \to \infty} \Prob{X_n \le x}
+            \le \limsup_{n \to \infty} \Prob{X_n \le x}
+            \le \Prob{X \le x + \epsilon}.
+        \]
+        Since this is true for all \(\epsilon > 0\) we have
+        \[
+            \liminf_{n \to \infty} \Prob{X_n \le x}
+            \ge \lim_{\epsilon \to 0} \Prob{X \le x - \epsilon}
+            = \Prob[\Big]{\bigcap_{\epsilon > 0} \Set{X \le x - \epsilon}}
+            = \Prob{X < x},
+        \]
+        and
+        \[
+            \limsup_{n \to \infty} \Prob{X_n \le x}
+            \le \lim_{\epsilon \to 0} \Prob{X \le x + \epsilon}
+            = \Prob[\Big]{\bigcup_{\epsilon > 0} \Set{X \le x + \epsilon}}
+            = \Prob{X \le x}.
+        \]
+        Due to \(\Prob{X \le x} = \Prob{X < x} + \Prob{X = x}\) and \(\Prob{X =
+        x} = 0\) we thus have the claim by the squeeze theorem:
+        \[
+            \lim_{n\to \infty} \Prob{X_n \le x} = \Prob{X \le x}.
+            \qedhere
+        \]
+
+    \end{enumerate}
+\end{proof}
+
+
+\section{Almost Sure Convergence}
+
+\begin{definition}[Almost Sure Convergence]
+A sequence of random variables $(X_n)_{n=1}^\infty$ is 
+said to converge almost surely to a random variable $X$
+if 
+\[
+\Prob*{\lim_{n\to\infty}X_n=X}=1\;.
+\]
+In other words, the event
+\[
+\Set*{\omega\in\Omega:\lim_{n\to\infty} X_n(\omega)=X(\omega)}
+\]
+has probability $1$.
+\end{definition}
+
+The most important example of almost sure convergence is the Strong Law of Large Numbers (SLLN).
+
+\begin{theorem}[Strong Law of Large Numbers]
+If $X_1,X_2,X_3,\ldots$ are i.i.d.\ random variables with finite first moment $\mu$, then 
+\[
+\frac{X_1+\cdots+X_n}{n}\rightarrow\mu\mbox{ almost surely}\;.
+\]
+\end{theorem}
+
+\newpage
+
+% \begin{lstlisting}
+% SLLN <- function(n,rep) {
+%   X = matrix(0,nr=rep,nc=n)
+%   S = matrix(0,nr=rep,nc=n)
+%   M = matrix(0,nr=rep,nc=n)
+%   p = ggplot() +
+%         xlim(0, n) +
+%         ylim(-1, 1) +
+%         xlab("n") +
+%         ylab(TeX("$\\frac{S_n}{n}$")) +
+%         ggtitle("Plot of Sample Average") +
+%         theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+%         theme(plot.title = element_text(hjust = 0.5))
+%   for(i in 1:rep){
+%    X[i,] = sample(c(-1,1),n,replace=TRUE)
+%    S[i,] = cumsum(X[i,])
+%    M[i,] = S[i,]/(1:n)
+%    df = data.frame(x=1:n,y=M[i,])
+%    p = p + 
+%        geom_line(data=df, aes(x=x,y=y), color=i)
+%    }
+%   return(p)
+% }    
+% \end{lstlisting}
+
+\begin{figure}[h]
+\centering
+% \includegraphics[width=\linewidth]{Figures/Rplot01.png}
+\caption{Plot of $(X_1+\cdots+X_n)/n$ for $n=1,2,\ldots,1000$. Here the random variables are $1$ with probability $1/2$ and $-1$ with probability $1/2$. $10$ simulations are shown. In all cases the sample average gets close to $0$.}
+\end{figure}
+
+\newpage
+
+In the strong law of large numbers, the random variable at the limit is a degenerate random variable. A more interesting example is the Polya's urn model. Consider an urn containing $R_0$ red balls and $G_0$ green balls initially. A ball is drawn at random. Thus the drawn ball is red with probability $R_0/(R_0+G_0)$, and is green with probability $G_0/(R_0+G_0)$. The drawn ball is replaced and a ball of the same color is added to the urn. Thus if we denote by $R_1$ and $G_1$ the number of red balls and green balls in the urn after this, $\{R_1=R_0+1,G_1=G_0\}$ with probability $R_0/(R_0+G_0)$, and $\{R_1=R_0,G_1=G_0+1\}$ with probability $G_0/(R_0+G_0)$. It can be shown that as this procedure is repeated, the proportion of red balls converge almost surely and the limiting random variable, say $X$, has distribution $\mathrm{Beta}(R_0,G_0)$. The proportion of green balls converge to $1-X$ and $1-X$ has distribution $\mathrm{Beta}(G_0,R_0)$. Thus in this situation the limit is non-degenerate.
+
+% \begin{lstlisting}
+% Polya <- function(N,M){
+% r = 1
+% g = 1
+% p = ggplot() +
+%   xlim(0, N) +
+%   ylim(0, 1) +
+%   xlab("n") +
+%   ylab(TeX("$\\frac{R_n}{R_n+G_n}$")) +
+%   ggtitle("Plot of Proportion of Red Balls") +
+%   theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+%   theme(plot.title = element_text(hjust = 0.5))
+% for(m in 1:M){
+%   g.seq = numeric(N)
+%   r.seq = numeric(N)
+%   r.seq[1] = r
+%   g.seq[1] = g
+%   for(i in 2:N){
+%     U = runif(1)
+%     if(U<r.seq[i-1]/(r.seq[i-1]+g.seq[i-1])){
+%       r.seq[i] = r.seq[i-1]+1
+%       g.seq[i] = g.seq[i-1]
+%     }
+%     else
+%     {
+%       r.seq[i] = r.seq[i-1]
+%       g.seq[i] = g.seq[i-1] + 1
+%     }
+%   }
+%   r.prop.seq = r.seq/(r.seq+g.seq)
+%   df = data.frame(x=1:N,y=r.prop.seq)
+%   p = p + geom_line(data=df, aes(x=x,y=y), color=m)
+%   }
+%   return(p)
+% }
+% \end{lstlisting}
+
+\begin{figure}[h]
+    \centering
+    % \includegraphics[width=\linewidth]{Figures/Rplot02.png}
+    \caption{Plot of $R_n/(R_n+G_n)$ for $n=1,2,\ldots,1000$. Here $R_0=1,G_0=1$. $10$ simulations are shown. In all cases the proportions approach a limit, and the limiting random variable
+    is non-degenerate. The limit is clearly different for the different simulations.}
+    \label{fig:enter-label}
+\end{figure}
+
+
+\newpage
+
+\section{Convergence in Probability}
+
+\begin{definition}[Convergence in Probability]
+A sequence of random variables $(X_n)_{n=1}^\infty$ is 
+said to converge in probability to a random variable $X$
+if for all $\epsilon>0$
+\[
+\lim_{n\to\infty} \Prob*{|X_n-X|>\epsilon}=0\;.
+\]
+\end{definition}
+
+The difference between convergence in probability and almost sure convergence can be understood by the following example.
+
+\begin{example}[Convergence in probability but not almost surely] 
+Let $U$ be a standard Uniform random variable. We will use $U$ to construct a sequence of random variables. Let $X_1$ be just the constant random variable $1$. Let $X_2$ be $\Indicator{U\leq 1/2}$. Let $X_3$ be
+$\Indicator{U>1/2}$. Let $X_4$ be $\Indicator{U\leq 1/4}$, $X_5$ be $\Indicator{1/4<U\leq 1/2}$, and so on. Thus if $U=0.3$ then we will have
+\[
+X_1=1,X_2=1,X_3=0,X_4=0,X_5=1,X_6=0,X_7=0,\ldots
+\]
+Thus the sequence $X_1(\omega),X_2(\omega),\ldots$ clearly doesn't converge for any $\omega$. Most of the terms are $0$, but $1$s keep coming back infinitely often. But the sequence of random variables 
+does converge to the constant $0$ random variable in probability. Fix any $\epsilon>0$. Here $X\equiv 0$. Thus $|X_n-X|>\epsilon$ is only possible if $X_n=1$. But what is $\Prob*{X_n=1}$? 
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c}
+$n$  & $\Prob*{X_n=1}$ \\
+$1$  & $1$\\
+$1$  & $1/2$\\
+$2$  & $1/2$\\
+$3$  & $1/4$\\
+$4$  & $1/4$\\
+$5$  & $1/4$\\
+$6$  & $1/4$\\
+$7$  & $1/8$\\
+\end{tabular}
+\end{table}
+Thus the probability that $X_n=1$ does go to $0$. Hence $X_n$
+converges in probability to $0$ but not almost surely.
+\end{example}
+
+\newpage
+
+\section{Convergence in Distribution}
+
+\begin{definition}[Convergence in Distribution]
+A sequence of random variables $(X_n)_{n=1}^\infty$ is said to converge in distribution to a random variable $X$ if 
+\[
+\lim_{n\to\infty} \Prob*{X_n\leq x} = \Prob*{X\leq x}
+\]
+for all $x\in\real$ satisfying $\Prob*{X=x}=0$.
+\end{definition}
+
+The most important example of convergence in distribution is
+the central limit theorem:
+
+\begin{theorem}[The Central Limit Theorem]
+Let $X_1,X_2,\ldots$ are i.i.d.\ random variables with $\Exp*{X_1}=\mu$, $\Var*{X_1}=\sigma^2$. Then
+\[
+\frac{S_n - n\mu}{\sqrt{n} \sigma} \rightarrow \mathcal{N}(0,1) \mbox{
+in distribution}\;.
+\]
+\end{theorem}
+
+\begin{figure}[h]
+\centering
+% \includegraphics[width=\linewidth]{Figures/RplotCLT.png}
+ \caption{Plot of $(S_n-n\mu)/(\sqrt{n}\sigma)$ for $n=1,2,\ldots,1000$ for $10$ simulations. Here the random variables are $1$ with probability $1/2$ and $-1$ with probability $1/2$.}
+\end{figure}
+
+Note that, here there is no limiting random variable. The sequences do not converge, they oscillate a lot for there to be convergence. But instead of just $10$ if we did a lot of simulations and draw the histogram of $(S_n-n\mu)/(\sqrt{n}\sigma)$ for some large but fixed $n$, we will get the usual Normal density curve.
+
+\newpage
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 10. May 5, 2025}}
+
+\section{$L^p$ Convergence}
+
+\begin{definition}[$L^p$ Convergence]
+A sequence of random variables $(X_n)_{n=1}^\infty$ is said to converge to a random variable $X$ in $L^p$ if 
+\[
+\lim_{n\to\infty} \Exp*{|X_n-X|^p} \to 0 \;.
+\]
+\end{definition}
+
+\section{Hierarchy Between the Various Modes of Convergence}
+
+\subsection{$L^1$ Implies ``In Probability"}
+
+This follows by Markov's Inequality.
+\[
+\Prob*{\abs*{X_n-X}\geq\epsilon}\leq\frac{\Exp*{\abs*{X_n-X}}}{\epsilon}\;.
+\]
+
+\begin{theorem}[Markov's Inequality]
+Let $X$ be a non-negative random variable with finite mean. Then, for any $\epsilon>0$
+\[
+\Prob*{X>\epsilon}
+\leq 
+\frac{\Exp*{X}}{\epsilon}\;.
+\]
+\end{theorem}
+
+\begin{proof}
+First let us do a short proof. 
+We observe that
+\[
+\epsilon\cdot\Indicator{X>\epsilon}
+\leq X\;.
+\]
+To see this, consider two cases: if $X\leq\epsilon$ then l.h.s.\ is $0$ and r.h.s.\ is nonnegative anyways, hance the inequality is valid; if $X>\epsilon$ then l.h.s.\ is $\epsilon$ whereas r.h.s.\ is $X$, and hence the inequality is valid. Now, taking expectation both sides yields
+\begin{alignat*}{3}
+&& \epsilon\cdot\Prob*{X>\epsilon}\leq{} & \Exp*{X}\\
+\Leftrightarrow{} && \Prob*{X>\epsilon}\leq{} & \frac{\Exp*{X}}{\epsilon}\;.
+\end{alignat*}
+Note that, we are using $\Exp*{\Indicator*{X>\epsilon}}=\Prob*{X>\epsilon}$. This is true because $\Indicator*{X>\epsilon}=1$ with probability $\Prob*{X>\epsilon}$ and $0$ with probability $1-\Prob*{X>\epsilon}$. Thus,
+\[
+\Exp*{\Indicator*{X>\epsilon}} = 1\cdot\Prob*{X>\epsilon} + 0\cdot(1-\Prob*{X>\epsilon}) = \Prob*{X>\epsilon}\;.
+\]
+Now let us do a proof which might be a bit more intuitive. Suppose $X$ has a density $f$. Then
+\[
+\Exp*{X} 
+= \int_0^\infty x f(x) \mathrm{d}x
+\geq \int_\epsilon^\infty x f(x) \mathrm{d}x
+\geq \int_\epsilon^\infty \epsilon f(x) \mathrm{d}x
+= \epsilon \int_\epsilon^\infty f(x) \mathrm{d}x
+= \epsilon \cdot \Prob*{X>\epsilon}\;.
+\]
+A similar proof will also work in the case $X$ has a probability mass function. But there are random variables which neither have a density nor has a mass function. For such random variables the first proof works.
+\end{proof}
+
+\newpage
+
+\subsection{$L^p$ Implies ``In Probability"}
+
+This also follows from Markov's Inequality.
+\[
+\Prob*{\abs*{X_n-X}\geq\epsilon} =
+\Prob*{\abs*{X_n-X}^p\geq\epsilon^p} \leq 
+\frac{\Exp*{\abs*{X_n-X}^p}}{\epsilon^p} \;.
+\]
+
+\subsection{$L^p$ Implies $L^q$ if $q<p$}
+
+This follows from inequality between moments of random variables.
+\[
+\left(\Exp*{\abs*{X_n-X}^q}\right)^{1/q}
+\leq 
+\left(\Exp*{\abs*{X_n-X}^p}\right)^{1/p} \;.
+\]
+
+\subsection{``In Distribution" Does Not Imply ``In Probability"}
+
+Let $X\sim N(0,1)$. Let $X_1=X,X_2=-X,X_3=X,X_4=-X,\ldots$. Then the sequence of random variables $(X_n)_{n=1}^\infty$ converges in distribution, because each $X_n$ has the same $N(0,1)$ distribution. But the sequence does not converge in probability.
+
+\subsection{``In probability" Does Not Imply $L^p$}
+
+Let $X_n$ be a random variable that is $n$ with probability $1/n$ and $0$ with probability $1-1/n$. Then the sequence $X_n$ converges to $0$ in probability but not in $L^1$.
+
+\newpage
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 11. May 12, 2025}}
+
+\chapter{Borel-Cantelli Lemmas}
+
+\section{Experiments, Outcomes, Events}
+
+\section{Increasing and Decreasing Sequences of Events}
+
+A sequence of events $A_1,A_2,A_3,\ldots$ is called increasing if 
+\[
+A_1\subset A_2\subset A_3\subset \ldots.
+\]
+In this case we write $A_n\uparrow \cup_m A_m$. 
+
+A sequence of events $A_1,A_2,A_3,\ldots$ is called decreasing if 
+\[
+A_1\supset A_2\supset A_3\supset \ldots.
+\]
+In this case we write $A_n\downarrow \cap_m A_m$. 
+
+\section{Infinitely Often}
+
+Let $A_1,A_2,A_3,\ldots$ be a sequence of events. Consider the event that infinitely many of the events $A_n$ happen. We can represent this event as
+\[
+\cap_{i=1}^\infty\cup_{j=i}^\infty A_j \;.
+\]
+Thus, we are saying that for every $u$, there is some $j\geq i$ such that $A_j$ happens. This just means that infinitely many of the events $A_n$ happen. We denote this event by $\limsup A_n$ or $[A_n \mbox{ i.o. }]$.
+
+Similarly we can define the $\liminf$ of a sequence of events.
+\[
+\liminf A_n = \cup_{i=1}^\infty\cap_{j=i}^\infty A_j \;.
+\]
+Thus, we are saying that there is some $i$ such that all the events $A_i,A_{i+1},A_{i+2},\ldots$ happens.
+
+So if $\limsup A_n$ does not happen, then $\liminf A_n^c$ happens and vice versa. So $(\limsup A_n)^c = \liminf A_n^c$.
+
+\section{Borel-Cantelli Lemma 1}
+
+\begin{theorem}[Borel-Cantelli Lemma 1]
+Let $\left(A_n\right)_{n=1}^\infty$ be sequence of events. If $\sum_{n=1}^\infty \Prob*{A_n}<\infty$ then $\Prob*{\limsup A_n}=0$.
+\end{theorem}
+
+\section{Borel-Cantelli Lemma 2}
+
+\begin{theorem}[Bore-Cantelli Lemma 2]
+Let $\left(A_n\right)_{n=1}^\infty$ be sequence of \textbf{independent} events. If $\sum_{n=1}^\infty \Prob*{A_n}=\infty$, then $\Prob*{\limsup A_n}=1$.
+\end{theorem}
+
+\newpage
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 8. April 7, 2025}}
+
+\section{Drunk Men and Drunk Birds}
+
+There is a saying, attributed to  Japanese-American mathematician Shizuo
+Kakutani: ``A drunk man will find his way home, but a drunk bird may get lost
+forever." Let us try to understand this. A drunk birds can be modeled by three
+dimensional random walk. Suppose the bird starts at the origin of the three
+dimensional integer lattice $\integer^3$. It moves only at integer time points. For
+$n=0,1,2,3,\ldots$ let $S_n=(S_n^x,S_n^y,S_n^z)\in\integer^3$ denote its location.
+If at a certain time the bird is at location $(x,y,z)$, then at the next time
+point it can be at one of the $8$ locations given by $(x\pm 1,y\pm 1,z\pm 1)$.
+Thus we can say
+
+\begin{align*}
+S_n^x ={} & S_{n-1}^x + X_n\;,\\
+S_n^y ={} & S_{n-1}^y + Y_n\;,\\
+S_n^z ={} & S_{n-1}^z + Z_n\;,
+\end{align*}
+where
+\[
+X_n = \begin{cases}
+1 & \mbox{ with probability } 1/2\;,\\
+-1 & \mbox{ with probability } 1/2\;,
+\end{cases}
+\]
+\[
+Y_n = \begin{cases}
+1 & \mbox{ with probability } 1/2\;,\\
+-1 & \mbox{ with probability } 1/2\;,
+\end{cases}
+\]
+\[
+Z_n = \begin{cases}
+1 & \mbox{ with probability } 1/2\;,\\
+-1 & \mbox{ with probability } 1/2\;,
+\end{cases}
+\]
+and $(X_1,X_2,X_3,\ldots,Y_1,Y_2,Y_3,\ldots,Z_1,Z_2,Z_3,\ldots)$ are independent.
+\[
+\Prob*{S_n=(0,0,0)} 
+= \Prob*{S_n^x=0}\Prob*{S_n^y=0}\Prob*{S_n^z=0}
+\]
+For $n$ odd, 
+\[
+\Prob*{S_n^x=0}=
+\Prob*{S_n^y=0}=
+\Prob*{S_n^z=0}=0\;.
+\]
+For $n$ even, say $n=2N$
+\[
+\Prob*{S_n^x=0}=
+\Prob*{S_n^y=0}=
+\Prob*{S_n^z=0}=\left(2^{-2N}\binom{2N}{N}\right)^3\;.
+\]
+By Stirling's approximation
+\[
+2^{-2N}\binom{2N}{N} \approx \frac{C}{N^{1/2}} 
+\approx \frac{C}{n^{1/2}}.
+\]
+Thus, for $n$ even
+\[
+\Prob*{S_n=0} \approx C n^{-3/2}\;.
+\]
+Thus, the probability that $S_n=0$ happens infinitely often is $0$. Thus, a drunk bird may get lost forever. But for two dimensional or one dimensional random walk with probability $1$ $S_n=0$ happens infinitely often. Thus a drunk man will find his way home. Note that, to prove this we cannot use the second Borel-Cantelli Lemma. Because the second Borel-Cantelli Lemma requires the events to be independent, but the events $\{S_n=0\}$ are not independent. But the result is true and can be proved in different ways, generally you will learn this in a course on Markov Chains.
+
+\newpage
+
+\section{Borel-Cantelli Lemma 1 Proof}
+
+Let $(A_n)_{n=1}^\infty$ be a sequence of events.\\
+Suppose
+\[
+\sum_{n=1}^\infty \Prob*{A_n} < \infty \;.
+\]
+Let $A$ denote the event that infinitely many $A_n$s happen. Thus
+\[
+A = [A_n \mbox{ i.o. }] =
+\bigcap_{i=1}^\infty \bigcup_{j=i}^\infty A_i \;.
+\]
+We need to show that 
+\[
+\Prob*{A}=0\;.
+\]
+For $i=1,2,3,\ldots$ let
+\[
+B_i \coloneqq \cup_{j=i}^\infty A_j\;.
+\]
+The events $B_i$s are decreasing: $B_{i}$ involves union of more events than $B_{i+1}$. Thus
+\[
+B_1\supset B_2\supset \cdots \downarrow A\;.
+\]
+Therefore
+\[
+\Prob*{A} = \lim_{i\to\infty} \Prob*{B_i}\;.
+\]
+We have
+\[
+\Prob*{B_i}\leq\sum_{j=i}^\infty\Prob*{A_j}\;.
+\]
+Since $\sum_{n=1}^\infty\Prob*{A_n}<\infty$,
+we have
+\[
+\lim_{i\to\infty}\sum_{j=i}^\infty\Prob*{A_j}=0\;.
+\]
+Therefore,
+\[
+\lim_{i\to\infty}\Prob*{B_i}=0\;.
+\]
+
+\newpage
+
+\section{Borel-Cantelli Lemma 2 Proof}
+
+Let $(A_n)_{n=1}^\infty$ be a sequence of independent events.\\
+This means, for any set of integers $\{n_1,n_2,\cdots,n_k\}$ we have
+\[
+\Prob*{A_{n_1}\cap A_{n_2}\cap \cdots A_{n_k}}
+= \Prob*{A_{n_1}} \cdot \Prob*{A_{n_2}} \cdot \cdots \Prob*{A_{n_k}} \;.
+\]
+Let $A$ denote the event that infinitely many $A_n$s happen. Thus
+\[
+A = [A_n \mbox{ i.o. }] = \bigcap_{i=1}^\infty \bigcup_{j=i}^\infty A_i \;.
+\]
+Suppose 
+\[
+\sum_{n=1}^\infty \Prob*{A_n} = \infty\;.
+\]
+We want to show that 
+\[
+\Prob*{A} = 1\;.
+\]
+For $i=1,2,3,\ldots$ let
+\[
+B_i \coloneqq \cup_{j=i}^\infty A_i\;.
+\]
+Therefore
+\[
+B_1\supset B_2\supset \cdots \downarrow A\;.
+\]
+To show $\Prob*{A}=1$ we will show that $\Prob*{A^c}=0$. We observe that
+\[
+A^c = \bigcup_{i=1}^\infty \bigcap_{j=i}^\infty A_i^c\;.
+\]
+We also
+\[
+B_i^c = \cap_{j=i}^\infty A_i^c\;,
+\]
+and 
+\[
+B_1^c\subset B_2^c\subset \cdots \uparrow A^c\;.
+\]
+Therefore
+\[
+\Prob*{B_i^c}\uparrow\Prob*{A^c}\;.
+\]
+Therefore, it is enough to show that 
+$\Prob*{B_i^c}=0$ for all $i$. We fix an $i$. 
+For $m=i,i+1,i+2,\ldots$ let 
+\[
+C_m \coloneqq \cap_{j=i}^m A_i^c\;.
+\]
+Thus
+\[
+C_i \supset C_{i+1} \supset \cdots \downarrow B_i^c\;.
+\]
+Thus 
+\[
+\Prob*{B_i^c} = \lim_{m\to\infty} \Prob*{C_m}\;.
+\]
+By independence of the events $A_i$s we have
+\[
+\Prob*{C_m} = \prod_{j=i}^m \Prob*{A_i^c} \;.
+\]
+\begin{tcolorbox}
+We are using $A_i^c$s are independent. This follows from the fact that $A_i$s are independent.
+\end{tcolorbox}
+We observe that
+\[
+\Prob*{A_i^c} = 1-\Prob*{A_i} \leq e^{-\Prob*{A_i}}\;.
+\]
+Therefore,
+\[
+\Prob*{C_m}\leq\exp\left(-\sum_{j=i}^m \Prob*{A_i}\right)\;.
+\]
+Since $\sum_{n=1}^\infty \Prob*{A_n} = \infty$,
+\[
+\lim_{m\to\infty}\sum_{j=i}^m\Prob*{A_i}=\infty\;.
+\]
+Therefore,
+\[
+\lim_{m\to\infty} \Prob*{C_m} = 0\;.
+\]
+Therefore, 
+\[
+\Prob*{B_i^c}=0
+\;.
+\]
+
+\newpage

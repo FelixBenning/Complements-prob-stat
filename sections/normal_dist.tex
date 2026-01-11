@@ -1,0 +1,388 @@
+\chapter{Normal Distribution}
+
+\section{The Density Function}
+
+The Normal Distribution has density
+\[
+f(x) = \frac{1}{\sqrt{2\pi}} \exp\left(-\frac{x^2}{2}\right) \;.
+\]
+We want to show that this is indeed a density function. Thus, we have to show that
+\[
+\int_{-\infty}^{\infty} f(x) \mathrm{d}x = 1 \;. 
+\]
+Let
+\[
+I \coloneqq \int_{-\infty}^{\infty} \exp\left(-\frac{x^2}{2}\right) \mathrm{d}x\;.
+\]
+Thus we have to show that $I=\sqrt{2\pi}$. We will show that $I^2=2\pi$. We observe that
+\begin{align*}
+I\times I ={} & 
+\left(\int_{-\infty}^{\infty} \exp\left(-\frac{x^2}{2}\right) \mathrm{d}x \right)
+\left(\int_{-\infty}^{\infty} \exp\left(-\frac{y^2}{2}\right) \mathrm{d}y \right)\\
+={} & 
+\int_{-\infty}^{\infty}
+\int_{-\infty}^{\infty}
+\exp\left(-\frac{x^2+y^2}{2}\right) \mathrm{d}x\mathrm{d}y \\
+\end{align*}
+We will evaluate this integral by using polar coordinates. We change variables from $(x,y)$ to $(r,\theta)$ by using the transformation
+\[
+x = r \cos\theta \;, y = r \sin\theta  \;.
+\]
+The Jacobian determinant of this transformation is
+\[
+\left|\begin{pmatrix}
+\frac{\partial x}{\partial r} & \frac{\partial y}{\partial r} \\
+\frac{\partial x}{\partial \theta} & \frac{\partial y}{\partial \theta} \\
+\end{pmatrix}\right| 
+= \left|\begin{pmatrix}
+\cos\theta & \sin\theta \\
+-r\sin\theta & r\cos\theta \\
+\end{pmatrix}\right| = r(\cos^2\theta + \sin^2\theta) = r\;.
+\]
+Therefore,
+\[
+I\times I = 
+\int_{0}^\infty \int_{0}^{2\pi} e^{-\frac{r^2}{2}} \, r \, \mathrm{d}\theta \mathrm{d}r = 
+2\pi \int_0^\infty e^{-\frac{r^2}{2}} \, r \, \mathrm{d}r =  2\pi \;.
+\]
+\newpage
+
+\section{The Moment Generating Function}
+
+Suppose $X\sim\mathcal{N}(0,1)$. We want to show that the moment generating function of $X$ is the function $\phi:\real\to\real$ given by $\phi(t)=e^{t^2/2}$.
+\begin{alignat*}{3}
+&& \Exp*{e^{tX}} ={} & e^{\frac{t^2}{2}} \;. \\[1em]
+\Leftrightarrow{} && \frac{1}{\sqrt{2\pi}} \int e^{tx} \, e^{-\frac{x^2}{2}} \, \mathrm{d}x ={} & e^{\frac{t^2}{2}} \;. \\[1em]
+\Leftrightarrow{} && \frac{1}{\sqrt{2\pi}} \int e^{tx - \frac{x^2}{2} - \frac{t^2}{2} } \, \mathrm{d}x ={} & 1 \;.\\[1em]
+\Leftrightarrow{} && \frac{1}{\sqrt{2\pi}} \int e^{-\frac{(t-x)^2}{2}} \, \mathrm{d}x ={} & 1 \;.\\[1em]
+\Leftrightarrow{} && \frac{1}{\sqrt{2\pi}} \int e^{-\frac{y^2}{2}} \, \mathrm{d}y ={} & 1 \;.
+\end{alignat*}
+We have already seen the last assertion is true.
+
+\section{The Characteristic Function}
+
+Suppose $X\sim\mathcal{N}(0,1)$. We want to show that the characteristic function of $X$ is the function $\phi:\real\to\complex$ given by $\phi(t)=e^{-t^2/2}$. Thus, we want to show
+\[
+\Exp*{ e^{-itX} } = e^{ - \frac{t^2}{2} } \;.
+\]
+The l.h.s.\ is by definition $\Exp*{\cos(tX)}+i \, \Exp*{\sin(tX)}$. So we want to show that
+\[
+\Exp*{\cos(tX)}+i\Exp*{\sin(tX)} = e^{ - \frac{t^2}{2} } \;.
+\]
+Since $X$ is symmetric, and $\sin$ is an odd function, we have
+\[
+\Exp*{\sin(tX)} = 0 \;.
+\]
+Thus we just need to show
+\[
+\Exp*{\cos(tX)} =  e^{ - \frac{t^2}{2} } \;.
+\]
+Let us denote the l.h.s.\ by $g(t)$ i.e., 
+\[
+g(t) = \Exp*{\cos(tX)} = \int_{-\infty}^{\infty} \cos(tx)\, e^{-\frac{x^2}{2}}\, \mathrm{d}x \;.
+\]
+We differentiate $g(t)$ with respect to $t$ and use integration by parts formula to get
+\[
+\frac{\mathrm{d}g}{\mathrm{d}t} = - \int_{-\infty}^{\infty} x\sin(tx)e^{-\frac{x^2}{2}} \mathrm{d}x = - \int_{-\infty}^{\infty} t \cos(tx) e^{-\frac{x^2}{2}} dx = -t g(t).
+\]
+Thus we have the differential equation 
+\[
+\frac{\mathrm{d}g}{\mathrm{d}t} = -t \, g(t) \;.
+\]
+Solving it we get
+\[
+g(t) = e^{-\frac{t^2}{2}} C\;,
+\]
+where $C$ is a constant. Since $g(0) = 1$, we get $C=1$. Thus
+\[
+g(t) = e^{-\frac{t^2}{2}} \;.
+\]
+
+\section{Linear Combinations}
+
+\begin{proposition}[Distribution of Linear Combination of Independent Normal Random Variables]
+If $X$ and $Y$ are independent normal then liner combinations of $X$ and $Y$ are normal.     
+\end{proposition}
+
+\begin{proof}
+Suppose $X\sim\mathcal{N}(\mu_x,\sigma_x^2)$, 
+$Y\sim\mathcal{N}(\mu_y,\sigma_y^2)$, and
+$X\perp Y$. Hence,
+\[
+\Exp*{e^{itX}}=e^{i\mu_x t - t^2\sigma_x^2/2}\,\quad
+\Exp*{e^{itY}}=e^{i\mu_y t - t^2\sigma_y^2/2}\;.
+\]
+Now, consider a linear combination of $X$ and $Y$, say $aX+bY$. Then
+\begin{align*}
+& \Exp*{e^{it(aX+bY)}} \\
+={} & \Exp*{e^{itaX}}\Exp*{e^{itbY}} \\
+={} & e^{i \mu_x t a + i \mu_y t b} 
+e^{ - t^2 a^2 \sigma_x^2/2 - t^2 b^2 \sigma_y^2 / 2} \\
+={} & e^{i (\mu_x a + \mu_y b) t - t^2/2 (a^2\sigma_x^2+b^2\sigma_y^2)} \;.
+\end{align*}
+This shows $aX+bY\sim\mathcal{N}(a\mu_x+b\mu_y,a_2\sigma_x^2+b^2\sigma_y^2)$.
+\end{proof}
+
+\begin{example}[$X$ and $Y$ are normal, but a linear combination of $X$ and $Y$ is not normal.]
+Take $X\sim\mathcal{N}(0,1)$.\\
+Take $R$, which is $1$ with probability $1/2$ and $-1$ with probability $1/2$, which is independent of $X$\\
+Take $Y = RX$.\\
+Thus when $R=1$, $Y=X$.\\\
+Then $R=-1$, $Y=-X$.\\
+Distribution of $Y$ is $\mathcal{N}(0,1)$.\\
+But $X+Y$ is not normal, as $\Prob*{X+Y=0}=1/2$.
+\end{example}
+
+
+\section{Sample Mean and Deviations}
+
+Suppose $X_1,\ldots,X_n$ are i.i.d.\ 
+$\normal{\mu,\sigma^2}$. The sample mean 
+$
+\Bar{X} = \frac{X_1+\cdots+X_n}{n}
+$
+is a linear combinations of $X_1,\cdots,X_n$. Hence it is normally distributed. It can be easily seen that $\Bar{X}\sim\normal{\mu,\sigma^2/n}$. Similarly the deviation $X_1-\Bar{X}$ is also a linear combination of $X_1,\ldots,X_n$ and hence is normally distributed. It can be easily seen that $X_1-\Bar{X}\sim\normal{0,\sigma^2(1-\frac{1}{n})}$. We can also calculate the covariance between $\Bar{X}$ and $X_1-\Bar{X}$ and see that it is $0$. But, this does not imply they are independent. But since both of them are linear combination of the same set of independent normal variables, we can say that they are jointly normal and hence they are independent.
+
+
+\newpage
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 12. May 19, 2025}}
+
+\section{Bivariate Normal Distribution}
+
+\begin{proposition}[Independence Implies Covariance $0$] 
+If $X$ and $Y$ are two independent random variables
+then $\Cov*{X,Y}=0$.
+\end{proposition}
+
+\begin{proof}
+$\Cov*{X,Y} = \Exp*{XY}-\Exp*{X}\Exp*{Y}$.\\
+$\Exp*{XY} = \Exp*{X}\Exp*{Y}$.\\
+$\Cov*{X,Y} = 0$.
+\end{proof}
+
+\begin{example}[$\Cov*{X,Y}=0$ does not imply independence.]
+$X\sim\mathrm{N}(0,1)$.\\
+$Y=X^2$.\\
+$\Cov*{X,Y}=0$.\\
+$X,Y$ not independent.
+\end{example}
+
+\begin{definition}[Bivariate Normal Distribution]
+$(X,Y)\sim\mathcal{N}(\mu_x,\mu_y,\sigma_x^2,\sigma_y^2,\rho)$ if
+\begin{align*}
+& f(x,y) \\
+={} & \frac{1}{2\pi\sigma_x\sigma_y\sqrt{1-\rho^2}}\\
+& \times \exp\left(-\frac{1}{2(1-\rho^2)}
+\left\{ 
+\left(\frac{x-\mu_x}{\sigma_x}\right)^2
++\left(\frac{y-\mu_y}{\sigma_y}\right)^2
+-2\rho\left(\frac{x-\mu_x}{\sigma_x}\right)
+\left(\frac{y-\mu_y}{\sigma_y}\right)
+\right\}
+\right)\;.
+\end{align*}
+\end{definition}
+
+\begin{proposition}[Covariance $0$ Implies Independence for Jointly Normal Random Variables]
+$(X,Y)$ Bivariate normal. If $\Cov*{X,Y}=0$ then $X\perp Y$.    
+\end{proposition}
+
+\begin{proof}
+If we plug in $\rho=0$ in the formula of the density then we get a product of densities of $\mathcal{N}(\mu_x,\sigma_x^2)$ and $\mathcal{N}(\mu_y,\sigma_y^2)$.
+\end{proof}
+
+\begin{example}[$X,Y$ marginally normal does not imply they are jointly normal.]
+Take $X\sim\mathcal{N}(0,1)$.\\
+Take $R$, which is $1$ with probability $1/2$ and $-1$ with probability $1/2$, and independent of $X$.\\
+Take $Y = RX$.\\
+Thus when $R=1$, $Y=X$.\\\
+Then $R=-1$, $Y=-X$.\\
+Distribution of $Y$ is $\mathcal{N}(0,1)$.\\
+$X,Y$ are not jointly normal.\\
+$\Cov*{X,Y}=0$.\\
+If they were jointly normal, they would be independent, but they are not independent as $X/Y$ is always $\pm 1$.
+\end{example}
+
+\newpage
+
+\section{Multivariate Normal}
+
+\begin{definition}[Multivariate Normal]
+\[
+f(x) = \frac{1}{2\pi|\Sigma|^{1/2}}
+\exp\left(-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right)\;.
+\]    
+\end{definition}
+
+\begin{example}[Non-invertible covariance matrix.]
+The variance-covariance matrix of some random variables is non-invertible iff they satisfy some linear constraint. For example variance covariance matrix of $X$ and $2X+3$ will be non-invertible, no matter what the random variable $X$ is. If $X$ has variance $\sigma^2$ then the variance covariance matrix is
+\[
+\begin{pmatrix}
+\sigma^2 & 2\sigma^2\\
+2\sigma^2 & 4\sigma^2
+\end{pmatrix},
+\]
+which is non-invertible. If three random variables $X,Y,Z$ satisfy $X+Y+Z=3$, which is a linear constraint, then the variance covariance matrix will be non-invertible.
+\end{example}
+
+\newpage
+\section{Chi-squared Distribution}
+
+\begin{definition}[Chi-squared Distribution]
+If $X_1,\ldots,X_n$ i.i.d.\ $\mathrm{N}(0,1)$. Then the distribution of $X_1^2+\cdots+X_n^2$ is called $\chi^2$ distribution with $n$ degrees of freedom:
+\[
+X_1^2 + \cdots + X_n^2 \sim \chi^2(n) \;.
+\]
+It has density
+\[
+f(x) = \frac{1}{2^{n/2}\Gamma(n/2)}x^{n/2-1}e^{-x/2}\;.
+\]
+It is a Gamma distribution: $\Gamma(n/2,1/2)$ where we use the convention that $\Gamma(\alpha,\beta)$ has density
+\[
+\frac{\beta^\alpha}{\Gamma(\alpha)}
+e^{-x\beta}x^{\alpha-1}\;.
+\]
+\end{definition}
+
+\begin{theorem}[Distribution of Normal Sample Standard Deviation]
+If $X_1,X_2,\ldots,X_n$ are i.i.d.\ $\normal{\mu,\sigma^2}$ then 
+\[
+(X_1-\Bar{X_1})^2+\cdots+(X_n-\Bar{X_n})^2  
+\sim \sigma^2 \cdot \chi^2(n-1)\;.
+\]
+\end{theorem}
+
+\begin{proof} 
+The standardized variables 
+\[
+\frac{X_1-\mu}{\sigma}, \ldots, \frac{X_n-\mu}{\sigma}
+\]
+are i.i.d.\ $\normal{0,1}$. Therefore,
+\[
+\sum_{i=1}^n (X_i-\mu)^2 \sim \sigma^2 \cdot \chi^2(n) \;.
+\]
+We know $\Bar{X}\sim\normal{\mu,\sigma^2/n}$. Therefore
+\[
+n (\Bar{X}-\mu)^2 \sim \sigma^2 \cdot \chi^2(1) \;.
+\]
+We observe that
+\[
+\sum_{i=1}^n (X_i-\mu)^2 
+= n(\Bar{X}-\mu)^2 
++ \sum_{i=1}^n (X_i-\Bar{X})^2 \;.
+\]
+The variables $n(\Bar{X}-\mu)^2$ and $\sum_{i=1}^n (X_i-\Bar{X})^2$ are independent (see the next theorem). Hence 
+\[
+\sum_{i=1}^n (X_i-\Bar{X})^2 \sim \sigma^2 \cdot \chi^2(n-1).
+\]    
+\end{proof}
+
+\newpage
+
+\section{Independence of Normal Sample Mean and Standard Deviation}
+
+\begin{theorem}[Independence of Normal Sample Mean and Standard Deviation]
+If $X_1,X_2,\ldots,X_n$ are i.i.d.\ $\mathcal{N}(\mu,\sigma^2)$ then the sample mean
+\[
+\Bar{X} = \frac{X_1+\cdots+X_n}{n}
+\]
+and the sample standard deviation
+\[
+s = \left(\frac{(X_1-\Bar{X_1})^2+\cdots+(X_n-\Bar{X_n})^2}{n-1}\right)^{1/2}
+\]
+are independent.
+\end{theorem}
+
+\begin{proof}
+First we rewrite the joint density
+\begin{align*}
+f(x_1,\ldots,x_n) ={} & \frac{1}{(2\pi)^{n/2}\sigma^n}
+\exp\left(-\frac{1}{2\sigma^2}\sum_{i=1}^n(x_i-\mu)^2\right)\\
+={} & \frac{1}{(2\pi)^{n/2}\sigma^n}
+\exp\left(-\frac{1}{2\sigma^2}
+\sum_{i=1}^n(x_i-\Bar{x})^2+n(\Bar{x}-\mu)^2\right).
+\end{align*}
+Next, we do a change of variables.
+\[
+y_1 = x_1 - \Bar{x}\,,\, \ldots \,,\, y_{n-1} = x_{n-1} - \Bar{x} \,,\, y_n = \Bar{x} \;.
+\]
+The inverse transformation is
+\[
+x_1 = y_1+y_n \,,\, \ldots \;,\, x_{n-1}=y_{n-1}+y_n \,,\,, \ldots \,,\, x_n=y_n \;.
+\]
+Taking $n=4$ as an example, the Jacobian matrix is
+{
+\renewcommand{\arraystretch}{1.5}
+\setlength{\arraycolsep}{10pt}
+\[
+\begin{pmatrix}
+\J{1}{1} & \J{1}{2} & \J{1}{3} & \J{1}{4} \\  
+\J{2}{1} & \J{2}{2} & \J{2}{3} & \J{2}{4} \\  
+\J{3}{1} & \J{3}{2} & \J{3}{3} & \J{3}{4} \\  
+\J{4}{1} & \J{4}{2} & \J{4}{3} & \J{4}{4} \\  
+\end{pmatrix}
+= 
+\begin{pmatrix}
+1 & 0 & 0 & 1\\
+0 & 1 & 0 & 1\\
+0 & 0 & 1 & 1\\
+0 & 0 & 0 & 1
+\end{pmatrix}
+\]
+}
+This matrix has determinant $1$. This is true for general $n$. Thus the joint density of the new variables is
+\[
+g(y_1,\ldots,y_n) = \frac{1}{(2\pi)^{n/2}\sigma^n}
+\exp\left(-\frac{1}{2\sigma^2}(y_1^2+\cdots+y_{n-1}^2+(y_1+\cdots+y_{n-1})^2 + n(y_n-\mu)^2\right)
+\]
+The density splits as a product of a function of $(y_1,\ldots,y_{n-1})$ and a function of $y_n$. Thus, $\Bar{X}$ is independent of $(X_1-\Bar{X},\ldots,X_{n-1}-\Bar{X})$. Note that, $X_n-\Bar{X}$ is determined by $(X_1-\Bar{X},\ldots,X_{n-1}-\Bar{X})$ because $(X_1-\Bar{X})+\cdots+(X_n-\Bar{X})=0$.
+\end{proof}
+
+\newpage
+
+\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 13. May 26, 2025}}
+
+\section{Conditional Distribution}
+
+\begin{fact}[Generating Correlated Normal Random Variables from Independent Normal Random Variables]
+Suppose $Z_1,Z_2$ are i.i.d.\ $N(0,1)$.\\
+Let $-1\leq\rho\leq 1$.\\
+Let 
+\[
+X_1 = Z_1 \quad \mbox{and} \quad X_2 = \rho Z_1 + \sqrt{1-\rho^2} Z_2 \;.
+\]
+Then $(X_1,X_2)\sim N(0,0,1,1,\rho)$.
+\end{fact}
+
+\begin{fact}[Conditional Distribution of Correlated Standard Normal Random Variables]
+Suppose $(X_1,X_2)\sim\normal{0,0,1,1,\rho}$. Then we can write $X_1=Z_1$ and $X_2=\rho Z_1+\sqrt{1-\rho^2} Z_2$ where $(Z_1,Z_2)\sim\normal{0,0,1,1,0}$. Therefore,
+\begin{align*}
+\Exp*{X_2\given X_1} ={} & \Exp*{\rho Z_1+\sqrt{1-\rho^2}Z_2\given Z_1} = \rho Z_1 = \rho X_1\;.\\
+\Var*{X_2\given X_1} ={} & \Var*{\rho Z_1+\sqrt{1-\rho^2}Z_2\given Z_1} = 1-\rho^2 \;.\\
+X_2|X_1 \sim{} & \normal{\rho X_1, 1-\rho^2}\;.
+\end{align*}
+\end{fact}
+
+\begin{proposition}[Conditional Distribution of Jointly Normal Random Variables]
+Suppose $(X,Y)\sim\normal{\mu_x,\mu_y,\sigma_x^2,\sigma_y^2,\rho}$.
+Then
+\begin{align*}
+\Exp*{X\given Y} ={} & \mu_x + \rho \frac{\sigma_x}{\sigma_y}(Y-\mu_y) \\
+\Var*{X\given Y} ={} & (1-\rho^2) \sigma_x \\
+\Exp*{Y\given X} ={} & \mu_y + \rho\frac{\sigma_y}{\sigma_x} (X-\mu_x) \\
+\Var*{Y\given X} ={} & (1-\rho^2) \sigma_y^2 \\
+X|Y \sim{} & \normal{\mu_x + \rho \frac{\sigma_x}{\sigma_y}(Y-\mu_y),(1-\rho^2) \sigma_x^2} \\
+Y|X \sim{} & \normal{\mu_y + \rho \frac{\sigma_y}{\sigma_x}(X-\mu_x),(1-\rho^2) \sigma_y^2} \;.
+\end{align*}
+\end{proposition}
+
+\begin{proposition}[Linear Combination of Jointly Normal Random Variables]
+If $(X,Y)\sim\normal{\mu_x,\mu_y,\sigma_x^2,\sigma_y^2,\rho}$ then any linear combination of $X$ and $Y$ is normally distributed.    
+\end{proposition}
+
+\begin{proof}
+$X$ and $Y$ can be written as a linear combination of
+$Z_1,Z_2$ which are i.i.d.\ $\normal{0,1}$. We have already seen that a linear combination of independent $\normal{0,1}$ random variables is normal.
+\end{proof}
+
