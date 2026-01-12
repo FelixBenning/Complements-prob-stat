@@ -1,7 +1,9 @@
 
-\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 1.}}
 
 \chapter{Convergence}
+
+\marginpar{\red{Lecture 1}}
+
 
 \section{Types of convergence}
 
@@ -562,6 +564,7 @@ following theorem.
 \end{example}
 
 \begin{fact}
+    \label{fact: Lp zero norm}
     \(\|X-Y\|_p = 0\) if and only if \(\Prob{X=Y}=1\).
 \end{fact}
 \begin{proof}[Proofsketch]
@@ -600,6 +603,9 @@ is the following inequality.
         \Exp{\abs{XY}} \le \Exp{\abs{X}^p}^{\frac1p}\Exp{\abs{Y}^q}^{\frac1q} = \|X\|_p \|Y\|_q
     \]
 \end{theorem}
+\begin{proof}
+    Exercise \ref{ex: hölder's inequality}.
+\end{proof}
 
 Using this inequality we can now prove Theorem \ref{thm: seminorm properties}
 
@@ -620,15 +626,147 @@ Using this inequality we can now prove Theorem \ref{thm: seminorm properties}
     Taking the \(p\)-th root implies the claim.
     What is left is only the triangle inequality \ref{it: triangle inequality},
     which is the most difficult part to prove. Due to this difficulty
-    it has its own name the ``Minkowski inequality''. For its proof we use
-
+    it has its own name the ``Minkowski inequality''. We start with a
+    simple application of the triangle inequality for real numbers:
+    \[\begin{aligned}
+        \|X+ Y\|_p^p
+        &= \Exp{\abs{X + Y}^p}
+        \\
+        &\le \Exp[\big]{\abs{X+Y}^{p-1} \abs{X}} + \Exp[\big]{\abs{X+Y}^{p-1} \abs{Y}}.
+    \end{aligned}
+    \]
+    We then define
+    \(q \coloneq \frac{p}{p-1}\) such that \(\frac1p + \frac1q = 1\).
+    We may therefore apply Hölder's inequality to both terms to get
+    for the first term
+    \[
+        \Exp[\big]{\abs{X+Y}^{p-1} \abs{X}}
+        \overset{\text{Hölder}}\le \Exp[\Big]{\abs{X+Y}^{q(p-1)}}^{\frac1q} \Exp{\abs{X}^p}^{\frac1p}
+        = \|X+Y\|_p^{p/q} \|X\|_p,
+    \]
+    and similarly \(\Exp[\big]{\abs{X+Y}^{p-1} \abs{Y}} \le \|X+Y\|_p^{p/q}
+    \|Y\|_p\) for the second.
+    Thus
+    \[
+        \|X+ Y\|_p^p
+        \le \|X+Y\|_p^{p/q} (\|X\|_p + \|Y\|_p).
+    \]
+    Since \(p - \frac{p}q = 1\) we can divide by \(\|X+Y\|_p^{p/q}\)
+    to obtain
+    \[
+        \|X+ Y\|_p = \|X+ Y\|_p^{p-\frac{p}q} \le \|X\|_p + \|Y\|_p.
+        \qedhere
+    \]
 \end{proof}
 
-\begin{proof}[Proof of Hölders inequality (Theorem \ref{thm: Hölder inequality})]
-    
+\begin{fact}[\(L^p\) is a Banach space]
+    \label{fact: Lp complete}
+    For every \(p \ge 1\) the normed space \((L^p, \|\cdot\|_p)\) is \underline{complete},
+    that is every Cauchy sequence converges in \(L^p\). 
+\end{fact}
+\begin{proof}
+See e.g. \citep[Thm.~6.25 and 7.3]{klenkeProbabilityTheoryComprehensive2014}.
 \end{proof}
 
-\section{Borel-Cantelli Lemmas}
+\subsection{Exercises}
+
+\begin{exercise}[Proof of Hölder's inequality]
+    \label{ex: hölder's inequality}
+    Let \(\frac1p + \frac1q = 1\) with \(p,q > 1\).
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove ``Young's inequality'': for \(a,b \ge 0\) we have
+        \[
+            ab \le \frac{a^p}p + \frac{b^q}q.
+        \]
+        \textbf{Hint:} \emph{Option 1}: Let \(x = p \log(a)\) and \(y = q \log(b)\)
+        and use convexity of the exponential function.
+        \emph{Option 2 (brute force)}: Find the minimum of 
+        the function \(f(x) = \frac{x^p}p + \frac{b^q}q - xb\).
+        \begin{solution}
+            \emph{Option 1:} Using the convexity of the exponential function,
+            \[\begin{aligned}
+                ab
+                = e^{\log(a) + \log(b)}
+                = e^{\frac1p (p\log(a)) + \frac1q (q\log(b))}
+                &\le \frac1p e^{p\log(a)} + \frac1q e^{q\log(b)}
+                \\
+                &= \frac{a^p}p + \frac{b^q}q.
+            \end{aligned}
+            \]
+            \emph{Option 2:} On \([0, \infty)\), \(f\) is convex  as \(f''(x) = (p-1)x^{p-2} \ge 0\).
+            The minimum is therefore attained at \(f'(x) = x^{p-1} - b = 0\), that is
+            at \(x_* = b^{\frac1{p-1}}\). Since \(q= \frac{p}{p-1}\) we have that \(x_*^p = b^q\).
+            \[
+                f(x_*) = \frac{b^q}p + \frac{b^q}q - b^{\frac{1}{p-1} + 1} = 0.
+            \]
+            Consequently, for all \(x \ge 0\) we have \(f(x) \ge f(x_*) = 0\).
+            In particular for \(x = a\) we have the claim.
+        \end{solution}
+
+        \item Prove ``Hölder's inequality'' (Theorem \ref{thm: Hölder inequality})
+
+        \textbf{Hint:} Apply Young's inequality to \(a =
+        \frac{\abs{X}}{\|X\|_p}\) and \(b = \frac{\abs{Y}}{\|Y\|_q}\).
+        \begin{solution}
+            Applying Young's inequality we have
+            \[
+                \frac{\abs{X}}{\|X\|_p} \cdot \frac{\abs{Y}}{\|Y\|_q}
+                \le \frac1p \Bigl(\frac{\abs{X}}{\|X\|_p}\Bigr)^p
+                + \frac1q \Bigl(\frac{\abs{Y}}{\|Y\|_q}\Bigr)^q.
+            \]
+            Taking expectation on both sides we get
+            \[
+                \frac{\Exp[\big]{\abs{XY}}}{\|X\|_p \|Y\|_q}
+                \le 
+                    \frac1p \Exp[\Big]{\Bigl(\frac{\abs{X}}{\|X\|_p}\Bigr)^p}
+                    + \frac1q \Exp[\Big]{\Bigl(\frac{\abs{Y}}{\|Y\|_q}\Bigr)^q}
+                = 
+                    \frac1p + \frac1q
+                = 1,
+            \]
+            where we use that \(\|X\|_p^p = \Exp{\abs{X}^p}\) is deterministic to move
+            it outside of the expectation. Multiplying both sides by \(\|X\|_p \|Y\|_q\)
+            implies the claim.
+        \end{solution}
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[\(L^2\)-Hilbertspace]
+    Show that 
+    \[
+        \langle [X], [Y] \rangle \coloneq \langle X, Y\rangle \coloneq \Exp{XY}
+    \]
+    defines an inner product on \(L^2\) which induces the norm \(\|\cdot\|_2\).
+    \begin{solution}
+        Clearly \(\langle X, X\rangle = \|X\|_2^2\) so the inner product induces
+        the norm \(\|\cdot\|_2\). We need to show the inner product properties:
+        \begin{enumerate}[label=(\roman*)]
+            \item\label{it: inner product positive}
+            \(\langle X, X \rangle \ge 0\) with equality if and only if \([X]=0 \overset{\text{Fact } \ref{fact: Lp zero norm}}\iff X=0\) a.s.
+            \\ \null \hfill (positive definiteness)
+            \item\label{it: inner product symmetry}
+            \(\langle X, Y \rangle = \langle Y, X \rangle\).
+            \hfill (symmetry)
+            \item\label{it: inner product linearity}
+            \(\langle aX + bY, Z \rangle = a \langle X, Z \rangle + b \langle Y, Z \rangle\)
+            for all \(a,b\in \real\).
+            \hfill (linearity in first argument)
+        \end{enumerate}
+        Property \ref{it: inner product positive} follows from \(\langle X, X\rangle = \|X\|_2^2\)
+        and this property is established in Theorem \ref{thm: seminorm properties} and
+        Fact \ref{fact: Lp zero norm}.
+        Property \ref{it: inner product symmetry} follows from the
+        commutativity of multiplication. Property \ref{it: inner product linearity}
+        follows from the linearity of expectation.
+        \(L^2\) is further a complete normed space by Fact \ref{fact: Lp complete}.
+        Consequently, \((L^2, \langle \cdot, \cdot \rangle)\) is a Hilbert space.
+    \end{solution}
+\end{exercise}
+
+
+\marginpar{\red{Lecture 2}}
+
+\section{Borel-Cantelli}
 \label{sec: borel cantelli}
 
 \subsection{Increasing and Decreasing Sequences of Events}
@@ -661,7 +799,6 @@ Thus, we are saying that there is some $i$ such that all the events $A_i,A_{i+1}
 
 So if $\limsup A_n$ does not happen, then $\liminf A_n^c$ happens and vice versa. So $(\limsup A_n)^c = \liminf A_n^c$.
 
-\section{Borel-Cantelli}
 
 \begin{theorem}[Borel-Cantelli Lemma 1]
 Let $\left(A_n\right)_{n=1}^\infty$ be sequence of events. If $\sum_{n=1}^\infty \Prob*{A_n}<\infty$ then $\Prob*{\limsup A_n}=0$.
@@ -805,23 +942,9 @@ Therefore,
 \end{proof}
 
 
-\section{Exercises}
+\subsection{Exercises}
 
-\begin{figure}[h]
-\centering
-% \includegraphics[width=\linewidth]{Figures/Rplot01.png}
-\caption{Plot of $(X_1+\cdots+X_n)/n$ for $n=1,2,\ldots,1000$. Here the random variables are $1$ with probability $1/2$ and $-1$ with probability $1/2$. $10$ simulations are shown. In all cases the sample average gets close to $0$.}
-\end{figure}
-
-\newpage
-
-
-\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 11. May 12, 2025}}
-
-
-\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 8. April 7, 2025}}
-
-\section{Drunk Men and Drunk Birds}
+\begin{exercise}[Drunk Men and Drunk Birds]
 
 There is a saying, attributed to  Japanese-American mathematician Shizuo
 Kakutani: ``A drunk man will find his way home, but a drunk bird may get lost
@@ -891,3 +1014,15 @@ Borel-Cantelli Lemma. Because the second Borel-Cantelli Lemma requires the
 events to be independent, but the events $\{S_n=0\}$ are not independent. But
 the result is true and can be proved in different ways, generally you will learn
 this in a course on Markov Chains.
+
+\end{exercise}
+
+\section{Law of Large Numbers}
+
+
+\section{Concentration inequalities}
+
+
+\section{Continuous mapping}
+
+
