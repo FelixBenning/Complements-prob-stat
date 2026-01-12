@@ -16,6 +16,15 @@
 \newtheorem{remark}[proposition]{Remark}
 %%
 
+%%% Solution
+
+
+%%% Prepare if solution
+\newif\ifsolution
+\NewDocumentEnvironment{solution}{O{Solution} +b}{\ifsolution \begin{proof}[#1] #2\end{proof}\fi}{}
+
+%%%
+
 \newcommand*{\dims}{d}
 
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
@@ -49,7 +58,7 @@
 \DeclareMathOperator{\iid}{iid}
 \newcommand*{\given}{\mid}
 
-\newcommand{\normal}[1]{{\color{blue}\boldsymbol{\mathcal{N}}}\left(#1\right)}
+\DeclarePairedDelimiterXPP{\normal}[1]{\mathcal{N}}{(}{)}{}{#1}
 \newcommand*{\uniform}{\mathcal{U}}
 \newcommand*{\Binomial}{\mathrm{Bin}}
 \newcommand*{\Poisson}{\mathrm{Poi}}
@@ -81,6 +90,7 @@
 % Numerical Analysis
 \newcommand*{\bigO}{\mathcal{O}}
 
+\newcommand{\J}[2]{\frac{\partial x_{#1}}{\partial y_{#2}}}
 
 %% =========== Color (use RGB for digital, CMYK for print) ==========
 
@@ -103,4 +113,6 @@
 % --- convenient color access ---
 \newcommand*{\colorPrimary}[2][]{{\color{primary#1} #2}}
 \newcommand*{\colorAccent}[1]{{\color{accent} #1}}
+
+
 
