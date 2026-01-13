@@ -98,11 +98,12 @@
         Dominated Convergence Theorem (DCT) are important results in Measure
         Theory for moving limits into integrals.
     }
+    \label{fig: convergence}
 \end{figure}
 
 \begin{theorem}[Convergence implications]
     \label{thm: convergence implications}
-    The following implications hold:
+    The following implications hold (see Figure \ref{fig: convergence}):
     \begin{enumerate}[label=(\alph*)]
         \item\label{it: as to p}
         If \(X_n \xrightarrow{a.s.} X\), then \(X_n \xrightarrow{p} X\).
@@ -148,8 +149,10 @@
             \\
             \overset{\text{fix } n=N}&\ge \lim_{N\to \infty} \Prob[\big]{|X_N - X| \ge \epsilon},
         \end{align*}
-        where the penultimate equality follows from \(\lim_{N\to \infty} \Prob{A_N} = \Prob[\big]{\bigcap_{N\in \nat} A_N}\).
-        for a decreasing sequence of events \(A_1 \supseteq A_2 \supseteq \ldots\).
+        where the penultimate equality follows from \(\lim_{N\to \infty}
+        \Prob{A_N} = \Prob[\big]{\bigcap_{N\in \nat} A_N}\) for a decreasing
+        sequence of events \(A_1 \supseteq A_2 \supseteq \ldots\)
+        \continuityOfMeasure.
 
         \item[\ref{it: Lq to Lp}] See Remark \ref{rem: Lp convergence}.
 
@@ -766,183 +769,230 @@ See e.g. \citep[Thm.~6.25 and 7.3]{klenkeProbabilityTheoryComprehensive2014}.
 
 \marginpar{\red{Lecture 2}}
 
-\section{Borel-Cantelli}
+\section[Borel-Cantelli]{Borel-Cantelli and almost sure convergence}
 \label{sec: borel cantelli}
 
-\subsection{Increasing and Decreasing Sequences of Events}
+In Theorem \ref{thm: convergence implications} (Figure \ref{fig: convergence}) we have
+seen that almost sure convergence implies convergence in probability. In this
+section we will discover that the speed at which the term
+\begin{equation*}
+    \Prob*{|X_n - X| \ge \epsilon}
+\end{equation*}
+converges to zero determines whether we also have almost sure convergence.
+Roughly speaking if this probability decays like \(\frac1n\) or slower, then
+we do not have almost sure convergence, while if it decays faster then we do.
 
-A sequence of events $A_1,A_2,A_3,\ldots$ is called increasing if 
-\[
-A_1\subset A_2\subset A_3\subset \ldots.
-\]
-In this case we write $A_n\uparrow \cup_m A_m$. 
+The key results to formalize this claim are known as the Borel-Cantelli lemmas.
+To state them we recall some definitions about limits of events.
+\begin{definition}[Limits of events]
+    If the sequence of events \((A_n)_{n=1}^\infty\) 
+    \begin{itemize}
+        \item is \emph{increasing}, that is \(A_1\subseteq A_2\subseteq \ldots\),
+        then we write
+        \[
+            \lim_{n\to \infty} A_n \coloneq \bigcup_{n\in \nat} A_n
+            \qquad \text{ or } \quad A_n \uparrow \bigcup_{n\in \nat} A_n.
+        \]
+        \item is \emph{decreasing}, that is \(A_1\supseteq A_2\supseteq \ldots\),
+        then we write
+        \[
+            \lim_{n\to \infty} A_n \coloneq \bigcap_{n\in \nat} A_n
+            \qquad \text{ or } \quad A_n \downarrow \bigcap_{n\in \nat} A_n.
+        \]
+    \end{itemize}
+\end{definition}
 
-A sequence of events $A_1,A_2,A_3,\ldots$ is called decreasing if 
-\[
-A_1\supset A_2\supset A_3\supset \ldots.
-\]
-In this case we write $A_n\downarrow \cap_m A_m$. 
+\begin{remark}[Continuity of the probability measure]
+    Recall that the probability measure is continuous for increasing and decreasing
+    sequences of events \continuityOfMeasure, that is
+    \[
+        \Prob[\big]{\lim_{n\to \infty} A_n}
+        = \lim_{n\to \infty} \Prob{A_n}.
+    \]
+    We have already used this in the proof that almost sure convergence implies
+    convergence in probability in Theorem \ref{thm: convergence implications}.
+\end{remark}
 
-\subsection{Infinitely Often}
+Now recall that an event \(A\) ``happens'' if \(\omega \in A\). This
+motivates the following definition.
 
-Let $A_1,A_2,A_3,\ldots$ be a sequence of events. Consider the event that infinitely many of the events $A_n$ happen. We can represent this event as
-\[
-\cap_{i=1}^\infty\cup_{j=i}^\infty A_j \;.
-\]
-Thus, we are saying that for every $u$, there is some $j\geq i$ such that $A_j$ happens. This just means that infinitely many of the events $A_n$ happen. We denote this event by $\limsup A_n$ or $[A_n \mbox{ i.o. }]$.
+\begin{definition}[``Infinitely many'' and ``eventually all'']
+    Let \((A_n)_{n=1}^\infty\) be a sequence of events. Then
+    \begin{itemize}
+        \item 
+        the \emph{limes superior}
+        is the event that infinitely many of the events \(A_n\) happen
+        \[\begin{aligned}
+            \limsup_{n\to\infty} A_n 
+            &\coloneq \bigcap_{N\in \nat} \bigcup_{n \ge N} A_n,
+            \\
+            &= \Set{\omega \in \Omega : \omega \in A_n \text{ for infinitely many } n}.
+        \end{aligned}
+        \]
+        
+        \item
+        the \emph{limes inferior}
+        is the event that eventually all of the events \(A_n\) happen
+        \[\begin{aligned}
+            \liminf_{n\to\infty} A_n 
+            &\coloneq \bigcup_{N\in \nat} \bigcap_{n \ge N} A_n,
+            \\
+            &= \Set{\omega \in \Omega : \omega \in A_n \text{ for all \(n\) after some } N\in \nat}.
+        \end{aligned}
+        \]
+    \end{itemize}
+\end{definition}
 
-Similarly we can define the $\liminf$ of a sequence of events.
-\[
-\liminf A_n = \cup_{i=1}^\infty\cap_{j=i}^\infty A_j \;.
-\]
-Thus, we are saying that there is some $i$ such that all the events $A_i,A_{i+1},A_{i+2},\ldots$ happens.
+To better understand these definitions it is helpful to convince yourself of the
+following properties and compare the limes superior/inferior for sets with
+its analogue for real-valued sequences.
 
-So if $\limsup A_n$ does not happen, then $\liminf A_n^c$ happens and vice versa. So $(\limsup A_n)^c = \liminf A_n^c$.
-
-
-\begin{theorem}[Borel-Cantelli Lemma 1]
-Let $\left(A_n\right)_{n=1}^\infty$ be sequence of events. If $\sum_{n=1}^\infty \Prob*{A_n}<\infty$ then $\Prob*{\limsup A_n}=0$.
-\end{theorem}
-
-
-\begin{theorem}[Bore-Cantelli Lemma 2]
-Let $\left(A_n\right)_{n=1}^\infty$ be sequence of \textbf{independent} events. If $\sum_{n=1}^\infty \Prob*{A_n}=\infty$, then $\Prob*{\limsup A_n}=1$.
-\end{theorem}
-
-
-\begin{proof}[Borel Cantelli 1]
-Let $(A_n)_{n=1}^\infty$ be a sequence of events.\\
-Suppose
-\[
-\sum_{n=1}^\infty \Prob*{A_n} < \infty \;.
-\]
-Let $A$ denote the event that infinitely many $A_n$s happen. Thus
-\[
-A = [A_n \mbox{ i.o. }] =
-\bigcap_{i=1}^\infty \bigcup_{j=i}^\infty A_i \;.
-\]
-We need to show that 
-\[
-\Prob*{A}=0\;.
-\]
-For $i=1,2,3,\ldots$ let
-\[
-B_i \coloneqq \cup_{j=i}^\infty A_j\;.
-\]
-The events $B_i$s are decreasing: $B_{i}$ involves union of more events than $B_{i+1}$. Thus
-\[
-B_1\supset B_2\supset \cdots \downarrow A\;.
-\]
-Therefore
-\[
-\Prob*{A} = \lim_{i\to\infty} \Prob*{B_i}\;.
-\]
-We have
-\[
-\Prob*{B_i}\leq\sum_{j=i}^\infty\Prob*{A_j}\;.
-\]
-Since $\sum_{n=1}^\infty\Prob*{A_n}<\infty$,
-we have
-\[
-\lim_{i\to\infty}\sum_{j=i}^\infty\Prob*{A_j}=0\;.
-\]
-Therefore,
-\[
-\lim_{i\to\infty}\Prob*{B_i}=0\;.
-\]
-
+\begin{lemma}[Liminf and limsup properties]
+    \label{lem: liminf and limsup properties}
+    We have
+    \begin{enumerate}[label=(\roman*)]
+        \item \(\liminf_n A_n \subseteq \limsup_n A_n\),
+        \item \((\limsup_n A_n)^\complement = \liminf_n A_n^\complement\),
+        \item \(\limsup_n \Indicator{A_n}(\omega) = \Indicator*{\limsup_n A_n}(\omega)\) for all \(\omega \in \Omega\),
+        \item \(\liminf_n \Indicator{A_n}(\omega) = \Indicator*{\liminf_n A_n}(\omega)\) for all \(\omega \in \Omega\).
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    Exercise \ref{ex: liminf and limsup properties}. Note that indicators are always in \(\{0,1\}\)
+    and use the definition of the limits superior and inferior.
 \end{proof}
 
 
-\begin{proof}[Borel Cantelli 2]
-Let $(A_n)_{n=1}^\infty$ be a sequence of independent events.\\
-This means, for any set of integers $\{n_1,n_2,\cdots,n_k\}$ we have
+
+\begin{theorem}[Borel-Cantelli Lemmas]
+    \label{thm: borel-cantelli}
+    Let \((A_n)_{n=1}^\infty\) be a sequence of events. Then
+    \begin{alignat}{3}
+        \tag{BC-1}\label{eq: borel cantelli 1}
+        \sum_{n=1}^\infty \Prob*{A_n}<\infty& \quad & \implies & \quad & \Prob[\Big]{\limsup_{n\to \infty} A_n}=0.
+    \intertext{
+        If the events \(A_n\) are further \textbf{independent} events, then
+    }
+        \tag{BC-2}\label{eq: borel cantelli 2}
+        \sum_{n=1}^\infty \Prob{A_n}=\infty& &\implies& &\Prob[\Big]{\limsup_{n\to \infty} A_n}=1.
+    \end{alignat}
+\end{theorem}
+
+A direct consequence of the Borel-Cantelli lemmas \eqref{eq: borel cantelli 1} and
+\eqref{eq: borel cantelli 2} is the following \(0\)-\(1\) law.
+
+\begin{corollary}[Borel-Cantelli \(0\)-\(1\) law]
+    \label{cor: borel cantelli 0-1 law}
+    Let \((A_n)_{n=1}^\infty\) be a sequence of independent events. Then 
+    \[
+        \Prob[\Big]{\limsup_{n\to \infty} A_n} \in \{0,1\}
+        \quad\text{and}\quad
+        \Prob[\Big]{\liminf_{n\to \infty} A_n} \in \{0,1\}.
+    \]
+    Consequently, if the probability is greater zero it must be one!
+\end{corollary}
+\begin{proof}
+    Exercise \ref{ex: borel cantelli 0-1 law}.
+\end{proof}
+
+\begin{remark}[Kolmogorov's \(0\)-\(1\) law]
+    \label{rem: kolmogorov 0-1 law}
+    The Borel-Cantelli \(0\)-\(1\) law is a special case of Kolmogorov's \(0\)-\(1\) law
+    about ``tail events'' \citep[Thm.~2.37, Cor.~2.38]{klenkeProbabilityTheoryComprehensive2014},
+    as the liminf and limsup are such ``tail events''.
+\end{remark}
+
+
+\begin{proof}[Proof of Borel-Cantelli (Theorem \ref{thm: borel-cantelli})]
+Let \((A_n)_{n=1}^\infty\) be a sequence of events with
+\(\sum_{n=1}^\infty \Prob*{A_n} < \infty\). Observe that
+a smaller and smaller union of events is a decreasing sequence and consequently
+\begin{align*}
+    \Prob[\Big]{\limsup_{n\to \infty} A_n}
+    = \Prob[\Big]{ \lim_{N\to\infty} \bigcup_{n \ge N} A_n }
+    &= \lim_{N\to\infty} \Prob[\Big]{\bigcup_{n \ge N} A_n}
+    \\
+    &\le \lim_{N\to\infty} \sum_{n=N}^\infty \Prob{A_n}
+    = 0.
+\end{align*}
+This proves the first Borel-Cantelli lemma \eqref{eq: borel cantelli 1}.
+For the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2}
+let $(A_n)_{n=1}^\infty$ be a sequence of independent events. By
+Lemma \ref{lem: liminf and limsup properties} we have
 \[
-\Prob*{A_{n_1}\cap A_{n_2}\cap \cdots A_{n_k}}
-= \Prob*{A_{n_1}} \cdot \Prob*{A_{n_2}} \cdot \cdots \Prob*{A_{n_k}} \;.
+    \Prob[\Big]{\limsup_{n\to \infty} A_n}
+    = 1 - \Prob[\Big]{\liminf_{n\to \infty} A_n^\complement}
 \]
-Let $A$ denote the event that infinitely many $A_n$s happen. Thus
+we can therefore equivalently show that the liminf has probability zero.
+For this we start like in the first Borel-Cantelli lemma by observing that
+a larger and larger intersection of events is an increasing sequence and consequently
 \[
-A = [A_n \mbox{ i.o. }] = \bigcap_{i=1}^\infty \bigcup_{j=i}^\infty A_i \;.
+    \Prob[\Big]{\liminf_{n\to \infty} A_n^\complement}
+    = \Prob[\Big]{ \lim_{N\to\infty} \bigcap_{n \ge N} A_n^\complement }
+    = \lim_{N\to\infty} \Prob[\Big]{\bigcap_{n \ge N} A_n^\complement}
 \]
-Suppose 
+On this intersection we would like to use the independence of the events \(A_n\)
+and consequently the independence of the events \(A_n^\complement\) (Exercise \ref{ex: independent complements}). However
 \[
-\sum_{n=1}^\infty \Prob*{A_n} = \infty\;.
+    \Prob{A_N^\complement\cap \cdots \cap A_{N+k}^\complement}
+    = \Prob{A_N^\complement} \cdots \Prob{A_{N+k}^\complement}.
 \]
-We want to show that 
+is only true for finite \(k\). We work around this issue with the following
+trick:
 \[
-\Prob*{A} = 1\;.
+    \bigcap_{n \ge N} A_n^\complement
+    = \bigcap_{k\in \nat} \bigcap_{n=N}^{k} A_n^\complement
+    = \lim_{k\to\infty} \bigcap_{n=N}^{k} A_n^\complement,
 \]
-For $i=1,2,3,\ldots$ let
+where we use that \(\bigcap_{n=N}^{k} A_n^\complement\) is a decreasing sequence in \(k\).
+Using the continuity of the probability measure and independence we therefore obtain
 \[
-B_i \coloneqq \cup_{j=i}^\infty A_i\;.
+    \Prob[\Big]{\liminf_{n\to \infty} A_n^\complement}
+    = \lim_{N\to\infty} \lim_{k\to\infty} \Prob[\Big]{\bigcap_{n=N}^{k} A_n^\complement}
+    = \lim_{N\to\infty} \lim_{k\to\infty} \prod_{n=N}^{k} \Prob{A_n^\complement}.
 \]
-Therefore
+With the bound \(1+x \le e^x\) for \(x\in \real\) we can bound each term
 \[
-B_1\supset B_2\supset \cdots \downarrow A\;.
+\Prob{A_n^\complement} = 1-\Prob{A_n} \le e^{-\Prob*{A_n}}
 \]
-To show $\Prob*{A}=1$ we will show that $\Prob*{A^c}=0$. We observe that
+and obtain
 \[
-A^c = \bigcup_{i=1}^\infty \bigcap_{j=i}^\infty A_i^c\;.
+    \prod_{n=N}^{k} \Prob{A_n^\complement} \le \exp\Bigl(-\sum_{n=N}^{k} \Prob{A_n}\Bigr).
 \]
-We also
+Since \(\sum_{n=1}^\infty \Prob*{A_n} = \infty\) and \(\exp(-x) \to 0\) as \(x\to \infty\)
+we have
 \[
-B_i^c = \cap_{j=i}^\infty A_i^c\;,
+    \lim_{k\to \infty} \prod_{n=N}^{k} \Prob{A_n^\complement}
+    \le \lim_{k\to \infty} \exp\Bigl(-\sum_{n=N}^{k} \Prob{A_n}\Bigr) = 0
 \]
-and 
+This finally implies
 \[
-B_1^c\subset B_2^c\subset \cdots \uparrow A^c\;.
-\]
-Therefore
-\[
-\Prob*{B_i^c}\uparrow\Prob*{A^c}\;.
-\]
-Therefore, it is enough to show that 
-$\Prob*{B_i^c}=0$ for all $i$. We fix an $i$. 
-For $m=i,i+1,i+2,\ldots$ let 
-\[
-C_m \coloneqq \cap_{j=i}^m A_i^c\;.
-\]
-Thus
-\[
-C_i \supset C_{i+1} \supset \cdots \downarrow B_i^c\;.
-\]
-Thus 
-\[
-\Prob*{B_i^c} = \lim_{m\to\infty} \Prob*{C_m}\;.
-\]
-By independence of the events $A_i$s we have
-\[
-\Prob*{C_m} = \prod_{j=i}^m \Prob*{A_i^c} \;.
-\]
-\begin{tcolorbox}
-We are using $A_i^c$s are independent. This follows from the fact that $A_i$s are independent.
-\end{tcolorbox}
-We observe that
-\[
-\Prob*{A_i^c} = 1-\Prob*{A_i} \leq e^{-\Prob*{A_i}}\;.
-\]
-Therefore,
-\[
-\Prob*{C_m}\leq\exp\left(-\sum_{j=i}^m \Prob*{A_i}\right)\;.
-\]
-Since $\sum_{n=1}^\infty \Prob*{A_n} = \infty$,
-\[
-\lim_{m\to\infty}\sum_{j=i}^m\Prob*{A_i}=\infty\;.
-\]
-Therefore,
-\[
-\lim_{m\to\infty} \Prob*{C_m} = 0\;.
-\]
-Therefore, 
-\[
-\Prob*{B_i^c}=0
-\;.
+    \Prob[\Big]{\liminf_{n\to \infty} A_n^\complement}
+    = \lim_{N\to\infty} \lim_{k\to\infty} \prod_{n=N}^{k} \Prob{A_n^\complement}
+    = \lim_{N\to\infty} 0 = 0.
+    \qedhere
 \]
 \end{proof}
 
 
 \subsection{Exercises}
+
+\begin{exercise}[Liminf and Limsup Properties]
+    \label{ex: liminf and limsup properties}
+    Prove Lemma \ref{lem: liminf and limsup properties}. 
+\end{exercise}
+
+\begin{exercise}[Borel-Cantelli \(0\)-\(1\) law]
+    \label{ex: borel cantelli 0-1 law}
+    Prove Corollary \ref{cor: borel cantelli 0-1 law}.
+\end{exercise}
+
+\begin{exercise}[Independent Complements]
+    \label{ex: independent complements}
+    Let \((A_n)_{n=1}^\infty\) be a sequence of independent events. Show that
+    the sequence of complementary events \((A_n^\complement)_{n=1}^\infty\)
+    is also a sequence of independent events.
+\end{exercise}
 
 \begin{exercise}[Drunk Men and Drunk Birds]
 
@@ -1022,6 +1072,19 @@ this in a course on Markov Chains.
 
 \section{Concentration inequalities}
 
+Observe that quantitative bounds on 
+\(
+    \Prob*{|X_n - X| \ge \epsilon}
+\)
+are somehow more useful than just knowing (the rate of) convergence. This
+is because \(n\), albeit possibly very large, is always finite in practice. It
+is therefore often much more meaningful to make ``probably, approximately
+correct'' (PAC) statements, that is
+
+\begin{quote}
+``with probability at least \(1-\delta\), we have \(|X_n - X| < \epsilon\) for a
+specific \(n\in \nat\)''.
+\end{quote}
 
 \section{Continuous mapping}
 
