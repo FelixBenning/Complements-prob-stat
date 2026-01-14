@@ -282,7 +282,7 @@
         X_n \coloneq (-1)^n X
     \]
     Prove that
-    \begin{enumerate}[label=(\alph*)]
+    \begin{enumerate}[label=(\alph*), noitemsep]
         \item \(X_n \xrightarrow{d} X\)
         \begin{solution}
             Observe that the distribution of \(X\) is symmetric, that is
@@ -325,7 +325,7 @@
         X_n \coloneq n \Indicator{[0, 1/n)}(U)
     \]
     Show that
-    \begin{enumerate}[label=(\alph*)]
+    \begin{enumerate}[label=(\alph*), noitemsep]
         \item the sequence $X_n$ converges to $0$ in probability,
         \begin{solution}
             We have for any \(\epsilon > 0\)
@@ -388,7 +388,7 @@
         m \coloneq \lfloor\log_2(n)\rfloor, \quad k \coloneq n - 2^m. 
     \]
     Show that
-    \begin{enumerate}[label=(\alph*)]
+    \begin{enumerate}[label=(\alph*), noitemsep]
         \item \(X_n \xrightarrow{L^p} 0\),
         \begin{solution}
             We have for any \(p \ge 1\)
@@ -442,6 +442,54 @@
     \end{enumerate}
 \end{exercise}
 
+\begin{exercise}[Stochastic limits are unique]
+    \label{ex: unique stochastic limits}
+    Show that
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item if \(X_n \overset{p}\to X\) and \(X_n \overset{p}\to Y\), then
+        \(\Prob{X = Y}=1\).
+    \end{enumerate}
+    Deduce
+    \begin{enumerate}[label=(\alph*), resume,noitemsep]
+        \item if \(X_n \overset{\as}\to X\) and \(X_n \overset{\as}\to Y\), then \(\Prob{X = Y}=1,\)
+        \item if \(X_n \overset{L^p}\to X\) and \(X_n \overset{L^p}\to Y\), then \(\Prob{X = Y}=1.\)
+    \end{enumerate}
+    Finally, 
+    \begin{enumerate}[label=(\alph*), resume, noitemsep]
+        \item show that the statement is not true for convergence in
+        distribution.
+    \end{enumerate}
+    \noindent\textbf{Hint:} Recall the proof of unique deterministic limits in Analysis
+    and use the stochastic triangle inequality (Exercise \ref{ex: stochastic
+    triangle}).
+\end{exercise}
+
+\begin{exercise}[Stochastic triangle inequality]
+    \label{ex: stochastic triangle}
+    For random variables \(X,Y,Z\) show that for all \(\epsilon > 0\)
+    \[
+        \Prob*{|X - Z| \ge \epsilon} \le \Prob*{|X - Y| \ge \tfrac\epsilon2} + \Prob*{|Y - Z| \ge \tfrac\epsilon2}.
+    \] 
+    \textbf{Hint:} Use set inclusions.
+    \begin{solution}
+        The claim follows directly from
+        \[
+            \Set{|X - Z| \ge \epsilon}
+            \subseteq \Set{|X - Y| \ge \tfrac\epsilon2} \cup \Set{|Y - Z| \ge \tfrac\epsilon2},
+        \]
+        which is proven using that \(A \subseteq B\) is equivalent
+        to \(B^\complement \subseteq A^\complement\) and
+        \begin{align*}
+            \Bigl(\Set{|X - Y| \ge \tfrac\epsilon2} \cup \Set{|Y - Z| \ge \tfrac\epsilon2}\Bigr)^\complement
+            &=\Set{|X - Y| < \tfrac\epsilon2} \cap \Set{|Y - Z| < \tfrac\epsilon2}
+            \\
+            &\subseteq \Set{|X - Z| < \epsilon}
+            \\
+            &= \Set{|X - Z| \ge \epsilon}^\complement.
+        \end{align*}
+        The standard triangle inequality is used for the inclusion step.
+    \end{solution}
+\end{exercise}
 
 
 % \begin{exercise}[Polya's urn model]
@@ -680,6 +728,21 @@ Using this inequality we can now prove Theorem \ref{thm: seminorm properties}
 See e.g. \citep[Thm.~6.25 and 7.3]{klenkeProbabilityTheoryComprehensive2014}.
 \end{proof}
 
+Note that for any \(X,Y\in [X] \in L^p\) we have \(\Prob{X=Y}=1\)
+and recall that limits in probability were unique in the same sense
+(Exercise \ref{ex: unique stochastic limits}).
+This calls for the following definition
+
+\begin{definition}[Almost surely equal]
+    We say that two random variables \(X\) and \(Y\) are
+    \emph{almost surely equal} if \(\Prob{X=Y}=1\).
+    We write \(X\overset{\as}= Y\).
+\end{definition}
+
+Since most equations in probability theory only hold almost surely, this caveat
+is often omitted and one simply writes \(X=Y\), blurring the lines
+between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
+
 \subsection*{Exercises}
 
 \begin{exercise}[Proof of Hölder's inequality]
@@ -775,6 +838,32 @@ See e.g. \citep[Thm.~6.25 and 7.3]{klenkeProbabilityTheoryComprehensive2014}.
     \end{solution}
 \end{exercise}
 
+\begin{exercise}[Projection in \(L^2\)]
+    \label{ex: projection in L2}
+    Identifying deterministic random variables with real numbers
+    we have \(\real \subseteq \cL^2\). Identify \(\real\) with \(\Set{[x]:
+    x\in\real} \subseteq L^2\).
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item show that \(\real\) and \(\real^\perp \coloneq \Set{[X] \in L^2 :
+        \Exp{X}=0}\) are orthogonal subspaces of \(L^2\) with \(L^2 = \real
+        \oplus \real^\perp\),
+        \item show that the orthogonal projection onto \(\real\) is given by
+        \[
+            \E \colon \begin{cases}
+                L^2 \to \real,
+                \\
+                [X] \mapsto \Exp{X}.
+            \end{cases}
+        \]
+
+        \item Let \(\pi : L^2 \to \real^\perp\) be the orthogonal projection
+        onto \(\real^\perp\). Show that
+        \[
+            \Cov(X,Y) = \langle \pi(X), Y\rangle = \langle X, \pi(Y)\rangle = \langle \pi(X), \pi(Y)\rangle
+        \]
+        In particular \(\Cov\) coincides with the inner product on \(\real^\perp\)!
+    \end{enumerate}
+\end{exercise}
 
 \marginpar{\red{Lecture 2}}
 
@@ -896,7 +985,7 @@ its analogue for real-valued sequences.
 A direct consequence of the Borel-Cantelli lemmas \eqref{eq: borel cantelli 1} and
 \eqref{eq: borel cantelli 2} is the following \(0\)-\(1\) law.
 
-\begin{corollary}[Borel-Cantelli \(0\)-\(1\) law]
+\begin{corollary}[Borel's \(0\)-\(1\) law]
     \label{cor: borel cantelli 0-1 law}
     Let \((A_n)_{n=1}^\infty\) be a sequence of independent events. Then 
     \[
@@ -1158,7 +1247,15 @@ Our next result shows that this is mostly the case.
 
 \begin{theorem}[Continuous mapping]
     \label{thm: continuous mapping}
-    
+    Let \(f\) be a continuous function, \((X_n)_{n\in \nat}\) a sequence of
+    random variables and \(X\) another random variable. Then
+    \begin{enumerate}[label=(\roman*)]
+        \item \(X_n \overset{\as}\to X\) implies \(f(X_n) \overset{\as}\to f(X)\).
+        \item \(X_n \overset{p}\to X\) implies \(f(X_n) \overset{p}\to f(X)\).
+        \item \(X_n \overset{d}\to X\) implies \(f(X_n) \overset{d}\to f(X)\).
+        \item If \(f\) is \underline{Lipschitz} continuous and \(X_n \overset{L^p}\to X\),
+        then \(f(X_n) \overset{L^p}\to f(X)\).
+    \end{enumerate}
 \end{theorem}
 
 
@@ -1173,8 +1270,7 @@ is therefore the following theorem that shows that for most convergence
 concepts the convergence of the components is sufficient.
 
 \begin{theorem}[Joint convergence]
-    \label{thm: joint convergence}
-    Convergence of vectors follows from convergence of the components:
+    \label{thm: joint convergence} We have
     \begin{enumerate}[label=(\roman*)]
         \item \label{it: as}
         If \(X_n \overset{\as}\to X\) and \(Y_n \overset{\as}\to Y\),
@@ -1207,37 +1303,15 @@ continuous mapping} is ``Slutsky's theorem'':
 In the rest of this section we prove the Theorems \ref{thm: continuous mapping}
 and \ref{thm: joint convergence}.
 
-
-\begin{lemma}[Probabilistic triangle inequality]
-    For random variables \(X,Y,Z\) we have for all \(\epsilon > 0\)
-    \[
-        \Prob*{|X - Z| \ge \epsilon} \le \Prob*{|X - Y| \ge \tfrac\epsilon2} + \Prob*{|Y - Z| \ge \tfrac\epsilon2}.
-    \] 
-\end{lemma}
-\begin{proof}
-    The claim follows directly from
-    \[
-        \Set{|X - Z| \ge \epsilon}
-        \subseteq \Set{|X - Y| \ge \tfrac\epsilon2} \cup \Set{|Y - Z| \ge \tfrac\epsilon2},
-    \]
-    which is proven using that \(A \subseteq B\) is equivalent
-    to \(B^\complement \subseteq A^\complement\) and
-    \begin{align*}
-        \Bigl(\Set{|X - Y| \ge \tfrac\epsilon2} \cup \Set{|Y - Z| \ge \tfrac\epsilon2}\Bigr)^\complement
-        &=\Set{|X - Y| < \tfrac\epsilon2} \cap \Set{|Y - Z| < \tfrac\epsilon2}
-        \\
-        &\subseteq \Set{|X - Z| < \epsilon}
-        \\
-        &= \Set{|X - Z| \ge \epsilon}^\complement.
-    \end{align*}
-    The standard triangle inequality is used for the inclusion step.
-\end{proof}
 \begin{lemma}[Pull along]
     \(|X_n - Y_n| \overset{p}\to 0\) and \(X_n \overset{d}\to X\) implies \(Y_n \overset{d}\to X\).
 \end{lemma}
+\begin{proof}
+    
+\end{proof}
 
 \begin{proof}[Proof of Theorem \ref{thm: continuous mapping}]
-
+    
 \end{proof}
 
 \begin{proof}[Proof of Theorem \ref{thm: joint convergence}]
@@ -1255,6 +1329,14 @@ and \ref{thm: joint convergence}.
         X_n + Y_n \overset{d}{\not\to} X + X = 2X.
     \]
     Conclude that \((X_n, Y_n)\) does not converge to \((X,X)\) in distribution.
+\end{exercise}
+
+\begin{exercise}[Hölder continuos functions]
+    Let \(f\) be a Hölder continuous function. That is
+    \[
+        |f(x) - f(y)| \le L |x-y|^\alpha
+    \]
+    Show that \(X_n \overset{L^p}\to X\) implies \(f(X_n) \overset{L^q}\to f(X)\) for \(q = \frac{p}{\alpha}\).
 \end{exercise}
 
 \section{Law of Large Numbers}
@@ -1475,25 +1557,27 @@ to the elements of the sequence in between.
 In Theorem \ref{thm: strong law of large numbers} we still assumed that the
 random variables are in \(L^2\). And if you want to work with
 ``uncorrelated'' random variables this cannot be avoided as the covariance
-is otherwise undefined. However, if you are willing to assume independence
-then the strong law of large numbers also holds under the weaker assumption
-that the random variables are in \(L^1\).
+is otherwise undefined. However, if you are willing to assume pairwise
+independence then the strong law of large numbers also holds under the weaker
+assumption that the random variables are in \(L^1\).
 
 \begin{theorem}[Etemadi's Strong law of large numbers]
-    Let \((X_n)_{n\in \nat}\) be a sequence of iid random variables
+    Let \((X_n)_{n\in \nat}\) be a sequence of identically distributed,
+    \underline{pairwise} independent random variables
     in \(\cL^1\). Then \(\mean{X}_n \overset{\as}\to \E[X_1]\).
 \end{theorem}
 \begin{proof}[Proof (sketch)]
     The main idea is to define the truncated random variables \(Y_n \coloneq
     \Indicator{|X_n| \le n} X_n\). Then the variance of every \(Y_n\) is
-    finite although the variance is increasing in \(n\). Using
-    Borel-Cantelli it is possible to show that eventually all \(Y_n\) are equal to \(X_n\).
-    Then one proves the strong law of large numbers for the \(Y_n\). We can
-    unfortunately not apply Theorem \ref{thm: strong law of large numbers} here
-    since it requires a uniform bound on the variances, which are increasing
-    here.  The trick is to select an even sparser subsequence such that the
-    growing variance still results in a summable series when applying the
-    Chebyshev inequality. See \citep[Thm.~5.17]{klenkeProbabilityTheoryComprehensive2014}
+    finite although the variance is increasing in \(n\). The \(Y_n\) as
+    functions of pairwise independent random variables are also pairwise
+    independent and consequently uncorrelated.
+    Using Borel-Cantelli it is possible to show that eventually all \(Y_n\) are
+    equal to \(X_n\). Then one proves the strong law of large numbers for the
+    \(Y_n\). We can unfortunately not apply Theorem \ref{thm: strong law of
+    large numbers} since it requires a uniform bound on the variances and
+    the variances are increasing here. For details see e.g.\
+    \citep[Thm.~5.17]{klenkeProbabilityTheoryComprehensive2014}.
 \end{proof}
 
 \subsection*{Exercises}
