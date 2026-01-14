@@ -26,9 +26,11 @@
 %%%
 
 \newcommand*{\dims}{d}
+\renewcommand{\complement}{c}
 
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 \DeclarePairedDelimiter{\Set}{\{}{\}}
+\DeclarePairedDelimiter{\norm}{\|}{\|}
 \DeclarePairedDelimiterXPP{\Exp}[1]{\E}{[}{]}{}{#1}
 \DeclarePairedDelimiterXPP{\Var}[1]{\mathrm{Var}}{[}{]}{}{#1}
 \DeclarePairedDelimiterXPP{\Prob}[1]{\Pr}{(}{)}{}{#1}
@@ -58,10 +60,18 @@
 \DeclareMathOperator{\iid}{iid}
 \newcommand*{\given}{\mid}
 
+\newcommand*{\cL}{\mathcal{L}}
+
 \DeclarePairedDelimiterXPP{\normal}[1]{\mathcal{N}}{(}{)}{}{#1}
 \newcommand*{\uniform}{\mathcal{U}}
 \newcommand*{\Binomial}{\mathrm{Bin}}
 \newcommand*{\Poisson}{\mathrm{Poi}}
+\newcommand*{\bernoulli}{\mathrm{Ber}}
+
+\newcommand*{\as}{\text{a.s.}}
+
+% statistics
+\newcommand*{\mean}{\overline}
 
 % random functions
 \newcommand*{\rf}{\mathbf{f}}
@@ -119,6 +129,5 @@
 %% References
 
 \newcommand*{\continuityOfMeasure}{(Proposition 12 in Ivan's lecture)}
-
 
 
