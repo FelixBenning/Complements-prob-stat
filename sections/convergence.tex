@@ -60,37 +60,43 @@
 \begin{figure}
     \centering
     \begin{tikzcd}[
-        % 1. Global Node Styling
+        every matrix/.append style={name=m},
         cells={nodes={
             draw, 
             rectangle, 
             rounded corners, 
             align=center, 
             minimum width=2.5cm, 
-            inner sep=6pt
+            inner sep=5pt
         }},
         % 2. Spacing between nodes
         row sep=0.6cm,
-        column sep=0.9cm,
+        column sep=1.1cm,
         % 3. Global Arrow Styling
+        execute at end picture={
+            \draw[dashed, thick, gray] 
+            ($(m-1-2.north east)!0.5!(m-1-3.north west) + (0.1, 0.1)$) -- 
+            ($(m-1-2.south east)!0.5!(m-1-3.south west) + (0.1, -2)$)
+            node[midway, fill=white, text=gray, font=\footnotesize, xshift=-39,yshift=-40] {a.s.\ unique limits};
+        }
     ]
         % --- Row 1 ---
         \parbox{2.1cm}{Almost sure convergence}
         \arrow[r, Rightarrow]{}{\text{\ref{it: as to p}}}
         \arrow[d,xshift=-20]{}{\text{MCT/DCT}}
         & \parbox{2.3cm}{Convergence in probability}
-        \arrow[r, Rightarrow] {}{\ref{it: p to d}}
+        \arrow[r, Rightarrow] {}[xshift=-4]{\ref{it: p to d}}
         \arrow[l, out=190, in=350, looseness=1] {}[below,yshift=-2]{\text{Borel-Cantelli}}
         & \parbox{2.4cm}{Convergence in distribution} 
-        \arrow[l, out=220, in=340, looseness=1] {}[below,xshift=10,yshift=-2]{X \equiv c \in \real \text{ \ref{it: d to p}}}
+        \arrow[l, out=220, in=340, looseness=1] {}[below,xshift=13,yshift=-2]{X \equiv c \in \real \text{ \ref{it: d to p}}}
         \\
         
         % --- Row 2 ---
         % The loop is defined here on the Lp node
         $L^p$-convergence, $p \ge 1$
-        \arrow[r, Rightarrow] {}{\text{\ref{it: Lq to Lp}}}
+        \arrow[ur, Rightarrow, out=360, in=240] {}[below,xshift=2]{\text{\ref{it: L1 to p}}}
         \arrow[loop below, Rightarrow, looseness=4, out=220, in=290,xshift=-10]{}[xshift=15,yshift=-3]{L_q \overset{\ref{it: Lq to Lp}}\implies L_p \; (p \le q)}
-        & $L^1$ \text{ convergence} \arrow[u, Rightarrow] {} {\text{\ref{it: L1 to p}}}
+        % & $L^1$ \text{ convergence} \arrow[u, Rightarrow] {} {\text{\ref{it: L1 to p}}}
     \end{tikzcd}
     \caption{
         Implications among different modes of convergence (Thm.~\ref{thm:
@@ -801,7 +807,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
     \begin{enumerate}[label=(\alph*)]
         \item Prove ``Young's inequality'': for \(a,b \ge 0\) we have
         \[
-            ab \le \frac{a^p}p + \frac{b^q}q.
+            ab \le \tfrac{a^p}p + \tfrac{b^q}q.
         \]
         \textbf{Hint:} \emph{Option 1}: Let \(x = p \log(a)\) and \(y = q \log(b)\)
         and use convexity of the exponential function.
