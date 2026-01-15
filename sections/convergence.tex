@@ -117,6 +117,10 @@
         If \(X\) is deterministic, that is \(X \equiv c\in \real\) almost surely, then
         \(X_n \xrightarrow{d} X\) implies \(X_n \xrightarrow{p} X\).
     \end{enumerate}
+    See Exercises \ref{ex: convergence in distribution but not in probability},
+    \ref{ex: convergence in probability but not in Lp}, \ref{ex: convergence in
+    Lp but not as} and \ref{ex: as but not Lp} for counterexamples showing that
+    we have not forgotten any implications in Figure \ref{fig: convergence}.
 \end{theorem}
 \begin{proof}
     \begin{enumerate}[wide]
@@ -171,7 +175,7 @@
             \label{eq: lower bound for p to d}
             \Set{X \le x - \epsilon}
             \subseteq \Set{X_n \le x}
-            \cup \Set[\big]{|X_n - X| > \epsilon}
+            \cup \Set[\big]{|X_n - X| > \epsilon}.
         \end{equation}
         Consequently, we have
         \begin{align*}
@@ -277,6 +281,7 @@
 \subsection*{Exercises}
 
 \begin{exercise}[Convergence in distribution but not probability]
+    \label{ex: convergence in distribution but not in probability}
     Let \(X\sim \normal{0,1}\) and define
     \[
         X_n \coloneq (-1)^n X
@@ -320,7 +325,8 @@
 \end{exercise}
 
 \begin{exercise}[Convergence in probability but not \(L^p\)]
-    Let \(U\sim \uniform([0,1))\) be a standard uniform random variable and define
+    \label{ex: convergence in probability but not in Lp}
+    Let \(U\sim \uniform(0,1)\) be a standard uniform random variable and define
     \[
         X_n \coloneq n \Indicator{[0, 1/n)}(U)
     \]
@@ -364,8 +370,9 @@
         \end{enumerate}
 \end{exercise}
 
-\begin{exercise}[Convergence in \(L^p\) and probability but not almost surely] 
-    Let \(U\sim \uniform([0,1))\) be a standard uniform random variable.
+\begin{exercise}[Convergence in \(L^p\) but not almost surely] 
+    \label{ex: convergence in Lp but not as}
+    Let \(U\sim \uniform(0,1)\) be a standard uniform random variable.
     We will scan the interval for \(U\) with increasingly fine measurements. Specifically,
     let
     \begin{alignat*}{7}
@@ -491,6 +498,49 @@
     \end{solution}
 \end{exercise}
 
+\begin{exercise}[Stochastic Simulation]
+    \label{ex: stochastic simulation}
+    The goal is to simulate a random variable \(X\) with cumulative distribution 
+    function \(F(x) = \Prob{X \le x}\) using a standard uniform random variable
+    \(U\sim \uniform(0,1)\). We define the generalized inverse of \(F\) as
+    \[
+        F^{\leftarrow}(p) \coloneq \inf\{x \in \real : F(x) \ge p\}, \quad p \in (0,1).
+    \]
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item Show that if \(F\) is invertible, then \(F^{\leftarrow}(p) = F^{-1}(p)\) for all
+        \(p \in (0,1)\).
+        \item Show that \(F^{\leftarrow}\) is non-decreasing.
+        \item Show \(F^{\leftarrow}(F(x)) \le x\) for all \(x \in \real\).
+        \item \(F(F^{\leftarrow}(p)) \ge p\) for all \(p \in (0,1)\).
+        \item \(F^{\leftarrow}(p) \le x\) if and only if \(p \le F(x)\).
+        \item The the distribution of \(X\coloneq F^{\leftarrow}(U)\) is \(F\), that is
+        \[
+            F(x) = \Prob{X \le x}
+            \qquad \forall x \in \real.
+        \]
+        \item Propose a way to simulate an exponential distribution \(X \sim
+        \exponential(\lambda)\) using a standard uniform random variable \(U\sim
+        \uniform(0,1)\).
+    \end{enumerate}
+    \textbf{Hint:} Use the properties of cumulative distribution functions \(F\).
+\end{exercise}
+
+\begin{exercise}[Skorokhod's representation theorem]
+    \label{ex: skorokhod representation}
+    Let \((X_n)_{n \in \nat}\) be a sequence of random variables in \(\real\)
+    such that \(X_n \xrightarrow{d} X\). Show that there exist random variables
+    \((Y_n)_{n\in \nat}\) and \(Y\), where the \(Y_n\) and \(Y\) are all defined on the
+    same probability space such that
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item \(Y_n \overset{d}= X_n\) for all \(n\in \nat\) and \(Y \overset{d}= X\),
+        \item \(Y_n \overset{\as}\to Y\).
+    \end{enumerate}
+    \textbf{Hint:} Use \(F_n(x) = \Prob{X_n \le x}\) and Exercise \ref{ex: stochastic simulation}.
+    \begin{remark}
+        We assume \(X_n\) in \(\real\) to simplify the proof. Skorokhod's representation 
+        theorem holds in much greater generality.
+    \end{remark}
+\end{exercise}
 
 % \begin{exercise}[Polya's urn model]
 %     In the strong law of large numbers, the random variable at the limit is a
@@ -865,10 +915,11 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
     \end{enumerate}
 \end{exercise}
 
-\marginpar{\red{Lecture 2}}
 
-\section[Borel-Cantelli]{Borel-Cantelli and almost sure convergence}
+\section[Borel-Cantelli]{Borel-Cantelli and almost sure convergence \marginpar{\red{Lecture 2}}}
 \label{sec: borel cantelli}
+
+
 
 In Theorem \ref{thm: convergence implications} (Figure \ref{fig: convergence}) we have
 seen that almost sure convergence implies convergence in probability. In this
@@ -1126,6 +1177,16 @@ X| \ge \epsilon}\) does not only converge to zero but is also summable.
         Deduce that \((\Indicator{A_n})_{n=1}^\infty\) is a sequence of
         independent random variables.
     \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Almost sure but not \(L^p\) convergence]
+    \label{ex: as but not Lp}
+    Let \(U\sim \uniform(0,1)\) and define
+    \[
+        X_n = 2^n \Indicator{[0, 2^{-n})}(U).
+    \]
+    Show that \(X_n \overset{\as}\to 0\) but \(X_n\) does not converge to \(0\)
+    in \(L^1\) and hence in no other \(L^p\) space with \(p \ge 1\).
 \end{exercise}
 
 \begin{exercise}[Infinitely often or never successful]
