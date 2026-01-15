@@ -70,23 +70,24 @@
         % 3. Global Arrow Styling
         execute at end picture={
             \draw[dashed, thick, gray] 
-            ($(m-1-2.north east)!0.5!(m-1-3.north west) + (0.1, 0.1)$) -- 
-            ($(m-1-2.south east)!0.5!(m-1-3.south west) + (0.1, -2.4)$)
-            node[midway, fill=white, text=gray, font=\footnotesize, xshift=-32,yshift=-37] {\(X\) a.s.\ unique};
+            ($(m-1-2.north east)!0.5!(m-1-3.north west) + (0.1, 1.2)$) -- 
+            ($(m-1-2.south east)!0.5!(m-1-3.south west) + (0.1, -2.3)$)
+            node[midway, fill=white, text=gray, font=\footnotesize, xshift=-32,yshift=-48] {\(X\) a.s.\ unique};
         }
     ]
         % --- Row 1 ---
-        \(X_n \overset{\as}\to X\)
+        |[yshift=20]| \(X_n \overset{\as}\to X\)
         % \parbox{2.1cm}{Almost sure convergence}
-        \arrow[r, Rightarrow]{}{\text{\ref{it: as to p}}}
-        \arrow[d,xshift=-20]{}{\text{MCT/DCT}}
+        \arrow[r, Rightarrow, out=0, in=170]{}{\text{\ref{it: as to p}}}
+        \arrow[d,xshift=20]{}[left]{\substack{\text{MCT/DCT}\\\text{(Measure Theory)}}}
         & \(X_n \overset{p}\to X\)
         \arrow[r, Rightarrow] {}[xshift=-4]{\ref{it: p to d}}
-        \arrow[l, out=190, in=352, looseness=1] {}[below,yshift=-2]{\text{Borel-Cantelli}}
+        \arrow[l, out=180, in=352, looseness=1] {}[below,yshift=-5]{\substack{\text{Borel-Cantelli}\\Cor.~\ref{cor: characterization of almost sure convergence}}}
         & \(X_n \overset{d}\to X\)
-        \arrow[l, out=220, in=345, looseness=1] {}[below,xshift=13,yshift=-2]{X \equiv c \in \real \text{ \ref{it: d to p}}}
+        \arrow[l, out=220, in=345, looseness=1] {}[below,xshift=19]{X \overset{\as}= c \in \real \text{ \ref{it: d to p}}}
+        \arrow[ll, out=140, in=50, looseness=0.3]{}[above]{\text{Skorokhod (Exercise \ref{ex: skorokhod representation})}}
+
         \\
-        
         % --- Row 2 ---
         % The loop is defined here on the Lp node
         \(\;X_n \overset{L^p}\to X,\; p \ge 1\)
@@ -95,13 +96,13 @@
         % & $L^1$ \text{ convergence} \arrow[u, Rightarrow] {} {\text{\ref{it: L1 to p}}}
     \end{tikzcd}
     \end{center}
-    \begin{enumerate}[label=(\alph*)]
+    \begin{enumerate}[label=(\alph*),noitemsep]
         \item\label{it: as to p}
         If \(X_n \xrightarrow{\as} X\), then \(X_n \xrightarrow{p} X\).
         \item\label{it: p to d}
         If \(X_n \xrightarrow{p} X\), then \(X_n \xrightarrow{d} X\).
         \item \label{it: d to p}
-        If \(X\) is deterministic, that is \(X \equiv c\in \real\) almost surely, then
+        If \(X\) is deterministic, i.e.\ \(X \overset{\as}= c\in \real\), then
         \(X_n \xrightarrow{d} X\) implies \(X_n \xrightarrow{p} X\).
         \item\label{it: Lq to Lp}
         If \(X_n \xrightarrow{L^q} X\) for some \(q \ge p \ge 1\), then \(X_n \xrightarrow{L^p} X\).
@@ -111,7 +112,12 @@
     See Exercises \ref{ex: convergence in distribution but not in probability},
     \ref{ex: convergence in probability but not in Lp}, \ref{ex: convergence in
     Lp but not as} and \ref{ex: as but not Lp} for counterexamples showing that
-    we have not forgotten any implications.
+    we have not forgotten any true implications.
+    \begin{enumerate}[label=(\alph*),noitemsep, resume]
+        \item\label{it: uniqueness of limits}
+        The limits of convergence in probability are almost surely unique.
+        Consequently, the same holds for stronger notions of convergence.
+    \end{enumerate}
 \end{theorem}
 \begin{proof}
     \begin{enumerate}[wide]
@@ -218,8 +224,9 @@
             \Prob[\big]{|X_n - X| > \epsilon}
             \le \frac{\Exp[\big]{|X_n - X|}}{\epsilon}
             \to 0.
-            \qedhere
         \]
+        \item[\ref{it: uniqueness of limits}] See Exercise \ref{ex: unique stochastic limits}.
+        \qedhere
     \end{enumerate}
 \end{proof}
 
@@ -668,7 +675,7 @@ following theorem.
 
 \begin{fact}
     \label{fact: Lp zero norm}
-    \(\|X-Y\|_p = 0\) if and only if \(\Prob{X=Y}=1\).
+    \(\|X-Y\|_p = 0\) if and only if \(\Prob{X=Y}=1 \overset{\text{def.}}\iff X\overset{\as}= Y\).
 \end{fact}
 \begin{proof}[Proofsketch]
     Measure theory: \(f\ge 0\), \(\int f d\mu = 0\) 
@@ -685,7 +692,7 @@ following theorem.
     \]
     where \([X]\) is the equivalence class of the equivalence relation
     \[
-        X\sim Y :\iff \|X-Y\|_p = 0 \iff \Pr(X=Y) =1.
+        X\sim Y :\iff \|X-Y\|_p = 0 \iff X\overset{\as}= Y.
     \]
 \end{definition}
 \begin{remark}[Norm well defined]
@@ -771,17 +778,9 @@ Using this inequality we can now prove Theorem \ref{thm: seminorm properties}
 See e.g. \citep[Thm.~6.25 and 7.3]{klenkeProbabilityTheoryComprehensive2014}.
 \end{proof}
 
-Note that for any \(X,Y\in [X] \in L^p\) we have \(\Prob{X=Y}=1\)
-and recall that limits in probability were unique in the same sense
+Note that for any \(X,Y\in [X] \in L^p\) we have \(X\overset{\as}= Y\)
+and recall that most limits in probability were unique in the same sense
 (Exercise \ref{ex: unique stochastic limits}).
-This calls for the following definition
-
-\begin{definition}[Almost surely equal]
-    We say that two random variables \(X\) and \(Y\) are
-    \emph{almost surely equal} if \(\Prob{X=Y}=1\).
-    We write \(X\overset{\as}= Y\).
-\end{definition}
-
 Since most equations in probability theory only hold almost surely, this caveat
 is often omitted and one simply writes \(X=Y\), blurring the lines
 between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
@@ -914,7 +913,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 
 
 
-In Theorem \ref{thm: convergence implications} (Figure \ref{fig: convergence}) we have
+In Theorem \ref{thm: convergence implications} we have
 seen that almost sure convergence implies convergence in probability. In this
 section we will discover that the speed at which the term
 \begin{equation*}
@@ -922,7 +921,7 @@ section we will discover that the speed at which the term
 \end{equation*}
 converges to zero determines whether we also have almost sure convergence.
 Roughly speaking if this probability decays like \(\frac1n\) or slower, then
-we do not have almost sure convergence, while if it decays faster then we do.
+we do not have almost sure convergence. But if it decays faster then we do.
 The key results to formalize this claim are known as the Borel-Cantelli lemmas
 (Theorem \ref{thm: borel-cantelli}). With these we will characterize almost sure
 convergence in terms of speed of convergence in Corollary \ref{cor:
