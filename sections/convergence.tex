@@ -521,7 +521,6 @@
         \exponential(\lambda)\) using a standard uniform random variable \(U\sim
         \uniform(0,1)\).
     \end{enumerate}
-    \textbf{Hint:} Use the properties of cumulative distribution functions \(F\).
 \end{exercise}
 
 \begin{exercise}[Skorokhod's representation theorem]
@@ -605,7 +604,7 @@
 
 
 
-\section{\texorpdfstring{\(L^p\)}{Lp} spaces}
+\section[\texorpdfstring{\(L^p\)}{Lp} spaces]{\texorpdfstring{\(L^p\)}{Lp} spaces  \marginpar{\red{Lecture 2}}}
 \label{sec: Lp spaces}
 
 \begin{definition}
@@ -742,7 +741,7 @@ Using this inequality we can now prove Theorem \ref{thm: seminorm properties}
         \|X+ Y\|_p^p
         &= \Exp{\abs{X + Y}^p}
         \\
-        &\le \Exp[\big]{\abs{X+Y}^{p-1} \abs{X}} + \Exp[\big]{\abs{X+Y}^{p-1} \abs{Y}}.
+        &\le \Exp[\Big]{\abs{X+Y}^{p-1} \abs{X}} + \Exp[\Big]{\abs{X+Y}^{p-1} \abs{Y}}.
     \end{aligned}
     \]
     We then define
@@ -908,7 +907,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 \end{exercise}
 
 
-\section[Borel-Cantelli]{Borel-Cantelli and almost sure convergence \marginpar{\red{Lecture 2}}}
+\section[Borel-Cantelli]{Borel-Cantelli and almost sure convergence}
 \label{sec: borel cantelli}
 
 
@@ -1097,7 +1096,11 @@ The Borel-Cantelli lemmas now lead to the following characterization of almost s
     \begin{alignat*}{4}
         \forall \epsilon > 0: &\quad &  
         \sum_{n=1}^\infty \Prob*{|X_n - X| \ge \epsilon} < \infty
-        & \quad & \implies & \quad & \underbrace{\Prob[\Big]{\lim_{n\to\infty} X_n = X} =1}_{\iff X_n\overset{\as}\to X}.
+        & \quad & \implies & \quad & \underbrace{
+            \Prob[\Big]{\lim_{n\to\infty} X_n = X} =1
+        }_{
+            \iff X_n\overset{\as}\to X
+        }.
         \\
     \intertext{
         If the random variables \((X_n-X)_{n\in \nat}\) are also independent, then
@@ -1216,80 +1219,116 @@ X| \ge \epsilon}\) does not only converge to zero but is also summable.
     Analogous results hold for decreasing sets with the infimum.
 \end{exercise}
 
-\begin{exercise}[Drunk Men and Drunk Birds]
-
-There is a saying, attributed to  Japanese-American mathematician Shizuo
-Kakutani: ``A drunk man will find his way home, but a drunk bird may get lost
-forever." Let us try to understand this. A drunk birds can be modeled by three
-dimensional random walk. Suppose the bird starts at the origin of the three
-dimensional integer lattice $\integer^3$. It moves only at integer time points. For
-$n=0,1,2,3,\ldots$ let $S_n=(S_n^x,S_n^y,S_n^z)\in\integer^3$ denote its location.
-If at a certain time the bird is at location $(x,y,z)$, then at the next time
-point it can be at one of the $8$ locations given by $(x\pm 1,y\pm 1,z\pm 1)$.
-Thus we can say
-
-\begin{align*}
-S_n^x ={} & S_{n-1}^x + X_n\;,\\
-S_n^y ={} & S_{n-1}^y + Y_n\;,\\
-S_n^z ={} & S_{n-1}^z + Z_n\;,
-\end{align*}
-where
-\[
-X_n = \begin{cases}
-1 & \mbox{ with probability } 1/2\;,\\
--1 & \mbox{ with probability } 1/2\;,
-\end{cases}
-\]
-\[
-Y_n = \begin{cases}
-1 & \mbox{ with probability } 1/2\;,\\
--1 & \mbox{ with probability } 1/2\;,
-\end{cases}
-\]
-\[
-Z_n = \begin{cases}
-1 & \mbox{ with probability } 1/2\;,\\
--1 & \mbox{ with probability } 1/2\;,
-\end{cases}
-\]
-and $(X_1,X_2,X_3,\ldots,Y_1,Y_2,Y_3,\ldots,Z_1,Z_2,Z_3,\ldots)$ are independent.
-\[
-\Prob*{S_n=(0,0,0)} 
-= \Prob*{S_n^x=0}\Prob*{S_n^y=0}\Prob*{S_n^z=0}
-\]
-For $n$ odd, 
-\[
-\Prob*{S_n^x=0}=
-\Prob*{S_n^y=0}=
-\Prob*{S_n^z=0}=0\;.
-\]
-For $n$ even, say $n=2N$
-\[
-\Prob*{S_n^x=0}=
-\Prob*{S_n^y=0}=
-\Prob*{S_n^z=0}=\left(2^{-2N}\binom{2N}{N}\right)^3\;.
-\]
-By Stirling's approximation
-\[
-2^{-2N}\binom{2N}{N} \approx \frac{C}{N^{1/2}} 
-\approx \frac{C}{n^{1/2}}.
-\]
-Thus, for $n$ even
-\[
-\Prob*{S_n=0} \approx C n^{-3/2}\;.
-\]
-Thus, the probability that $S_n=0$ happens infinitely often is $0$. Thus, a
-drunk bird may get lost forever. But for two dimensional or one dimensional
-random walk with probability $1$ $S_n=0$ happens infinitely often. Thus a drunk
-man will find his way home. Note that, to prove this we cannot use the second
-Borel-Cantelli Lemma. Because the second Borel-Cantelli Lemma requires the
-events to be independent, but the events $\{S_n=0\}$ are not independent. But
-the result is true and can be proved in different ways, generally you will learn
-this in a course on Markov Chains.
-
+\begin{exercise}[Further characterize almost sure convergence]
+    Prove
+    \[
+    \begin{aligned}
+        \Prob{X_n \to X} =1
+        &\iff \forall \epsilon >0 :  \Prob[\Big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon} = 0.
+        \\
+        &\iff \forall \epsilon >0 :  \Prob[\Big]{\limsup_{n \to \infty} \Set{|X_n - X| \ge \epsilon}} = 0.
+        \\
+        &\iff \forall \epsilon >0 : \lim_{N\to \infty} \Prob[\Big]{\sup_{n \ge N} |X_n - X| \ge \epsilon} = 0.
+    \end{aligned}
+    \]
 \end{exercise}
 
-\section{Continuous mapping}
+\begin{exercise}[Infinite Monkey Theorem]
+    The infinite monkey theorem states that an immortal monkey hitting keys at
+    random on a typewriter keyboard for an infinite amount of time will
+    eventually type any arbitrarily long text -- for example all the
+    works of William Shakespeare -- with probability one.  It is also know as
+    the ``Law of truly large numbers''.
+    Prove it!
+
+    \noindent\textbf{Hint:} Define a (finite) alphabet \(\alphabet\), e.g.\
+    \[
+        \alphabet = \Set{a,\dots, z, A, \dots, Z, 0,1,\dots,9, ,.,!,?}\;,
+    \]
+    Let \((X_n)_{n=1}^\infty\) be a sequence of independent random variables
+    with uniform distribution on \(\alphabet\). That is \(\Prob{X_n = a} =
+    \frac1{|\alphabet|}\) for all \(a\in \alphabet\).
+    For any sequence \(y=(y_0, \dots, y_m) \in \alphabet^{m+1}\) define the event
+    \[
+        A(y) \coloneq \Set{\omega \in \Omega : \exists t \in \nat , X_t(\omega) = y_0, \dots, X_{t+m} = y_m}\;,
+    \]
+    Prove that \(\Prob{A(y)} = 1\) for any finite sequence \(y\). 
+\end{exercise}
+
+% \begin{exercise}[Drunk Men and Drunk Birds]
+
+% There is a saying, attributed to  Japanese-American mathematician Shizuo
+% Kakutani: ``A drunk man will find his way home, but a drunk bird may get lost
+% forever." Let us try to understand this. A drunk birds can be modeled by three
+% dimensional random walk. Suppose the bird starts at the origin of the three
+% dimensional integer lattice $\integer^3$. It moves only at integer time points. For
+% $n=0,1,2,3,\ldots$ let $S_n=(S_n^x,S_n^y,S_n^z)\in\integer^3$ denote its location.
+% If at a certain time the bird is at location $(x,y,z)$, then at the next time
+% point it can be at one of the $8$ locations given by $(x\pm 1,y\pm 1,z\pm 1)$.
+% Thus we can say
+
+% \begin{align*}
+% S_n^x ={} & S_{n-1}^x + X_n\;,\\
+% S_n^y ={} & S_{n-1}^y + Y_n\;,\\
+% S_n^z ={} & S_{n-1}^z + Z_n\;,
+% \end{align*}
+% where
+% \[
+% X_n = \begin{cases}
+% 1 & \mbox{ with probability } 1/2\;,\\
+% -1 & \mbox{ with probability } 1/2\;,
+% \end{cases}
+% \]
+% \[
+% Y_n = \begin{cases}
+% 1 & \mbox{ with probability } 1/2\;,\\
+% -1 & \mbox{ with probability } 1/2\;,
+% \end{cases}
+% \]
+% \[
+% Z_n = \begin{cases}
+% 1 & \mbox{ with probability } 1/2\;,\\
+% -1 & \mbox{ with probability } 1/2\;,
+% \end{cases}
+% \]
+% and $(X_1,X_2,X_3,\ldots,Y_1,Y_2,Y_3,\ldots,Z_1,Z_2,Z_3,\ldots)$ are independent.
+% \[
+% \Prob*{S_n=(0,0,0)} 
+% = \Prob*{S_n^x=0}\Prob*{S_n^y=0}\Prob*{S_n^z=0}
+% \]
+% For $n$ odd, 
+% \[
+% \Prob*{S_n^x=0}=
+% \Prob*{S_n^y=0}=
+% \Prob*{S_n^z=0}=0\;.
+% \]
+% For $n$ even, say $n=2N$
+% \[
+% \Prob*{S_n^x=0}=
+% \Prob*{S_n^y=0}=
+% \Prob*{S_n^z=0}=\left(2^{-2N}\binom{2N}{N}\right)^3\;.
+% \]
+% By Stirling's approximation
+% \[
+% 2^{-2N}\binom{2N}{N} \approx \frac{C}{N^{1/2}} 
+% \approx \frac{C}{n^{1/2}}.
+% \]
+% Thus, for $n$ even
+% \[
+% \Prob*{S_n=0} \approx C n^{-3/2}\;.
+% \]
+% Thus, the probability that $S_n=0$ happens infinitely often is $0$. Thus, a
+% drunk bird may get lost forever. But for two dimensional or one dimensional
+% random walk with probability $1$ $S_n=0$ happens infinitely often. Thus a drunk
+% man will find his way home. Note that, to prove this we cannot use the second
+% Borel-Cantelli Lemma. Because the second Borel-Cantelli Lemma requires the
+% events to be independent, but the events $\{S_n=0\}$ are not independent. But
+% the result is true and can be proved in different ways, generally you will learn
+% this in a course on Markov Chains.
+
+% \end{exercise}
+
+\section[Continuous mapping]{Continuous mapping \marginpar{\red{Lecture 3}}}
 
 An incredibly useful tool in analysis was the concept of continuous functions
 that allows the transfer of limits through functions. In this section
@@ -1548,7 +1587,8 @@ to the elements of the sequence in between.
     0\) separately and conclude by continuous mapping that \(\mean{X}_n \overset{\as}\to
     0\). For the first term observe that by \eqref{eq: k definition} we have
     \[
-        1  \ge \tcbhighmath[colback=white,colframe=black,boxrule=1pt]{\frac{k_n^2}{n}}
+        1 \ge
+        \frac{k_n^2}{n}
         \ge \frac{k_n^2}{(k_n+1)^2} = \Bigl(\frac{1}{1 + \frac{1}{k_n}}\Bigr)^2
         \to 1.
     \]
@@ -1622,12 +1662,13 @@ assumption that the random variables are in \(L^1\).
 \begin{proof}[Proof (sketch)]
     The main idea is to define the truncated random variables \(Y_n \coloneq
     \Indicator{|X_n| \le n} X_n\). Then the variance of every \(Y_n\) is
-    finite although the variance is increasing in \(n\). The \(Y_n\) as
-    functions of pairwise independent random variables are also pairwise
-    independent and consequently uncorrelated.
+    finite although the variance is increasing in \(n\).
     Using Borel-Cantelli it is possible to show that eventually all \(Y_n\) are
     equal to \(X_n\). Then one proves the strong law of large numbers for the
-    \(Y_n\). We can unfortunately not apply Theorem \ref{thm: strong law of
+    \(Y_n\). For this it is used that functions of pairwise independent random
+    variables are also pairwise independent and consequently the \(Y_n\) are
+    uncorrelated. We can unfortunately not
+    apply Theorem \ref{thm: strong law of
     large numbers} since it requires a uniform bound on the variances and
     the variances are increasing here. For details see e.g.\
     \citep[Thm.~5.17]{klenkeProbabilityTheoryComprehensive2014}.
