@@ -113,15 +113,15 @@
     \begin{enumerate}[label=(\alph*)]
         \item\label{it: as to p}
         If \(X_n \xrightarrow{\as} X\), then \(X_n \xrightarrow{p} X\).
-        \item\label{it: Lq to Lp}
-        If \(X_n \xrightarrow{L^q} X\) for some \(q \ge p \ge 1\), then \(X_n \xrightarrow{L^p} X\).
-        \item\label{it: L1 to p}
-        If \(X_n \xrightarrow{L^1} X\), then \(X_n \xrightarrow{p} X\).
         \item\label{it: p to d}
         If \(X_n \xrightarrow{p} X\), then \(X_n \xrightarrow{d} X\).
         \item \label{it: d to p}
         If \(X\) is deterministic, that is \(X \equiv c\in \real\) almost surely, then
         \(X_n \xrightarrow{d} X\) implies \(X_n \xrightarrow{p} X\).
+        \item\label{it: Lq to Lp}
+        If \(X_n \xrightarrow{L^q} X\) for some \(q \ge p \ge 1\), then \(X_n \xrightarrow{L^p} X\).
+        \item\label{it: L1 to p}
+        If \(X_n \xrightarrow{L^1} X\), then \(X_n \xrightarrow{p} X\).
     \end{enumerate}
     See Exercises \ref{ex: convergence in distribution but not in probability},
     \ref{ex: convergence in probability but not in Lp}, \ref{ex: convergence in
@@ -164,7 +164,6 @@
         sequence of events \(A_1 \supseteq A_2 \supseteq \ldots\)
         \continuityOfMeasure.
 
-        \item[\ref{it: Lq to Lp}] See Remark \ref{rem: Lp convergence}.
 
         \item[\ref{it: p to d}] Let \(x\in \real\) be such that \(\Prob{X=x}=0\).
         If \(X_n \le x\), then either \(X\) is further from \(X_n\) than
@@ -226,6 +225,8 @@
             \to \Pr_X((c-\epsilon, c+\epsilon)) = 1.
         \]
         and consequently \(\Prob[\big]{\abs{X_n - X} \ge \epsilon} \to 0\).
+
+        \item[\ref{it: Lq to Lp}] See Remark \ref{rem: Lp convergence} in Section \ref{sec: Lp spaces} on \(L^p\) spaces.
 
         \item[\ref{it: L1 to p}] By the \(L^1\) Chebyshev inequality (Corollary
         \ref{cor: markov inequality Lp}), we have for \(\epsilon > 0\) \[
@@ -613,6 +614,7 @@
 
 
 \section{\texorpdfstring{\(L^p\)}{Lp} spaces}
+\label{sec: Lp spaces}
 
 \begin{definition}
     We define the \(\cL^p\) space to be
