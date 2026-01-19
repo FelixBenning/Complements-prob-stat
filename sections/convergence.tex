@@ -43,10 +43,10 @@
             \lim_{n\to\infty}\Exp{f(X_n)} = \Exp{f(X)}.
         \end{equation}
         \begin{enumerate}[label=(S.\arabic*), nosep,leftmargin=3em]
-            \item\label{it: s.open} For all \underline{open} sets \(O\) we have 
-            \[\liminf_{n\in \nat }\Prob{X_n \in O} \ge \Pr(X \in O).\]
             \item\label{it: s.closed} For all \underline{closed} sets \(A\) we have
             \[\limsup_{n\in \nat} \Prob{X_n \in A} \le \Pr(X \in A).\]
+            \item\label{it: s.open} For all \underline{open} sets \(O\) we have 
+            \[\liminf_{n\in \nat }\Prob{X_n \in O} \ge \Pr(X \in O).\]
             \item\label{it: s.zero boundary} For all \underline{measurable} sets \(B\) with \underline{\(\Prob{X \in \partial B} = 0\)} we have
             \[
                 \lim_{n \to \infty} \Pr(X_n \in B) = \Pr(X \in B).
@@ -70,56 +70,86 @@
     \]
 \end{definition}
 
-\begin{proof}[Proof (Portmanteau Theorem)]
+\begin{myproof}[Proof (Portmanteau Theorem)]
     The proof strategy is
     \begin{center}
-    \begin{tikzcd}[
-        column sep=.6cm,
-        row sep=0.5cm,
-    ]
-        \ref{it: b.a.s. cont}
-        \arrow[r, Rightarrow]{}{\text{trivial}}
-        & \ref{it: b.cont}
-        \arrow[r, Rightarrow]{}{\text{trivial}}
-        & \ref{it: b.lip}
-        \arrow[r, Rightarrow]{}{!}
-        & \ref{it: s.open}
-        \arrow[r, Leftrightarrow]{}{\text{easy}}
-        & \ref{it: s.closed}
-        \arrow[r, Rightarrow]{}{\text{easy}}
-        & \ref{it: s.zero boundary}
-        \arrow[r, Rightarrow]{}{!}
-        \arrow[d, Rightarrow]{}{\text{trivial}}
-        & \ref{it: b.a.s. cont}.
-        \\
-        & & & & & \ref{it: df}
-        \arrow[ull, Rightarrow]{}{!}
-    \end{tikzcd}
+        \input{tikz/portemanteau.tikz}
     \end{center}
     The equivalence of \ref{it: s.open} and \ref{it: s.closed} follows from
     directly from set complements. These two conditions then imply \ref{it: s.zero boundary}
-    by considering the interior and closure of sets \(B\) for an upper and lower
-    bound. Specifically, we have that \(\Prob{X \in \closure{B}} = \Prob{X \in B} = \Prob{X\in \interior{B}}\)
-    as \(\Prob{X \in \partial B} = 0\). This implies
+    by considering the interior and closure of the set \(B\) for an upper and lower
+    bound.
+    % Specifically, we have that \(\Prob{X \in \closure{B}} = \Prob{X \in B} = \Prob{X\in \interior{B}}\)
+    % as \(\Prob{X \in \partial B} = 0\). This implies
+    % \[\begin{aligned}
+    %     \Prob{X \in B} = \Prob{X \in \interior{B}}
+    %     &\le \liminf_{n\to \infty} \Prob{X_n \in \interior{B}}
+    %     \\
+    %     &\le \lim_{n\to\infty} \Prob{X_n \in B}
+    %     \\
+    %     &\le \limsup_{n\to \infty} \Prob{X_n \in \closure{B}}
+    %     \le \Prob{X \in \closure{B}} = \Prob{X \in B}.
+    % \end{aligned}
+    % \]
+
+    % \begin{wrapstuff}[type=figure,width=.35\textwidth,top=1]
+    %     \scalebox{0.7}{
+    %     \input{tikz/eps-bump.tikz}
+    %     }
+    % \end{wrapstuff}
+
+    \begin{wrapfigure}[5]{o}{0.35\textwidth}
+        \scalebox{0.7}{
+        \input{tikz/eps-bump.tikz}
+        }
+    \end{wrapfigure}
+    
+    ``\ref{it: b.lip} \(\Rightarrow\) \ref{it: s.closed}'': We use \(\epsilon\)-bump
+    functions as approximations of indicators.
+    Specifically, using \((x)_+ = \max\{x, 0\}\) we define
+    \[
+        \Indicator{A}^\epsilon(x) \coloneq \Bigl(1-\frac{\metric(x, A)}\epsilon\Bigr)_+,
+    \]
+    where the distance of \(x\) to the set \(A\) is
+    defined as
+    \[
+        \metric(x,A) = \inf_{y\in A} \metric(x,y).
+    \]
+    Lipschitz continuity is straightforward to verify (Exercise \ref{ex: lipschitz bump functions}).
+    Now using an \(\epsilon\)-increase of the set \(A\)
+    \[
+        A_\epsilon \coloneq \Set{x \in \domain : \metric(x,A) \le \epsilon},
+    \]
+    we have  \(\Indicator{A}(x) \le \Indicator{A}^\epsilon(x) \le \Indicator{A_\epsilon}(x)\) for all \(x\).
+    Consequently we have for any closed set \(A\)
     \[\begin{aligned}
-        \Prob{X \in B} = \Prob{X \in \interior{B}}
-        &\le \liminf_{n\to \infty} \Prob{X_n \in \interior{B}}
+        \Pr(X_n \in A) = \Exp{\Indicator{A}(X_n)}
+        &\le \Exp{\Indicator{A}^\epsilon(X_n)}
         \\
-        &\le \lim_{n\to\infty} \Prob{X_n \in B}
-        \\
-        &\le \limsup_{n\to \infty} \Prob{X_n \in \closure{B}}
-        \le \Prob{X \in \closure{B}} = \Prob{X \in B}.
+        \overset{\ref{it: b.lip}}&\to \Exp{\Indicator{A}^\epsilon(X)} \le \Exp{\Indicator{A_\epsilon}(X)}
+        = \Pr(X \in A_\epsilon),
     \end{aligned}
     \]
-    \input{tikzpictures/eps-bump.tikz}
-\end{proof}
+    This implies that for every \(\epsilon >0\)
+    \[
+        \limsup_{n\to \infty} \Pr(X_n \in A) \le \Pr(X \in A_\epsilon).
+    \]
+    Since this is true for every \(\epsilon_m = \frac1m\) we have
+    \[
+        \limsup_{n\to \infty} \Pr(X_n \in A)
+        \le \lim_{m\to\infty}\Pr(X \in A_{\frac1m})
+        = \Pr\Bigl(X \in \bigcap_{m\in \nat} A_{\frac1m}\Bigr)
+        = \Pr(X \in A),
+    \]
+    Since \(A_m\) is a decreasing sequence of sets and \(\bigcap_{m\in \nat} A_{\frac1m} = A\).
+\end{myproof}
 
 \begin{theorem}[Convergence implications]
     \label{thm: convergence implications}
     For a sequence of random variables \((X_n)_{n\in\nat}\) and a
     random variable \(X\) the following implications hold:
     \begin{center}
-        \input{tikzpictures/convergence-impl.tikz}
+        \input{tikz/convergence-impl.tikz}
     \end{center}
     \begin{enumerate}[label=(\alph*),noitemsep]
         \item\label{it: as to p}
@@ -563,6 +593,35 @@
         We assume \(X_n\) in \(\real\) to simplify the proof. Skorokhod's representation 
         theorem holds in much greater generality.
     \end{remark}
+\end{exercise}
+
+\begin{exercise}[Lipschitz continuous bump functions]
+    \label{ex: lipschitz bump functions}
+    Let \((\domain, \metric)\) be a metric space and \(A \subseteq \domain\). 
+    Show that
+    \begin{enumerate}[label=(\alph*)]
+        \item \(x\mapsto \metric(x,A)\equiv \inf_{z \in A} \metric(x,z)\) is \(1\)-Lipschitz continuous.
+        \begin{solution}
+        By the triangle inequality we have for \(x,y\in \domain\)
+        \[
+            \metric(x,A)
+            =\inf_{z\in A} \metric(x,z)
+            \le \inf_{z\in A} \bigl(\metric(x,y) + \metric(y,z)\bigr)
+            = \metric(x,y) + \metric(y,A).
+        \]
+        with reordering this implies
+        \[
+            \metric(x,A) - \metric(y,A) \le \metric(x,y)
+        \]
+        By symmetry we also have  \(\metric(y,A) - \metric(x,A) \le \metric(x,y)\)
+        and thereby the claim.
+        \end{solution}
+
+        \item \(x\mapsto (1-\frac{x}\epsilon)_+\) is \(\frac1\epsilon\)-Lipschitz continuous.
+
+        \item the bump function \(\Indicator{A}^\epsilon(x) = (1 - \frac{\metric(x,A)}\epsilon)_+\)
+        is \(\frac1\epsilon\)-Lipschitz continuous.
+    \end{enumerate}
 \end{exercise}
 
 % \begin{exercise}[Polya's urn model]

@@ -16,9 +16,15 @@
 \newtheorem{remark}[proposition]{Remark}
 %%
 
+\NewDocumentEnvironment{myproof}{o}{
+  \pushQED{\qed}%
+  \medbreak\noindent%
+  \IfNoValueTF{#1}%
+    {\textit{Proof.}}%
+    {\textit{#1.}}%
+}{\popQED \par\medskip}
+
 %%% Solution
-
-
 %%% Prepare if solution
 \newif\ifsolution
 \NewDocumentEnvironment{solution}{O{Solution} +b}{\ifsolution \begin{proof}[#1] #2\end{proof}\fi}{}

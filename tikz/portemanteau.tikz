@@ -1,0 +1,22 @@
+    \begin{tikzcd}[
+        column sep=.6cm,
+        row sep=0.5cm,
+    ]
+        \ref{it: b.a.s. cont}
+        \arrow[r, Rightarrow]{}{\text{trivial}}
+        & \ref{it: b.cont}
+        \arrow[r, Rightarrow]{}{\text{trivial}}
+        & \ref{it: b.lip}
+        \arrow[r, Rightarrow]{}{!}
+        & \ref{it: s.closed}
+        \arrow[r, Leftrightarrow]{}{\text{easy}}
+        & \ref{it: s.open}
+        \arrow[r, Rightarrow]{}{\text{easy}}
+        & \ref{it: s.zero boundary}
+        \arrow[r, Rightarrow]{}{!}
+        \arrow[d, Rightarrow]{}{\text{trivial}}
+        & \ref{it: b.a.s. cont}.
+        \\
+        & & & & & \ref{it: df}
+        \arrow[ul, Rightarrow]{}{!}
+    \end{tikzcd}
