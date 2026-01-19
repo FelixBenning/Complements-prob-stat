@@ -9,8 +9,8 @@
 
 \begin{definition}[Types of Convergence]
     \label{def: types of convergence}
-    We say that a sequence of random variables $(X_n)_{n=1}^\infty$ converges to
-    a random variable $X$,
+    A sequence of random variables $(X_n)_{n=1}^\infty$ in a normed
+    space \((\domain, \norm{\cdot})\) converges to a random variable $X$,
     \begin{itemize}
         \item \textbf{almost surely}, or \textbf{with probability one}, denoted by \(X_n \overset{\as}\to X\), if
         \[
@@ -20,19 +20,41 @@
         \item \textbf{in \(L^p\)} for \(p \geq 1\), denoted by \(X_n \overset{L^p}\to X\), if
         \(X_n, X \in L^p\) for all \(n\) and
         \[
-            \lim_{n \to \infty} \Exp[\Big]{|X_n - X|^p} = 0.
+            \lim_{n \to \infty} \Exp[\Big]{\norm{X_n - X}^p} = 0.
         \]
 
         \item \textbf{in probability}, denoted by \(X_n \overset{p}\to X\), if for all \(\epsilon > 0\)
         \[
-            \lim_{n \to \infty} \Prob[\big]{|X_n - X| \ge \epsilon} = 0.
+            \lim_{n \to \infty} \Prob[\big]{\norm{X_n- X} \ge \epsilon} = 0.
         \]
 
         \item \textbf{in distribution}, denoted by \(X_n \overset{d}\to X\), if
         it satisfies one of the following equivalent conditions (\textbf{Portmanteau theorem}):
-        \begin{enumerate}[label=(\roman*)]
-            \item\textbf{Convergence of distribution functions} (This condition 
-            requires \(X_n\) and \(X\) to be real-valued):
+        \begin{enumerate}[label=(B.\arabic*),leftmargin=3em]
+            \item\label{it: b.lip} For all \(f\) bounded, Lipschitz continuous we have \eqref{eq: fun convergence},
+            \item\label{it: b.cont} For all \(f\) bounded, continuous we have \eqref{eq: fun
+            convergence},
+            \item\label{it: b.a.s. cont} For all \(f\) bounded, measurable, with \(\Prob[\big]{f\text{
+            continuous in }X} = 1\) we have \eqref{eq:
+            fun convergence}. Where \eqref{eq: fun convergence} is defined as
+        \end{enumerate}
+        \begin{equation}
+            \label{eq: fun convergence}\tag{B}
+            \lim_{n\to\infty}\Exp{f(X_n)} = \Exp{f(X)}.
+        \end{equation}
+        \begin{enumerate}[label=(S.\arabic*), nosep,leftmargin=3em]
+            \item\label{it: s.open} For all \underline{open} sets \(O\) we have 
+            \[\liminf_{n\in \nat }\Prob{X_n \in O} \ge \Pr(X \in O).\]
+            \item\label{it: s.closed} For all \underline{closed} sets \(A\) we have
+            \[\limsup_{n\in \nat} \Prob{X_n \in A} \le \Pr(X \in A).\]
+            \item\label{it: s.zero boundary} For all \underline{measurable} sets \(B\) with \underline{\(\Prob{X \in \partial B} = 0\)} we have
+            \[
+                \lim_{n \to \infty} \Pr(X_n \in B) = \Pr(X \in B).
+            \]
+        \end{enumerate}
+        If \(X_n\) and \(X\) are real-valued the following condition is also equivalent:
+        \begin{enumerate}[label={(DF)},nosep,leftmargin=3em]
+            \item\label{it: df} \textbf{Convergence of distribution functions}:
             for all \(x \in \real\) satisfying \(\Prob{X = x} = 0\),
             \[
                 \lim_{n \to \infty} \Prob{X_n \leq x} = \Prob{X \leq x}.
@@ -47,6 +69,32 @@
         X_n \to X \quad \text{and} \quad X_n \to Y \implies X \overset{\as}= Y.
     \]
 \end{definition}
+
+\begin{proof}[Proof (Portmanteau Theorem)]
+    The proof strategy is
+    \begin{center}
+    \begin{tikzcd}[
+        column sep=.6cm,
+    ]
+        \ref{it: b.a.s. cont}
+        \arrow[r, Rightarrow]{}{\text{trivial}}
+        & \ref{it: b.cont}
+        \arrow[r, Rightarrow]{}{\text{trivial}}
+        & \ref{it: b.lip}
+        \arrow[r, Rightarrow]{}{!}
+        & \ref{it: s.closed}
+        \arrow[r, Leftrightarrow]{}{\text{easy}}
+        & \ref{it: s.open}
+        \arrow[r, Rightarrow]{}{\text{easy}}
+        & \ref{it: s.zero boundary}
+        \arrow[r, Rightarrow]{}{!}
+        \arrow[d, Rightarrow]{}{\text{trivial}}
+        & \ref{it: b.a.s. cont}.
+        \\
+        & & & & & \ref{it: df}
+    \end{tikzcd}
+    \end{center}
+\end{proof}
 
 \begin{theorem}[Convergence implications]
     \label{thm: convergence implications}
