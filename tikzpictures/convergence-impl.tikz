@@ -1,0 +1,42 @@
+\begin{tikzcd}[
+    every matrix/.append style={name=m},
+    cells={nodes={
+        draw, 
+        rectangle, 
+        rounded corners, 
+        align=center, 
+        minimum width=2.5cm, 
+        minimum height=0.8cm,
+        inner sep=5pt
+    }},
+    % 2. Spacing between nodes
+    row sep=0.7cm,
+    column sep=1.7cm,
+    % 3. Global Arrow Styling
+    execute at end picture={
+        \draw[dashed, thick, gray] 
+        ($(m-1-2.north east)!0.5!(m-1-3.north west) + (0.1, 1.2)$) -- 
+        ($(m-1-2.south east)!0.5!(m-1-3.south west) + (0.1, -2.3)$)
+        node[midway, fill=white, text=gray, font=\footnotesize, xshift=-32,yshift=-48] {\(X\) a.s.\ unique};
+    }
+]
+    % --- Row 1 ---
+    |[yshift=20]| \(X_n \overset{\as}\to X\)
+    % \parbox{2.1cm}{Almost sure convergence}
+    \arrow[r, Rightarrow, out=0, in=170]{}{\text{\ref{it: as to p}}}
+    \arrow[d,xshift=20]{}[left]{\substack{\text{MCT/DCT}\\\text{(Measure Theory)}}}
+    & \(X_n \overset{p}\to X\)
+    \arrow[r, Rightarrow] {}[xshift=-4]{\ref{it: p to d}}
+    \arrow[l, out=180, in=352, looseness=1] {}[below,yshift=-5]{\substack{\text{Borel-Cantelli}\\Cor.~\ref{cor: characterization of almost sure convergence}}}
+    & \(X_n \overset{d}\to X\)
+    \arrow[l, out=220, in=345, looseness=1] {}[below,xshift=19]{X \overset{\as}= c \in \real \text{ \ref{it: d to p}}}
+    \arrow[ll, out=140, in=50, looseness=0.3]{}[above]{\text{Skorokhod (Exercise \ref{ex: skorokhod representation})}}
+
+    \\
+    % --- Row 2 ---
+    % The loop is defined here on the Lp node
+    \(\;X_n \overset{L^p}\to X,\; p \ge 1\)
+    \arrow[ur, Rightarrow, out=360, in=240] {}[below,xshift=2]{\text{\ref{it: L1 to p}}}
+    \arrow[loop below, Rightarrow, looseness=4, out=220, in=290,xshift=-10]{}[xshift=15,yshift=-3]{L_q \overset{\ref{it: Lq to Lp}}\implies L_p \; (p \le q)}
+    % & $L^1$ \text{ convergence} \arrow[u, Rightarrow] {} {\text{\ref{it: L1 to p}}}
+\end{tikzcd}
