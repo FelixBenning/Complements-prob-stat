@@ -15,7 +15,7 @@
         & \ref{it: s.zero boundary}
         \arrow[r, Rightarrow]{}{!}
         \arrow[d, Rightarrow]{}{\text{trivial}}
-        & \ref{it: b.a.s. cont}.
+        & \ref{it: b.a.s. cont}
         \\
         & & & & & \ref{it: df}
         \arrow[ul, Rightarrow]{}{!}

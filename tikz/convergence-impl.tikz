@@ -28,6 +28,7 @@
     & \(X_n \overset{p}\to X\)
     \arrow[r, Rightarrow] {}[xshift=-4]{\ref{it: p to d}}
     \arrow[l, out=180, in=352, looseness=1] {}[below,yshift=-5]{\substack{\text{Borel-Cantelli}\\Sec.~\ref{sec: borel cantelli}}}
+    \arrow[ld, out=250, in=358] {} [right,xshift=4,yshift=-2]{\substack{\text{\(X_n,X\) bounded}\\\text{Exercise \ref{ex: p to Lp when bounded}}}}
     & \(X_n \overset{d}\to X\)
     \arrow[l, out=220, in=345, looseness=1] {}[below,xshift=19]{X \overset{\as}= c \in \real \text{ \ref{it: d to p}}}
     \arrow[ll, out=140, in=50, looseness=0.3]{}[above]{\text{Skorokhod (Exercise \ref{ex: skorokhod representation})}}
@@ -36,7 +37,7 @@
     % --- Row 2 ---
     % The loop is defined here on the Lp node
     \(\;X_n \overset{L^p}\to X,\; p \ge 1\)
-    \arrow[ur, Rightarrow, out=360, in=240] {}[below,xshift=2]{\text{\ref{it: L1 to p}}}
-    \arrow[loop below, Rightarrow, looseness=4, out=220, in=290,xshift=-10]{}[xshift=15,yshift=-3]{L_q \overset{\ref{it: Lq to Lp}}\implies L_p \; (p \le q)}
+    \arrow[ur, Rightarrow, out=5, in=230] {}[above]{\text{\ref{it: L1 to p}}}
+    \arrow[loop below, Rightarrow, looseness=3.5, out=220, in=290,xshift=-10]{}[xshift=15,yshift=-3]{L_q \overset{\ref{it: Lq to Lp}}\implies L_p \; (p \le q)}
     % & $L^1$ \text{ convergence} \arrow[u, Rightarrow] {} {\text{\ref{it: L1 to p}}}
 \end{tikzcd}

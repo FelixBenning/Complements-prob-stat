@@ -80,7 +80,7 @@
 
 Before we get lost in the details of the proof, we summarize the implications
 between the different types of convergence in the following theorem.
-This should give the reader a better intuition on the strength of different
+This should give you a better intuition on the strength of different
 types of convergence.
 We particularly want to highlight the fundamental difference between
 convergence in distribution and the other, stronger, types of convergence
@@ -123,7 +123,7 @@ standard normal distributed for example.
 We begin with the proof of the Portmanteau theorem,
 
 \begin{myproof}[Proof (Portmanteau Theorem)]
-    The proof strategy is
+    The proof strategy is as follows:
     \begin{center}
         \input{tikz/portemanteau.tikz}
     \end{center}
@@ -200,6 +200,87 @@ We begin with the proof of the Portmanteau theorem,
     sequence of events \(A_1 \supseteq A_2 \supseteq \ldots\)
     \continuityOfMeasure,
     and \(B_m \supseteq B_{m+1} \supseteq \dots\) with \(\bigcap_{m\in \nat} B_m = A\).
+
+    ``\ref{it: s.zero boundary} \(\Rightarrow\) \ref{it: b.a.s. cont}'': For the
+    opposite direction it is necessary to discretize a bounded, measurable,
+    almost surely continuous function \(f\). For this discretization we want to
+    select a finite number of \(y_0 \le \ldots \le y_N\)
+    such that 
+    \begin{enumerate}[noitemsep]
+        \item the bounded range of \(f\) is contained in the interval \([y_0, y_N)\)
+        \item the \(y_i\) are an \(\epsilon\)-grid, i.e.\ \(y_{i+1} - y_i < \epsilon\) for all \(i\)
+        \item \(\Prob{f(X) = y_i} = 0\) for all \(i\).
+    \end{enumerate}
+    That the first two conditions can be satisfied is trivial by the boundedness of \(f\). For
+    the third condition we observe that the set of points that do not
+    satisfy this condition is at most countable
+    \[
+        \Set[\big]{y \in \real : \Prob{f(X) = y} > 0}
+        = \bigcup_{k=1}^\infty \underbrace{\Set[\Big]{y \in \real : \Prob{f(X) = y} \ge \tfrac1k}}_{\text{at most \(k\)-many}}.
+    \]
+    Since there is thus an uncountable number of choices left we may assume that
+    the \(y_i\) satisfy all three conditions.
+
+    The third condition implies for \(E_i = [y_{i-1}, y_i)\) that
+    \(\Pr(f(X) \in \partial E_i) = 0\). We will now prove that this
+    implies \(\Pr(X \in \partial f^{-1}(E_i)) = 0\), which will
+    allow us to apply \ref{it: s.zero boundary} to the sets \(f^{-1}(E_i)\).
+    Let \(D_f\) be the set of discontinuities of \(f\). Then for any set \(A\)
+    we claim to have
+    \[
+        \partial f^{-1}(A) \subseteq f^{-1}(\partial A) \cup D_f.
+    \]
+    \begin{center}
+    \begin{tabular}{|p{0.9\textwidth}}
+    To see this, let \(x \in \partial f^{-1}(A)\). If \(x\in D_f\) we are done
+    so assume that \(f\) is continuous in \(x\). By definition of continuity
+    there exists for any \(\epsilon > 0\) a \(\delta > 0\) such that
+    \(f(\ball{x}{\delta}) \subseteq \ball{f(x)}{\epsilon}\). By definition of
+    the boundary, there exists
+    \[
+        y \in f^{-1}(A) \cap \ball{x}{\delta}
+        \quad \text{and}\quad
+        z \in \bigl(f^{-1}(A)\bigr)^\complement \cap \ball{x}{\delta}.
+    \]
+    Since \(\bigl(f^{-1}(A)\bigr)^\complement = f^{-1}(A^\complement)\) we consequently
+    have
+    \[
+        f(y) \in A \cap \ball{f(x)}{\epsilon}
+        \quad \text{and}\quad
+        f(z) \in A^\complement \cap \ball{f(x)}{\epsilon}.
+    \]
+    As neither set may thus be empty for any \(\epsilon > 0\), we have that
+    \(f(x) \in \partial A\) and thus \(x \in f^{-1}(\partial A)\).
+    \end{tabular}
+    \end{center}
+    We may now use this inclusion to conclude
+    \[
+        \Prob{ X \in \partial f^{-1}(E_i)}
+        \le \underbrace{\Prob[\big]{X \in f^{-1}(\partial E_i)}}_{=\Pr(f(X) \in \partial E_i)} + \underbrace{\Prob{X \in D_f}}_{=0} = 0.
+    \]
+    Finally, we may use the discretization we built. Observe that if \(f(X_n)
+    \in E_i\), then \(f(X_n) \le y_i\). Since the sets \(E_i\) cover
+    the range of \(f\) we have
+    \[
+        \Exp{f(X_n)}
+        \le \Exp[\Big]{\sum_{i=1}^N y_i \Indicator{E_i}(f(X_n))}
+        = \sum_{i=1}^N y_i \underbrace{\Prob{X_n \in f^{-1}(E_i)}}_{\overset{\ref{it: s.zero boundary}}\to \Prob{X \in f^{-1}(E_i)}}
+    \]
+    where we use \(\Prob{X \in \partial f^{-1}(E_i)} = 0\). Using \(y_i \le f(X) +
+    \epsilon\) for \(f(X) \in E_i\) we get
+    \[
+        \sum_{i=1}^N y_i \Prob{X \in f^{-1}(E_i)}
+        = \Exp[\Big]{\sum_{i=1}^N y_i \Indicator{E_i}(f(X))}
+        \le \Exp{f(X)} + \epsilon.
+    \]
+    Put together this implies
+    \[
+        \limsup_{n\to \infty} \Exp{f(X_n)}
+        \le \Exp{f(X)} + \epsilon.
+    \]
+    As this is true for any \(\epsilon >0\) we may drop it. Applying the same
+    arguments to \(-f\) we obtain the lower bound and consequently
+    \(\Exp{f(X_n)} \to \Exp{f(X)}\).
 \end{myproof}
 
 \begin{proof}[Proof (Theorem \ref{thm: convergence implications})]
@@ -530,6 +611,28 @@ We begin with the proof of the Portmanteau theorem,
             \]
         \end{solution}
     \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Stochastic convergence to \(L^p\)]
+    Assume that \(X_n\) and \(X\) are bounded random variables. That is 
+    \(\sup_n\|X_n\| \le c\) and \(\|X\|\le c\) with probability one for some \(c
+    \in \real\). Show that then \(X_n \overset{p}\to X\) implies \(X_n
+    \overset{L^p}\to X\).
+    \begin{solution}
+        We have for every \(\epsilon > 0\)
+        \[
+            \Exp[\big]{\norm{X_n - X}^p}
+            = \Exp[\big]{\norm{X_n - X}^p \Indicator{\norm{X_n - X} < \epsilon}}
+            + \Exp[\big]{\norm{X_n - X}^p \Indicator{\norm{X_n - X} \ge \epsilon}}
+            \le \epsilon^p + (2c)^p \Prob[\big]{\norm{X_n - X} \ge \epsilon}.
+        \]
+        Due to \(X_n \overset{p}\to X\) the second term converges to \(0\)
+        and we thus have
+        \[
+            \limsup_{n\to \infty} \Exp[\big]{\norm{X_n - X}^p} \le \epsilon^p.
+        \]
+        Since this is true for any \(\epsilon > 0\) we have the claim.
+    \end{solution}
 \end{exercise}
 
 \begin{exercise}[Stochastic triangle inequality]
