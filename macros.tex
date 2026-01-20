@@ -40,6 +40,7 @@
 \DeclarePairedDelimiterXPP{\Exp}[1]{\E}{[}{]}{}{#1}
 \DeclarePairedDelimiterXPP{\Var}[1]{\mathrm{Var}}{[}{]}{}{#1}
 \DeclarePairedDelimiterXPP{\Prob}[1]{\Pr}{(}{)}{}{#1}
+\DeclarePairedDelimiterXPP{\ball}[2]{\mathbb{B}}{(}{)}{}{#1, #2}
 \NewDocumentCommand{\Indicator}{s m}{%
   \IfBooleanTF{#1}
     {\mathbf{1}_{\left\{#2\right\}}} % starred: wrap in braces

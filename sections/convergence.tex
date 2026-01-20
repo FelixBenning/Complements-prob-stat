@@ -5,7 +5,7 @@
 \marginpar{\red{Lecture 1}}
 
 
-% \section{Types of convergence}
+\section{Types of convergence}
 
 \begin{definition}[Types of Convergence]
     \label{def: types of convergence}
@@ -118,7 +118,8 @@
     Lipschitz continuity is straightforward to verify (Exercise \ref{ex: lipschitz bump functions}).
     Now using an \(\epsilon\)-increase of the set \(A\)
     \[
-        A_\epsilon \coloneq \Set{x \in \domain : \metric(x,A) \le \epsilon},
+        A_\epsilon \coloneq \Set{x \in \domain : \metric(x,A) \le \epsilon}
+        = A + \ball{0}{\epsilon},
     \]
     we have  \(\Indicator{A}(x) \le \Indicator{A}^\epsilon(x) \le \Indicator{A_\epsilon}(x)\) for all \(x\).
     Consequently we have for any closed set \(A\)
@@ -130,11 +131,11 @@
         = \Pr(X \in A_\epsilon),
     \end{aligned}
     \]
-    This implies that for every \(\epsilon >0\)
-    \[
+    Thus for every \(\epsilon >0\) we have
+    \(
         \limsup_{n\to \infty} \Pr(X_n \in A) \le \Pr(X \in A_\epsilon).
-    \]
-    Since this is true for every \(\epsilon_m = \frac1m\) we have
+    \)
+    And since this is true for every \(\epsilon\), in particular \(\epsilon_m = \frac1m\), we have
     \[
         \limsup_{n\to \infty} \Pr(X_n \in A)
         \le \lim_{m\to\infty}\Pr(X \in A_{\frac1m})
@@ -503,28 +504,6 @@
     \end{enumerate}
 \end{exercise}
 
-\begin{exercise}[Stochastic limits are unique]
-    \label{ex: unique stochastic limits}
-    Show that
-    \begin{enumerate}[label=(\alph*),noitemsep]
-        \item if \(X_n \overset{p}\to X\) and \(X_n \overset{p}\to Y\), then
-        \(\Prob{X = Y}=1\).
-    \end{enumerate}
-    Deduce
-    \begin{enumerate}[label=(\alph*), resume,noitemsep]
-        \item if \(X_n \overset{\as}\to X\) and \(X_n \overset{\as}\to Y\), then \(\Prob{X = Y}=1,\)
-        \item if \(X_n \overset{L^p}\to X\) and \(X_n \overset{L^p}\to Y\), then \(\Prob{X = Y}=1.\)
-    \end{enumerate}
-    Finally, 
-    \begin{enumerate}[label=(\alph*), resume, noitemsep]
-        \item show that the statement is not true for convergence in
-        distribution.
-    \end{enumerate}
-    \noindent\textbf{Hint:} Recall the proof of unique deterministic limits in Analysis
-    and use the stochastic triangle inequality (Exercise \ref{ex: stochastic
-    triangle}).
-\end{exercise}
-
 \begin{exercise}[Stochastic triangle inequality]
     \label{ex: stochastic triangle}
     For random variables \(X,Y,Z\) show that for all \(\epsilon > 0\)
@@ -552,22 +531,47 @@
     \end{solution}
 \end{exercise}
 
-\begin{exercise}[Stochastic Simulation]
+
+\begin{exercise}[Stochastic limits are unique]
+    \label{ex: unique stochastic limits}
+    Show that
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item if \(X_n \overset{p}\to X\) and \(X_n \overset{p}\to Y\), then
+        \(\Prob{X = Y}=1\).
+    \end{enumerate}
+    Deduce
+    \begin{enumerate}[label=(\alph*), resume,noitemsep]
+        \item if \(X_n \overset{\as}\to X\) and \(X_n \overset{\as}\to Y\), then \(\Prob{X = Y}=1,\)
+        \item if \(X_n \overset{L^p}\to X\) and \(X_n \overset{L^p}\to Y\), then \(\Prob{X = Y}=1.\)
+    \end{enumerate}
+    Finally, 
+    \begin{enumerate}[label=(\alph*), resume, noitemsep]
+        \item show that the statement is not true for convergence in
+        distribution.
+    \end{enumerate}
+    \noindent\textbf{Hint:} Recall the proof of unique deterministic limits in Analysis
+    and use the stochastic triangle inequality (Exercise \ref{ex: stochastic
+    triangle}).
+\end{exercise}
+
+\begin{exercise}[Stochastic Simulation and Quantiles]
     \label{ex: stochastic simulation}
-    The goal is to simulate a random variable \(X\) with cumulative distribution 
+    The goal is to simulate a random variable \(X\) with distribution 
     function \(F(x) = \Prob{X \le x}\) using a standard uniform random variable
     \(U\sim \uniform(0,1)\). We define the generalized inverse of \(F\) as
     \[
         F^{\leftarrow}(p) \coloneq \inf\{x \in \real : F(x) \ge p\}, \quad p \in (0,1).
     \]
+    Show that
     \begin{enumerate}[label=(\alph*), noitemsep]
-        \item Show that if \(F\) is invertible, then \(F^{\leftarrow}(p) = F^{-1}(p)\) for all
-        \(p \in (0,1)\).
-        \item Show that \(F^{\leftarrow}\) is non-decreasing.
-        \item Show \(F^{\leftarrow}(F(x)) \le x\) for all \(x \in \real\).
-        \item \(F(F^{\leftarrow}(p)) \ge p\) for all \(p \in (0,1)\).
-        \item \(F^{\leftarrow}(p) \le x\) if and only if \(p \le F(x)\).
-        \item The the distribution of \(X\coloneq F^{\leftarrow}(U)\) is \(F\), that is
+        \item if \(F\) is invertible, then \(F^{\leftarrow}(p) = F^{-1}(p)\) for all
+        \(p \in (0,1)\),
+        \item \(F^{\leftarrow}\) is non-decreasing,
+        \item \(F^{\leftarrow}(F(x)) \le x\) for all \(x \in \real\),
+        \item \(F(F^{\leftarrow}(p)) \ge p\) for all \(p \in (0,1)\),
+        \item \(F^{\leftarrow}(p) \le x\) if and only if \(p \le F(x)\),
+        \item\label{it: inverse transform sampling}
+        \(X\coloneq F^{\leftarrow}(U) \sim F\) for a standard uniform \(U\sim \uniform(0,1)\), i.e.\ 
         \[
             F(x) = \Prob{X \le x}
             \qquad \forall x \in \real.
@@ -575,6 +579,16 @@
         \item Propose a way to simulate an exponential distribution \(X \sim
         \exponential(\lambda)\) using a standard uniform random variable \(U\sim
         \uniform(0,1)\).
+        \item\label{it: inverse transform sampling dual} Show \(F(X) \sim \uniform(0,1)\) for \(X\sim  F\)
+        (This is the dual property of \ref{it: inverse transform sampling}).
+    \end{enumerate}
+    The function \(F^{\leftarrow}\) is also called a \emph{quantile function} of
+    the distribution function \(F\). The reason for this is
+    the following: Show that
+    \begin{enumerate}[resume, label=(\alph*), noitemsep]
+        \item \(Q(p) \coloneq (-\infty, F^{\leftarrow}(p)]\) is the smallest
+        interval of the form \((-\infty, a]\) such that \(\Prob{X \in (-\infty,
+        a]} \ge p\) for \(X\sim F\). We say that \(Q(p)\) is a \(p\)-quantile.
     \end{enumerate}
 \end{exercise}
 
@@ -963,16 +977,16 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
     \end{solution}
 \end{exercise}
 
-\begin{exercise}[Projection in \(L^2\)]
+\begin{exercise}[Expectation -- Projection in \(L^2\)]
     \label{ex: projection in L2}
-    Identifying deterministic random variables with real numbers
-    we have \(\real \subseteq \cL^2\). Identify \(\real\) with \(\Set{[x]:
-    x\in\real} \subseteq L^2\).
+    Identify deterministic random variables with real numbers
+    such that \(\real \subseteq \cL^2\). Then identify \(\real\) with \(\Set{[x]:
+    x\in\real} \subseteq L^2\) such that \(\real \subseteq L^2\).
     \begin{enumerate}[label=(\alph*), noitemsep]
-        \item show that \(\real\) and \(\real^\perp \coloneq \Set{[X] \in L^2 :
+        \item Show that \(\real\) and \(\real^\perp \coloneq \Set{[X] \in L^2 :
         \Exp{X}=0}\) are orthogonal subspaces of \(L^2\) with \(L^2 = \real
-        \oplus \real^\perp\),
-        \item show that the orthogonal projection onto \(\real\) is given by
+        \oplus \real^\perp\).
+        \item Show that the orthogonal projection onto \(\real\) is given by
         \[
             \E \colon \begin{cases}
                 L^2 \to \real,
@@ -987,11 +1001,59 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
             \Cov(X,Y) = \langle \pi(X), Y\rangle = \langle X, \pi(Y)\rangle = \langle \pi(X), \pi(Y)\rangle
         \]
         In particular \(\Cov\) coincides with the inner product on \(\real^\perp\)!
+
+        \item Show that the expectation is the closest real number to \(X\in
+        \cL^2\) in the \(L^2\) distance, that is
+        \[
+            \Exp{X} = \argmin_{c\in \real} \Exp{(X - c)^2} = \argmin_{c\in \real} \|X - c\|_2.
+        \]
     \end{enumerate}
 \end{exercise}
 
+\begin{exercise}[Median -- Projection in \(L^1\)]
+    
+\end{exercise}
 
-\section[Borel-Cantelli]{Borel-Cantelli and almost sure convergence}
+\begin{remark}[Median is more stable]
+    Observe that both the median and expectation are defined in greater
+    generality than their interpretation as projections permits
+    \begin{center}
+       \def\arraystretch{1.2} 
+    \begin{tabular}{l|ll}
+        & expectation & median 
+        \\
+        \hline
+        defined & in \(L^1\) & always
+        \\
+        minimizes & \(L^2\)-norm & \(L^1\)-norm
+    \end{tabular}
+    \end{center}
+    However the median is more stable and works for heavy tailed
+    distributions that do not have a well defined expectation -- it is
+    more robust to outliers.
+\end{remark}
+
+\begin{remark}[Median in higher dimension]
+    The median is much more difficult to work with than the expectation
+    as it is set-valued in general and more difficult to compute.
+    In higher dimension it is even more difficult to define as there is no
+    natural ordering and consequently no distribution function or quantile
+    function. Finding a good generalization is still an active area of
+    research! A recent approach \citep{hallinDistributionQuantileFunctions2021}
+    exploits the idea that the distribution function is a monotonous function.
+    More specifically, the shifted function \(F(x) - \frac12\) is decreasing
+    before the median and increasing after the median. Integrating this function
+    therefore gives a convex function that is minimized at the median.
+    While a monotonous function is only defined on ordered sets, convexity
+    generalizes to higher dimensions. This idea is used in
+    \citep{hallinDistributionQuantileFunctions2021} to define higher dimensional
+    distribution (and quantile) functions as the unique gradient of a convex function
+    that satisfies Property \ref{it: inverse transform sampling dual} (or resp.\
+    Property \ref{it: inverse transform sampling}) of Exercise \ref{ex:
+    stochastic simulation}.
+\end{remark}
+
+\section[Borel-Cantelli]{Borel-Cantelli characterization of almost sure convergence}
 \label{sec: borel cantelli}
 
 
@@ -1004,7 +1066,7 @@ section we will discover that the speed at which the term
 \end{equation*}
 converges to zero determines whether we also have almost sure convergence.
 Roughly speaking if this probability decays like \(\frac1n\) or slower, then
-we do not have almost sure convergence. But if it decays faster then we do.
+we do not have almost sure convergence. But if it decays faster, then we do.
 The key results to formalize this claim are known as the Borel-Cantelli lemmas
 (Theorem \ref{thm: borel-cantelli}). With these we will characterize almost sure
 convergence in terms of speed of convergence in Corollary \ref{cor:
@@ -1165,35 +1227,37 @@ Lemma \ref{lem: liminf and limsup properties} we have
 Where we used that \(\sum_{n=1}^\infty \Prob{A_n} = \infty\) and \(\exp(-x)\to 0\) for \(x\to \infty\).
 \end{proof}
 
-\begin{remark}
+\begin{remark}[Pairwise independence]
+    \label{rem: pairwise independence}
     With significantly more effort it is possible to generalize the
     Borel-Cantelli Lemma 2 \eqref{eq: borel cantelli 2} to require only
     \underline{pairwise} independence.\fxwarning{reference: ask Leif.}
 \end{remark}
 
-The Borel-Cantelli lemmas now lead to the following characterization of almost sure convergence.
+The Borel-Cantelli lemmas now lead to the following characterization of almost
+sure convergence.
 
 \begin{corollary}[Characterization of almost sure convergence]
     \label{cor: characterization of almost sure convergence}
     Let \((X_n)_{n=1}^\infty\) be a sequence of random variables and \(X\) another random variable.
     Then
-    \begin{alignat*}{4}
-        \forall \epsilon > 0: &\quad &  
+    \[
+        \forall \epsilon > 0: \quad
         \sum_{n=1}^\infty \Prob*{|X_n - X| \ge \epsilon} < \infty
-        & \quad & \implies & \quad & \underbrace{
+         \quad \implies \quad \underbrace{
             \Prob[\Big]{\lim_{n\to\infty} X_n = X} =1
         }_{
             \iff X_n\overset{\as}\to X
         }.
-        \\
-    \intertext{
-        If the random variables \((X_n-X)_{n\in \nat}\) are also independent, then
-    }
-        \exists \epsilon > 0: & &
+    \]
+    If the random variables \((X_n-X)_{n\in \nat}\) are (pairwise)\footnote{see Remark \ref{rem: pairwise independence}} independent, then
+    \[
+        \exists \epsilon > 0: \quad
         \sum_{n=1}^\infty \Prob*{|X_n - X| \ge \epsilon} = \infty
-        & & \implies & & \Prob[\Big]{\lim_{n\to\infty} X_n = X} =0,
-    \end{alignat*}
-    Consequently, if the probability of convergence is greater zero it must be one!
+        \quad \implies \quad \Prob[\Big]{\lim_{n\to\infty} X_n = X} =0.
+    \]
+    In the independent case this implies a \(0\)-\(1\) law: If the probability of
+    convergence is greater zero it must be one!
 \end{corollary}
 
 This corollary shows that almost sure convergence simply means that we have
@@ -1222,6 +1286,66 @@ X| \ge \epsilon}\) does not only converge to zero but is also summable.
     then the application of the second Borel-Cantelli lemma \eqref{eq: borel
     cantelli 2} to this particular \(\epsilon\) shows that the probability
     in \eqref{eq: characterization of does not converge} must be one.
+\end{proof}
+
+An application of this characterization of almost sure convergence is the
+insight that from every sequence that converges in probability we can extract
+a subsequence that converges almost surely.
+
+\begin{lemma}[Subsequences converge almost surely]
+    \label{lem: subsequences converge almost surely}
+    Let \((X_n)_{n\in \nat}\) be a sequence of random variables and \(X\)
+    another random variable such that \(X_n \overset{p}\to X\).
+    Then there exists a subsequence \((X_{n_k})_{k\in \nat}\)
+    such that \(X_{n_k} \overset{\as}\to X\).
+\end{lemma}
+
+The idea of the proof is that we can increase the speed of convergence
+of \(\Prob{|X_n - X| \ge \epsilon}\) by choosing a subsequence.
+For example in the case
+\[
+    \Prob*{|X_n - X| \ge \epsilon} \le \frac{C_\epsilon}{n},
+\]
+we can choose \(n_k = k^2\) such that for every \(\epsilon > 0\)
+\begin{equation}
+    \label{eq: subsequence summable}    
+    \sum_{k=1}^\infty \Prob*{|X_{n_k} - X| \ge \epsilon}
+    \le \sum_{k=1}^\infty \frac{C_\epsilon}{k^2} < \infty.
+\end{equation}
+Corollary \ref{cor: characterization of almost sure convergence} then
+implies that \(X_{n_k} \overset{\as}\to X\).
+The actual proof is a little bit more complicated for two reasons: First, we do
+not have an explicit rate of convergence. And second, we do not want to select a
+subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
+0\) simultaneously.
+
+
+\begin{proof}
+    By convergence in probability, we have for every \(\epsilon >0\),
+    in particular \(\epsilon =\frac1k\) for \(k\in \nat\), that
+    there exists an \(N_k\) such that for all \(n \ge N_k\)
+    \[
+        \Prob{|X_n - X| \ge \tfrac1k} \le \tfrac1{2^k}.
+    \]
+    By choosing the subsequence \(n_k = N_k\) we thus get
+    for every \(\epsilon > 0\)
+    \[
+        \sum_{k=1}^\infty \Prob*{|X_{n_k} - X| \ge \epsilon}
+        = \underbrace{\sum_{k=1}^{\lceil \frac1\epsilon \rceil-1}
+        \Prob*{|X_{n_k} - X| \ge \epsilon}}_{< \infty}
+        +\sum_{k=\lceil \frac1\epsilon \rceil}^\infty
+        \Prob*{|X_{n_k} - X| \ge \epsilon}
+    \]
+    For the remaining summands we have \(\epsilon > \frac1k\) and therefore
+    \[
+       \sum_{k=\lceil \frac1\epsilon \rceil}^\infty
+        \Prob*{|X_{n_k} - X| \ge \epsilon}
+        \le \sum_{k=\lceil \frac1\epsilon \rceil}^\infty
+        \Prob*{|X_{n_k} - X| \ge \tfrac1k}
+        \le \sum_{k=1}^\infty \frac1{2^k} = 1 < \infty.
+    \]
+    Consequently, by Corollary \ref{cor: characterization of almost sure convergence}
+    we have that \(X_{n_k} \overset{\as}\to X\).
 \end{proof}
 
 \subsection*{Exercises}
@@ -1423,8 +1547,9 @@ Our next result shows that this is mostly the case.
 
 \begin{theorem}[Continuous mapping]
     \label{thm: continuous mapping}
-    Let \(f\) be a continuous function, \((X_n)_{n\in \nat}\) a sequence of
-    random variables and \(X\) another random variable. Then
+    Let \((X_n)_{n\in \nat}\) be a sequence of random variables and \(X\)
+    another random variable. Let \(f\) be a function that is almost surely continuous in \(X\), that is
+    \(\Prob{f \text{ is continuous at } X} = 1\). Then
     \begin{enumerate}[label=(\roman*)]
         \item \(X_n \overset{\as}\to X\) implies \(f(X_n) \overset{\as}\to f(X)\).
         \item \(X_n \overset{p}\to X\) implies \(f(X_n) \overset{p}\to f(X)\).
@@ -1519,126 +1644,104 @@ and \ref{thm: joint convergence}.
 
 The difference between a ``weak law'' and ``strong law'' is the convergence type.
 A ``weak law'' only requires convergence in probability, while a ``strong law''
-requires almost sure convergence. Recall that in the 
-\fxnote*{change eventually}{lecture by Ivan} you have already seen the proof of the weak
-law of large numbers. In the proof the Chebyshev inequality was used to show
-\begin{equation}
-    \label{eq: quantitative weak law of large numbers}    
-    \Prob[\big]{|\mean{X}_n - \E[X]| > \epsilon}
-    \overset{\text{Cheb.}}\le \frac{\Var{\mean{X}_n}}{\epsilon^2} = \frac{\Var{X}}{n\epsilon^2},
-\end{equation}
-where \(\mean{X}_n \coloneq \frac1n \sum_{i=1}^n X_i\). The second equality follows
-from an explicit calculation of the variance
-\begin{align*}
-    \Var{\mean{X}_n}
-    &= \E[(\mean{X}_n - \E[X])^2] &&= \norm[\big]{\mean{X}_n - \E[X]}_2^2
-    \\
-    &= \Exp[\Big]{ \Bigl(\frac1n\sum_{i=1}^n (X_i - \Exp{X})\Bigr)^2}
-    \\
-    &= \frac1{n^2}\sum_{i,j=1}^n \underbrace{\E[(X_i - \E[X])(X_j- \E[X])]}_{=\Cov(X_i, X_j)}
-    \\
-    &= \frac1{n^2} \sum_{i=1}^n \Var{X_i}
-    = \frac1n \Var{X}.
-\end{align*}
-Observe that we do not really need the random variables \(X_i\) to be
-identically distributed. We only need that they are uncorrelated
-such that \(\Cov(X_i, X_j) = 0\) and that the variances
-\(\Var{X_i}\) are bounded by some \(\sigma^2\) to get
-\[
-    \frac1{n^2} \sum_{i=1}^n \Var{X_i} \le \frac{\sigma^2}n.
+requires almost sure convergence. The typical strategy to obtain strong laws is
+to obtain quantitative convergence results in \(L^p\), translate them
+to quantitative convergence result in probability using the Markov inequality
+and deduce almost sure convergence using the Borel-Cantelli lemmas from
+the rate of convergence, that is
+\[\begin{aligned}
+    \substack{\text{Qunatitative}\\ X_n \overset{L^p}\to X } \quad
+    \overset{\text{Markov ineq.}}\implies \quad \substack{\text{Quantitative}\\ X_n \overset{p}\to X}\quad
+    \overset{\text{Borel-Cantelli}}\implies \quad X_n \overset{\as}\to X.
+\end{aligned}
 \]
-Also observe
-that we really showed \(L^2\) convergence here. That is we showed
-\begin{lemma}[Law of large numbers in \(L^2\)]
-    Let \((X_n)_{n\in \nat}\in \cL^2\) be uncorrelated random variables
-    with identical mean \(m= \E[X_n]\) and bounded variances \(\Var{X_n} \le \sigma^2 < \infty\).
-    Then
+The reason for this strategy is that it is often easiest to calculate \(L^p\)-norms.
+For example \(\norm{X - \E[X]}_2 = \sqrt{\Var{X}}\). 
+In this section we illustrate this strategy by implementing it for the
+law of large numbers. The variance of sums or random variables is
+straightforward to calculate:
+
+\begin{lemma}[Bienaymé]
+    Let \(X_1, \dots, X_n\) be random variables in \(\cL^2\). Then
     \[
-        \norm[\big]{\mean{X}_n - m}_2 \le \sqrt{\frac{\sigma^2}{n}}.
+        \Var[\Big]{\sum_{i=1}^n X_i} = \sum_{i=1}^n \Var{X_i} + \sum_{\substack{i,j=1\\i \neq j}}^n \Cov(X_i, X_j).
+    \]
+    Consequently, if the random variables are uncorrelated (i.e.\ \(\Cov(X_i, X_j) = 0\) for \(i\neq j\)), then
+    \[
+        \Var[\Big]{\sum_{i=1}^n X_i} = \sum_{i=1}^n \Var{X_i}
+        \quad \text{and thus} \quad \Var[\Big]{\underbrace{\frac1n \sum_{i=1}^n X_i}_{\eqcolon \mean{X}_n}} = \frac1{n^2} \sum_{i=1}^n \Var{X_i}.
     \]
 \end{lemma}
-Using this \(L^2\) convergence 
-and the Chebyshev inequality (Corollary \ref{cor: markov inequality Lp}), that is
-\[
-    \Prob{\abs{\mean{X}_n - m}\ge \epsilon} \le \frac{\norm{\bar{X}_n - m}_p^p}{\epsilon^p}
-\]
-for \(p=2\) results in convergence in probability.
-Unfortunately the convergence speed we deduced is only \(\bigO(\frac1n)\) which
-is not enough for almost sure convergence as the harmonic series diverges. To
-prove almost sure convergence -- that is a strong law of large numbers, a
-different approach is needed.
-
-A shortcut to the law of large numbers is to bound the \(L^4\) norm and use the
-Chebyshev inequality for \(p=4\). This results in a convergence speed
-on the order of \(\bigO(\frac1{n^2})\) which is summable and therefore
-sufficient for almost sure convergence by Corollary \ref{cor: characterization of almost sure convergence}.
-However to bound the \(L^4\) norm it is necessary to assume the variables \(X_n\)
-have finite fourth moments \(\E[X_n^4] < \infty\) and assume independence such
-that \(\E[X_i X_j X_k X_l]\) factorizes when the indices are different (see
-Exercise \ref{ex: strong law of large numbers in L4}).
-This is a much stronger assumption than necessary.
-
-The key to a more general proof is the following observation:
-
-\begin{lemma}[Subsequences converge almost surely]
-    \label{lem: subsequences converge almost surely}
-    Let \((X_n)_{n\in \nat}\) be a sequence of random variables and \(X\)
-    another random variable such that \(X_n \overset{p}\to X\).
-    Then there exists a subsequence \((X_{n_k})_{k\in \nat}\)
-    such that \(X_{n_k} \overset{\as}\to X\).
-\end{lemma}
-
-The idea of the proof is that we can increase the speed of convergence
-of \(\Prob{|X_n - X| \ge \epsilon}\) by choosing a subsequence.
-For example in the case
-\[
-    \Prob*{|X_n - X| \ge \epsilon} \le \frac{C_\epsilon}{n},
-\]
-we can choose \(n_k = k^2\) such that for every \(\epsilon > 0\)
-\begin{equation}
-    \label{eq: subsequence summable}    
-    \sum_{k=1}^\infty \Prob*{|X_{n_k} - X| \ge \epsilon}
-    \le \sum_{k=1}^\infty \frac{C_\epsilon}{k^2} < \infty.
-\end{equation}
-Corollary \ref{cor: characterization of almost sure convergence} then
-implies that \(X_{n_k} \overset{\as}\to X\).
-The actual proof is a little bit more complicated for two reasons: First, we do
-not have an explicit rate of convergence. And second, we do not want to select a
-subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
-0\) simultaneously.
-
-
 \begin{proof}
-    By convergence in probability, we have for every \(\epsilon >0\),
-    in particular \(\epsilon =\frac1k\) for \(k\in \nat\), that
-    there exists an \(N_k\) such that for all \(n \ge N\)
+    Let \(Y_i \coloneq X_i - \E[X_i]\). Then by definition of variance and covariance
     \[
-        \Prob{|X_n - X| \ge \tfrac1k} \le \tfrac1{2^k}.
+        \Var[\Big]{\sum_{i=1}^n X_i}
+        = \Exp[\Big]{\Big(\sum_{i=1}^n Y_i\Big)^2} = \sum_{i,j=1}^n \E[Y_i Y_j]
+        = \sum_{i,j=1}^n \Cov(X_i, X_j).
     \]
-    By choosing the subsequence \(n_k = N_k\) we thus get
-    for every \(\epsilon > 0\)
-    \[
-        \sum_{k=1}^\infty \Prob*{|X_{n_k} - X| \ge \epsilon}
-        = \underbrace{\sum_{k=1}^{\lceil \frac1\epsilon \rceil-1}
-        \Prob*{|X_{n_k} - X| \ge \epsilon}}_{< \infty}
-        +\sum_{k=\lceil \frac1\epsilon \rceil}^\infty
-        \Prob*{|X_{n_k} - X| \ge \epsilon}
-    \]
-    For the remaining summands we have \(\epsilon > \frac1k\) and therefore
-    \[
-       \sum_{k=\lceil \frac1\epsilon \rceil}^\infty
-        \Prob*{|X_{n_k} - X| \ge \epsilon}
-        \le \sum_{k=\lceil \frac1\epsilon \rceil}^\infty
-        \Prob*{|X_{n_k} - X| \ge \tfrac1k}
-        \le \sum_{k=1}^\infty \frac1{2^k} = 1 < \infty.
-    \]
-    Consequently, by Corollary \ref{cor: characterization of almost sure convergence}
-    we have that \(X_{n_k} \overset{\as}\to X\).
+    With \(\Var{X_i} = \Cov(X_i, X_i)\) the result follows from a split of the sum.
 \end{proof}
 
-We can therefore prove the strong law of large numbers by proving
-almost sure convergence on a subsequence and then extending this
-to the elements of the sequence in between.
+If we do not care about the speed of convergence, then an immediate corollary of
+Bienaymé is the following weak law of large numbers.
+
+\begin{corollary}[Khinchin's weak law of large numbers]
+    \label{cor: weak law of large numbers}
+    Let \((X_n)_{n\in \nat}\) be a sequence of uncorrelated random variables
+    with identical mean \(m= \E[X_n]\) and \(\frac1{n^2} \sum_{i=1}^n \Var{X_i} \to 0\).
+    Then
+    \[
+        \mean{X}_n\coloneq \frac1n \sum_{i=1}^n X_i \overset{p}\to m.
+    \]
+\end{corollary}
+\begin{proof}
+    By the Chebyshev inequality (Corollary \ref{cor: markov inequality Lp})
+    we get
+    \begin{equation*}
+        \Prob[\big]{|\mean{X}_n - m| > \epsilon}
+        \le \frac1{\epsilon^2}\|\mean{X}_n - m\|_2^2
+        = \frac1{\epsilon^2} \Var[\big]{\mean{X}_n}
+        \overset{\text{Bienaymé}}= \frac1{\epsilon^2}\Bigl(\frac1{n^2} \sum_{i=1}^n \Var{X_i}\Bigr).
+    \end{equation*}
+    The assumption \(\frac1{n^2} \sum_{i=1}^n \Var{X_i} \to 0\) therefore
+    yields the claim.
+\end{proof}
+
+From the proof it is clear that the speed of convergence is determined by the
+speed of convergence of \(\frac1{n^2} \sum_{i=1}^n \Var{X_i}\).
+If the variances are bounded, that is
+\(\sup_{i}\Var{X_i} \le \sigma^2 < \infty\),
+then
+\begin{equation}
+    \label{eq: rate of convergence for bounded variance}    
+    \Prob[\big]{|\mean{X}_n - m| > \epsilon}
+    \le \frac1{\epsilon^2}\frac{\sigma^2}{n} \in \bigO(\tfrac1n).
+\end{equation}
+If the variances \(\Var{X_i}\) are increasing in \(i\), then one
+may still obtain (slower) convergence. But even the convergence speed for the
+bounded case is too slow to deduce almost sure convergence directly as 
+as the harmonic series diverges (cf.\ Corollary \ref{cor: characterization of
+almost sure convergence}). The problem is essentially that Markov's inequality
+is too lose. To prove almost sure convergence -- that is a strong
+law of large numbers, a different approach is needed. There are
+two common approaches:
+\begin{enumerate}
+    \item (Shortcut): \textbf{Bound the \(L^4\) norm} and use the Chebyshev inequality
+    for \(p=4\). This results in a convergence speed on the order of
+    \(\bigO(\frac1{n^2})\) which is summable and therefore sufficient for almost
+    sure convergence by Corollary \ref{cor: characterization of almost sure
+    convergence}.  However to bound the \(L^4\) norm it is necessary to assume
+    the variables \(X_n\) have finite fourth moments \(\E[X_n^4] < \infty\) and
+    assume independence such that \(\E[X_i X_j X_k X_l]\) factorizes when the
+    indices are different (see Exercise \ref{ex: strong law of large numbers in
+    L4}).
+
+    \item The most general forms of the strong law of large numbers, is
+    obtained by the observation that we may prove almost sure convergence
+    on a \textbf{subsequence} (cf.\ Lemma \ref{lem: subsequences converge almost
+    surely}). The second step is to control the elements in between the
+    converging subsequence.
+\end{enumerate}
 
 \begin{theorem}[Strong law of large numbers]
     \label{thm: strong law of large numbers}
@@ -1651,13 +1754,23 @@ to the elements of the sequence in between.
 \end{theorem}
 
 \begin{proof}[Proof (by Michael J Neely \citep{neelyInfinitelyOftenProbability2021})]
+    Since the variance is bounded, we have seen in \eqref{eq: rate of convergence for bounded variance}
+    that  \(\Prob[\big]{|\mean{X}_n - m| > \epsilon} \le
+    \frac{\sigma^2}{n\epsilon^2}\). This implies \(\mean{X}_{n^2}
+    \overset{\as}\to m\) by Corollary \ref{cor: characterization of almost sure
+    convergence}
+    since 
+    \[
+        \sum_{n=1}^\infty \Prob[\big]{|\mean{X}_{n^2}-m| \ge \epsilon}
+        \le \frac{\sigma^2}{\epsilon^2}\sum_{n=1}^\infty \frac1{n^2} < \infty.
+    \]
+    That is we choose the  subsequence indexed by \(n^2\). What is left to prove
+    is that \(X_n \overset{\as}\to 0\) for any \(n\in \nat\) that is not a
+    perfect square. 
     Observe that by defining \(\tilde{X}_n \coloneq X_n - m\) we can
     assume without loss of generality that \(m=0\), which we will do from now on.
-    Since the probability is bounded by \(\frac{\sigma^2}{n\epsilon^2}\), we have already
-    seen in \eqref{eq: subsequence summable} that \(\mean{X}_{n^2} \overset{\as}\to m=0\) where we have chosen
-    the subsequence indexed by \(n^2\). What is left to prove is that \(X_n \overset{\as}\to 0\)
-    for any \(n\in \nat\) that is not a perfect square. To this end define
-    \(k_n \coloneq \lfloor \sqrt{n} \rfloor\) such that
+    Define \(k_n \coloneq \lfloor \sqrt{n} \rfloor\) to find the closest 
+    squares surrounding \(n\)
     \begin{equation}
         \label{eq: k definition}    
         k_n^2 \le n < (k_n+1)^2.
@@ -1721,15 +1834,6 @@ to the elements of the sequence in between.
         \qedhere
     \end{align*}
 \end{proof}
-
-\begin{remark}[Unbounded variance]
-    Observe that using the bounded variance we obtain a \(\bigO(\frac1n)\)
-    bound on the variance of the mean. If the variances are unbounded
-    but grow slower than \(\frac1n\) the variance of the mean still decays
-    albeit slower. This requires an even sparser selection of the subsequence
-    which then makes it more difficult (but not impossible) to control the
-    \(\Delta_n\) terms.
-\end{remark}
 
 In Theorem \ref{thm: strong law of large numbers} we still assumed that the
 random variables are in \(L^2\). And if you want to work with
