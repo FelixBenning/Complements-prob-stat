@@ -17,7 +17,7 @@
         \draw[dashed, thick, gray] 
         ($(m-1-2.north east)!0.5!(m-1-3.north west) + (0.1, 1.2)$) -- 
         ($(m-1-2.south east)!0.5!(m-1-3.south west) + (0.1, -2.3)$)
-        node[midway, fill=white, text=gray, font=\footnotesize, xshift=-32,yshift=-48] {\(X\) a.s.\ unique};
+        node[midway, fill=white, text=gray, font=\footnotesize, xshift=-32,yshift=-53] {\(X\) a.s.\ unique};
     }
 ]
     % --- Row 1 ---
@@ -28,7 +28,7 @@
     & \(X_n \overset{p}\to X\)
     \arrow[r, Rightarrow] {}[xshift=-4]{\ref{it: p to d}}
     \arrow[l, out=180, in=352, looseness=1] {}[below,yshift=-5]{\substack{\text{Borel-Cantelli}\\Sec.~\ref{sec: borel cantelli}}}
-    \arrow[ld, out=250, in=358] {} [right,xshift=4,yshift=-2]{\substack{\text{\(X_n,X\) bounded}\\\text{Exercise \ref{ex: p to Lp when bounded}}}}
+    \arrow[ld, out=250, in=358] {} [right,xshift=4,yshift=-5]{\substack{\text{\(X_n,X\) bounded}\\\text{(Exercise \ref{ex: p to Lp when bounded})}}}
     & \(X_n \overset{d}\to X\)
     \arrow[l, out=220, in=345, looseness=1] {}[below,xshift=19]{X \overset{\as}= c \in \real \text{ \ref{it: d to p}}}
     \arrow[ll, out=140, in=50, looseness=0.3]{}[above]{\text{Skorokhod (Exercise \ref{ex: skorokhod representation})}}
