@@ -17,8 +17,8 @@
             \Prob[\Big]{\lim_{n \to \infty} X_n = X} = 1.
         \]
 
-        \item \textbf{in \(L^p\)} for \(p \geq 1\), denoted by \(X_n \overset{L^p}\to X\), if
-        \(X_n, X \in L^p\) for all \(n\) and
+        \item \textbf{in \(L^p\)} for \(p \geq 1\), denoted by \(X_n \overset{L^p}\to X\), if \(\Exp{\norm{X_n}^p} < \infty\) for all \(n\), \(\Exp{\norm{X}^p} < \infty\)
+        and
         \[
             \lim_{n \to \infty} \Exp[\Big]{\norm{X_n - X}^p} = 0.
         \]
@@ -31,13 +31,15 @@
         \item \textbf{in distribution}, denoted by \(X_n \overset{d}\to X\), if
         it satisfies one of the following equivalent conditions (\textbf{Portmanteau theorem}):
         \begin{enumerate}[label=(B.\arabic*),leftmargin=3em]
-            \item\label{it: b.lip} For all \(f\) bounded, Lipschitz continuous we have \eqref{eq: fun convergence},
-            \item\label{it: b.cont} For all \(f\) bounded, continuous we have \eqref{eq: fun
+            \item\label{it: b.lip} For all \(f\colon \domain \to \real\) bounded, Lipschitz continuous we have \eqref{eq: fun convergence},
+            \item\label{it: b.cont} For all \(f\colon \domain \to \real\) bounded, continuous we have \eqref{eq: fun
             convergence},
-            \item\label{it: b.a.s. cont} For all \(f\) bounded, measurable, with \(\Prob[\big]{f\text{
-            continuous in }X} = 1\) we have \eqref{eq:
-            fun convergence}. Where \eqref{eq: fun convergence} is defined as
+            \item\label{it: b.a.s. cont} For all \(f\colon \domain \to \real\) bounded, measurable, almost surely
+            continuous in \(X\), that is \(\Prob[\big]{f\text{
+            continuous in }X} = 1\), we have \eqref{eq:
+            fun convergence}.
         \end{enumerate}
+        Where \eqref{eq: fun convergence} is given by
         \begin{equation}
             \label{eq: fun convergence}\tag{B}
             \lim_{n\to\infty}\Exp{f(X_n)} = \Exp{f(X)}.
@@ -52,7 +54,7 @@
                 \lim_{n \to \infty} \Pr(X_n \in B) = \Pr(X \in B).
             \]
         \end{enumerate}
-        If \(X_n\) and \(X\) are real-valued the following condition is also equivalent:
+        If \(\domain = \real\) the following condition is also equivalent:
         \begin{enumerate}[label={(DF)},nosep,leftmargin=3em]
             \item\label{it: df} \textbf{Convergence of distribution functions}:
             for all \(x \in \real\) satisfying \(\Prob{X = x} = 0\),
@@ -66,9 +68,59 @@
     The limit \(X\) of a convergent sequence of random variables \((X_n)_{n\in \nat}\) is \textbf{almost
     surely unique}, if
     \[
-        X_n \to X \quad \text{and} \quad X_n \to Y \implies X \overset{\as}= Y.
+        X_n \overset{(\cdot)}\to X \quad \text{and} \quad X_n \overset{(\cdot)}\to Y \implies X \overset{\as}= Y.
     \]
 \end{definition}
+
+\begin{remark}[Generalization to metric spaces]
+    Except for convergence in \(L^p\), the definitions may be extended in the
+    obvious way to metric spaces \((\domain, \metric)\). We
+    prove the Portmanteau theorem in this generalized setting.
+\end{remark}
+
+Before we get lost in the details of the proof, we summarize the implications
+between the different types of convergence in the following theorem.
+This should give the reader a better intuition on the strength of different
+types of convergence.
+We particularly want to highlight the fundamental difference between
+convergence in distribution and the other, stronger, types of convergence
+that have almost surely unique limits. To see that convergence in
+distribution cannot have almost surely unique limits, consider the
+fact that \(X\) and \(-X\) have the same distribution when \(X\) is
+standard normal distributed for example.
+
+\begin{theorem}[Convergence implications]
+    \label{thm: convergence implications}
+    For a sequence of random variables \((X_n)_{n\in\nat}\) and a
+    random variable \(X\) the following implications hold:
+    \begin{center}
+        \input{tikz/convergence-impl.tikz}
+    \end{center}
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item\label{it: as to p}
+        If \(X_n \xrightarrow{\as} X\), then \(X_n \xrightarrow{p} X\).
+        \item\label{it: p to d}
+        If \(X_n \xrightarrow{p} X\), then \(X_n \xrightarrow{d} X\).
+        \item \label{it: d to p}
+        If \(X\) is deterministic, i.e.\ \(X \overset{\as}= c\in \real\), then
+        \(X_n \xrightarrow{d} X\) implies \(X_n \xrightarrow{p} X\).
+        \item\label{it: Lq to Lp}
+        If \(X_n \xrightarrow{L^q} X\) for some \(q \ge p \ge 1\), then \(X_n \xrightarrow{L^p} X\).
+        \item\label{it: L1 to p}
+        If \(X_n \xrightarrow{L^1} X\), then \(X_n \xrightarrow{p} X\).
+    \end{enumerate}
+    See Exercises \ref{ex: convergence in distribution but not in probability},
+    \ref{ex: convergence in probability but not in Lp}, \ref{ex: convergence in
+    Lp but not as} and \ref{ex: as but not Lp} for counterexamples showing that
+    we have not forgotten any true implications.
+    \begin{enumerate}[label=(\alph*),noitemsep, resume]
+        \item\label{it: uniqueness of limits}
+        The limits of convergence in probability are almost surely unique.
+        Consequently, the same holds for stronger notions of convergence.
+    \end{enumerate}
+\end{theorem}
+
+We begin with the proof of the Portmanteau theorem,
 
 \begin{myproof}[Proof (Portmanteau Theorem)]
     The proof strategy is
@@ -106,7 +158,7 @@
     
     ``\ref{it: b.lip} \(\Rightarrow\) \ref{it: s.closed}'': We use \(\epsilon\)-bump
     functions as approximations of indicators.
-    Specifically, using \((x)_+ = \max\{x, 0\}\) we define
+    Specifically, using \(x_+ \coloneq \max\{x, 0\}\) we define
     \[
         \Indicator{A}^\epsilon(x) \coloneq \Bigl(1-\frac{\metric(x, A)}\epsilon\Bigr)_+,
     \]
@@ -116,7 +168,7 @@
         \metric(x,A) = \inf_{y\in A} \metric(x,y).
     \]
     Lipschitz continuity is straightforward to verify (Exercise \ref{ex: lipschitz bump functions}).
-    Now using an \(\epsilon\)-increase of the set \(A\)
+    Using an \(\epsilon\)-increase in size of the set \(A\)
     \[
         A_\epsilon \coloneq \Set{x \in \domain : \metric(x,A) \le \epsilon}
         = A + \ball{0}{\epsilon},
@@ -135,47 +187,23 @@
     \(
         \limsup_{n\to \infty} \Pr(X_n \in A) \le \Pr(X \in A_\epsilon).
     \)
-    And since this is true for every \(\epsilon\), in particular \(\epsilon_m = \frac1m\), we have
+    Since this is true for any \(\epsilon >0\) define
+    \(B_m \coloneq A_{\frac1m}\), then we have
     \[
         \limsup_{n\to \infty} \Pr(X_n \in A)
-        \le \lim_{m\to\infty}\Pr(X \in A_{\frac1m})
-        = \Pr\Bigl(X \in \bigcap_{m\in \nat} A_{\frac1m}\Bigr)
+        \le \lim_{m\to\infty}\Pr(X \in B_m)
+        = \Pr\Bigl(X \in \bigcap_{m\in \nat} B_m\Bigr)
         = \Pr(X \in A),
     \]
-    Since \(A_m\) is a decreasing sequence of sets and \(\bigcap_{m\in \nat} A_{\frac1m} = A\).
+    where we recall that \(\lim_{N\to \infty}
+    \Prob{A_N} = \Prob[\big]{\bigcap_{N\in \nat} A_N}\) for a decreasing
+    sequence of events \(A_1 \supseteq A_2 \supseteq \ldots\)
+    \continuityOfMeasure,
+    and \(B_m \supseteq B_{m+1} \supseteq \dots\) with \(\bigcap_{m\in \nat} B_m = A\).
 \end{myproof}
 
-\begin{theorem}[Convergence implications]
-    \label{thm: convergence implications}
-    For a sequence of random variables \((X_n)_{n\in\nat}\) and a
-    random variable \(X\) the following implications hold:
-    \begin{center}
-        \input{tikz/convergence-impl.tikz}
-    \end{center}
-    \begin{enumerate}[label=(\alph*),noitemsep]
-        \item\label{it: as to p}
-        If \(X_n \xrightarrow{\as} X\), then \(X_n \xrightarrow{p} X\).
-        \item\label{it: p to d}
-        If \(X_n \xrightarrow{p} X\), then \(X_n \xrightarrow{d} X\).
-        \item \label{it: d to p}
-        If \(X\) is deterministic, i.e.\ \(X \overset{\as}= c\in \real\), then
-        \(X_n \xrightarrow{d} X\) implies \(X_n \xrightarrow{p} X\).
-        \item\label{it: Lq to Lp}
-        If \(X_n \xrightarrow{L^q} X\) for some \(q \ge p \ge 1\), then \(X_n \xrightarrow{L^p} X\).
-        \item\label{it: L1 to p}
-        If \(X_n \xrightarrow{L^1} X\), then \(X_n \xrightarrow{p} X\).
-    \end{enumerate}
-    See Exercises \ref{ex: convergence in distribution but not in probability},
-    \ref{ex: convergence in probability but not in Lp}, \ref{ex: convergence in
-    Lp but not as} and \ref{ex: as but not Lp} for counterexamples showing that
-    we have not forgotten any true implications.
-    \begin{enumerate}[label=(\alph*),noitemsep, resume]
-        \item\label{it: uniqueness of limits}
-        The limits of convergence in probability are almost surely unique.
-        Consequently, the same holds for stronger notions of convergence.
-    \end{enumerate}
-\end{theorem}
-\begin{proof}
+\begin{proof}[Proof (Theorem \ref{thm: convergence implications})]
+    \leavevmode
     \begin{enumerate}[wide]
         \item[\ref{it: as to p}] The set of point-wise convergence is given by
         \begin{align*}
@@ -185,10 +213,10 @@
             \overset{\text{def.}}&= \Set[\Big]{
                 \omega \in \Omega
                 : \forall \epsilon > 0, \exists N\in \nat, \forall n \ge N
-                : |X_n(\omega) - X(\omega)| < \epsilon}.
+                : \metric(X_n(\omega), X(\omega)) < \epsilon}.
             \\
             &= \bigcap_{\epsilon > 0} \bigcup_{N \in \nat} \bigcap_{n \ge N}
-            \Set[\Big]{\omega \in \Omega : |X_n(\omega) - X(\omega)| < \epsilon}.
+            \Set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) < \epsilon}.
         \end{align*}
         By de Morgan's laws for set complements and almost sure
         convergence we therefore have
@@ -196,15 +224,15 @@
             0 &= \Prob[\big]{X_n \not\to X}
             \\
             &= \Prob[\bigg]{\bigcup_{\epsilon > 0} \bigcap_{N \in \nat} \bigcup_{n \ge N}
-            \Set[\Big]{\omega \in \Omega : |X_n(\omega) - X(\omega)| \ge \epsilon}}
+            \Set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
             \\
             \overset{\text{fix } \epsilon}&\ge \Prob[\bigg]{\bigcap_{N \in \nat} \bigcup_{n \ge N}
-            \Set[\Big]{\omega \in \Omega : |X_n(\omega) - X(\omega)| \ge \epsilon}}
+            \Set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
             \\
             &= \lim_{N \to \infty} \Prob[\Big]{\bigcup_{n \ge N}
-            \Set[\Big]{\omega \in \Omega : |X_n(\omega) - X(\omega)| \ge \epsilon}}
+            \Set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
             \\
-            \overset{\text{fix } n=N}&\ge \lim_{N\to \infty} \Prob[\big]{|X_N - X| \ge \epsilon},
+            \overset{\text{fix } n=N}&\ge \lim_{N\to \infty} \Prob[\big]{\metric(X_N, X) \ge \epsilon},
         \end{align*}
         where the penultimate equality follows from \(\lim_{N\to \infty}
         \Prob{A_N} = \Prob[\big]{\bigcap_{N\in \nat} A_N}\) for a decreasing
@@ -220,22 +248,22 @@
             \label{eq: upper bound for p to d}
             \Set{X_n \le x}
             \subseteq \Set{X \le x + \epsilon}
-            \cup \Set[\big]{|X_n - X| > \epsilon}.
+            \cup \Set[\big]{\metric(X_n, X) > \epsilon}.
         \end{equation}
         With similar arguments we have
         \begin{equation}
             \label{eq: lower bound for p to d}
             \Set{X \le x - \epsilon}
             \subseteq \Set{X_n \le x}
-            \cup \Set[\big]{|X_n - X| > \epsilon}.
+            \cup \Set[\big]{\metric(X_n, X) > \epsilon}.
         \end{equation}
         Consequently, we have
         \begin{align*}
-            \Prob{X \le x - \epsilon} - \smash{\underbrace{\Prob[\big]{|X_n - X| > \epsilon}}_{\to 0}}
+            \Prob{X \le x - \epsilon} - \smash{\underbrace{\Prob[\big]{\metric(X_n, X) > \epsilon}}_{\to 0}}
             \overset{\eqref{eq: lower bound for p to d}}&\le \Prob{X_n \le x}
             \\
             \overset{\eqref{eq: upper bound for p to d}}&\le
-            \Prob{X \le x + \epsilon} + \underbrace{\Prob[\big]{|X_n - X| > \epsilon}}_{\to 0}.
+            \Prob{X \le x + \epsilon} + \underbrace{\Prob[\big]{\metric(X_n, X) > \epsilon}}_{\to 0}.
         \end{align*}
         This implies for all \(\epsilon > 0\)
         \[
@@ -277,8 +305,8 @@
 
         \item[\ref{it: L1 to p}] By the \(L^1\) Chebyshev inequality (Corollary
         \ref{cor: markov inequality Lp}), we have for \(\epsilon > 0\) \[
-            \Prob[\big]{|X_n - X| > \epsilon}
-            \le \frac{\Exp[\big]{|X_n - X|}}{\epsilon}
+            \Prob[\big]{\norm{X_n - X} > \epsilon}
+            \le \frac{\Exp[\big]{\norm{X_n - X}}}{\epsilon}
             \to 0.
         \]
         \item[\ref{it: uniqueness of limits}] See Exercise \ref{ex: unique stochastic limits}.
@@ -300,13 +328,13 @@
     \label{cor: markov inequality Lp}
     We have for all \(t > 0\)
     \[
-        \Prob[\Big]{|X - \Exp{X}| \ge t}
-        \le \frac{\Exp[\Big]{\abs[\big]{X-\Exp{X}}^p}}{t^p}.
+        \Prob[\Big]{\norm{X - \Exp{X}} \ge t}
+        \le \frac{\Exp[\Big]{\norm[\big]{X-\Exp{X}}^p}}{t^p}.
     \]
 \end{corollary}
 
 \begin{proof}
-    Markov inequality applied to \(\tilde X = |X - \Exp{X}|\) 
+    Markov inequality applied to \(\tilde X = \norm{X - \Exp{X}}\) 
     and \(h(x) = x^p\) with \(I = [0, \infty)\).
 \end{proof}
 
@@ -387,7 +415,7 @@
     \]
     Show that
     \begin{enumerate}[label=(\alph*), noitemsep]
-        \item the sequence $X_n$ converges to $0$ in probability,
+        \item the sequence \((X_n)_{n\in \nat}\) converges to \(0\) in probability,
         \begin{solution}
             We have for any \(\epsilon > 0\)
             \[
@@ -400,7 +428,7 @@
             \]
         \end{solution}
 
-        \item the sequence \(X_n\) does not converge to \(0\) in \(L^1\),
+        \item the sequence \((X_n)_{n\in \nat}\) does not converge to \(0\) in \(L^1\),
         \begin{solution}
             We have
             \[
@@ -413,8 +441,8 @@
             \]            
         \end{solution}
 
-        \item For every \(p \ge 1\) construct a sequence such that
-        \(Y_n\xrightarrow{L^q} X\) for all \(q < p\) but not for \(q \ge p\).
+        \item For every \(p \ge 1\) construct a sequence \((Y_n)_{n\in \nat}\) such that
+        \(Y_n\xrightarrow{L^q} 0\) for all \(q < p\) but not for \(q \ge p\).
         \begin{solution}
             Define \(Y_n \coloneq X_n^{1/p}\) with \(X_n\) as above. Then
             \[
@@ -506,26 +534,26 @@
 
 \begin{exercise}[Stochastic triangle inequality]
     \label{ex: stochastic triangle}
-    For random variables \(X,Y,Z\) show that for all \(\epsilon > 0\)
+    Let \(X,Y,Z\) be random variables. Show for all \(\epsilon > 0\)
     \[
-        \Prob*{|X - Z| \ge \epsilon} \le \Prob*{|X - Y| \ge \tfrac\epsilon2} + \Prob*{|Y - Z| \ge \tfrac\epsilon2}.
+        \Prob*{\norm{X - Z} \ge \epsilon} \le \Prob*{\norm{X - Y} \ge \tfrac\epsilon2} + \Prob*{\norm{Y - Z} \ge \tfrac\epsilon2}.
     \] 
     \textbf{Hint:} Use set inclusions.
     \begin{solution}
         The claim follows directly from
         \[
-            \Set{|X - Z| \ge \epsilon}
-            \subseteq \Set{|X - Y| \ge \tfrac\epsilon2} \cup \Set{|Y - Z| \ge \tfrac\epsilon2},
+            \Set{\norm{X - Z} \ge \epsilon}
+            \subseteq \Set{\norm{X - Y} \ge \tfrac\epsilon2} \cup \Set{\norm{Y - Z} \ge \tfrac\epsilon2},
         \]
         which is proven using that \(A \subseteq B\) is equivalent
         to \(B^\complement \subseteq A^\complement\) and
         \begin{align*}
-            \Bigl(\Set{|X - Y| \ge \tfrac\epsilon2} \cup \Set{|Y - Z| \ge \tfrac\epsilon2}\Bigr)^\complement
-            &=\Set{|X - Y| < \tfrac\epsilon2} \cap \Set{|Y - Z| < \tfrac\epsilon2}
+            \Bigl(\Set{\norm{X - Y} \ge \tfrac\epsilon2} \cup \Set{\norm{Y - Z} \ge \tfrac\epsilon2}\Bigr)^\complement
+            &=\Set{\norm{X - Y} < \tfrac\epsilon2} \cap \Set{\norm{Y - Z} < \tfrac\epsilon2}
             \\
-            &\subseteq \Set{|X - Z| < \epsilon}
+            &\subseteq \Set{\norm{X - Z} < \epsilon}
             \\
-            &= \Set{|X - Z| \ge \epsilon}^\complement.
+            &= \Set{\norm{X - Z} \ge \epsilon}^\complement.
         \end{align*}
         The standard triangle inequality is used for the inclusion step.
     \end{solution}
@@ -1547,18 +1575,19 @@ Our next result shows that this is mostly the case.
 
 \begin{theorem}[Continuous mapping]
     \label{thm: continuous mapping}
-    Let \((X_n)_{n\in \nat}\) be a sequence of random variables and \(X\)
-    another random variable. Let \(f\) be a function that is almost surely continuous in \(X\), that is
-    \(\Prob{f \text{ is continuous at } X} = 1\). Then
+    Let \((\domain, \norm{\cdot})\) and \((\range, \norm{\cdot})\) be normed
+    spaces.  Let \((X_n)_{n\in \nat}\) and \(X\) be random variables in
+    \(\domain\). Let \(f\colon \domain \to \range\) be almost
+    surely continuous in \(X\), that is \(\Prob{f \text{ is continuous at } X} =
+    1\). Then
     \begin{enumerate}[label=(\roman*)]
-        \item \(X_n \overset{\as}\to X\) implies \(f(X_n) \overset{\as}\to f(X)\).
-        \item \(X_n \overset{p}\to X\) implies \(f(X_n) \overset{p}\to f(X)\).
-        \item \(X_n \overset{d}\to X\) implies \(f(X_n) \overset{d}\to f(X)\).
-        \item If \(f\) is \underline{Lipschitz} continuous and \(X_n \overset{L^p}\to X\),
+        \item\label{it: cont. mapping as} \(X_n \overset{\as}\to X\) implies \(f(X_n) \overset{\as}\to f(X)\).
+        \item\label{it: cont. mapping p} \(X_n \overset{p}\to X\) implies \(f(X_n) \overset{p}\to f(X)\).
+        \item\label{it: cont. mapping d} \(X_n \overset{d}\to X\) implies \(f(X_n) \overset{d}\to f(X)\).
+        \item\label{it: cont. mapping Lp} If \(f\) is \underline{Lipschitz} continuous and \(X_n \overset{L^p}\to X\),
         then \(f(X_n) \overset{L^p}\to f(X)\).
     \end{enumerate}
 \end{theorem}
-
 
 This continuous mapping result can be very misleading, as one may expect that
 \(X_n \overset{d} \to X\) and \(Y_n \overset{d} \to Y\) implies that \(X_n + Y_n
@@ -1571,53 +1600,185 @@ is therefore the following theorem that shows that for most convergence
 concepts the convergence of the components is sufficient.
 
 \begin{theorem}[Joint convergence]
-    \label{thm: joint convergence} We have
+    \label{thm: joint convergence} Let \((X_n)_{n\in \nat}\) and \(X\) be
+    random variables in \(\real^\dims\) and  \((Y_n)_{n\in
+    \nat}\) and \(Y\) be random variables in \(\real^{\dims'}\). Then
     \begin{enumerate}[label=(\roman*)]
-        \item \label{it: as}
-        If \(X_n \overset{\as}\to X\) and \(Y_n \overset{\as}\to Y\),
-        then \((X_n, Y_n) \overset{\as}\to (X,Y)\).
+        \item \label{it: joint conv as}
+        if \(X_n \overset{\as}\to X\) and \(Y_n \overset{\as}\to Y\),
+        then \((X_n, Y_n) \overset{\as}\to (X,Y)\),
 
-        \item \label{it: Lp}
-        If \(X_n \overset{L^p}\to X\) and \(Y_n \overset{L^p}\to Y\),
-        then \((X_n, Y_n) \overset{L^p}\to (X,Y)\).
+        \item \label{it: joint conv Lp}
+        if \(X_n \overset{L^p}\to X\) and \(Y_n \overset{L^p}\to Y\),
+        then \((X_n, Y_n) \overset{L^p}\to (X,Y)\),
 
-        \item \label{it: in prob}
-        If \(X_n \overset{p}\to X\) and \(Y_n \overset{p}\to Y\),
-        then \((X_n, Y_n) \overset{p}\to (X,Y)\).
-        \item \label{it: law}
-        If \(X_n \overset{d}\to X\) and \(Y_n \overset{d}\to c\) \underline{for some \(c\in \real\)},
+        \item \label{it: joint conv in prob}
+        if \(X_n \overset{p}\to X\) and \(Y_n \overset{p}\to Y\),
+        then \((X_n, Y_n) \overset{p}\to (X,Y)\),
+        \item \label{it: joint conv law}
+        if \(X_n \overset{d}\to X\) and \(Y_n \overset{d}\to c\) \underline{for some \(c\in \real^{\dims'}\)},
         then \((X_n, Y_n) \overset{d}\to (X,c)\).
     \end{enumerate}
 \end{theorem}
 
-The statement for convergence in distribution \ref{it: law} is
-weaker on purpose as the general statement is false (Exercise \ref{ex: counterexample joint convergence}).
-A direct corollary of Theorem \ref{thm: joint convergence} and \ref{thm:
-continuous mapping} is ``Slutsky's theorem'':
-
-\begin{corollary}[Slutsky's theorem]
-    
-\end{corollary}
+The statement for convergence in distribution \ref{it: joint conv law} is weaker
+on purpose as the general statement is false (Exercise \ref{ex: counterexample
+joint convergence}). These statements also do not necessarily need to be
+restricted to \(\real^\dims\). However for convergence of the components
+to imply convergence of the tuple it is necessary that the metric on the product
+space is ``compatible'' with the metrics on the components. This is already
+necessary in the deterministic setting (see Exercise~\ref{ex:
+incompatible metric}). To avoid these technicalities we restrict ourselves to
+this special case.
 
 \subsection{Proof of continuous mapping and joint convergence}
 
 In the rest of this section we prove the Theorems \ref{thm: continuous mapping}
 and \ref{thm: joint convergence}.
 
-\begin{lemma}[Pull along]
-    \(|X_n - Y_n| \overset{p}\to 0\) and \(X_n \overset{d}\to X\) implies \(Y_n \overset{d}\to X\).
-\end{lemma}
-\begin{proof}
+\begin{proof}[Proof of Theorem \ref{thm: continuous mapping}]
+    Let \(D_f\) be the set of discontinuity points of \(f\).
+    Then
+    \(\Prob{X \in D_f} = 0\) by assumption. We have \ref{it: cont. mapping as}
+    by
+    \[
+        \Set{X_n \to X} \subseteq \Set{f(X_n) \to f(X)} \cup \Set{X \in D_f}
+    \]
+    and consequently
+    \[
+        \Prob[\Big]{f(X_n) \to f(X)}
+        \ge \Prob[\big]{X_n \to X} - \Prob{X \in D_f} = 1.
+    \]
+    For \ref{it: cont. mapping d} we use Portmanteau's theorem.
+    Specifically, for \(f(X_n) \overset{d}\to f(X_n)\) we need
+    \begin{equation}
+        \label{eq: cont. mapping d}    
+        \Exp{g(f(X_n))} \to \Exp{g(f(X))}
+    \end{equation}
+    for all bounded and continuous functions \(g\) \ref{it: b.cont}. To prove
+    \eqref{eq: cont. mapping d} we use \ref{it: b.a.s. cont} on \(X_n
+    \overset{d}\to X\) and the function \(h=g\circ f\). Observe that \(h\) is
+    bounded (as \(g\) is bounded) and almost surely continuous in \(X\) as \(g\)
+    is continuous and \(f\) is almost surely continuous in \(X\), thus \ref{it:
+    b.a.s. cont} is applicable.
     
+    \noindent For \ref{it: cont. mapping Lp} we simply apply Lipschitz continuity of \(f\)
+    \[\begin{aligned}
+        \norm{f(X_n) - f(X)}_p^p
+        &= \Exp{\norm{f(X_n) - f(X)}^p}
+        \\
+        \overset{\text{Lip.}}&\le \Exp{(L \norm{X_n - X})^p}
+        = L^p \norm{X_n - X}_p^p \to 0.
+    \end{aligned}
+    \]
+    Finally, \ref{it: cont. mapping p} is the most involved. For a fixed \(\epsilon\) we define
+    \[
+        A_\delta \coloneq \Set{x \in \domain: \underbrace{x \notin D_f}_{\text{cont. point}}, \underbrace{\exists y \in \domain : \|x-y\|\le \delta, \|f(x) - f(y)\| > \epsilon}_{\delta\text{ not small enough for }\epsilon}}
+    \]
+    Observe that since \(A_\delta\) only includes continuity points of \(f\) we have \(A_\delta \downarrow \emptyset\) for \(\delta \to 0\).
+    By definition of \(A_\delta\) we have the following inclusion of events
+    \[
+        \Set[\big]{\norm{f(X_n) - f(X)} > \epsilon}
+        \subseteq \Set[\big]{\norm{X_n - X} > \delta} \cup \Set{X \in A_\delta} \cup \Set{X\in D_f}.
+    \]
+    Taking the limit superior in \(n\) we thus get
+    \[\begin{aligned}
+        &\limsup_{n\to \infty} \Prob[\big]{\norm{f(X_n) - f(X)} > \epsilon}
+        \\
+        &\le \underbrace{\lim_{n\to \infty} \Prob[\big]{\norm{X_n - X} > \delta}}_{=0}
+        + \Prob{X \in A_\delta} + \underbrace{\Prob{X \in D_f}}_{=0}.
+    \end{aligned}
+    \]
+    Since this is true for all \(\delta > 0\) we have
+    \[
+        \limsup_{n\to \infty} \Prob[\big]{\norm{f(X_n) - f(X)} > \epsilon}
+        \le \lim_{\delta \to 0} \Prob{X \in A_\delta}
+        = \Prob[\Big]{ X \in \bigcap_{\delta >0} A_\delta }
+        = 0,
+    \]
+    where we used that \(A_\delta \downarrow \emptyset\). This proves the claim.
 \end{proof}
 
-\begin{proof}[Proof of Theorem \ref{thm: continuous mapping}]
-    
-\end{proof}
 
 \begin{proof}[Proof of Theorem \ref{thm: joint convergence}]
-    
+    For \ref{it: joint conv as} we simply observe
+    \[
+        \Prob[\Big]{\lim_{n\to \infty} (X_n, Y_n) \neq (X,Y)}
+        \le \Prob[\Big]{\lim_{n\to \infty} X_n \neq X} + \Prob[\Big]{\lim_{n\to \infty} Y_n \neq Y} = 0.
+    \]
+    For \ref{it: joint conv Lp} we use Minkowski's inequality
+    \[\begin{aligned}
+        \norm{(X_n, Y_n) - (X,Y)}_p
+        &\le \norm{(X_n, Y_n) - (X,Y_n)}_p + \norm{(X,Y_n) - (X,Y)}_p
+        \\
+        &= \norm{X_n - X}_p + \norm{Y_n - Y}_p \to 0,
+    \end{aligned}\]
+    where the last equality uses \(\norm{(x, 0)} = \norm{x}\) in \(\real^{\dims\times \dims'}\) to get
+    \[
+        \|(X,0)\|_p^p = \Exp{\|(X,0)\|^p} \overset{\text{in }\real^{\dims\times \dims'}}= \Exp{\|X\|^p} = \|X\|_p^p.
+    \]
+    For \ref{it: joint conv in prob} we use the stochastic triangle inequality (Exercise \ref{ex: stochastic triangle})
+    and again \(\norm{(x, 0)} = \norm{x}\) in \(\real^{\dims\times \dims'}\)
+    to obtain
+    \[\begin{aligned}
+        &\Prob[\Big]{\norm{(X_n, Y_n) - (X,Y)} > \epsilon}
+        \\
+        &\le \Prob[\Big]{\norm{(X_n, Y_n) - (X,Y_n)} > \tfrac\epsilon2}
+        + \Prob[\Big]{\norm{(X,Y_n) - (X,Y)} > \tfrac\epsilon2}
+        \\
+        &= \Prob[\Big]{\norm{X_n - X} > \tfrac\epsilon2}
+        + \Prob[\Big]{\norm{Y_n - Y} > \tfrac\epsilon2} \to 0.
+    \end{aligned}\]
+    Finally, for \ref{it: joint conv law} we use that \(Y_n \overset{d}\to c\)
+    for some constant \(c\in \real^{\dims'}\) implies \(Y_n \overset{p}\to c\)
+    by Theorem \ref{thm: convergence implications}~\ref{it: d to p}. To prove
+    \((X_n, Y_n) \overset{d}\to (X,c)\) we show \ref{it: b.cont} from the Portemanteau
+    theorem. Thus let \(f\colon \real^{\dims + \dims'} \to \real\) be bounded
+    and continuous function. Then \(g(x) \coloneq f(x,c)\) is a bounded
+    and continuous function. Since \(X_n \overset{d}\to X\) we therefore have
+    \[
+        \Exp{f(X_n, c)} = \Exp{g(X_n)} \to \Exp{g(X)} = \Exp{f(X,c)}.
+    \]
+    This implies \((X_n, c) \overset{d}\to (X,c)\). With 
+    \(\|(X_n, Y_n) - (X_n, c)\| = \|Y_n - c\| \overset{p}\to 0\)
+    due to \(Y_n \overset{p}\to c\), we can apply the
+    pull-along lemma (Lemma \ref{lem: pull along}) to conclude that \((X_n, Y_n)
+    \overset{d}\to (X,c)\).
 \end{proof}
+
+\begin{lemma}[Pull along]
+    \label{lem: pull along}
+    \(X_n \overset{d}\to X\) and \(\norm{Y_n - X_n} \overset{p}\to 0\) implies \(Y_n \overset{d}\to X\).
+\end{lemma}
+\begin{proof}
+    To prove \(Y_n \overset{d}\to X\) we prove \ref{it: b.lip} from the Portmanteau theorem.
+    For a bounded Lipschitz continuous function \(f\colon \domain \to \real\) we thus need to
+    prove the following term converges to zero
+    \[
+        \abs{\Exp{f(Y_n)} - \Exp{f(X)}}
+        \overset{\Delta}\le \abs[\big]{\Exp{f(Y_n)} - \Exp{f(X_n)}} + \underbrace{\abs[\big]{\Exp{f(X_n)} - \Exp{f(X)}}}_{\to 0}.
+    \]
+    By \(X_n \overset{d}\to X\) the second term converges to zero so we are finished,
+    if we can show that the first term converges to zero as well. 
+    Since \(f\) is bounded we have that \(\abs{f(x)} \le M\) for all \(x\in
+    \domain\) for some \(M > 0\). Let \(L\) further be the Lipschitz constant
+    of \(f\) and choose an arbitrary \(\epsilon > 0\).
+    Then
+    \[\begin{aligned}
+        &\abs{\Exp{f(Y_n)} - \Exp{f(X_n)}}
+        \\
+        &\le \Exp{\abs{f(Y_n) - f(X_n)}}
+        \\
+        &\le \Exp{\underbrace{\abs{f(Y_n) - f(X_n)}}_{\le L\norm{Y_n - X_n}} \Indicator{\norm{Y_n - X_n} \le \epsilon}}
+        + \Exp{\underbrace{\abs{f(Y_n) - f(X_n)}}_{\le 2M} \Indicator{\norm{Y_n - X_n} > \epsilon}}
+        \\
+        &\le L \epsilon + 2M \underbrace{\Prob{\norm{Y_n - X_n} > \epsilon}}_{\to 0}.
+    \end{aligned}\]
+    Using \(\norm{Y_n - X_n} \overset{p}\to 0\) we thus we have \(\limsup_{n\to
+    \infty} \abs{\Exp{f(Y_n)} - \Exp{f(X_n)}} \le L \epsilon\)
+    for arbitrary \(\epsilon > 0\) and thus its limit must be zero.
+\end{proof}
+
 
 \subsection*{Exercises}
 
@@ -1635,9 +1796,47 @@ and \ref{thm: joint convergence}.
 \begin{exercise}[Hölder continuos functions]
     Let \(f\) be a Hölder continuous function. That is
     \[
-        |f(x) - f(y)| \le L |x-y|^\alpha
+        \norm{f(x) - f(y)} \le L \norm{x-y}^\alpha
     \]
     Show that \(X_n \overset{L^p}\to X\) implies \(f(X_n) \overset{L^q}\to f(X)\) for \(q = \frac{p}{\alpha}\).
+\end{exercise}
+
+\begin{exercise}[Counterexample \(L^p\) continuous mapping]
+    Let \(f(x) = x^\gamma\) with \(\gamma >1\), let \(U\sim \uniform(0,1)\) and define
+    \[
+        X_n = n^{\frac1q} \Indicator{[0, 1/n)}(U).
+    \]
+    Show for \(p\in [\frac{q}\gamma, q)\) we have that \(X_n \overset{L^p}\to 0\)
+    but not \(f(X_n) \overset{L^p}\to 0\).
+\end{exercise}
+
+\begin{exercise}[Slutsky's theorem]
+    Let \((X_n)_{n\in \nat}\) and \(X\) be random variables in \(\real^\dims\)
+    such that \(X_n \overset{d}\to X\). And let \((Y_n)_{n\in \nat}\) be random
+    variables in \(\real^{\dims'}\) such that \(Y_n \overset{d}\to c\) for some
+    constant \(c\in \real^{\dims'}\). Prove
+    \begin{enumerate}[label=(\alph*)]
+        \item \(X_n + Y_n \overset{d}\to X + c\),
+        \item \(X_n Y_n \overset{d}\to X c\),
+        \item if \(\dims = \dims' = 1\) and \(c \neq 0\)
+        then \(X_n/Y_n \overset{d}\to X/c\).
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Incompatible metric]
+    \label{ex: incompatible metric}
+    Let \((x_n)_{n\in \nat}\) and \((y_n)_{n\in \nat}\) be sequences in
+    \(\real\). Assume that \(x_n \to x\) and \(y_n \to y\) in the usual
+    Euclidean metric.
+    Show that this does not necessarily imply \((x_n, y_n) \to (x,y)\)
+    in \((\real^2, \metric_\infty)\) with
+    \[
+        \metric_\infty((x,y), (x',y'))
+        = \begin{cases}
+            0 & x=y\\
+            1 & x\neq y.
+        \end{cases}
+    \]
 \end{exercise}
 
 \section{Law of Large Numbers}
@@ -1667,9 +1866,11 @@ straightforward to calculate:
         \Var[\Big]{\sum_{i=1}^n X_i} = \sum_{i=1}^n \Var{X_i} + \sum_{\substack{i,j=1\\i \neq j}}^n \Cov(X_i, X_j).
     \]
     Consequently, if the random variables are uncorrelated (i.e.\ \(\Cov(X_i, X_j) = 0\) for \(i\neq j\)), then
+    % for the mean \(\mean{X}_n \coloneq \frac1n \sum_{i=1}^n X_i\) we have
     \[
-        \Var[\Big]{\sum_{i=1}^n X_i} = \sum_{i=1}^n \Var{X_i}
-        \quad \text{and thus} \quad \Var[\Big]{\underbrace{\frac1n \sum_{i=1}^n X_i}_{\eqcolon \mean{X}_n}} = \frac1{n^2} \sum_{i=1}^n \Var{X_i}.
+        % \Var[\Big]{\sum_{i=1}^n X_i} = \sum_{i=1}^n \Var{X_i}
+        % \quad \text{and} \quad
+        \Var[\Big]{\frac1n \sum_{i=1}^n X_i} = \frac1{n^2} \sum_{i=1}^n \Var{X_i}.
     \]
 \end{lemma}
 \begin{proof}
@@ -1679,7 +1880,11 @@ straightforward to calculate:
         = \Exp[\Big]{\Big(\sum_{i=1}^n Y_i\Big)^2} = \sum_{i,j=1}^n \E[Y_i Y_j]
         = \sum_{i,j=1}^n \Cov(X_i, X_j).
     \]
-    With \(\Var{X_i} = \Cov(X_i, X_i)\) the result follows from a split of the sum.
+    With \(\Var{X_i} = \Cov(X_i, X_i)\) the first result follows from a split of the sum.
+    The second result follows directly from the first and
+    \(
+        \Var{aX} = a^2 \Var{X}
+    \) for any \(a\in \real\).
 \end{proof}
 
 If we do not care about the speed of convergence, then an immediate corollary of
@@ -1789,9 +1994,9 @@ two common approaches:
         \ge \frac{k_n^2}{(k_n+1)^2} = \Bigl(\frac{1}{1 + \frac{1}{k_n}}\Bigr)^2
         \to 1.
     \]
-    This implies \(\frac{k_n^2}{n} \to 1\).  Now \(\mean{X}_{n^2} \overset{\as}\to 0\)
+    This implies \(\frac{k_n^2}{n} \to 1\). Since \(\mean{X}_{n^2} \overset{\as}\to 0\)
     implies \(\mean{X}_{k_n^2} \overset{\as}\to 0\)
-    therefore by continuous mapping we have
+    we have by continuous mapping
     \[
         S_n = \frac{k_n^2}{n} \mean{X}_{k_n^2} \overset{\as}\to 0.
     \]
@@ -1839,7 +2044,7 @@ In Theorem \ref{thm: strong law of large numbers} we still assumed that the
 random variables are in \(L^2\). And if you want to work with
 ``uncorrelated'' random variables this cannot be avoided as the covariance
 is otherwise undefined. However, if you are willing to assume pairwise
-independence then the strong law of large numbers also holds under the weaker
+independence, then the strong law of large numbers also holds under the weaker
 assumption that the random variables are in \(L^1\).
 
 \begin{theorem}[Etemadi's Strong law of large numbers]
@@ -1862,6 +2067,11 @@ assumption that the random variables are in \(L^1\).
     \citep[Thm.~5.17]{klenkeProbabilityTheoryComprehensive2014}.
 \end{proof}
 
+
+\subsection{Glivenko-Cantelli}
+
+
+
 \subsection*{Exercises}
 
 \begin{exercise}[Strong law of large numbers in \(L^4\)]
@@ -1873,6 +2083,9 @@ assumption that the random variables are in \(L^1\).
     \noindent\textbf{Hint:} Assume \(\E[X] = 0\) without loss of generality.
 \end{exercise}
 
+\begin{example}[Asymptotic equipartition property]
+    
+\end{example}
 
 \section{Concentration inequalities}
 

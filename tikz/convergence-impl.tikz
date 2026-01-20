@@ -27,7 +27,7 @@
     \arrow[d,xshift=20]{}[left]{\substack{\text{MCT/DCT}\\\text{(Measure Theory)}}}
     & \(X_n \overset{p}\to X\)
     \arrow[r, Rightarrow] {}[xshift=-4]{\ref{it: p to d}}
-    \arrow[l, out=180, in=352, looseness=1] {}[below,yshift=-5]{\substack{\text{Borel-Cantelli}\\Cor.~\ref{cor: characterization of almost sure convergence}}}
+    \arrow[l, out=180, in=352, looseness=1] {}[below,yshift=-5]{\substack{\text{Borel-Cantelli}\\Sec.~\ref{sec: borel cantelli}}}
     & \(X_n \overset{d}\to X\)
     \arrow[l, out=220, in=345, looseness=1] {}[below,xshift=19]{X \overset{\as}= c \in \real \text{ \ref{it: d to p}}}
     \arrow[ll, out=140, in=50, looseness=0.3]{}[above]{\text{Skorokhod (Exercise \ref{ex: skorokhod representation})}}
