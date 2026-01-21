@@ -10,7 +10,7 @@
 \newtheorem{definition}[proposition]{Definition}
 \newtheorem{example}[proposition]{Example}
 \newtheorem{assumption}[proposition]{Assumption}
-\newtheorem{exercise}[proposition]{Exercise}
+\newtheorem{exercise}{Exercise}[section]
 
 \theoremstyle{remark}
 \newtheorem{remark}[proposition]{Remark}
@@ -37,10 +37,13 @@
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 \DeclarePairedDelimiter{\Set}{\{}{\}}
 \DeclarePairedDelimiter{\norm}{\|}{\|}
+\DeclarePairedDelimiter{\inner}{\langle}{\rangle}
 \DeclarePairedDelimiterXPP{\Exp}[1]{\E}{[}{]}{}{#1}
-\DeclarePairedDelimiterXPP{\Var}[1]{\mathrm{Var}}{[}{]}{}{#1}
+\DeclarePairedDelimiterXPP{\Var}[1]{\varSymb}{[}{]}{}{#1}
+\DeclarePairedDelimiterXPP{\Cov}[2]{\covSymb}{[}{]}{}{#1, #2}
+\newcommand*{\covSymb}{\mathrm{Cov}}
+\newcommand*{\varSymb}{\mathrm{Var}}
 \DeclarePairedDelimiterXPP{\Prob}[1]{\Pr}{(}{)}{}{#1}
-\DeclarePairedDelimiterXPP{\ball}[2]{\mathbb{B}}{(}{)}{}{#1, #2}
 \NewDocumentCommand{\Indicator}{s m}{%
   \IfBooleanTF{#1}
     {\mathbf{1}_{\left\{#2\right\}}} % starred: wrap in braces
@@ -53,6 +56,9 @@
 \newcommand*{\integer}{\mathbb{Z}}
 \newcommand*{\complex}{\mathbb{C}}
 \newcommand*{\rational}{\mathbb{Q}}
+\newcommand*{\hilbert}{\mathbb{H}}
+\DeclarePairedDelimiterXPP{\ball}[2]{\mathrm{B}}{(}{)}{}{#1, #2}
+
 \newcommand*{\domain}[1][X]{\mathbb{#1}}
 \newcommand*{\range}[1][Y]{\mathbb{#1}}
 
@@ -67,9 +73,6 @@
 % Probability
 \newcommand{\E}{\mathbb{E}}
 \renewcommand{\Pr}{\mathbb{P}}
-% \DeclareMathOperator{\Var}{Var}
-\DeclareMathOperator{\Cov}{Cov}
-% \newcommand*{\normal}{\mathcal{N}}
 \newcommand*{\density}{\varphi}
 \DeclareMathOperator{\iid}{iid}
 \newcommand*{\given}{\mid}

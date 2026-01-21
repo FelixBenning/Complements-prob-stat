@@ -1,16 +1,34 @@
-
-
 \chapter{Convergence}
 
 \marginpar{\red{Lecture 1}}
 
+Probability theory is fundamentally concerned with asymptotic behavior as
+the number of ``objects'' grows. Understanding probability therefore requires a
+precise language for describing how sequences of random variables converge, and
+for distinguishing the different senses in which such convergence may occur.
+
+In this chapter we will introduce different notions of convergence and study how
+they are related. The notion of convergence in \(L^p\) will lead us to the concept
+of \(L^p\) spaces of random variables (Section \ref{sec: Lp spaces}). The
+characterization of the strong notion of almost sure convergence, will lead us
+to the Borel-Cantelli lemmas (Section \ref{sec: borel cantelli}).
+In classical Analysis ``continuity'' is a central concept that allows
+moving limits through functions and we will study whether this is also possible
+in the probabilistic setting in Section \ref{sec: continuous mapping}.
+Putting all these concepts together we will prove the Strong Law of Large Numbers
+in Section \ref{sec: law of large numbers}. In Section \ref{sec:
+concentration inequalities} we will learn how to quantify the speed of convergence
+with tight bounds.
 
 \section{Types of convergence}
 
+In probability theory there are several different notions of convergence and in
+this section we will define and relate them.
+
 \begin{definition}[Types of Convergence]
     \label{def: types of convergence}
-    A sequence of random variables $(X_n)_{n=1}^\infty$ in a normed
-    space \((\domain, \norm{\cdot})\) converges to a random variable $X$,
+    A sequence of random variables \((X_n)_{n\in \nat}\) in a normed
+    space \((\domain, \norm{\cdot})\) converges to a random variable \(X\)
     \begin{itemize}
         \item \textbf{almost surely}, or \textbf{with probability one}, denoted by \(X_n \overset{\as}\to X\), if
         \[
@@ -29,7 +47,7 @@
         \]
 
         \item \textbf{in distribution}, denoted by \(X_n \overset{d}\to X\), if
-        it satisfies one of the following equivalent conditions (\textbf{Portmanteau theorem}):
+        it satisfies one of the following equivalent conditions (\textbf{Portemanteau theorem}):
         \begin{enumerate}[label=(B.\arabic*),leftmargin=3em]
             \item\label{it: b.lip} For all \(f\colon \domain \to \real\) bounded, Lipschitz continuous we have \eqref{eq: fun convergence},
             \item\label{it: b.cont} For all \(f\colon \domain \to \real\) bounded, continuous we have \eqref{eq: fun
@@ -75,19 +93,44 @@
 \begin{remark}[Generalization to metric spaces]
     Except for convergence in \(L^p\), the definitions may be extended in the
     obvious way to metric spaces \((\domain, \metric)\). We
-    prove the Portmanteau theorem in this generalized setting.
+    prove the Portemanteau theorem in this generalized setting.
 \end{remark}
 
-Before we get lost in the details of the proof, we summarize the implications
+While the Portemanteau theorem may seem like it introduces many different
+definitions, there are essentially just \textbf{two} equivalent concepts:
+The first is \textbf{convergence of bounded functions in expectation} \eqref{eq: fun
+convergence}, where the functions have different degrees of continuity. 
+This is useful as it is sufficient to prove convergence for the smallest
+class of Lipschitz functions to conclude convergence for the larger classes.
+The second big concept is that the \textbf{probabilities of sets converge},
+with the caveat that probability mass may converge outside the set at the boundary
+of the set. As an example consider the deterministic sequence \(\Prob{X_n =
+\frac1n} =1\). Then we have \(\Prob{X_n \in (0,1]} =1\) for all \(n\) but for
+the limit \(X\) we have \(\Prob{X = 0} = 1\).
+Thus open sets may lose probability mass at the boundary, while closed sets
+may gain probability mass at the boundary. If the boundary has zero mass
+in the limit however, then the probabilities converge.
+The convergence of distribution functions is just a special case, since
+\[
+    \Pr(X_n \le x) = \Pr(X_n \in (-\infty, x]).
+\]
+So we simply consider the sets \((-\infty, x]\) for all \(x\in \real\)
+for which the boundary \(\{x\}\) has zero probability mass in the limit.
+The interesting thing about this special case is that it is enough to check
+convergence on this small family of sets to conclude convergence of
+a much larger family of sets.
+
+With convergence in distribution reduced to these two big concepts
+let us contextualize the other types of convergence before we get lost in the details of the proof
+of the Portemanteau theorem. We summarize the implications
 between the different types of convergence in the following theorem.
-This should give you a better intuition on the strength of different
-types of convergence.
-We particularly want to highlight the fundamental difference between
-convergence in distribution and the other, stronger, types of convergence
-that have almost surely unique limits. To see that convergence in
-distribution cannot have almost surely unique limits, consider the
-fact that \(X\) and \(-X\) have the same distribution when \(X\) is
+Notice the fundamental difference between convergence in distribution and the
+other, stronger, types of convergence that have almost surely unique limits. To
+see that convergence in distribution cannot have almost surely unique limits,
+consider the fact that \(X\) and \(-X\) have the same distribution when \(X\) is
 standard normal distributed for example.
+
+\newpage
 
 \begin{theorem}[Convergence implications]
     \label{thm: convergence implications}
@@ -120,9 +163,21 @@ standard normal distributed for example.
     \end{enumerate}
 \end{theorem}
 
-We begin with the proof of the Portmanteau theorem,
+Observe that it is not possible to conclude convergence in probability 
+from convergence in distribution if the limit is not almost surely constant.
+Indeed, if the limit is non-deterministic it may assume different values.
+It is therefore possible to construct two different random variables \(X\) and \(Y\)
+with the same distribution by essentially ``shuffling'' the outcomes and
+letting \(X\) take a different value from \(Y\) since there are multiple
+options. Since the limit is then not unique we cannot have convergence in
+probability.
 
-\begin{myproof}[Proof (Portmanteau Theorem)]
+In the remainder of this section we will prove the Portemanteau theorem
+and Theorem \ref{thm: convergence implications}. For the Proof of
+Theorem \ref{thm: convergence implications} we introduce and prove the Markov
+inequality, which is an incredibly useful tool.
+
+\begin{myproof}[Proof (Portemanteau Theorem)]
     The proof strategy is as follows:
     \begin{center}
         \input{tikz/portemanteau.tikz}
@@ -203,12 +258,12 @@ We begin with the proof of the Portmanteau theorem,
 
     ``\ref{it: s.zero boundary} \(\Rightarrow\) \ref{it: b.a.s. cont}'': For the
     opposite direction it is necessary to discretize a bounded, measurable,
-    almost surely continuous function \(f\). For this discretization we want to
-    select a finite number of \(y_0 \le \ldots \le y_N\)
+    almost surely continuous function \(f\colon \domain \to \real\). For this discretization we want to
+    select a finite number of \(y_0 \le \ldots \le y_N\) in \(\real\)
     such that 
     \begin{enumerate}[noitemsep]
-        \item the bounded range of \(f\) is contained in the interval \([y_0, y_N)\)
-        \item the \(y_i\) are an \(\epsilon\)-grid, i.e.\ \(y_{i+1} - y_i < \epsilon\) for all \(i\)
+        \item the bounded range of \(f\) is contained in the interval \([y_0, y_N)\),
+        \item the \(y_i\) are an \(\epsilon\)-grid, i.e.\ \(y_{i+1} - y_i < \epsilon\) for all \(i\),
         \item \(\Prob{f(X) = y_i} = 0\) for all \(i\).
     \end{enumerate}
     That the first two conditions can be satisfied is trivial by the boundedness of \(f\). For
@@ -227,9 +282,10 @@ We begin with the proof of the Portmanteau theorem,
     allow us to apply \ref{it: s.zero boundary} to the sets \(f^{-1}(E_i)\).
     Let \(D_f\) be the set of discontinuities of \(f\). Then for any set \(A\)
     we claim to have
-    \[
+    \begin{equation}
+        \label{eq: boundary inclusion}    
         \partial f^{-1}(A) \subseteq f^{-1}(\partial A) \cup D_f.
-    \]
+    \end{equation}
     \begin{center}
     \begin{tabular}{|p{0.9\textwidth}}
     To see this, let \(x \in \partial f^{-1}(A)\). If \(x\in D_f\) we are done
@@ -253,7 +309,7 @@ We begin with the proof of the Portmanteau theorem,
     \(f(x) \in \partial A\) and thus \(x \in f^{-1}(\partial A)\).
     \end{tabular}
     \end{center}
-    We may now use this inclusion to conclude
+    With \eqref{eq: boundary inclusion} we conclude
     \[
         \Prob{ X \in \partial f^{-1}(E_i)}
         \le \underbrace{\Prob[\big]{X \in f^{-1}(\partial E_i)}}_{=\Pr(f(X) \in \partial E_i)} + \underbrace{\Prob{X \in D_f}}_{=0} = 0.
@@ -281,6 +337,8 @@ We begin with the proof of the Portmanteau theorem,
     As this is true for any \(\epsilon >0\) we may drop it. Applying the same
     arguments to \(-f\) we obtain the lower bound and consequently
     \(\Exp{f(X_n)} \to \Exp{f(X)}\).
+
+    ``\ref{it: df} \(\Rightarrow\) \ref{it: s.open}'': See Appendix \ref{sec: appendix portmanteau}.
 \end{myproof}
 
 \begin{proof}[Proof (Theorem \ref{thm: convergence implications})]
@@ -613,7 +671,7 @@ We begin with the proof of the Portmanteau theorem,
     \end{enumerate}
 \end{exercise}
 
-\begin{exercise}[Stochastic sometimes implies \(L^p\)]
+\begin{exercise}[Stochastic convergence sometimes implies \(L^p\)]
     \label{ex: p to Lp when bounded}
     Assume that \(X_n\) and \(X\) are bounded random variables. That is 
     \(\sup_n\|X_n\| \le c\) and \(\|X\|\le c\) with probability one for some \(c
@@ -840,50 +898,50 @@ We begin with the proof of the Portmanteau theorem,
 \begin{definition}
     We define the \(\cL^p\) space to be
     \[
-        \cL^p \coloneq \Set{X\colon \Omega \to \real : \Exp{\abs{X}^p} < \infty}
+        \cL^p \coloneq \cL^p(\domain) \coloneq \Set{X\colon \Omega \to \domain : \Exp{\norm{X}^p} < \infty}
     \]
     and define the seminorm for \(X\in \cL^p\) as
     \[
-        \|X\|_p \coloneq \Exp[\big]{\abs{X}^p}^{\frac1p}.
+        \norm{X}_{L^p} \coloneq \Exp[\big]{\norm{X}^p}^{\frac1p}.
     \]
 \end{definition}
 
-We called \(\|\cdot\|_p\) a ``seminorm''. For this we need to prove that
+We called \(\norm{\cdot}_{L^p}\) a ``seminorm''. For this we need to prove that
 it actually satisfies the seminorm properties. This is the content of the
 following theorem.
 
 \begin{theorem}[Seminorm]
     \label{thm: seminorm properties}
-    \(\|\cdot\|_p\) satisfies the
-    seminorm properties. That is for \(X,Y \in \cL^p\)
+    \(\norm{\cdot}_{L^p}\) satisfies the seminorm properties. That is for \(X,Y
+    \in \cL^p(\domain)\) with \((\domain, \norm{\cdot})\) a normed space we have
     \begin{enumerate}[label=(\roman*)]
         \item\label{it: positive}
-        \(\|X\|_p \ge 0\),
+        \(\norm{X}_{L^p} \ge 0\),
         \hfill (positive)
         \item\label{it: scaling}
-        \(\|\lambda X\|_p = |\lambda| \|X\|_p\)
+        \(\norm{\lambda X}_{L^p} = |\lambda| \norm{X}_{L^p}\)
         for all \(\lambda \in \real\),
         \hfill (scaling)
         \item\label{it: triangle inequality}
-        \(\|X + Y\|_p \le \|X\|_p + \|Y\|_p\).
+        \(\norm{X + Y}_{L^p} \le \norm{X}_{L^p} + \norm{Y}_{L^p}\).
         \hfill (triangle/Minkowski inequality)
     \end{enumerate}
     Moreover we have for any \(p \le q\)
     \begin{equation}
         \label{eq: Lp norm domination}
-        \|X\|_p \le \|X\|_q.
+        \norm{X}_{L^p} \le \norm{X}_{L^q}.
     \end{equation}
 \end{theorem}
 
 \begin{remark}[\(L^p\) convergence]
     \label{rem: Lp convergence}
-    Observe that \(X_n \xrightarrow{L^p} X\) (Definition \ref{def: types of convergence}) if and only if \(\|X_n -X\|_p \to
-    0\). And Equation \eqref{eq: Lp norm domination} means for \(1\le p\le q\) that \(\|X_n - X\|_q \to 0\) implies \(\|X_n - X\|_p \to 0\).
+    Observe that \(X_n \xrightarrow{L^p} X\) (Definition \ref{def: types of convergence}) if and only if \(\norm{X_n -X}_{L^p} \to
+    0\). And Equation \eqref{eq: Lp norm domination} means for \(1\le p\le q\) that \(\norm{X_n - X}_{L^q} \to 0\) implies \(\norm{X_n - X}_{L^p} \to 0\).
 \end{remark}
 
 \begin{example}[Not positive definite]
-    Observe that the missing property for \(\|\cdot\|_p\) to be a norm 
-    is that \(\|X\|_p = 0\) implies \(X=0\). As an example consider
+    Observe that the missing property for \(\norm{\cdot}_{L^p}\) to be a norm 
+    is that \(\norm{X}_{L^p} = 0\) implies \(X=0\). As an example consider
     a uniformly distributed \(U\sim \uniform(0,1)\) with density \(f(x) = \Indicator{[0,1]}\).
     Define
     \[
@@ -895,16 +953,16 @@ following theorem.
     \]
     Then clearly \(U\neq X\) but for any \(p\ge 1\)
     \[
-        \E[(X-U)^p]
-        = \int_0^1 (x^p \Indicator{[0,1)}(x) - x^p) dx
+        \Exp{\abs{X-U}^p}
+        = \int_0^1 \abs{x^p \Indicator{[0,1)}(x) - x^p} dx
         = \int_0^1 \Indicator{\Set{1}} dx = 0,
     \]
-    and consequently \(\|X-U\|_p = 0\).
+    and consequently \(\norm{X-U}_{L^p} = 0\).
 \end{example}
 
 \begin{fact}
     \label{fact: Lp zero norm}
-    \(\|X-Y\|_p = 0\) if and only if \(\Prob{X=Y}=1 \overset{\text{def.}}\iff X\overset{\as}= Y\).
+    \(\norm{X-Y}_{L^p} = 0\) if and only if \(\Prob{X=Y}=1 \overset{\text{def.}}\iff X\overset{\as}= Y\).
 \end{fact}
 \begin{proof}[Proofsketch]
     Measure theory: \(f\ge 0\), \(\int f d\mu = 0\) 
@@ -913,22 +971,22 @@ following theorem.
 
 
 \begin{definition}[\(L^p\) space]
-    We define the normed space \((L^p,\|\cdot\|_p)\) as
+    We define the normed space \((L^p,\norm{\cdot}_{L^p})\) as
     \[
-        L^p \coloneq \Set{[X]: X \in \cL^p},
+        L^p \coloneq L^p(\domain) \coloneq \Set{[X]: X \in \cL^p(\domain)},
         \quad\text{with}\quad
-        \|[X]\|_p \coloneq \|X\|_p
+        \norm{[X]}_{L^p} \coloneq \norm{X}_{L^p}
     \]
     where \([X]\) is the equivalence class of the equivalence relation
     \[
-        X\sim Y :\iff \|X-Y\|_p = 0 \iff X\overset{\as}= Y.
+        X\sim Y :\iff \norm{X-Y}_{L^p} = 0 \iff X\overset{\as}= Y.
     \]
 \end{definition}
 \begin{remark}[Norm well defined]
     The definition of the norm is well-defined as for \(X,Y\in [X]\)
     we have by the triangle inequality
     \[
-        \|X\|_p \le \|Y\|_p + \|X - Y\|_p \overset{X,Y\in [X]}= \|Y\|_p.
+        \norm{X}_{L^p} \le \norm{Y}_{L^p} + \norm{X - Y}_{L^p} \overset{X,Y\in [X]}= \norm{Y}_{L^p}.
     \]
 \end{remark}
 
@@ -938,8 +996,9 @@ is the following inequality.
 \begin{theorem}[Hölder's inequality]
     \label{thm: Hölder inequality}
     For \(p,q >1\) with \(\frac1p + \frac1q = 1\) we have
+    for \(X \in \cL^p(\real)\) and \(Y\in \cL^q(\real)\) 
     \[
-        \Exp{\abs{XY}} \le \Exp{\abs{X}^p}^{\frac1p}\Exp{\abs{Y}^q}^{\frac1q} = \|X\|_p \|Y\|_q
+        \Exp{\abs{XY}} \le \Exp{\abs{X}^p}^{\frac1p}\Exp{\abs{Y}^q}^{\frac1q} = \norm{X}_{L^p} \norm{Y}_{L^q}.
     \]
 \end{theorem}
 \begin{proof}
@@ -956,11 +1015,14 @@ Using this inequality we can now prove Theorem \ref{thm: seminorm properties}
     \frac{q}p>1\) and \(s \coloneq \frac{p}{q-p}>1\) such that \(\frac1{r} +
     \frac1{s} = 1\). Then
     \[
-        \|X\|_p^p = \Exp{\abs{X}^p}
-        = \Exp{\abs{\abs{X}^p \cdot 1}}
-        \overset{\text{Hölder}}\le \Exp{\abs{X}^{pr}}^{\frac1r} \Exp{1^s}^{\frac1s}
-        = \Exp{\abs{X}^q}^{\frac{p}q}
-        = \|X\|_q^p.
+    \begin{aligned}
+        \norm{X}_{L^p}^p = \Exp{\norm{X}^p}
+        &= \Exp{\abs{\norm{X}^p \cdot 1}}
+        \\
+        \overset{\text{Hölder}}&\le \Exp{\norm{X}^{pr}}^{\frac1r} \Exp{1^s}^{\frac1s}
+        = \Exp{\norm{X}^q}^{\frac{p}q}
+        = \norm{X}_{L^q}^p.
+    \end{aligned}
     \]
     Taking the \(p\)-th root implies the claim.
     What is left is only the triangle inequality \ref{it: triangle inequality},
@@ -968,10 +1030,10 @@ Using this inequality we can now prove Theorem \ref{thm: seminorm properties}
     it has its own name the ``Minkowski inequality''. We start with a
     simple application of the triangle inequality for real numbers:
     \[\begin{aligned}
-        \|X+ Y\|_p^p
-        &= \Exp{\abs{X + Y}^p}
+        \norm{X+ Y}_{L^p}^p
+        &= \Exp{\norm{X + Y}^p}
         \\
-        &\le \Exp[\Big]{\abs{X+Y}^{p-1} \abs{X}} + \Exp[\Big]{\abs{X+Y}^{p-1} \abs{Y}}.
+        &\le \Exp[\Big]{\norm{X+Y}^{p-1} \norm{X}} + \Exp[\Big]{\norm{X+Y}^{p-1} \norm{Y}}.
     \end{aligned}
     \]
     We then define
@@ -979,29 +1041,31 @@ Using this inequality we can now prove Theorem \ref{thm: seminorm properties}
     We may therefore apply Hölder's inequality to both terms to get
     for the first term
     \[
-        \Exp[\big]{\abs{X+Y}^{p-1} \abs{X}}
-        \overset{\text{Hölder}}\le \Exp[\Big]{\abs{X+Y}^{q(p-1)}}^{\frac1q} \Exp{\abs{X}^p}^{\frac1p}
-        = \|X+Y\|_p^{p/q} \|X\|_p,
+        \Exp[\big]{\norm{X+Y}^{p-1} \norm{X}}
+        \overset{\text{Hölder}}\le \Exp[\Big]{\norm{X+Y}^{q(p-1)}}^{\frac1q} \Exp{\norm{X}^p}^{\frac1p}
+        = \norm{X+Y}_{L^p}^{p/q} \norm{X}_{L^p},
     \]
-    and similarly \(\Exp[\big]{\abs{X+Y}^{p-1} \abs{Y}} \le \|X+Y\|_p^{p/q}
-    \|Y\|_p\) for the second.
+    and similarly \(\Exp[\big]{\norm{X+Y}^{p-1} \norm{Y}} \le \norm{X+Y}_{L^p}^{p/q}
+    \norm{Y}_{L^p}\) for the second.
     Thus
     \[
-        \|X+ Y\|_p^p
-        \le \|X+Y\|_p^{p/q} (\|X\|_p + \|Y\|_p).
+        \norm{X+ Y}_{L^p}^p
+        \le \norm{X+Y}_{L^p}^{p/q} (\norm{X}_{L^p} + \norm{Y}_{L^p}).
     \]
-    Since \(p - \frac{p}q = 1\) we can divide by \(\|X+Y\|_p^{p/q}\)
+    Since \(p - \frac{p}q = 1\) we can divide by \(\norm{X+Y}_{L^p}^{p/q}\)
     to obtain
     \[
-        \|X+ Y\|_p = \|X+ Y\|_p^{p-\frac{p}q} \le \|X\|_p + \|Y\|_p.
+        \norm{X+ Y}_{L^p} = \norm{X+ Y}_{L^p}^{p-\frac{p}q} \le \norm{X}_{L^p} + \norm{Y}_{L^p}.
         \qedhere
     \]
 \end{proof}
 
 \begin{fact}[\(L^p\) is a Banach space]
     \label{fact: Lp complete}
-    For every \(p \ge 1\) the normed space \((L^p, \|\cdot\|_p)\) is \underline{complete},
-    that is every Cauchy sequence converges in \(L^p\). 
+    If \((\domain, \norm{\cdot})\) is a Banach space, then for every \(p \ge 1\)
+    the normed space \((L^p(\domain), \norm{\cdot}_{L^p})\) is
+    also a Banach space. That is it is \underline{complete},
+    which means that every Cauchy sequence converges in \(L^p\). 
 \end{fact}
 \begin{proof}
 See e.g. \citep[Thm.~6.25 and 7.3]{klenkeProbabilityTheoryComprehensive2014}.
@@ -1052,68 +1116,69 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
         \item Prove ``Hölder's inequality'' (Theorem \ref{thm: Hölder inequality})
 
         \textbf{Hint:} Apply Young's inequality to \(a =
-        \frac{\abs{X}}{\|X\|_p}\) and \(b = \frac{\abs{Y}}{\|Y\|_q}\).
+        \frac{\norm{X}}{\norm{X}_{L^p}}\) and \(b = \frac{\norm{Y}}{\norm{Y}_{L^q}}\).
         \begin{solution}
             Applying Young's inequality we have
             \[
-                \frac{\abs{X}}{\|X\|_p} \cdot \frac{\abs{Y}}{\|Y\|_q}
-                \le \frac1p \Bigl(\frac{\abs{X}}{\|X\|_p}\Bigr)^p
-                + \frac1q \Bigl(\frac{\abs{Y}}{\|Y\|_q}\Bigr)^q.
+                \frac{\norm{X}}{\norm{X}_{L^p}} \cdot \frac{\norm{Y}}{\norm{Y}_{L^q}}
+                \le \frac1p \Bigl(\frac{\norm{X}}{\norm{X}_{L^p}}\Bigr)^p
+                + \frac1q \Bigl(\frac{\norm{Y}}{\norm{Y}_{L^q}}\Bigr)^q.
             \]
             Taking expectation on both sides we get
             \[
-                \frac{\Exp[\big]{\abs{XY}}}{\|X\|_p \|Y\|_q}
+                \frac{\Exp[\big]{\norm{XY}}}{\norm{X}_{L^p} \norm{Y}_{L^q}}
                 \le 
-                    \frac1p \Exp[\Big]{\Bigl(\frac{\abs{X}}{\|X\|_p}\Bigr)^p}
-                    + \frac1q \Exp[\Big]{\Bigl(\frac{\abs{Y}}{\|Y\|_q}\Bigr)^q}
+                    \frac1p \Exp[\Big]{\Bigl(\frac{\norm{X}}{\norm{X}_{L^p}}\Bigr)^p}
+                    + \frac1q \Exp[\Big]{\Bigl(\frac{\norm{Y}}{\norm{Y}_{L^q}}\Bigr)^q}
                 = 
                     \frac1p + \frac1q
                 = 1,
             \]
-            where we use that \(\|X\|_p^p = \Exp{\abs{X}^p}\) is deterministic to move
-            it outside of the expectation. Multiplying both sides by \(\|X\|_p \|Y\|_q\)
+            where we use that \(\norm{X}_{L^p}^p = \Exp{\norm{X}^p}\) is
+            deterministic to move it outside of the expectation. Multiplying
+            both sides by \(\norm{X}_{L^p} \norm{Y}_{L^q}\)
             implies the claim.
         \end{solution}
     \end{enumerate}
 \end{exercise}
 
 \begin{exercise}[\(L^2\)-Hilbertspace]
+    Let \(X,Y\) be \(\cL^2\) random variables in a Hilbert space \((\hilbert, \inner{\cdot, \cdot})\).
     Show that 
     \[
-        \langle [X], [Y] \rangle \coloneq \langle X, Y\rangle \coloneq \Exp{XY}
+        \langle [X], [Y] \rangle_{L^2} \coloneq \langle X, Y\rangle_{L^2} \coloneq \Exp{\inner{X,Y}}
     \]
-    defines an inner product on \(L^2\) which induces the norm \(\|\cdot\|_2\).
+    defines an inner product on \(L^2\) which induces the norm \(\norm{\cdot}_{L^2}\).
     \begin{solution}
-        Clearly \(\langle X, X\rangle = \|X\|_2^2\) so the inner product induces
-        the norm \(\|\cdot\|_2\). We need to show the inner product properties:
+        Clearly \(\inner{X, X}_{L^2} = \norm{X}_{L^2}^2\) so the inner product induces
+        the norm \(\norm{\cdot}_{L^2}\). We need to show the inner product properties:
         \begin{enumerate}[label=(\roman*)]
             \item\label{it: inner product positive}
-            \(\langle X, X \rangle \ge 0\) with equality if and only if \([X]=0 \overset{\text{Fact } \ref{fact: Lp zero norm}}\iff X=0\) a.s.
+            \(\inner{X, X}_{L^2} \ge 0\) with equality if and only if \([X]=0 \overset{\text{Fact } \ref{fact: Lp zero norm}}\iff X=0\) a.s.
             \\ \null \hfill (positive definiteness)
             \item\label{it: inner product symmetry}
-            \(\langle X, Y \rangle = \langle Y, X \rangle\).
+            \(\inner{X, Y}_{L^2} = \inner{Y, X}_{L^2}\).
             \hfill (symmetry)
             \item\label{it: inner product linearity}
-            \(\langle aX + bY, Z \rangle = a \langle X, Z \rangle + b \langle Y, Z \rangle\)
+            \(\inner{aX + bY, Z}_{L^2} = a \inner{X, Z}_{L^2} + b \inner{Y, Z}_{L^2}\)
             for all \(a,b\in \real\).
             \hfill (linearity in first argument)
         \end{enumerate}
-        Property \ref{it: inner product positive} follows from \(\langle X, X\rangle = \|X\|_2^2\)
+        Property \ref{it: inner product positive} follows from \(\inner{X, X}_{L^2} = \norm{X}_{L^2}^2\)
         and this property is established in Theorem \ref{thm: seminorm properties} and
         Fact \ref{fact: Lp zero norm}.
         Property \ref{it: inner product symmetry} follows from the
         commutativity of multiplication. Property \ref{it: inner product linearity}
         follows from the linearity of expectation.
         \(L^2\) is further a complete normed space by Fact \ref{fact: Lp complete}.
-        Consequently, \((L^2, \langle \cdot, \cdot \rangle)\) is a Hilbert space.
+        Consequently, \((L^2, \inner{\cdot, \cdot}_{L^2})\) is a Hilbert space.
     \end{solution}
 \end{exercise}
 
 \begin{exercise}[Expectation -- Projection in \(L^2\)]
     \label{ex: projection in L2}
-    Identify deterministic random variables with real numbers
-    such that \(\real \subseteq \cL^2\). Then identify \(\real\) with \(\Set{[x]:
-    x\in\real} \subseteq L^2\) such that \(\real \subseteq L^2\).
+    Identify deterministic random variables with \(\real \subseteq \cL^2(\real)\). Then identify \(\real\) with \(\Set{[x]:
+    x\in\real} \subseteq L^2\) such that \(\real \subseteq L^2(\real)\).
     \begin{enumerate}[label=(\alph*), noitemsep]
         \item Show that \(\real\) and \(\real^\perp \coloneq \Set{[X] \in L^2 :
         \Exp{X}=0}\) are orthogonal subspaces of \(L^2\) with \(L^2 = \real
@@ -1130,16 +1195,23 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
         \item Let \(\pi : L^2 \to \real^\perp\) be the orthogonal projection
         onto \(\real^\perp\). Show that
         \[
-            \Cov(X,Y) = \langle \pi(X), Y\rangle = \langle X, \pi(Y)\rangle = \langle \pi(X), \pi(Y)\rangle
+            \Cov{X}{Y}
+            = \inner{\pi(X), Y}_{L^2}
+            = \inner{X, \pi(Y)}_{L^2}
+            = \inner{\pi(X), \pi(Y)}_{L^2}
         \]
-        In particular \(\Cov\) coincides with the inner product on \(\real^\perp\)!
+        In particular \(\covSymb\) coincides with the inner product on \(\real^\perp\)!
 
         \item Show that the expectation is the closest real number to \(X\in
         \cL^2\) in the \(L^2\) distance, that is
         \[
-            \Exp{X} = \argmin_{c\in \real} \Exp{(X - c)^2} = \argmin_{c\in \real} \|X - c\|_2.
+            \Exp{X} = \argmin_{c\in \real} \Exp{(X - c)^2} = \argmin_{c\in \real} \norm{X - c}_{L^2}.
         \]
     \end{enumerate}
+    \begin{remark}[Generalization to Hilbert spaces]
+        The same arguments work if we replace \(\real\) by any Hilbert space
+        \((\hilbert, \inner{\cdot, \cdot})\).
+    \end{remark}
 \end{exercise}
 
 \begin{exercise}[Median -- Projection in \(L^1\)]
@@ -1194,7 +1266,7 @@ In Theorem \ref{thm: convergence implications} we have
 seen that almost sure convergence implies convergence in probability. In this
 section we will discover that the speed at which the term
 \begin{equation*}
-    \Prob*{|X_n - X| \ge \epsilon}
+    \Prob*{\norm{X_n - X} \ge \epsilon}
 \end{equation*}
 converges to zero determines whether we also have almost sure convergence.
 Roughly speaking if this probability decays like \(\frac1n\) or slower, then
@@ -1375,7 +1447,7 @@ sure convergence.
     Then
     \[
         \forall \epsilon > 0: \quad
-        \sum_{n=1}^\infty \Prob*{|X_n - X| \ge \epsilon} < \infty
+        \sum_{n=1}^\infty \Prob[\big]{\norm{X_n - X} \ge \epsilon} < \infty
          \quad \implies \quad \underbrace{
             \Prob[\Big]{\lim_{n\to\infty} X_n = X} =1
         }_{
@@ -1385,7 +1457,7 @@ sure convergence.
     If the random variables \((X_n-X)_{n\in \nat}\) are (pairwise)\footnote{see Remark \ref{rem: pairwise independence}} independent, then
     \[
         \exists \epsilon > 0: \quad
-        \sum_{n=1}^\infty \Prob*{|X_n - X| \ge \epsilon} = \infty
+        \sum_{n=1}^\infty \Prob[\big]{\norm{X_n - X} \ge \epsilon} = \infty
         \quad \implies \quad \Prob[\Big]{\lim_{n\to\infty} X_n = X} =0.
     \]
     In the independent case this implies a \(0\)-\(1\) law: If the probability of
@@ -1393,8 +1465,9 @@ sure convergence.
 \end{corollary}
 
 This corollary shows that almost sure convergence simply means that we have
-``fast enough'' convergence in probability such that sequence of \(\Prob*{|X_n -
-X| \ge \epsilon}\) does not only converge to zero but is also summable.
+``fast enough'' convergence in probability such that sequence of
+\(\Prob[\big]{\norm{X_n - X} \ge \epsilon}\) does not only converge to zero but is also
+summable.
 
 \begin{proof}
     We have by definition of convergence and Exercise \ref{ex: set limits}
@@ -1402,19 +1475,19 @@ X| \ge \epsilon}\) does not only converge to zero but is also summable.
     \label{eq: characterization of does not converge}    
     \begin{aligned}
         \Prob[\Big]{\lim_{n\to\infty} X_n \neq X}
-        &= \Prob[\Big]{ \bigcup_{\epsilon > 0} \bigcap_{N\in \nat}\bigcup_{n \ge N} \{|X_n - X| \ge \epsilon\} }
+        &= \Prob[\Big]{ \bigcup_{\epsilon > 0} \bigcap_{N\in \nat}\bigcup_{n \ge N} \{\norm{X_n - X} \ge \epsilon\} }
         \\
-        &= \sup_{\epsilon >0} \Prob[\Big]{ \limsup_{n\to \infty} \{|X_n - X| \ge \epsilon\} }.
+        &= \sup_{\epsilon >0} \Prob[\Big]{ \limsup_{n\to \infty} \{\norm{X_n - X} \ge \epsilon\} }.
     \end{aligned}
     \end{equation}
-    Now if for all \(\epsilon > 0\) we have that \(\sum_{n=1}^\infty \Prob*{|X_n - X| \ge \epsilon} < \infty\),
+    Now if for all \(\epsilon > 0\) we have that \(\sum_{n=1}^\infty \Prob[\big]{\norm{X_n - X} \ge \epsilon} < \infty\),
     then by the first Borel-Cantelli lemma \eqref{eq: borel cantelli 1}
     we have that the probability in \eqref{eq: characterization of does not converge} is zero
     and consequently we get almost sure convergence.
 
     Now if the random variables \((X_n - X)_{n\in \nat}\) are independent, then
-    the sets \(\{|X_n - X| \ge \epsilon\}\) are independent events. If there is an
-    \(\epsilon > 0\) such that \(\sum_{n=1}^\infty \Prob*{|X_n - X| \ge \epsilon} = \infty\),
+    the sets \(\Set{\norm{X_n - X} \ge \epsilon}\) are independent events. If there is an
+    \(\epsilon > 0\) such that \(\sum_{n=1}^\infty \Prob[\big]{\norm{X_n - X} \ge \epsilon} = \infty\),
     then the application of the second Borel-Cantelli lemma \eqref{eq: borel
     cantelli 2} to this particular \(\epsilon\) shows that the probability
     in \eqref{eq: characterization of does not converge} must be one.
@@ -1433,15 +1506,15 @@ a subsequence that converges almost surely.
 \end{lemma}
 
 The idea of the proof is that we can increase the speed of convergence
-of \(\Prob{|X_n - X| \ge \epsilon}\) by choosing a subsequence.
+of \(\Prob[\big]{\norm{X_n - X} \ge \epsilon}\) by choosing a subsequence.
 For example in the case
 \[
-    \Prob*{|X_n - X| \ge \epsilon} \le \frac{C_\epsilon}{n},
+    \Prob[\big]{\norm{X_n - X} \ge \epsilon} \le \frac{C_\epsilon}{n},
 \]
 we can choose \(n_k = k^2\) such that for every \(\epsilon > 0\)
 \begin{equation}
     \label{eq: subsequence summable}    
-    \sum_{k=1}^\infty \Prob*{|X_{n_k} - X| \ge \epsilon}
+    \sum_{k=1}^\infty \Prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}
     \le \sum_{k=1}^\infty \frac{C_\epsilon}{k^2} < \infty.
 \end{equation}
 Corollary \ref{cor: characterization of almost sure convergence} then
@@ -1457,23 +1530,23 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
     in particular \(\epsilon =\frac1k\) for \(k\in \nat\), that
     there exists an \(N_k\) such that for all \(n \ge N_k\)
     \[
-        \Prob{|X_n - X| \ge \tfrac1k} \le \tfrac1{2^k}.
+        \Prob{\norm{X_n - X} \ge \tfrac1k} \le \tfrac1{2^k}.
     \]
     By choosing the subsequence \(n_k = N_k\) we thus get
     for every \(\epsilon > 0\)
     \[
-        \sum_{k=1}^\infty \Prob*{|X_{n_k} - X| \ge \epsilon}
+        \sum_{k=1}^\infty \Prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}
         = \underbrace{\sum_{k=1}^{\lceil \frac1\epsilon \rceil-1}
-        \Prob*{|X_{n_k} - X| \ge \epsilon}}_{< \infty}
+        \Prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}}_{< \infty}
         +\sum_{k=\lceil \frac1\epsilon \rceil}^\infty
-        \Prob*{|X_{n_k} - X| \ge \epsilon}
+        \Prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}
     \]
     For the remaining summands we have \(\epsilon > \frac1k\) and therefore
     \[
        \sum_{k=\lceil \frac1\epsilon \rceil}^\infty
-        \Prob*{|X_{n_k} - X| \ge \epsilon}
+        \Prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}
         \le \sum_{k=\lceil \frac1\epsilon \rceil}^\infty
-        \Prob*{|X_{n_k} - X| \ge \tfrac1k}
+        \Prob[\big]{\norm{X_{n_k} - X} \ge \tfrac1k}
         \le \sum_{k=1}^\infty \frac1{2^k} = 1 < \infty.
     \]
     Consequently, by Corollary \ref{cor: characterization of almost sure convergence}
@@ -1669,6 +1742,7 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
 % \end{exercise}
 
 \section[Continuous mapping]{Continuous mapping \marginpar{\red{Lecture 3}}}
+\label{sec: continuous mapping}
 
 An incredibly useful tool in analysis was the concept of continuous functions
 that allows the transfer of limits through functions. In this section
@@ -1753,7 +1827,7 @@ and \ref{thm: joint convergence}.
         \Prob[\Big]{f(X_n) \to f(X)}
         \ge \Prob[\big]{X_n \to X} - \Prob{X \in D_f} = 1.
     \]
-    For \ref{it: cont. mapping d} we use Portmanteau's theorem.
+    For \ref{it: cont. mapping d} we use Portemanteau's theorem.
     Specifically, for \(f(X_n) \overset{d}\to f(X_n)\) we need
     \begin{equation}
         \label{eq: cont. mapping d}    
@@ -1766,13 +1840,14 @@ and \ref{thm: joint convergence}.
     is continuous and \(f\) is almost surely continuous in \(X\), thus \ref{it:
     b.a.s. cont} is applicable.
     
-    \noindent For \ref{it: cont. mapping Lp} we simply apply Lipschitz continuity of \(f\)
+    \noindent For \ref{it: cont. mapping Lp} we simply apply Lipschitz continuity of \(f\).
+    Let \(K\) be the Lipschitz constant of \(f\), then
     \[\begin{aligned}
-        \norm{f(X_n) - f(X)}_p^p
+        \norm{f(X_n) - f(X)}_{L^p}^p
         &= \Exp{\norm{f(X_n) - f(X)}^p}
         \\
-        \overset{\text{Lip.}}&\le \Exp{(L \norm{X_n - X})^p}
-        = L^p \norm{X_n - X}_p^p \to 0.
+        \overset{\text{Lip.}}&\le \Exp{(K \norm{X_n - X})^p}
+        = K^p \norm{X_n - X}_{L^p}^p \to 0.
     \end{aligned}
     \]
     Finally, \ref{it: cont. mapping p} is the most involved. For a fixed \(\epsilon\) we define
@@ -1812,14 +1887,14 @@ and \ref{thm: joint convergence}.
     \]
     For \ref{it: joint conv Lp} we use Minkowski's inequality
     \[\begin{aligned}
-        \norm{(X_n, Y_n) - (X,Y)}_p
-        &\le \norm{(X_n, Y_n) - (X,Y_n)}_p + \norm{(X,Y_n) - (X,Y)}_p
+        \norm{(X_n, Y_n) - (X,Y)}_{L^p}
+        &\le \norm{(X_n, Y_n) - (X,Y_n)}_{L^p} + \norm{(X,Y_n) - (X,Y)}_{L^p}
         \\
-        &= \norm{X_n - X}_p + \norm{Y_n - Y}_p \to 0,
+        &= \norm{X_n - X}_{L^p} + \norm{Y_n - Y}_{L^p} \to 0,
     \end{aligned}\]
     where the last equality uses \(\norm{(x, 0)} = \norm{x}\) in \(\real^{\dims\times \dims'}\) to get
     \[
-        \|(X,0)\|_p^p = \Exp{\|(X,0)\|^p} \overset{\text{in }\real^{\dims\times \dims'}}= \Exp{\|X\|^p} = \|X\|_p^p.
+        \|(X,0)\|_{L^p}^p = \Exp{\|(X,0)\|^p} \overset{\text{in }\real^{\dims\times \dims'}}= \Exp{\|X\|^p} = \|X\|_{L^p}^p.
     \]
     For \ref{it: joint conv in prob} we use the stochastic triangle inequality (Exercise \ref{ex: stochastic triangle})
     and again \(\norm{(x, 0)} = \norm{x}\) in \(\real^{\dims\times \dims'}\)
@@ -1855,7 +1930,7 @@ and \ref{thm: joint convergence}.
     \(X_n \overset{d}\to X\) and \(\norm{Y_n - X_n} \overset{p}\to 0\) implies \(Y_n \overset{d}\to X\).
 \end{lemma}
 \begin{proof}
-    To prove \(Y_n \overset{d}\to X\) we prove \ref{it: b.lip} from the Portmanteau theorem.
+    To prove \(Y_n \overset{d}\to X\) we prove \ref{it: b.lip} from the Portemanteau theorem.
     For a bounded Lipschitz continuous function \(f\colon \domain \to \real\) we thus need to
     prove the following term converges to zero
     \[
@@ -1944,6 +2019,7 @@ and \ref{thm: joint convergence}.
 \end{exercise}
 
 \section{Law of Large Numbers}
+\label{sec: law of large numbers}
 
 The difference between a ``weak law'' and ``strong law'' is the convergence type.
 A ``weak law'' only requires convergence in probability, while a ``strong law''
@@ -1959,17 +2035,24 @@ the rate of convergence, that is
 \end{aligned}
 \]
 The reason for this strategy is that it is often easiest to calculate \(L^p\)-norms.
-For example \(\norm{X - \E[X]}_2 = \sqrt{\Var{X}}\). 
+For example \(\norm{X - \E[X]}_{L^2} = \sqrt{\Var{X}}\). 
 In this section we illustrate this strategy by implementing it for the
-law of large numbers. The variance of sums or random variables is
-straightforward to calculate:
+law of large numbers. It turns out that the natural domain to work in
+is a Hilbert space \((\hilbert, \inner{\cdot, \cdot})\) as it allows
+the definition of the covariance and variance in a natural way:
+\[
+    \Cov{X}{Y} = \Exp[\Big]{\inner[\big]{X-\Exp{X}, Y-\Exp{Y}}}
+    \quad \text{and} \quad
+    \Var{X} = \Cov{X}{X}.
+\]
+The variance of sums or random variables is straightforward to calculate:
 
 \begin{lemma}[Bienaymé]
     Let \(X_1, \dots, X_n\) be random variables in \(\cL^2\). Then
     \[
-        \Var[\Big]{\sum_{i=1}^n X_i} = \sum_{i=1}^n \Var{X_i} + \sum_{\substack{i,j=1\\i \neq j}}^n \Cov(X_i, X_j).
+        \Var[\Big]{\sum_{i=1}^n X_i} = \sum_{i=1}^n \Var{X_i} + \sum_{\substack{i,j=1\\i \neq j}}^n \Cov{X_i}{X_j}.
     \]
-    Consequently, if the random variables are uncorrelated (i.e.\ \(\Cov(X_i, X_j) = 0\) for \(i\neq j\)), then
+    Consequently, if the random variables are uncorrelated (i.e.\ \(\Cov{X_i}{X_j} = 0\) for \(i\neq j\)), then
     % for the mean \(\mean{X}_n \coloneq \frac1n \sum_{i=1}^n X_i\) we have
     \[
         % \Var[\Big]{\sum_{i=1}^n X_i} = \sum_{i=1}^n \Var{X_i}
@@ -1981,10 +2064,10 @@ straightforward to calculate:
     Let \(Y_i \coloneq X_i - \E[X_i]\). Then by definition of variance and covariance
     \[
         \Var[\Big]{\sum_{i=1}^n X_i}
-        = \Exp[\Big]{\Big(\sum_{i=1}^n Y_i\Big)^2} = \sum_{i,j=1}^n \E[Y_i Y_j]
-        = \sum_{i,j=1}^n \Cov(X_i, X_j).
+        = \Exp[\Big]{\norm[\Big]{\sum_{i=1}^n Y_i}^2} = \sum_{i,j=1}^n \Exp[\big]{\inner{Y_i, Y_j}}
+        = \sum_{i,j=1}^n \Cov{X_i}{X_j}.
     \]
-    With \(\Var{X_i} = \Cov(X_i, X_i)\) the first result follows from a split of the sum.
+    With \(\Var{X_i} = \Cov{X_i}{X_i}\) the first result follows from a split of the sum.
     The second result follows directly from the first and
     \(
         \Var{aX} = a^2 \Var{X}
@@ -2007,10 +2090,13 @@ Bienaymé is the following weak law of large numbers.
     By the Chebyshev inequality (Corollary \ref{cor: markov inequality Lp})
     we get
     \begin{equation*}
-        \Prob[\big]{|\mean{X}_n - m| > \epsilon}
-        \le \frac1{\epsilon^2}\|\mean{X}_n - m\|_2^2
-        = \frac1{\epsilon^2} \Var[\big]{\mean{X}_n}
+        \begin{aligned}
+        \Prob[\big]{\norm{\mean{X}_n - m} > \epsilon}
+        &\le \tfrac1{\epsilon^2}\|\mean{X}_n - m\|_{L^2}^2
+        \\
+        &= \frac1{\epsilon^2} \Var[\big]{\mean{X}_n}
         \overset{\text{Bienaymé}}= \frac1{\epsilon^2}\Bigl(\frac1{n^2} \sum_{i=1}^n \Var{X_i}\Bigr).
+        \end{aligned}
     \end{equation*}
     The assumption \(\frac1{n^2} \sum_{i=1}^n \Var{X_i} \to 0\) therefore
     yields the claim.
@@ -2023,7 +2109,7 @@ If the variances are bounded, that is
 then
 \begin{equation}
     \label{eq: rate of convergence for bounded variance}    
-    \Prob[\big]{|\mean{X}_n - m| > \epsilon}
+    \Prob[\big]{\norm{\mean{X}_n - m} > \epsilon}
     \le \frac1{\epsilon^2}\frac{\sigma^2}{n} \in \bigO(\tfrac1n).
 \end{equation}
 If the variances \(\Var{X_i}\) are increasing in \(i\), then one
@@ -2054,9 +2140,10 @@ two common approaches:
 
 \begin{theorem}[Strong law of large numbers]
     \label{thm: strong law of large numbers}
-    Let \((X_n)_{n\in \nat}\) be a sequence of uncorrelated
-    random variables in \(\cL^2\), with identical mean \(m = \E[X_n]\)   
-    and bounded variances \(\Var{X_n} \le \sigma^2 < \infty\). Then
+    Let \(\hilbert\) be a Hilbertspace and \((X_n)_{n\in \nat}\) a sequence
+    of uncorrelated random variables in \(\cL^2(\hilbert)\), with identical mean
+    \(m = \E[X_n]\) and bounded variances \(\Var{X_n} \le \sigma^2 < \infty\).
+    Then
     \[
         \mean{X}_n \coloneq \frac1n \sum_{i=1}^n X_i \overset{\as}\to m.
     \]
@@ -2064,13 +2151,13 @@ two common approaches:
 
 \begin{proof}[Proof (by Michael J Neely \citep{neelyInfinitelyOftenProbability2021})]
     Since the variance is bounded, we have seen in \eqref{eq: rate of convergence for bounded variance}
-    that  \(\Prob[\big]{|\mean{X}_n - m| > \epsilon} \le
+    that  \(\Prob[\big]{\norm{\mean{X}_n - m} > \epsilon} \le
     \frac{\sigma^2}{n\epsilon^2}\). This implies \(\mean{X}_{n^2}
     \overset{\as}\to m\) by Corollary \ref{cor: characterization of almost sure
     convergence}
     since 
     \[
-        \sum_{n=1}^\infty \Prob[\big]{|\mean{X}_{n^2}-m| \ge \epsilon}
+        \sum_{n=1}^\infty \Prob[\big]{\norm{\mean{X}_{n^2}-m} \ge \epsilon}
         \le \frac{\sigma^2}{\epsilon^2}\sum_{n=1}^\infty \frac1{n^2} < \infty.
     \]
     That is we choose the  subsequence indexed by \(n^2\). What is left to prove
@@ -2192,6 +2279,7 @@ assumption that the random variables are in \(L^1\).
 \end{example}
 
 \section{Concentration inequalities}
+\label{sec: concentration inequalities}
 
 Observe that quantitative bounds on 
 \(

@@ -1,161 +1,92 @@
-\chapter{Some Facts about the Binomial and Poisson Distributions}
+\chapter{Appendix}
 
-\section{Poisson Distribution}
 
-\begin{fact}[Sum of Independent Poisson is Poisson]\label{Fact:poissonsum}
-If $X_1\sim\mathrm{Poisson}(\lambda_1)$,
-$X_2\sim\mathrm{Poisson}(\lambda_2)$,
-and $X_1\perp X_2$, then 
-$X_1+X_2\sim\Poisson(\lambda_1+\lambda_2)$.
+\section{Proof of \ref{it: df} \texorpdfstring{\(\Rightarrow\)}{⇒} \ref{it: s.open} from the Portmanteau Theorem}
+\label{sec: appendix portmanteau}
+
+We require four facts that would be too much work to develop here. Especially Fatou's lemma
+which is a fundamental result in measure theory.
+
+\begin{fact}[Fatou's Lemma]
+    \label{fact: fatou}
+    Let \((f_n)_{n\in \nat}\) be a sequence of non-negative measurable functions.
+    Then for any measure \(\mu\) it holds that
+    \[
+        \int \liminf_{n\to\infty} f_n \, d\mu
+        \le \liminf_{n\to\infty} \int f_n \, d\mu.
+    \]
+\end{fact}
+\begin{fact}
+    \label{fact: non-decreasing -> discontinuities countable}
+    Let \(f\) be a non-decreasing function. Then its set of discontinuities 
+    is at most countable.
+\end{fact}
+\begin{proof}[Proofsketch]
+    The only discontinuities of a non-decreasing function are jumps.
+    On bounded intervals there are a finite number of jumps greater than
+    \(1/n\). Consequently, there are only countably many jumps of any size
+    on such a bounded interval. Since the real line may be covered by a
+    countable number of bounded intervals the claim follows.
+\end{proof}
+\begin{fact}
+    \label{fact: discontinuity are atoms}
+    \(\Pr(X =x) > 0\) if an only if \(x\) is a discontinuity point of the
+    distribution function \(F(x) = \Pr(X \le x)\).
+\end{fact}
+\begin{proof}[Proofsketch]
+    Use the continuity of measure to determine the value of the left-limits 
+    of \(F\).
+\end{proof}
+\begin{fact}
+    \label{fact: open set as union of intervals}
+    Any open set \(O\subseteq \real\) may be written as a countable,
+    disjoint union of open intervals \(O = \biguplus_{i=1}^\infty (a_i,
+    b_i)\) for \(a_i, b_i \in \real\).\footnote{
+        \(b_i \le a_i\) implies \((a_i, b_i) = \emptyset\).
+    }
 \end{fact}
 
-\begin{proof}
-We compute the probability mass function of $X_1+X_2$:
-\begin{align*}
-   & \Prob*{X_1+X_2=n}\\    
-={}& \sum_{k=0}^n \Prob*{X_1=k,X_2=n-k}\\
-={}& \sum_{k=0}^n \Prob*{X_1=k}\Prob*{X_2=n-k}\\
-={}& \sum_{k=0}^n e^{-\lambda_1}\frac{\lambda_1^k}{k!}
-e^{-\lambda_2}\frac{\lambda_2^{n-k}}{(n-k)!}\\
-={}& 
-\frac{e^{-(\lambda_1+\lambda_2)}}{n!}
-\sum_{k=0}^n \frac{n!}{k!(n-k)!}\lambda_1^k\lambda_2^{n-k}\\
-={}&\frac{e^{-(\lambda_1+\lambda_2)}}{n!}
-(\lambda_1+\lambda_2)^k\;.
-\end{align*}
-\end{proof}
-
-\begin{fact}[Characteristic Function of Poisson Random Variables]
-The characteristic function of $\mathrm{Poisso}(\lambda)$ distribution is the function $\phi:\real\to\complex$ given by 
-\[
-\phi(t) = \exp\left(\lambda(e^{it}-1)\right) \;.
+Using these facts the proof has two steps: First we prove it for all open
+intervals and then use that any open set \(O\) may be written as a
+countable, disjoint union of open intervals
+\(O = \biguplus_{i=1}^\infty (a_i, b_i)\) for
+\(a_i, b_i \in \real\) (Fact \ref{fact: open set as union of intervals}). Thus
+by Fatou's lemma (Fact \ref{fact: fatou}) we have
+\[\begin{aligned}
+    \liminf_{n\to \infty} \Prob{X_n \in O}
+    &= \liminf_{n\to \infty} \sum_{i=1}^\infty \Prob[\big]{X_n \in (a_i, b_i)}
+    \\
+    \overset{\text{Fatou}}&\ge \sum_{i=1}^\infty \liminf_{n\to \infty} \Prob[\big]{X_n \in (a_i, b_i)}
+    \\
+    \overset{(*)}&\ge \sum_{i=1}^\infty \Prob{X \in (a_i, b_i)}
+    &= \Prob{X \in O},
+\end{aligned}\]
+Here \((*)\) is the claim for open intervals. 
+To prove it for an open interval \((a,b)\) pick two sequences \((a_k)_{k\in \nat}\) and \((b_k)_{k\in \nat}\)
+of \underline{continuity} points of the distribution function \(F(x) \coloneq \Prob{X \le x}\)
+with \(a_k \downarrow a\) and \(b_k \uparrow b\). This is possible since 
+\(F\) is non-decreasing and Fact \ref{fact: non-decreasing -> discontinuities countable}.
+By \ref{it: df} and Fact \ref{fact:
+discontinuity are atoms} we thus have for \(F_n(x) \coloneq \Prob{X_n \le x}\)
+that \(F_n(a_k) \to F(a_k)\)
+as the \(a_k\) are continuity points and similarly for \(b_k\).
+Consequently,
+as \((a,b) \supseteq (a_k, b_k]\) we have
+\[\begin{aligned}
+    \liminf_{n\to \infty} \Prob{X_n \in (a,b)}
+    &\ge \liminf_{n\to\infty} \Prob{X_n \in (a_k, b_k]}
+    \\
+    &= \liminf_{n\to\infty} F_n(b_k) - F_n(a_k)
+    \\
+    \overset{\ref{it: df}}&= F(b_k) - F(a_k)
+    = \Prob{X \in (a_k, b_k]}.
+\end{aligned}\]
+Since it is true for any \(k\) we have
+\[\begin{aligned}
+    \liminf_{n\to \infty} \Prob{X_n \in (a,b)}
+    &\ge \lim_{k\to\infty} \Prob{X \in (a_k, b_k]}
+    \\
+    &= \Prob[\Big]{X \in \bigcup_{k\in \nat} (a_k, b_k]}
+    = \Prob{X \in (a,b)}.
+\end{aligned}
 \]
-\end{fact}
-
-\begin{proof}
-Let $X$ denote a $\mathrm{Poisson}(\lambda)$ random variable. Then, for any $t\in\real$ we have
-\begin{align*}
-\phi(t) ={} & \Exp*{e^{itX}}\\
-={} & \sum_{k=0}^\infty e^{itk} \, \Prob*{X=k}\\
-={} & \sum_{k=0}^\infty e^{itk} \, e^{-\lambda} \, \frac{\lambda^k}{k!}\\
-={} & e^{-\lambda} \sum_{k=0}^\infty \frac{(\lambda e^{it})^k}{k!}\\
-={} & e^{-\lambda} \, e^{\lambda e^{itk}}\\
-={} & e^{\lambda (e^{it}-1)}\;.
-\end{align*}
-\end{proof}
-
-\begin{fact}[Characteristic Function of Sum of Independent Random Variables]
-If $X_1$ has ch.f. $\phi_1$, $X_2$ has ch.f. $\phi_2$, and $X_1\perp X_2$. Then
-$X_1+X_2$ has ch.f. $\phi_1\times\phi_2$.
-\end{fact}
-
-\begin{fact}[Characteristic Function Characterize Distribution Function]
-If $X$ and $Y$ have the same characteristic functions, then they must have the same distribution.    
-\end{fact}
-
-\begin{proof}[Alternative proof of Fact~\ref{Fact:poissonsum}]\;
-\begin{itemize}
-\item $X_1$ has characteristic function $\phi_1(t)=e^{\lambda_1(e^{it}-1)}$.
-\item $X_2$ has characteristic function $\phi_2(t)=e^{\lambda_2(e^{it}-1)}$.
-\item $X_1+X_2$ has characteristic function $\phi(t)=\phi_1(t)\phi_2(t)=e^{(\lambda_1+\lambda_2)(e^{it}-1)}$. 
-\item Thus $X_1+X_2\sim\mathrm{Poisson}(\lambda_1+\lambda_2)$.
-\end{itemize}
-\end{proof}
-
-\section{Binomial Distribution}
-
-\begin{fact}[Sum of Independent Binomial]\label{Fact:binsum}
-If $X\sim\Binomial(n,p)$, $Y\sim\Binomial(m,p)$, and $X\perp Y$, then $X+Y\sim\Binomial(n+m,p)$.
-\end{fact}
-
-\begin{proof}
-We compute the probability mass function of $X+Y$:
-\begin{align*}
-& \Prob*{X+Y=k}\\
-={} & \sum_{i=0}^{k} \Prob*{X=i,Y=k-i}\\
-={} & \sum_{i=0}^{k} \Prob*{X=i}\Prob*{Y=k-i}\\
-={} & \sum_{i=0}^{k} \binom{n}{i}p^i(1-p)^{n-i}
-\binom{m}{k-i}p^{k-i}(1-p)^{m-k+i}\\
-={} & p^k(1-p)^{n+m-k}\sum_{i=0}^{k} \binom{n}{i}\binom{m}{k-i}\\
-={} & p^k(1-p)^{n+m-k}\binom{n+m}{k}\;.
-\end{align*}
-\end{proof}
-
-\filbreak
-
-\begin{fact}[Characteristic Function of Binomial]
-The characteristic function of $\Binomial(n,p)$ distribution is the function $\phi:\real\to\complex$ given by  
-Then    
-\[
-\phi(t) = \left(1-p+pe^{it}\right)^n\;.
-\]
-\end{fact}
-
-\begin{proof}
-\begin{align*}
- &  \Exp*{e^{itX}}\\
-={}&\sum_{k=0}^n e^{itk} \Prob*{X=k}\\
-={}&\sum_{k=0}^n e^{itk} \binom{n}{k} p^k (1-p)^{n-k}\\
-={}&\sum_{k=0}^n \binom{n}{k} (e^{it}p)^k (1-p)^{n-k}\\
-={}&(1-p+pe^{it})^n\;.
-\end{align*}
-\end{proof}
-
-
-\begin{proof}[Alternative proof of Fact~\ref{Fact:binsum}]
-\;
-\begin{itemize}
-\item Characteristic function of $X$: $\phi_1(t)=(e^{it}p+1-p)^n$.
-\item Characteristic function of $Y$: $\phi_2(t)=(e^{it}p+1-p)^m$.
-\item Characteristic function of $X+Y$: $\phi(t)=\phi_1(t) \phi_2(t) = (e^{it}p+1-p)^{n+m}$.
-\item So $X+Y\sim\Binomial(n+m,p)$.
-\end{itemize}
-\end{proof}
-
-\filbreak
-
-\section{A Connection Between Poisson and Binomial}
-
-\begin{fact}[A Connection Between Poisson and Binomial]
-If $X_1\sim\Poisson(\lambda_1)$, $X_2\sim\Poisson(\lambda_2)$, and $X_1\perp X_2$, then the conditional distribution of $X_1$ given $X_1+X_2=n$ is $\Binomial(n,\lambda_1/(\lambda_1+\lambda_2))$.
-\end{fact}
-
-\begin{proof}
-We compute the conditional probability mass function of $X_1$ given $X_1+X_2$:
-\begingroup
-\addtolength{\jot}{1em}
-\begin{align*}
-    & \Prob*{X_1=k\given X_1+X_2=n}\\
-={} & \frac{\Prob*{X_1=k,X_1+X_2=n}}{\Prob*{X_1+X_2=n}}\\
-={} & \frac{\Prob*{X_1=k,X_2=n-k}}{\Prob*{X_1+X_2=n}}\\
-={} & \frac{\Prob*{X_1=k}\Prob*{X_2=n-k}}{\Prob*{X_1+X_2=n}}\\
-={} & \frac{\displaystyle
-e^{-\lambda_1}\frac{\lambda_1^{k  }}{k!    } 
-e^{-\lambda_2}\frac{\lambda_2^{n-k}}{(n-k)!}
-}
-{\displaystyle
-e^{-(\lambda_1+\lambda_2)}\frac{(\lambda_1+\lambda_2)^n}{n!}
-} \\
-={} & \frac{n!}{k!(n-k)!}\frac{\lambda_1^k\lambda_2^{n-k}}{(\lambda_1+\lambda_2)^{n}} \\
-={} & \binom{n}{k}\Bigl(\frac{\lambda_1}{\lambda_1+\lambda_2}\Bigr)^k
-\Bigl(\frac{\lambda_2}{\lambda_1+\lambda_2}\Bigr)^{n-k}\\
-={} & \binom{n}{k}\Bigl(\frac{\lambda_1}{\lambda_1+\lambda_2}\Bigr)^k
-\Bigl(1-\frac{\lambda_1}{\lambda_1+\lambda_2}\Bigr)^{n-k}\;.
-\end{align*}    
-\endgroup
-\end{proof}
-
-\chapter{Combinatorial Identities}
-
-\begin{fact}[A Combinatorial Identity]
-For non-negative integers $n$, $m$, $k$
-\[
-\sum_{i=0}^{k} \binom{n}{i}\binom{m}{k-i} = \binom{n+m}{k} \;.
-\]
-\end{fact}
-
-\begin{fact}[Another Combinatorial Identity]
-\[
-\sum_{m=0}^{N} \binom{2m}{m}\binom{2N-2m}{N-m} = 2^{2N}\;.
-\]    
-\end{fact}
