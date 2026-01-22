@@ -165,7 +165,7 @@ standard normal distributed for example.
 
 Observe that it is not possible to conclude convergence in probability 
 from convergence in distribution if the limit is not almost surely constant.
-Indeed, if the limit is non-deterministic it may assume different values.
+Indeed, if the limit \(X\) is non-deterministic it can have different values.
 It is therefore possible to construct two different random variables \(X\) and \(Y\)
 with the same distribution by essentially ``shuffling'' the outcomes and
 letting \(X\) take a different value from \(Y\) since there are multiple
@@ -342,7 +342,8 @@ inequality, which is an incredibly useful tool.
 \end{myproof}
 
 \begin{proof}[Proof (Theorem \ref{thm: convergence implications})]
-    \leavevmode
+    We will prove all implications not involving \(L^p\) for metric spaces. You
+    may assume \(\metric(x,y) = \norm{x-y}\) for the sake of simplicity.
     \begin{enumerate}[wide]
         \item[\ref{it: as to p}] The set of point-wise convergence is given by
         \begin{align*}
@@ -1215,7 +1216,127 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 \end{exercise}
 
 \begin{exercise}[Median -- Projection in \(L^1\)]
-    
+	We define the median of \(X\) to be \(\bM[X]:=\inf\{m\in\real: f(m)> 0\}\), where
+    \[
+        f \colon\begin{cases}
+            \real \to [-1,1]\\
+            m\mapsto \Pr(X\le m) - \Pr(X > m)
+        \end{cases}
+    \]
+	\begin{enumerate}[label=(\alph*), noitemsep]
+		\item Prove that \(\Pr(X\le \bM[X])\ge \tfrac12\) and \(\Pr(X\ge \bM[X])\ge\tfrac12\),
+		and show that for all \(m>\bM[X]\) we do not have \(\Pr(X\le m)\ge\tfrac12\).
+
+        \textbf{Hint:}
+			Calculate the limits \(\lim_{m\uparrow \bM[X]} f(m)\) and
+			\(\lim_{m\downarrow \bM[X]} f(m)\) using the continuity of measures.
+			Also note that \(f(m)=2F_X(m) -1\), where \(F_X\) is the cumulative
+			distribution function of \(X\).
+		\begin{solution}
+			As \(f\) is right-continuous, since \(F_X(m)=\Pr(X\le m)\) is right-continuous,
+			we have	
+			\begin{align*}
+				2\Pr(X\le \bM[X]) -1 = f(\bM[X])= \lim_{m\downarrow \bM[X]} f(m) \ge 0
+			\end{align*}
+			and therefore \(\Pr(X\le\bM[X])\ge \tfrac12\). For the second claim we
+			need to use continuity of measures directly
+			\begin{align*}
+				2\Pr(X<\bM[X]) - 1
+				&=\Pr(X<\bM[X]) - \Pr(X\ge \bM[X])\\
+				&= \Pr\left(\bigcup_{m<\bM[X]} \{X\le m\}\right) - \Pr\left(\bigcap_{m<\bM[X]}\{X>m\}\right)\\
+				&=\lim_{m\uparrow\bM[X]} \Pr(X\le m) - \Pr(X>m)\\
+				&=\lim_{m\uparrow\bM[X]} f(m) \le 0
+			\end{align*}
+			Therefore we have \(\Pr(X<\bM[X])\le \tfrac12\), which implies that
+			\(\Pr(X\ge\bM[X])\ge\tfrac12\).
+
+			Lastly, for any \(m>\bM[X]\), we can find a small \(\epsilon>0\) with
+			\(m-\epsilon>\bM[X]\). Therefore
+			\begin{align*}
+				2\Pr(X<m)-1 \ge 2\Pr(X\le m-\epsilon) - 1 = f(m-\epsilon) > 0,
+			\end{align*}
+			which implies \(\Pr(X<m)>\tfrac12\) and therefore \(P(X\le m) < \tfrac12\).
+		\end{solution}
+		\begin{remark}
+			This property is usually the defining property of the median. If this property
+			does not define the median uniquely, \(\bM[X]\) is the largest median. A
+			lower bound can be found similarly.
+ 		\end{remark}
+		\item Prove that the median minimizes the $L^1$ error, i.e. \(\bM[X] =\arg\min_{m} \E[|X-m|]\).
+		Whenever useful, you can assume continuity.
+		% If you wish to prove the general
+		% case, note that \(f(m)=2F_X(m)-1\) is right-continuous and monotonously
+		% increasing. Monotonicity also implies it can only have a countable number
+		% of discontinuities.
+
+ 		\textbf{Hint:}
+			Recall that for \(X\ge0\) a.s., we have \(\E[X]=\int_0^\infty \Pr(X\ge
+			t)dt = \int_0^\infty \Pr(X>t)dt\).
+ 			Use this fact to prove
+			\begin{align*}
+				\E[(X-m)_+] = \int_m^\infty \Pr(X>m)dt.
+			\end{align*}
+		\begin{solution}
+			Recall that for \(X\ge0\) a.s., we have \(\E[X]=\int_0^\infty \Pr(X\ge
+			t)dt = \int_0^\infty \Pr(X>t)dt\). Applying this fact to \((X-m)_+\)
+			we get	
+			\begin{align*}
+				\E[(X-m)_+]
+				&= \int_0^\infty \underbrace{\Pr((X-m)_+ > t)}_{
+					\begin{aligned}
+						&=\Pr(X-m>t)\\
+						&=\Pr(X> t-m)
+					\end{aligned}
+				} dt\\
+				&= \int_m^\infty \Pr(X>s)ds
+			\end{align*}
+			And similarly
+			\begin{align*}
+				\E[(X-m)_-]
+				&= \int_0^\infty \underbrace{\Pr((X-m)_- \ge t)}_{
+					\begin{aligned}
+						&=\Pr(m-X\ge t) \quad \mathrlap{(\forall t>0)}\\
+						&=\Pr(m-t\ge x)
+					\end{aligned}
+				} dt\\
+				&= \int_{-\infty}^m \Pr(s\ge X)ds
+			\end{align*}
+			Put together we have
+			\begin{align*}
+				\E[|X-m|]
+				&= \int_m^\infty \Pr(X>s)ds + \int_{-\infty}^m \Pr(X\le s)ds.
+			\end{align*}
+			Assuming \(\Pr(X>s)\) and \(\Pr(X\le x)\) are both continuous in \(s\),
+			we can use the fundamental theorem of calculus to obtain
+			\begin{align*}
+				\frac{d}{dm}\E[|X-m|] = \Pr(X\le m) - \Pr(X>m) = f(m).
+			\end{align*}
+			Therefore we have
+			\begin{align*}
+				\E[|X-m|] - \E[|X-\bM[X]|] = \int_{\bM[X]}^m f(t) dt \ge 0
+			\end{align*}
+			as \(f\) is greater than zero for any \(m\ge\bM[X]\) and less than
+			zero for any \(m\le\bM[X]\) and sorting the integral borders results
+			in another sign flip. Notice that \(f\) is strictly greater than zero
+			for \(m\ge\bM[X]\) which implies that \(\bM[X]\) is the largest median,
+			i.e. all numbers greater than \(\bM[X]\) do not minimize \(\E[|X-m|]\).
+
+			As mentioned one can similarly define a lower bound, and all numbers
+			in-between fulfill the defining property of medians of \(\Pr(X\ge m)\ge\tfrac12\)
+			and \(\Pr(X\le m)\ge \tfrac12\).
+			\qedhere
+
+			\begin{remark}
+			In the non-continuous case, one still has right-continuity of \(f\)
+			and can prove right-differentiability of \(\E[|X-m|]\). This might be 
+			sufficient to prove it is monotonously increasing after \(\bM[X]\) and
+			similarly monotonously decreasing before. But the proof is likely going to
+			be complex or require a strong analysis foundation. Alternatively, a
+			short and basic (but unintuitive) proof of the general case can be found here:
+			\url{https://math.stackexchange.com/a/2790390/445105}.
+			\end{remark}
+		\end{solution}
+	\end{enumerate}
 \end{exercise}
 
 \begin{remark}[Median is more stable]
@@ -1983,7 +2104,7 @@ and \ref{thm: joint convergence}.
 \begin{exercise}[Counterexample \(L^p\) continuous mapping]
     Let \(f(x) = x^\gamma\) with \(\gamma >1\), let \(U\sim \uniform(0,1)\) and define
     \[
-        X_n = n^{\frac1q} \Indicator{[0, 1/n)}(U).
+        X_n = n^{\frac1q} \Indicator{[0, \frac1n)}(U).
     \]
     Show for \(p\in [\frac{q}\gamma, q)\) we have that \(X_n \overset{L^p}\to 0\)
     but not \(f(X_n) \overset{L^p}\to 0\).
@@ -2052,7 +2173,7 @@ The variance of sums or random variables is straightforward to calculate:
     \[
         \Var[\Big]{\sum_{i=1}^n X_i} = \sum_{i=1}^n \Var{X_i} + \sum_{\substack{i,j=1\\i \neq j}}^n \Cov{X_i}{X_j}.
     \]
-    Consequently, if the random variables are uncorrelated (i.e.\ \(\Cov{X_i}{X_j} = 0\) for \(i\neq j\)), then
+    If the random variables are uncorrelated (i.e.\ \(\Cov{X_i}{X_j} = 0\) for \(i\neq j\)), then
     % for the mean \(\mean{X}_n \coloneq \frac1n \sum_{i=1}^n X_i\) we have
     \[
         % \Var[\Big]{\sum_{i=1}^n X_i} = \sum_{i=1}^n \Var{X_i}
