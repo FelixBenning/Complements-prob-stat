@@ -380,66 +380,41 @@ inequality, which is an incredibly useful tool.
         \continuityOfMeasure.
 
 
-        \item[\ref{it: p to d}] Let \(x\in \real\) be such that \(\Prob{X=x}=0\).
-        If \(X_n \le x\), then either \(X\) is further from \(X_n\) than
-        \(\epsilon>0\) or it is also smaller than \(x+\epsilon\).  More
-        specifically,
-        \begin{equation}
-            \label{eq: upper bound for p to d}
-            \Set{X_n \le x}
-            \subseteq \Set{X \le x + \epsilon}
-            \cup \Set[\big]{\metric(X_n, X) > \epsilon}.
-        \end{equation}
-        With similar arguments we have
-        \begin{equation}
-            \label{eq: lower bound for p to d}
-            \Set{X \le x - \epsilon}
-            \subseteq \Set{X_n \le x}
-            \cup \Set[\big]{\metric(X_n, X) > \epsilon}.
-        \end{equation}
-        Consequently, we have
-        \begin{align*}
-            \Prob{X \le x - \epsilon} - \smash{\underbrace{\Prob[\big]{\metric(X_n, X) > \epsilon}}_{\to 0}}
-            \overset{\eqref{eq: lower bound for p to d}}&\le \Prob{X_n \le x}
+        \item[\ref{it: p to d}] We will prove a stronger result that will be used later
+        \begin{lemma}\label{lem: moving target p to d}
+            Let \((X_n)_{n\in \nat}\) and \((Y_n)_{n\in \nat}\) be two
+            sequences of random variables and \(f\colon \domain \to \real\) a
+            bounded, Lipschitz continuous function, then
+            \[
+                \metric(X_n,Y_n) \overset{p}\to 0
+                \quad\implies\quad
+                \abs[\big]{\Exp{f(X_n)} - \Exp{f(Y_n)}} \to 0.
+            \]
+        \end{lemma}
+        Choose \(Y_n = X\) and observe that \(\metric(X_n, X) \overset{p}\to 0\)
+        is equivalent to \(X_n \overset{p}\to X\), then this Lemma
+        proves \ref{it: b.lip} from the Portemanteau theorem.
+
+        \begin{proof}[Proof of Lemma \ref{lem: moving target p to d}]
+        Since \(f\) is bounded we have that \(\abs{f(x)} \le M\) for all \(x\in
+        \domain\) for some \(M > 0\). Let \(L\) further be the Lipschitz constant
+        of \(f\) and choose an arbitrary \(\epsilon > 0\).
+        Then
+        \[\begin{aligned}
+            &\abs{\Exp{f(X_n)} - \Exp{f(Y_n)}}
             \\
-            \overset{\eqref{eq: upper bound for p to d}}&\le
-            \Prob{X \le x + \epsilon} + \underbrace{\Prob[\big]{\metric(X_n, X) > \epsilon}}_{\to 0}.
-        \end{align*}
-        This implies for all \(\epsilon > 0\)
-        \[
-            \Prob{X \le x - \epsilon}
-            \le \liminf_{n \to \infty} \Prob{X_n \le x}
-            \le \limsup_{n \to \infty} \Prob{X_n \le x}
-            \le \Prob{X \le x + \epsilon}.
-        \]
-        Since this is true for all \(\epsilon > 0\) we have
-        \[
-            \liminf_{n \to \infty} \Prob{X_n \le x}
-            \ge \lim_{\epsilon \to 0} \Prob{X \le x - \epsilon}
-            = \Prob[\Big]{\bigcap_{\epsilon > 0} \Set{X \le x - \epsilon}}
-            = \Prob{X < x},
-        \]
-        and
-        \[
-            \limsup_{n \to \infty} \Prob{X_n \le x}
-            \le \lim_{\epsilon \to 0} \Prob{X \le x + \epsilon}
-            = \Prob[\Big]{\bigcup_{\epsilon > 0} \Set{X \le x + \epsilon}}
-            = \Prob{X \le x}.
-        \]
-        Due to \(\Prob{X \le x} = \Prob{X < x} + \Prob{X = x}\) and \(\Prob{X =
-        x} = 0\) we thus have the claim by the squeeze theorem:
-        \[
-            \lim_{n\to \infty} \Prob{X_n \le x} = \Prob{X \le x}.
-        \]
-        \item[\ref{it: d to p}] Assume that \(X\equiv c\) and let \(\epsilon>0\).
-        Then by the Portemanteau theorem and \(\Pr(X=c-\epsilon) = \Pr(X=c+\epsilon) = 0\)
-        we have
-        \[
-            \Prob[\big]{\abs{X_n -X} < \epsilon}
-            = \Pr_{X_n}((c-\epsilon, c+\epsilon))
-            \to \Pr_X((c-\epsilon, c+\epsilon)) = 1.
-        \]
-        and consequently \(\Prob[\big]{\abs{X_n - X} \ge \epsilon} \to 0\).
+            &\le \Exp{\abs{f(X_n) - f(Y_n)}}
+            \\
+            &\le \Exp{\underbrace{\abs{f(X_n) - f(Y_n)}}_{\le L\metric(X_n, Y_n)} \Indicator{\metric(X_n, Y_n) \le \epsilon}}
+            + \Exp{\underbrace{\abs{f(X_n) - f(Y_n)}}_{\le 2M} \Indicator{\metric(X_n, Y_n) > \epsilon}}
+            \\
+            &\le L \epsilon + 2M \underbrace{\Prob{\metric(X_n, Y_n) > \epsilon}}_{\to 0}.
+        \end{aligned}\]
+        Using \(\metric(X_n, Y_n) \overset{p}\to 0\) we thus we have \(\limsup_{n\to
+        \infty} \abs{\Exp{f(X_n)} - \Exp{f(Y_n)}} \le L \epsilon\)
+        for arbitrary \(\epsilon > 0\) and thus its limit must be zero.
+        \end{proof}
+        
 
         \item[\ref{it: Lq to Lp}] See Remark \ref{rem: Lp convergence} in Section \ref{sec: Lp spaces} on \(L^p\) spaces.
 
@@ -1807,19 +1782,14 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
     works of William Shakespeare -- with probability one.  It is also know as
     the ``Law of truly large numbers''.
     Prove it!
-
-    \noindent\textbf{Hint:} Define a (finite) alphabet \(\alphabet\), e.g.\
-    \[
-        \alphabet = \Set{a,\dots, z, A, \dots, Z, 0,1,\dots,9, ,.,!,?}\;,
-    \]
-    Let \((X_n)_{n=1}^\infty\) be a sequence of independent random variables
-    with uniform distribution on \(\alphabet\). That is \(\Prob{X_n = a} =
-    \frac1{|\alphabet|}\) for all \(a\in \alphabet\).
-    For any sequence \(y=(y_0, \dots, y_m) \in \alphabet^{m+1}\) define the event
-    \[
-        A(y) \coloneq \Set{\omega \in \Omega : \exists t \in \nat , X_t(\omega) = y_0, \dots, X_{t+m} = y_m}\;,
-    \]
-    Prove that \(\Prob{A(y)} = 1\) for any finite sequence \(y\). 
+    \begin{enumerate}[label={\emph{Level \arabic*:}},leftmargin=4em,noitemsep]
+        \item Assume the keys hit are independent and uniformly distributed.
+        \item Assume the keys hit are iid with a probability distribution that
+        assigns each of the (finite) keys a positive probability.
+        \item Assume the keys hit are a stationary Markov chain whose transition
+        probabilities from key \(x\) to key \(y\) are positive for all pairs
+        \(x,y\) from the (finite) alphabet.
+    \end{enumerate}
 \end{exercise}
 
 % \begin{exercise}[Drunk Men and Drunk Birds]
@@ -1963,8 +1933,6 @@ necessary in the deterministic setting (see Exercise~\ref{ex:
 incompatible metric}). To avoid these technicalities we restrict ourselves to
 this special case.
 
-\subsection{Proof of continuous mapping and joint convergence}
-
 In the rest of this section we prove the Theorems \ref{thm: continuous mapping}
 and \ref{thm: joint convergence}.
 
@@ -2089,27 +2057,10 @@ and \ref{thm: joint convergence}.
     prove the following term converges to zero
     \[
         \abs{\Exp{f(Y_n)} - \Exp{f(X)}}
-        \overset{\Delta}\le \abs[\big]{\Exp{f(Y_n)} - \Exp{f(X_n)}} + \underbrace{\abs[\big]{\Exp{f(X_n)} - \Exp{f(X)}}}_{\to 0}.
+        \overset{\Delta}\le \abs[\big]{\Exp{f(Y_n)} - \Exp{f(X_n)}} + \abs[\big]{\Exp{f(X_n)} - \Exp{f(X)}}.
     \]
-    By \(X_n \overset{d}\to X\) the second term converges to zero so we are finished,
-    if we can show that the first term converges to zero as well. 
-    Since \(f\) is bounded we have that \(\abs{f(x)} \le M\) for all \(x\in
-    \domain\) for some \(M > 0\). Let \(L\) further be the Lipschitz constant
-    of \(f\) and choose an arbitrary \(\epsilon > 0\).
-    Then
-    \[\begin{aligned}
-        &\abs{\Exp{f(Y_n)} - \Exp{f(X_n)}}
-        \\
-        &\le \Exp{\abs{f(Y_n) - f(X_n)}}
-        \\
-        &\le \Exp{\underbrace{\abs{f(Y_n) - f(X_n)}}_{\le L\norm{Y_n - X_n}} \Indicator{\norm{Y_n - X_n} \le \epsilon}}
-        + \Exp{\underbrace{\abs{f(Y_n) - f(X_n)}}_{\le 2M} \Indicator{\norm{Y_n - X_n} > \epsilon}}
-        \\
-        &\le L \epsilon + 2M \underbrace{\Prob{\norm{Y_n - X_n} > \epsilon}}_{\to 0}.
-    \end{aligned}\]
-    Using \(\norm{Y_n - X_n} \overset{p}\to 0\) we thus we have \(\limsup_{n\to
-    \infty} \abs{\Exp{f(Y_n)} - \Exp{f(X_n)}} \le L \epsilon\)
-    for arbitrary \(\epsilon > 0\) and thus its limit must be zero.
+    The first term converges to zero by Lemma \ref{lem: moving target p to d},
+    the second term converges to zero by \(X_n \overset{d}\to X\)
 \end{proof}
 
 
@@ -2132,6 +2083,15 @@ and \ref{thm: joint convergence}.
         \norm{f(x) - f(y)} \le L \norm{x-y}^\alpha
     \]
     Show that \(X_n \overset{L^p}\to X\) implies \(f(X_n) \overset{L^q}\to f(X)\) for \(q = \frac{p}{\alpha}\).
+    \begin{solution}
+        We have that
+        \[
+            \norm{f(X_n)- f(X)}_{L^q}^q
+            = \Exp{\norm{f(X_n) - f(X)}^q}
+            \le \Exp{L^q \norm{X_n - X}^{\alpha q}}
+            = L^q \norm{f(X_n) - f(X)}_{L^p}^p \to 0.
+        \]
+    \end{solution}
 \end{exercise}
 
 \begin{exercise}[Counterexample \(L^p\) continuous mapping]
