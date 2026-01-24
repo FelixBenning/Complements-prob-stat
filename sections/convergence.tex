@@ -166,16 +166,197 @@ standard normal distributed for example.
 Observe that it is not possible to conclude convergence in probability 
 from convergence in distribution if the limit is not almost surely constant.
 Indeed, if the limit \(X\) is non-deterministic it can have different values.
-It is therefore possible to construct two different random variables \(X\) and \(Y\)
+It is therefore possible to construct two independent random variables \(X\) and \(Y\)
 with the same distribution by essentially ``shuffling'' the outcomes and
 letting \(X\) take a different value from \(Y\) since there are multiple
 options. Since the limit is then not unique we cannot have convergence in
 probability.
 
-In the remainder of this section we will prove the Portemanteau theorem
-and Theorem \ref{thm: convergence implications}. For the Proof of
-Theorem \ref{thm: convergence implications} we introduce and prove the Markov
-inequality, which is an incredibly useful tool.
+The remainder of this section is structured as follows: First, we will introduce
+a few easy to prove tools. We will use them to prove the convergence implication
+(Theorem \ref{thm: convergence implications}) but we will use these tools in other
+sections as well. After proving these tools it is then natural to prove
+Theorem \ref{thm: convergence implications} after which we will finally get
+back to proving the Portemanteau theorem.
+
+The first tool we introduce is the Markov inequality. It will become a very
+close friend of ours as we will make frequent use of it (or its corollary)
+in the following sections. It may be the most used inequality in probability
+theory.
+
+\begin{theorem}[Markov inequality]
+    \label{thm: markov inequality}
+    Let \(I\subseteq \real\) be an interval, \(h\colon I\to (0, \infty)\) a
+    non-decreasing function and \(X\) an \(I\)-valued random variable.
+    Then for all \(t \in I\) we have
+    \[
+        \Prob{X \ge t} \le \frac{\Exp{h(X)}}{h(t)}.
+    \]
+\end{theorem}
+
+\begin{corollary}[Chebyshev inequality]
+    \label{cor: markov inequality Lp}
+    We have for all \(t > 0\)
+    \[
+        \Prob[\Big]{\norm{X - \Exp{X}} \ge t}
+        \le \frac{\Exp[\Big]{\norm[\big]{X-\Exp{X}}^p}}{t^p}.
+    \]
+\end{corollary}
+
+\begin{proof}
+    Markov inequality applied to \(\tilde X = \norm{X - \Exp{X}}\) 
+    and \(h(x) = x^p\) with \(I = [0, \infty)\).
+\end{proof}
+
+\begin{remark}[Historical note]
+    The case \(p=2\) is the classical ``Chebyshev inequality''.
+    Markov was Chebyshev's student and the classical
+    ``Markov inequality'' is the one from Theorem \ref{thm: markov inequality}
+    with \(h(x) = x\). The generalizations above are best known
+    as Markov's inequality but also referred to as Chebyshev's inequality by
+    some authors. We try to compromise with the Corollary covering a
+    special case. Though historically Chebyshev's inequality came first.
+\end{remark}
+
+\begin{proof}[Proof of Theorem \ref{thm: markov inequality}]
+    Since \(h\) is non-decreasing and \(t, X \in I\)
+    we have that \(X \ge t\) implies \(h(X) \ge h(t)\)
+    and thus
+    \[\begin{aligned}
+        \Prob{X \ge t}
+        &\le \Prob[\big]{h(X) \ge h(t)}
+        = \Exp{\Indicator{h(X) \ge h(t)}}
+        \le \Exp[\Big]{\frac{h(X)}{h(t)}\Indicator{h(X) \ge h(t)}}
+        \\
+        &\le \Exp[\Big]{\frac{h(X)}{h(t)}},
+    \end{aligned}
+    \]
+    where we have used \(h > 0\) in the last inequality to remove the indicator.
+\end{proof}
+
+Before we get to the proof of Theorem \ref{thm: convergence implications}
+we introduce another Lemma. A special case of the Lemma is the proof that
+convergence in probability implies convergence in distribution but we will use
+this more general form for the continuous mapping results (Section \ref{sec:
+continuous mapping}).
+
+\begin{lemma}\label{lem: moving target p to d}
+    Let \((X_n)_{n\in \nat}\) and \((Y_n)_{n\in \nat}\) be two sequences of
+    random variables in the metric space \((\domain, \metric)\) and
+    \(f\colon \domain \to \real\) a bounded, Lipschitz continuous function, then
+    \[
+        \metric(X_n,Y_n) \overset{p}\to 0
+        \quad\implies\quad
+        \abs[\big]{\Exp{f(X_n)} - \Exp{f(Y_n)}} \to 0.
+    \]
+\end{lemma}
+
+\begin{proof}
+    Since \(f\) is bounded we have that \(\abs{f(x)} \le M\) for all \(x\in
+    \domain\) for some \(M > 0\). Let \(L\) further be the Lipschitz constant
+    of \(f\) and choose an arbitrary \(\epsilon > 0\).
+    Then
+    \[\begin{aligned}
+        &\abs{\Exp{f(X_n)} - \Exp{f(Y_n)}}
+        \\
+        &\le \Exp{\abs{f(X_n) - f(Y_n)}}
+        \\
+        &\le \Exp{\underbrace{\abs{f(X_n) - f(Y_n)}}_{\le L\metric(X_n, Y_n)} \Indicator{\metric(X_n, Y_n) \le \epsilon}}
+        + \Exp{\underbrace{\abs{f(X_n) - f(Y_n)}}_{\le 2M} \Indicator{\metric(X_n, Y_n) > \epsilon}}
+        \\
+        &\le L \epsilon + 2M \underbrace{\Prob{\metric(X_n, Y_n) > \epsilon}}_{\to 0}.
+    \end{aligned}\]
+    Using \(\metric(X_n, Y_n) \overset{p}\to 0\) we thus we have \(\limsup_{n\to
+    \infty} \abs{\Exp{f(X_n)} - \Exp{f(Y_n)}} \le L \epsilon\)
+    for arbitrary \(\epsilon > 0\) and thus its limit must be zero.
+\end{proof}
+
+\begin{proof}[Proof (Theorem \ref{thm: convergence implications})]
+    We will prove all implications not involving \(L^p\) for metric spaces. You
+    may assume \(\metric(x,y) = \norm{x-y}\) for the sake of simplicity.
+    \begin{enumerate}[wide]
+        \item[\ref{it: p to d}] To see that Lemma \ref{lem: moving target p to d}
+        proves that convergence in probability implies convergence in distribution,
+        choose \(Y_n = X\) and observe that by definition
+        \[
+            \metric(X_n, X) \overset{p}\to 0 \iff X_n \overset{p}\to X
+        \]
+        then this Lemma proves \ref{it: b.lip} from the Portemanteau theorem.
+
+        \item[\ref{it: L1 to p}] Convergence in probability may be easily deduced
+        from the \(L^1\) Chebyshev inequality (Corollary
+        \ref{cor: markov inequality Lp}): We have for \(\epsilon > 0\) \[
+            \Prob[\big]{\norm{X_n - X} > \epsilon}
+            \le \frac{\Exp[\big]{\norm{X_n - X}}}{\epsilon}
+            \to 0.
+        \]
+
+        \item[\ref{it: as to p}] To prove that almost sure convergence implies convergence in 
+        probability observe that the set of point-wise convergence is given by
+        \begin{align*}
+            \Set{X_n \to X}
+            &= \Set[\Big]{\omega \in \Omega : \lim_{n \to \infty} X_n(\omega) = X(\omega)}
+            \\
+            \overset{\text{def.}}&= \Set[\Big]{
+                \omega \in \Omega
+                : \forall \epsilon > 0, \exists N\in \nat, \forall n \ge N
+                : \metric(X_n(\omega), X(\omega)) < \epsilon}.
+            \\
+            &= \bigcap_{\epsilon > 0} \bigcup_{N \in \nat} \bigcap_{n \ge N}
+            \Set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) < \epsilon}.
+        \end{align*}
+        By de Morgan's laws for set complements and almost sure
+        convergence we therefore have
+        \begin{align*}
+            0 &= \Prob[\big]{X_n \not\to X}
+            \\
+            &= \Prob[\bigg]{\bigcup_{\epsilon > 0} \bigcap_{N \in \nat} \bigcup_{n \ge N}
+            \Set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
+            \\
+            \overset{\text{fix } \epsilon}&\ge \Prob[\bigg]{\bigcap_{N \in \nat} \bigcup_{n \ge N}
+            \Set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
+            \\
+            &= \lim_{N \to \infty} \Prob[\Big]{\bigcup_{n \ge N}
+            \Set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
+            \\
+            \overset{\text{fix } n=N}&\ge \lim_{N\to \infty} \Prob[\big]{\metric(X_N, X) \ge \epsilon},
+        \end{align*}
+        where the penultimate equality follows from the continuity of the
+        probability measure
+        \[
+            \lim_{N\to \infty} \Prob{A_N} = \Prob[\big]{\bigcap_{N\in \nat} A_N}
+        \] for a decreasing sequence of
+        events \(A_1 \supseteq A_2 \supseteq \ldots\)
+        \continuityOfMeasure.
+
+        \item[\ref{it: d to p}] Assume that \(X\equiv c\in \domain\), choose any
+        \(\epsilon>0\) and let \(\ball{c}{\epsilon}\) denote the
+        \(\epsilon\)-ball centered at \(c\).
+        Then its border has zero probability under the distribution of \(X\), that is
+        \(\Pr(X\in \partial\ball{c}{\epsilon}) = 0\).
+        Using \ref{it: s.zero boundary} from the Portemanteau theorem
+        thus implies
+        \[
+            \Prob[\big]{\metric(X_n,X) < \epsilon}
+            = \Prob[\big]{X_n \in \ball{c}{\epsilon}}
+            \to \Prob[\big]{X \in \ball{c}{\epsilon}} = 1.
+        \]
+        Consequently \(\Prob[\big]{\metric(X_n, X) \ge \epsilon} \to 0\).
+
+        
+
+        \item[\ref{it: Lq to Lp}] We will prove this implication in a separate
+        section on \(L^p\) spaces (see Remark \ref{rem: Lp convergence} in
+        Section \ref{sec: Lp spaces}).
+
+        \item[\ref{it: uniqueness of limits}] See Exercise \ref{ex: unique stochastic limits}.
+        \qedhere
+    \end{enumerate}
+\end{proof}
+
+What remains is to prove the Portemanteau theorem as we have already made
+use of different variants of convergence in distribution to prove the convergence
+implications above.
 
 \begin{myproof}[Proof (Portemanteau Theorem)]
     The proof strategy is as follows:
@@ -341,140 +522,8 @@ inequality, which is an incredibly useful tool.
     ``\ref{it: df} \(\Rightarrow\) \ref{it: s.open}'': See Appendix \ref{sec: appendix portmanteau}.
 \end{myproof}
 
-\begin{proof}[Proof (Theorem \ref{thm: convergence implications})]
-    We will prove all implications not involving \(L^p\) for metric spaces. You
-    may assume \(\metric(x,y) = \norm{x-y}\) for the sake of simplicity.
-    \begin{enumerate}[wide]
-        \item[\ref{it: as to p}] The set of point-wise convergence is given by
-        \begin{align*}
-            \Set{X_n \to X}
-            &= \Set[\Big]{\omega \in \Omega : \lim_{n \to \infty} X_n(\omega) = X(\omega)}
-            \\
-            \overset{\text{def.}}&= \Set[\Big]{
-                \omega \in \Omega
-                : \forall \epsilon > 0, \exists N\in \nat, \forall n \ge N
-                : \metric(X_n(\omega), X(\omega)) < \epsilon}.
-            \\
-            &= \bigcap_{\epsilon > 0} \bigcup_{N \in \nat} \bigcap_{n \ge N}
-            \Set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) < \epsilon}.
-        \end{align*}
-        By de Morgan's laws for set complements and almost sure
-        convergence we therefore have
-        \begin{align*}
-            0 &= \Prob[\big]{X_n \not\to X}
-            \\
-            &= \Prob[\bigg]{\bigcup_{\epsilon > 0} \bigcap_{N \in \nat} \bigcup_{n \ge N}
-            \Set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
-            \\
-            \overset{\text{fix } \epsilon}&\ge \Prob[\bigg]{\bigcap_{N \in \nat} \bigcup_{n \ge N}
-            \Set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
-            \\
-            &= \lim_{N \to \infty} \Prob[\Big]{\bigcup_{n \ge N}
-            \Set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
-            \\
-            \overset{\text{fix } n=N}&\ge \lim_{N\to \infty} \Prob[\big]{\metric(X_N, X) \ge \epsilon},
-        \end{align*}
-        where the penultimate equality follows from \(\lim_{N\to \infty}
-        \Prob{A_N} = \Prob[\big]{\bigcap_{N\in \nat} A_N}\) for a decreasing
-        sequence of events \(A_1 \supseteq A_2 \supseteq \ldots\)
-        \continuityOfMeasure.
 
 
-        \item[\ref{it: p to d}] We will prove a stronger result that will be used later
-        \begin{lemma}\label{lem: moving target p to d}
-            Let \((X_n)_{n\in \nat}\) and \((Y_n)_{n\in \nat}\) be two
-            sequences of random variables and \(f\colon \domain \to \real\) a
-            bounded, Lipschitz continuous function, then
-            \[
-                \metric(X_n,Y_n) \overset{p}\to 0
-                \quad\implies\quad
-                \abs[\big]{\Exp{f(X_n)} - \Exp{f(Y_n)}} \to 0.
-            \]
-        \end{lemma}
-        Choose \(Y_n = X\) and observe that \(\metric(X_n, X) \overset{p}\to 0\)
-        is equivalent to \(X_n \overset{p}\to X\), then this Lemma
-        proves \ref{it: b.lip} from the Portemanteau theorem.
-
-        \begin{proof}[Proof of Lemma \ref{lem: moving target p to d}]
-        Since \(f\) is bounded we have that \(\abs{f(x)} \le M\) for all \(x\in
-        \domain\) for some \(M > 0\). Let \(L\) further be the Lipschitz constant
-        of \(f\) and choose an arbitrary \(\epsilon > 0\).
-        Then
-        \[\begin{aligned}
-            &\abs{\Exp{f(X_n)} - \Exp{f(Y_n)}}
-            \\
-            &\le \Exp{\abs{f(X_n) - f(Y_n)}}
-            \\
-            &\le \Exp{\underbrace{\abs{f(X_n) - f(Y_n)}}_{\le L\metric(X_n, Y_n)} \Indicator{\metric(X_n, Y_n) \le \epsilon}}
-            + \Exp{\underbrace{\abs{f(X_n) - f(Y_n)}}_{\le 2M} \Indicator{\metric(X_n, Y_n) > \epsilon}}
-            \\
-            &\le L \epsilon + 2M \underbrace{\Prob{\metric(X_n, Y_n) > \epsilon}}_{\to 0}.
-        \end{aligned}\]
-        Using \(\metric(X_n, Y_n) \overset{p}\to 0\) we thus we have \(\limsup_{n\to
-        \infty} \abs{\Exp{f(X_n)} - \Exp{f(Y_n)}} \le L \epsilon\)
-        for arbitrary \(\epsilon > 0\) and thus its limit must be zero.
-        \end{proof}
-        
-
-        \item[\ref{it: Lq to Lp}] See Remark \ref{rem: Lp convergence} in Section \ref{sec: Lp spaces} on \(L^p\) spaces.
-
-        \item[\ref{it: L1 to p}] By the \(L^1\) Chebyshev inequality (Corollary
-        \ref{cor: markov inequality Lp}), we have for \(\epsilon > 0\) \[
-            \Prob[\big]{\norm{X_n - X} > \epsilon}
-            \le \frac{\Exp[\big]{\norm{X_n - X}}}{\epsilon}
-            \to 0.
-        \]
-        \item[\ref{it: uniqueness of limits}] See Exercise \ref{ex: unique stochastic limits}.
-        \qedhere
-    \end{enumerate}
-\end{proof}
-
-\begin{theorem}[Markov inequality]
-    \label{thm: markov inequality}
-    Let \(I\subseteq \real\) be an interval, \(h\colon I\to (0, \infty)\) a
-    non-decreasing function and \(X\) an \(I\)-valued random variable.
-    Then for all \(t \in I\) we have
-    \[
-        \Prob{X \ge t} \le \frac{\Exp{h(X)}}{h(t)}.
-    \]
-\end{theorem}
-
-\begin{corollary}[Chebyshev inequality]
-    \label{cor: markov inequality Lp}
-    We have for all \(t > 0\)
-    \[
-        \Prob[\Big]{\norm{X - \Exp{X}} \ge t}
-        \le \frac{\Exp[\Big]{\norm[\big]{X-\Exp{X}}^p}}{t^p}.
-    \]
-\end{corollary}
-
-\begin{proof}
-    Markov inequality applied to \(\tilde X = \norm{X - \Exp{X}}\) 
-    and \(h(x) = x^p\) with \(I = [0, \infty)\).
-\end{proof}
-
-\begin{remark}[Historical note]
-    The case \(p=2\) is the classical ``Chebyshev inequality''.
-    Markov was Chebyshev's student and the classical
-    ``Markov inequality'' is the one from Theorem \ref{thm: markov inequality}
-    with \(h(x) = x\).
-\end{remark}
-
-\begin{proof}[Proof of Theorem \ref{thm: markov inequality}]
-    Since \(h\) is non-decreasing and \(t, X \in I\)
-    we have that \(X \ge t\) implies \(h(X) \ge h(t)\)
-    and thus
-    \[\begin{aligned}
-        \Prob{X \ge t}
-        &\le \Prob[\big]{h(X) \ge h(t)}
-        = \Exp{\Indicator{h(X) \ge h(t)}}
-        \le \Exp[\Big]{\frac{h(X)}{h(t)}\Indicator{h(X) \ge h(t)}}
-        \\
-        &\le \Exp[\Big]{\frac{h(X)}{h(t)}},
-    \end{aligned}
-    \]
-    where we have used \(h > 0\) in the last inequality to remove the indicator.
-\end{proof}
 
 \subsection*{Exercises}
 
@@ -2052,15 +2101,15 @@ and \ref{thm: joint convergence}.
     \(X_n \overset{d}\to X\) and \(\norm{Y_n - X_n} \overset{p}\to 0\) implies \(Y_n \overset{d}\to X\).
 \end{lemma}
 \begin{proof}
-    To prove \(Y_n \overset{d}\to X\) we prove \ref{it: b.lip} from the Portemanteau theorem.
-    For a bounded Lipschitz continuous function \(f\colon \domain \to \real\) we thus need to
-    prove the following term converges to zero
+    We prove \ref{it: b.lip} from the Portemanteau theorem.
+    Let \(f\colon \domain \to \real\) be bounded and Lipschitz continuous, then
     \[
-        \abs{\Exp{f(Y_n)} - \Exp{f(X)}}
-        \overset{\Delta}\le \abs[\big]{\Exp{f(Y_n)} - \Exp{f(X_n)}} + \abs[\big]{\Exp{f(X_n)} - \Exp{f(X)}}.
+        \abs[\big]{\Exp{f(Y_n)} - \Exp{f(X)}}
+        \overset{\Delta}\le \abs[\big]{\Exp{f(Y_n)} - \Exp{f(X_n)}} + \abs[\big]{\Exp{f(X_n)} - \Exp{f(X)}}
     \]
-    The first term converges to zero by Lemma \ref{lem: moving target p to d},
-    the second term converges to zero by \(X_n \overset{d}\to X\)
+    converges to zero as the first term converges to zero by Lemma \ref{lem:
+    moving target p to d} and the second term converges to zero by \(X_n
+    \overset{d}\to X\).
 \end{proof}
 
 
@@ -2397,7 +2446,7 @@ assumption that the random variables are in \(L^1\).
 
 Observe that quantitative bounds on 
 \(
-    \Prob*{|X_n - X| \ge \epsilon}
+    \Prob[\big]{\norm{X_n - X} \ge \epsilon}
 \)
 are somehow more useful than just knowing (the rate of) convergence. This
 is because \(n\), albeit possibly very large, is always finite in practice. It
@@ -2405,9 +2454,11 @@ is therefore often much more meaningful to make ``probably, approximately
 correct'' (PAC) statements, that is
 
 \begin{quote}
-``with probability at least \(1-\delta\), we have \(|X_n - X| < \epsilon\) for a
+``with probability at least \(1-\delta\), we have \(\norm{X_n - X} < \epsilon\) for a
 specific \(n\in \nat\)''.
 \end{quote}
+
+The main tool to obtain sharp bounds on probabilities is 
 
 \section{Central Limit Theorem}
 
