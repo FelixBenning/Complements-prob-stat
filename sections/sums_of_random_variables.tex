@@ -1,0 +1,441 @@
+\chapter{Sums of random variables}
+
+\section{Convergence: Law of Large Numbers}
+\label{sec: law of large numbers}
+
+The difference between a ``weak law'' and ``strong law'' is the convergence type.
+A ``weak law'' only requires convergence in probability, while a ``strong law''
+requires almost sure convergence. The typical strategy to obtain strong laws is
+to obtain quantitative convergence results in \(L^p\), translate them
+to quantitative convergence result in probability using the Markov inequality
+and deduce almost sure convergence using the Borel-Cantelli lemmas from
+the rate of convergence, that is
+\[\begin{aligned}
+    \substack{\text{Qunatitative}\\ X_n \overset{L^p}\to X } \quad
+    \overset{\text{Markov ineq.}}\implies \quad \substack{\text{Quantitative}\\ X_n \overset{p}\to X}\quad
+    \overset{\text{Borel-Cantelli}}\implies \quad X_n \overset{\as}\to X.
+\end{aligned}
+\]
+The reason for this strategy is that it is often easiest to calculate \(L^p\)-norms.
+For example \(\norm{X - \E[X]}_{L^2} = \sqrt{\Var{X}}\). 
+In this section we illustrate this strategy by implementing it for the
+law of large numbers. It turns out that the natural domain to work in
+is a Hilbert space \((\hilbert, \inner{\cdot, \cdot})\) as it allows
+the definition of the covariance and variance in a natural way:
+\[
+    \Cov{X}{Y} = \Exp[\Big]{\inner[\big]{X-\Exp{X}, Y-\Exp{Y}}}
+    \quad \text{and} \quad
+    \Var{X} = \Cov{X}{X}.
+\]
+The variance of sums or random variables is straightforward to calculate:
+
+\begin{lemma}[Bienaymé]
+    \label{lem: Bienaymé}
+    Let \(X_1, \dots, X_n\) be random variables in \(\cL^2\). Then
+    \[
+        \Var[\Big]{\sum_{i=1}^n X_i} = \sum_{i=1}^n \Var{X_i} + \sum_{\substack{i,j=1\\i \neq j}}^n \Cov{X_i}{X_j}.
+    \]
+    If the random variables are uncorrelated (i.e.\ \(\Cov{X_i}{X_j} = 0\) for \(i\neq j\)), then
+    % for the mean \(\mean{X}_n \coloneq \frac1n \sum_{i=1}^n X_i\) we have
+    \[
+        % \Var[\Big]{\sum_{i=1}^n X_i} = \sum_{i=1}^n \Var{X_i}
+        % \quad \text{and} \quad
+        \Var[\Big]{\frac1n \sum_{i=1}^n X_i} = \frac1{n^2} \sum_{i=1}^n \Var{X_i}.
+    \]
+\end{lemma}
+\begin{proof}
+    Let \(Y_i \coloneq X_i - \E[X_i]\). Then by definition of variance and covariance
+    \[
+        \Var[\Big]{\sum_{i=1}^n X_i}
+        = \Exp[\Big]{\norm[\Big]{\sum_{i=1}^n Y_i}^2} = \sum_{i,j=1}^n \Exp[\big]{\inner{Y_i, Y_j}}
+        = \sum_{i,j=1}^n \Cov{X_i}{X_j}.
+    \]
+    With \(\Var{X_i} = \Cov{X_i}{X_i}\) the first result follows from a split of the sum.
+    The second result follows directly from the first and
+    \(
+        \Var{aX} = a^2 \Var{X}
+    \) for any \(a\in \real\).
+\end{proof}
+
+If we do not care about the speed of convergence, then an immediate corollary of
+Bienaymé is the following weak law of large numbers.
+
+\begin{corollary}[Khinchin's weak law of large numbers]
+    \label{cor: weak law of large numbers}
+    Let \((X_n)_{n\in \nat}\) be a sequence of uncorrelated random variables
+    with identical mean \(m= \E[X_n]\) and \(\frac1{n^2} \sum_{i=1}^n \Var{X_i} \to 0\).
+    Then
+    \[
+        \mean{X}_n\coloneq \frac1n \sum_{i=1}^n X_i \overset{p}\to m.
+    \]
+\end{corollary}
+\begin{proof}
+    By the Chebyshev inequality (Corollary \ref{cor: markov inequality Lp})
+    we get
+    \begin{equation*}
+        \begin{aligned}
+        \Prob[\big]{\norm{\mean{X}_n - m} > \epsilon}
+        &\le \tfrac1{\epsilon^2}\|\mean{X}_n - m\|_{L^2}^2
+        \\
+        &= \frac1{\epsilon^2} \Var[\big]{\mean{X}_n}
+        \overset{\text{Bienaymé}}= \frac1{\epsilon^2}\Bigl(\frac1{n^2} \sum_{i=1}^n \Var{X_i}\Bigr).
+        \end{aligned}
+    \end{equation*}
+    The assumption \(\frac1{n^2} \sum_{i=1}^n \Var{X_i} \to 0\) therefore
+    yields the claim.
+\end{proof}
+
+From the proof it is clear that the speed of convergence is determined by the
+speed of convergence of \(\frac1{n^2} \sum_{i=1}^n \Var{X_i}\).
+If the variances are bounded, that is
+\(\sup_{i}\Var{X_i} \le \sigma^2 < \infty\),
+then
+\begin{equation}
+    \label{eq: rate of convergence for bounded variance}    
+    \Prob[\big]{\norm{\mean{X}_n - m} > \epsilon}
+    \le \frac1{\epsilon^2}\frac{\sigma^2}{n} \in \bigO(\tfrac1n).
+\end{equation}
+If the variances \(\Var{X_i}\) are increasing in \(i\), then one
+may still obtain (slower) convergence. But even the convergence speed for the
+bounded case is too slow to deduce almost sure convergence directly as 
+as the harmonic series diverges (cf.\ Corollary \ref{cor: characterization of
+almost sure convergence}). The problem is essentially that Markov's inequality
+is too lose. To prove almost sure convergence -- that is a strong
+law of large numbers, a different approach is needed. There are
+two common approaches:
+\begin{enumerate}
+    \item (Shortcut): \textbf{Bound the \(L^4\) norm} and use the Chebyshev inequality
+    for \(p=4\). This results in a convergence speed on the order of
+    \(\bigO(\frac1{n^2})\) which is summable and therefore sufficient for almost
+    sure convergence by Corollary \ref{cor: characterization of almost sure
+    convergence}.  However to bound the \(L^4\) norm it is necessary to assume
+    the variables \(X_n\) have finite fourth moments \(\E[X_n^4] < \infty\) and
+    assume independence such that \(\E[X_i X_j X_k X_l]\) factorizes when the
+    indices are different (see Exercise \ref{ex: strong law of large numbers in
+    L4}).
+
+    \item The most general forms of the strong law of large numbers, is
+    obtained by the observation that we may prove almost sure convergence
+    on a \textbf{subsequence} (cf.\ Lemma \ref{lem: subsequences converge almost
+    surely}). The second step is to control the elements in between the
+    converging subsequence.
+\end{enumerate}
+
+\begin{theorem}[Strong law of large numbers]
+    \label{thm: strong law of large numbers}
+    Let \(\hilbert\) be a Hilbertspace and \((X_n)_{n\in \nat}\) a sequence
+    of uncorrelated random variables in \(\cL^2(\hilbert)\), with identical mean
+    \(m = \E[X_n]\) and bounded variances \(\Var{X_n} \le \sigma^2 < \infty\).
+    Then
+    \[
+        \mean{X}_n \coloneq \frac1n \sum_{i=1}^n X_i \overset{\as}\to m.
+    \]
+\end{theorem}
+
+\begin{proof}[Proof (by Michael J Neely \citep{neelyInfinitelyOftenProbability2021})]
+    Since the variance is bounded, we have seen in \eqref{eq: rate of convergence for bounded variance}
+    that  \(\Prob[\big]{\norm{\mean{X}_n - m} > \epsilon} \le
+    \frac{\sigma^2}{n\epsilon^2}\). This implies \(\mean{X}_{n^2}
+    \overset{\as}\to m\) by Corollary \ref{cor: characterization of almost sure
+    convergence}
+    since 
+    \[
+        \sum_{n=1}^\infty \Prob[\big]{\norm{\mean{X}_{n^2}-m} \ge \epsilon}
+        \le \frac{\sigma^2}{\epsilon^2}\sum_{n=1}^\infty \frac1{n^2} < \infty.
+    \]
+    That is we choose the  subsequence indexed by \(n^2\). What is left to prove
+    is that \(X_n \overset{\as}\to 0\) for any \(n\in \nat\) that is not a
+    perfect square. 
+    Observe that by defining \(\tilde{X}_n \coloneq X_n - m\) we can
+    assume without loss of generality that \(m=0\), which we will do from now on.
+    Define \(k_n \coloneq \lfloor \sqrt{n} \rfloor\) to find the closest 
+    squares surrounding \(n\)
+    \begin{equation}
+        \label{eq: k definition}    
+        k_n^2 \le n < (k_n+1)^2.
+    \end{equation}
+    then we have
+    \[
+        \mean{X}_n = \underbrace{\frac1n \sum_{i=1}^{k_n^2} X_i}_{S_n}
+        + \underbrace{\frac1n \sum_{i=k_n^2+1}^{n} X_i}_{\Delta_n}.
+    \]
+    We will show that \(S_n \overset{\as}\to 0\) and \(\Delta_n \overset{\as}\to
+    0\) separately and conclude by continuous mapping that \(\mean{X}_n \overset{\as}\to
+    0\). For the first term observe that by \eqref{eq: k definition} we have
+    \[
+        1 \ge
+        \frac{k_n^2}{n}
+        \ge \frac{k_n^2}{(k_n+1)^2} = \Bigl(\frac{1}{1 + \frac{1}{k_n}}\Bigr)^2
+        \to 1.
+    \]
+    This implies \(\frac{k_n^2}{n} \to 1\). Since \(\mean{X}_{n^2} \overset{\as}\to 0\)
+    implies \(\mean{X}_{k_n^2} \overset{\as}\to 0\)
+    we have by continuous mapping
+    \[
+        S_n = \frac{k_n^2}{n} \mean{X}_{k_n^2} \overset{\as}\to 0.
+    \]
+    To show that the remaining term \(\Delta_n\) converges almost surely to zero we
+    use the Chebyshev inequality with \(p=2\) again. To this end
+    we bound the \(L^2\) norm of \(\Delta_n\). Observe that since the \(X_i\) are
+    uncorrelated we have
+    \[\begin{aligned}
+        \Var{\Delta_n}
+        = \frac1{n^2} \sum_{i=k_n^2+1}^{n} \Var{X_i}
+        &\le \sigma^2 \frac{n - k_n^2}{n^2}
+        \\
+        \overset{\eqref{eq: k definition}}&\le \sigma^2 \frac{(k_n+1)^2 - k_n^2}{k_n^4}
+        = \sigma^2 \frac{2k_n + 1}{k_n^4}
+        \\
+        \overset{k_n \ge 1}&\le \frac{3\sigma^2}{k_n^3}.
+    \end{aligned}
+    \]
+    Consequently, by the Chebyshev inequality we have for every \(\epsilon > 0\)
+    \[
+        \sum_{n=1}^\infty \Prob[\big]{|\Delta_n| \ge \epsilon}
+        \le \sum_{n=1}^\infty \frac{\Var{\Delta_n}}{\epsilon^2}
+        \le \frac{3\sigma^2}{\epsilon^2}\sum_{n=1}^\infty \frac1{k_n^3}.
+    \]
+    Now we are finished by the characterization of almost sure convergence
+    (Corollary \ref{cor: characterization of almost sure convergence}) if can
+    show that this series converges. To this end observe that by definition
+    of \(k_n\) we have \(k_n > \sqrt{n} -1\) and therefore
+    \begin{align*}
+        \sum_{n=3}^\infty \frac1{k_n^3}
+        &\le \sum_{n=3}^\infty \frac1{(\sqrt{n} -1)^3}
+        \\
+        &\le \sum_{n=3}^\infty \int_{n-1}^n \frac1{(\sqrt{x} -1)^3} dx
+        \\
+        &= \int_2^\infty \frac1{(\sqrt{x} -1)^3} dx
+        \\
+        \overset{y=\sqrt{x}-1}&= \int_{\sqrt{2}-1}^\infty \frac{2(y+1)}{y^3} dy
+        \le C \int_{\sqrt{2}-1}^\infty \frac1{y^2} dy 
+        < \infty.
+        \qedhere
+    \end{align*}
+\end{proof}
+
+In Theorem \ref{thm: strong law of large numbers} we still assumed that the
+random variables are in \(L^2\). And if you want to work with
+``uncorrelated'' random variables this cannot be avoided as the covariance
+is otherwise undefined. However, if you are willing to assume pairwise
+independence, then the strong law of large numbers also holds under the weaker
+assumption that the random variables are in \(L^1\).
+
+\begin{theorem}[Etemadi's Strong law of large numbers]
+    Let \((X_n)_{n\in \nat}\) be a sequence of identically distributed,
+    \underline{pairwise} independent random variables
+    in \(\cL^1\). Then \(\mean{X}_n \overset{\as}\to \E[X_1]\).
+\end{theorem}
+\begin{proof}[Proof (sketch)]
+    The main idea is to define the truncated random variables \(Y_n \coloneq
+    \Indicator{|X_n| \le n} X_n\). Then the variance of every \(Y_n\) is
+    finite although the variance is increasing in \(n\).
+    Using Borel-Cantelli it is possible to show that eventually all \(Y_n\) are
+    equal to \(X_n\). Then one proves the strong law of large numbers for the
+    \(Y_n\). For this it is used that functions of pairwise independent random
+    variables are also pairwise independent and consequently the \(Y_n\) are
+    uncorrelated. We can unfortunately not
+    apply Theorem \ref{thm: strong law of
+    large numbers} since it requires a uniform bound on the variances and
+    the variances are increasing here. For details see e.g.\
+    \citep[Thm.~5.17]{klenkeProbabilityTheoryComprehensive2014}.
+\end{proof}
+
+
+\subsection{Glivenko-Cantelli}
+
+
+
+\subsection*{Exercises}
+
+\begin{exercise}[Strong law of large numbers in \(L^4\)]
+    \label{ex: strong law of large numbers in L4}
+    Let \((X_n)_{n\in \nat}\) be a sequence of independent and identically
+    distributed random variables in \(L^4\). Bound \(\|\mean{X}_n -
+    \E[X]\|_4^4\) to prove the strong law of large numbers.
+
+    \noindent\textbf{Hint:} Assume \(\E[X] = 0\) without loss of generality.
+\end{exercise}
+
+\begin{example}[Asymptotic equipartition property]
+    
+\end{example}
+
+
+
+\section{Typical Deviations}
+
+In the previous section we have seen that the mean \(\mean{X}_n =
+\frac1n\sum_{k=1}^n X_k\) converges to the expected value \(\Exp{X}\).
+Consequently the deviations from the mean converge to zero. From Bienaymé (Lemma
+\ref{lem: Bienaymé}) we discovered for uncorrelated identically distributed
+random variables
+\[
+    \Var{\mean{X}_n} = \tfrac1n \Var{X_1}.
+\]
+Since the variance is a squared measure of deviation, this means
+that the typical size of the deviation of the mean \(\mean{X}_n\) from the expectation
+\(\Exp{X}\) is of order \(\frac1{\sqrt{n}}\).
+Specifically the rescaled mean \(\sqrt{n}\ \mean{X}_n\) has
+constant variance
+\[
+    \Var{\sqrt{n}\ \mean{X}_n} = \Var{X_1},
+\]
+and consequently by Chebyshev's inequality the deviation probability of order \(\frac{1}{\sqrt{n}}\) is
+bounded by a constant
+\[
+    \Prob[\Big]{\norm{\mean{X}_n - \Exp{X}} > \frac{\epsilon}{\sqrt{n}}}
+    \le \frac{\Var{X_1}}{\epsilon^2}.
+\]
+Of course this bound may be very loose but we will find that this is indeed
+the size of typical deviations. Moreover the ``Central Limit Theorem''
+characterizes the frequency of these typical deviations to be the
+normal distribution. That is the asymptotic distribution of \(\sqrt{n}\,
+\mean{X}_n\) is the normal distribution. Of course since the distribution of
+\(\sqrt{n}\, \mean{X}_n\) is centered at \(\Exp{\sqrt{n} \mean{X}_n} = \sqrt{n}
+\Exp{X}\) it is necessary to consider centered random variables \(X_n -
+\Exp{X_n}\).
+
+
+\subsection{Moment Generating functions}
+
+We start with a sketch of the argument why special ``Moment generating
+functions'' will help us with the asymptotic distribution of sums.
+
+Observe that the exponential function converts sums into products and the
+expectation of independent products factorizes, thus for \(X_1,\dots, X_n\)
+independent, identically distributed real random variables
+\[
+    \Exp[\Big]{\exp\Bigl(t\sum_{i=1}^n X_i\Bigr)} = \Exp[\Big]{\prod_{i=1}^n \exp(tX_i)}
+    \overset{\text{indep.}}= \prod_{i=1}^n \Exp{\exp(tX_i)}
+    = \Exp{\exp(tX_1)}^n
+\]
+The strategy is now essentially the following: Define the special function
+\(\MGF_{X_1}(t) = \Exp{\exp(t X_1)}\) and observe that
+by the equation above we have
+\begin{equation}
+    \label{eq: means and moment generating functions}    
+    \MGF_{\sqrt{n} \bar{X}_n}(t) = \MGF_{X_1}(\tfrac{t}{\sqrt{n}})^n.
+\end{equation}
+If this function \(\MGF_{X_1}\) characterizes the distribution of \(X_1\) like a
+distribution function and the above converges in \(n\), then we obtain the
+limiting distribution of \(\sqrt{n}\,\mean{X}_n\). The reason \eqref{eq: means
+and moment generating functions} would converge in \(n\) is that
+\(\frac{t}{\sqrt{n}}\) converges to \(0\) so the Taylor approximation of
+\(\MGF_{X_1}\) becomes asymptotically accurate and then we essentially apply
+\((1 + \frac{x^2}n)^n \to \exp(x^2)\). Here the key is, that
+the Taylor coefficients of the ``moment generating function'' \(\MGF_X\)
+will be the moments \(\Exp{X^n}\) and the first moment, the ``expectation'' is assumed
+to be zero. The behavior of the moment generating function close to
+zero is therefore determined by the Variance (second moment).
+A wrinkle in this strategy is that \(\Exp{\exp(tX_1)}\) may be infinite. The
+solution to this problem is to consider complex \(t\).
+
+Let us slow down now and build up the arguments properly. We start by
+defining ``Moment generating functions''.
+
+\begin{definition}[Moment Generating Functions]
+    The ``Moment Generating Function'' of a random variable \(X\) in a
+    Hilbertspace \(\hilbert\) with real-valued inner product is given by
+    \[
+        \MGF_X(t) \coloneq \Exp{\exp(\inner{t, X})} \qquad t\in \hilbert.
+    \]
+    The ``characteristic function'' is given by
+    \[
+        \charFct_X(t) \coloneq \MGF(it) = \Exp{\exp(i\inner{t,X})}
+    \]
+    Outside of probability and measure theory one typically uses \(-t\) 
+    instead of \(t\), and \(\mathcal{L}(t) = \MGF(-t)\) is called
+    the ``Laplace transform'', \(\mathcal{F}(t) = \charFct_X(-2\pi t)\)
+    the ``Fourier transform''. The logarithm
+    \[
+        \Lambda_X(t) = \log \MGF_X(t)
+    \]
+    is known as the ``Cumulant generating function'' (or log-Laplace transform).
+    Some authors define this function as \(\tilde{\Lambda}_X(t) = \log
+    \charFct_X(t)\) instead, which is also known as
+    the 2nd characteristic function.
+\end{definition}
+
+As mentioned in the introduction the \(\MGF_X\) is called the ``Moment
+Generating Function'' because its Taylor coefficients are the moments.
+
+\begin{lemma}
+    If \(X\) is a real valued random variable with
+    \[
+        \MGF_{X}(t) < \infty \qquad \forall t\in (-t_0, t_0)
+    \]
+    for some \(t_0>0\). Then all moments exist, that is \(\Exp{\abs{X}^n}
+    <\infty\) for all \(n\),
+    \[
+        \MGF_X(t) = \sum_{k=1}^\infty \Exp{X^k}\frac{t^k}{k!}
+        \qquad\text{and}\qquad
+        \charFct_X(t) = \sum_{k=1}^\infty \Exp{X^k}\frac{i^k t^k}{k!}.
+    \]
+    In particular this implies
+    \[
+        \frac{d^n}{dt^n} \MGF_X(0) = \Exp{X^n}
+        \qquad\text{and}\qquad
+        \frac{d^n}{dt^n} \charFct_X(0) = i^n\Exp{X^n}.
+    \]
+\end{lemma}
+\begin{proof}
+    The finiteness of all moments follows from
+    \[
+        \abs{x}^n
+        %\le \frac{n!}{t^n} \sum_{k=0}^\infty \frac{t^k\abs{x}^k}{k!}
+        \le \tfrac{n!}{t^n} e^{t\abs{x}}
+        \le \tfrac{n!}{t^n} \bigl(e^{tx} + e^{-tx}\bigr)
+    \]
+    and consequently for all \(t\in (0, t_0)\) we have
+    \[
+        \Exp{\abs{X}^n} \le \tfrac{n!}{t^n} \bigl(\MGF_X(t) + \MGF_X(-t)\bigr) < \infty.
+    \]
+    Now for the representations, we have for all \(t\in (-t_0, t_0)\)
+    that
+    \[
+        \Exp[\Big]{\sum_{k=0}^\infty \frac{\abs{tX}^k}{k!}} = \Exp{e^{\abs{tX}}} \le \Exp{e^{tX} + e^{-tX}} \le \MGF_X(t) + \MGF_X(-t) < \infty.
+    \]
+    Consequently we may apply Fubini (or the DCT) to obtain
+    \[
+        \MGF_X(t)
+        = \Exp[\Big]{\sum_{k=0}^\infty \frac{tX^k}{k!}}
+        \overset{\text{Fub.}}= 
+        \sum_{k=0}^\infty \Exp[\Big]{\frac{tX^k}{k!}}
+        = \sum_{k=0}^\infty \Exp{X^k}\frac{t^k}{k!}.
+    \]
+    For the 
+\end{proof}
+
+\subsection{The Central Limit Theorem}
+
+
+
+\section{Large Deviations: Concentration inequalities}
+\label{sec: concentration inequalities}
+
+Observe that quantitative bounds on 
+\(
+    \Prob[\big]{\norm{X_n - X} \ge \epsilon}
+\)
+are somehow more useful than just knowing (the rate of) convergence. This
+is because \(n\), albeit possibly very large, is always finite in practice. It
+is therefore often much more meaningful to make ``probably, approximately
+correct'' (PAC) statements, that is
+
+\begin{quote}
+``with probability at least \(1-\delta\), we have \(\norm{X_n - X} < \epsilon\) for a
+specific \(n\in \nat\)''.
+\end{quote}
+
+The main tool to obtain sharp bounds on probabilities is 
+
+Ideas:
+\begin{enumerate}
+    \item Large deviations: Normal deviations of order \(\sqrt{\frac1N}\) (Bienaymé)
+    \item Moment generating function, Cumulant generating function (interact well with sums)
+    \item Subgaussian: (Variance proxy norm, Orclitz Norm, Hoeffding)
+    \item Subexponential: (Bernstein inequality)
+    \item Gaussian concentration inequality for Lipschitz functions (Bound on sup/max)
+\end{enumerate}
+
