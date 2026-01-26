@@ -405,6 +405,7 @@ However, if moments do exist, the characteristic function has a similar
 representation.
 
 \begin{lemma}[Characteristic function representation]
+    \label{lem: characteristic function representation}
     Let \(X\) be real valued with \(\Exp{\abs{X}^n} < \infty\) for some
     \(n\), then \(\charFct_X\) is \(n\)-times continuously differentiable
     with
@@ -489,7 +490,78 @@ theorem.
 
 \subsection{The Central Limit Theorem}
 
+\begin{theorem}[Univariate CLT]
+    \label{thm: univariate central limit theorem}
+    Let \((X_n)_{n\in \nat}\) be iid copies of the random variable \(X\in
+    \cL^2(\real)\) with mean \(m = \Exp{X}\) and variance \(\sigma^2 =
+    \Var{X}\). Then
+    \[
+        \sqrt{n}\bigl(\mean{X}_n - m\bigr)
+        \overset{d}\to \normal{0, \sigma^2}.
+    \]
+\end{theorem}
+\begin{proof}
+    Without loss of generality we may assume that \(m=0\) since we can
+    consider the centered random variables \(\tilde{X}_n = X_n - m\).
+    We then have
+    \[
+        \charFct_{\sqrt{n} \mean{X}_n}(t)
+        = \Exp[\Big]{\exp\Bigl(i \frac{t}{\sqrt{n}} \sum_{k=1}^n X_k\Bigr)}
+        = \prod_{k=1}^n \Exp{\exp\Bigl(i \tfrac{t}{\sqrt{n}} X_k\Bigr)}
+        = \charFct_{X}(\tfrac{t}{\sqrt{n}})^n.
+    \]
+    Since second moments are finite, \(\Exp{X_1} = 0\) and \(\sigma^2 =
+    \Exp{X_1^2}\), we have by the representation for characteristic functions
+    (Lemma \ref{lem: characteristic function representation})
+    \[\begin{aligned}
+        \charFct_X(\tfrac{t}{\sqrt{n}})
+        &= \sum_{k=0}^2 \Exp{X^k}\frac{(i\frac{t}{\sqrt{n}})^k}{k!} + o\Bigl(\frac{t^2}{n}\Bigr)
+        \\
+        &= 1 - \frac{\sigma^2 t^2}{2 n} + o\Bigl(\frac{t^2}{n}\Bigr).
+    \end{aligned}
+    \]
+    Consequently we have by Lemma \ref{lem: compound interest}
+    \[
+        \charFct_{\sqrt{n} \mean{X}_n}(t)
+        = \Bigl(1 - \tfrac{\sigma^2 t^2}{2 n} + o(\tfrac{t^2}{n})\Bigr)^n
+        \to e^{-\frac12 \sigma^2 t^2}.
+    \]
+    The right hand side is the characteristic function of a normal distribution
+    with mean zero and variance \(\sigma^2\) the claim
+    thus follows by Lévy's continuity theorem.
+\end{proof}
 
+\begin{lemma}[Compound interest]
+    \label{lem: compound interest}
+    \((1+\frac{x_n}n)^n \to e^{x}\) for \(x_n \to x\in \real\setminus\Set{0}\).
+\end{lemma}
+\begin{proof}
+    Let \(f(\lambda) = \frac1\lambda\ln(1 + \lambda)\), then by L'Hôpital's rule
+    \[
+        \lim_{\lambda \to 0} f(\lambda)
+        = \lim_{\lambda \to 0} \frac{\ln(1 + \lambda)}{\lambda}
+        \overset{\text{L'Hôpital}}= \lim_{\lambda \to 0} \frac{\frac{1}{1 + \lambda}}{1}
+        = 1.
+    \]
+    Consequently due to \(\frac{x_n}n \to 0\) and therefore \(f(\frac{x_n}n) \to 1\) we have
+    \[
+        \lim_{n\to \infty} n \ln(1 + \tfrac{x_n}n)
+        = \lim_{n\to \infty} x_n \bigl(\tfrac{n}{x_n} \ln(1 + \tfrac{x_n}n)\bigr)
+        = \lim_{n\to \infty} x_n f\bigl(\tfrac{x_n}n\bigr) = x.
+        \qedhere
+    \]
+\end{proof}
+
+\begin{theorem}[Central Limit Theorem]
+    \label{thm: central limit theorem}
+    Let \((X_n)_{n\in \nat}\) be a sequence of independent, identically
+    distributed random variables in \(\real^\dims\) with mean \(m = \Exp{X_1}\)
+    and covariance matrix \(\Sigma = \Cov{X_1}{X_1}\). Then
+    \[
+        \sqrt{n}\bigl(\mean{X}_n - m\bigr)
+        \overset{d}\to \normal{0, \Sigma}.
+    \]
+\end{theorem}
 
 \subsection*{Exercises}
 
