@@ -338,15 +338,18 @@ defining ``Moment generating functions''.
     The ``Moment Generating Function'' of a random variable \(X\) in a
     Hilbertspace \(\hilbert\) with real-valued inner product is given by
     \[
-        \MGF_X(t) \coloneq \Exp{\exp(\inner{t, X})} \qquad t\in \hilbert.
+        \MGF_X(h) \coloneq \Exp{\exp(\inner{h, X})}
+        \qquad h\in \hilbert.
     \]
     The ``characteristic function'' is given by
     \[
-        \charFct_X(t) \coloneq \MGF(it) = \Exp{\exp(i\inner{t,X})}
+        \charFct_X(h) \coloneq \Exp{\exp(i\inner{h,X})}
+        \qquad h\in \hilbert.
     \]
+    With some abuse of notation \(\charFct_X(h) = \MGF_X(i h)\).
     Outside of probability and measure theory one typically uses \(-t\) 
-    instead of \(t\), and \(\mathcal{L}(t) = \MGF(-t)\) is called
-    the ``Laplace transform'', \(\mathcal{F}(t) = \charFct_X(-2\pi t)\)
+    instead of \(t\), and \(\mathcal{L}\Set{\Pr_X}(t) = \MGF_X(-t)\) is called
+    the ``Laplace transform'', \(\mathcal{F}\Set{\Pr_X}(t) = \charFct_X(-2\pi t)\)
     the ``Fourier transform''. The logarithm
     \[
         \Lambda_X(t) = \log \MGF_X(t)
@@ -359,25 +362,17 @@ defining ``Moment generating functions''.
 
 As mentioned in the introduction the \(\MGF_X\) is called the ``Moment
 Generating Function'' because its Taylor coefficients are the moments.
+In the following we first restrict ourselves to real valued random variables to
+keep the notation simple.
 
-\begin{lemma}
-    If \(X\) is a real valued random variable with
+\begin{lemma}[Moment generating function representation]
+    Let \(X\) be a real valued random variable with \(\MGF_{X}(t) < \infty\) for
+    all \(t\in (-t_0, t_0)\) for some \(t_0>0\). Then all moments exist, that is
+    \(\Exp{\abs{X}^n} <\infty\) for all \(n\), and
     \[
-        \MGF_{X}(t) < \infty \qquad \forall t\in (-t_0, t_0)
+        \MGF_X(t) = \sum_{k=0}^\infty \Exp{X^k}\frac{t^k}{k!}.
     \]
-    for some \(t_0>0\). Then all moments exist, that is \(\Exp{\abs{X}^n}
-    <\infty\) for all \(n\),
-    \[
-        \MGF_X(t) = \sum_{k=1}^\infty \Exp{X^k}\frac{t^k}{k!}
-        \qquad\text{and}\qquad
-        \charFct_X(t) = \sum_{k=1}^\infty \Exp{X^k}\frac{i^k t^k}{k!}.
-    \]
-    In particular this implies
-    \[
-        \frac{d^n}{dt^n} \MGF_X(0) = \Exp{X^n}
-        \qquad\text{and}\qquad
-        \frac{d^n}{dt^n} \charFct_X(0) = i^n\Exp{X^n}.
-    \]
+    in particular this implies \(\frac{d^n}{dt^n} \MGF_X(0) = \Exp{X^n}\).
 \end{lemma}
 \begin{proof}
     The finiteness of all moments follows from
@@ -403,8 +398,93 @@ Generating Function'' because its Taylor coefficients are the moments.
         \overset{\text{Fub.}}= 
         \sum_{k=0}^\infty \Exp[\Big]{\frac{tX^k}{k!}}
         = \sum_{k=0}^\infty \Exp{X^k}\frac{t^k}{k!}.
+        \qedhere
     \]
-    For the 
+\end{proof}
+
+With minor modifications it may be shown that a finite moment generating
+function also implies all moments \(\Exp{\abs{X_{i_1} \cdots X_{i_n}}}\) of a
+random vector \(X\) in \(\real^d\) are finite and a similar
+power series representation holds (Exercise \ref{ex: multivariate moment
+generating function}). It is straightforward to check that the Moment generating
+function moreover has the following properties (see Exercise \ref{ex: properties
+of moment generating function}).
+
+\begin{lemma}[Properties of moment generating functions]
+    Let \(X, Y\) be random variables in a Hilbert space \(\hilbert\).
+    Then
+    \begin{enumerate}[label=(\roman*)]
+        \item \(\MGF_X(0) = 1\).
+        \item \(\MGF_{X+Y}(h) = \MGF_X(h) \MGF_Y(h)\) for \(X,Y\) independent and all \(h\in \hilbert\).
+        \item \(\MGF_{aX + b}(h) = e^{\inner{h,b}} \MGF_X(a h)\)
+        for any \(a\in \real\), \(b, h\in \hilbert\).
+    \end{enumerate}
+\end{lemma}
+
+\begin{corollary}[Cumulants]
+    The moment generating function \(\MGF_X\) is finite
+    and thereby a power series if and only if the cumulant generating function
+    \(\Lambda_X(t) = \log(\MGF_X(t))\) is a
+    power series 
+    \[
+        \Lambda_X(t) = \sum_{k=1}^\infty \kappa_k \frac{t^k}{k!}.
+    \]
+    The coefficients \(\kappa_k\) of \(\Lambda_X\) are called ``cumulants''.
+\end{corollary}
+\begin{proof}
+    The argument is essentially that the composition of analytic functions
+    (power series) is analytic (cf. complex analysis). Since
+    \(\MGF_X(0) = \Exp{\abs{X}^0} = 1\) it thus sufficies that \(\log(1+x)\) is
+    a power series, which is the case.
+\end{proof}
+
+
+While the moment generating function needs all moments to exist, the
+characteristic function is always well defined since \(\abs{e^{itx}} =1\).
+However, if moments do exist, the characteristic function has a similar
+representation.
+
+\begin{lemma}[Characteristic function representation]
+    Let \(X\) be real valued with \(\Exp{\abs{X}^n} < \infty\) for some
+    \(n\), then \(\charFct_X\) is \(n\)-times continuously differentiable
+    with
+    \[
+        \charFct_X(t) = \sum_{k=0}^n \Exp{X^k}\frac{(it)^k}{k!} + o(t^n).
+    \]
+    If all the moments are finite and \(\lim_{n\to \infty}
+    \frac{t^n}{n!}\Exp{\abs{X}^n} =0\) for some \(t>0\), then
+    \(\charFct_X\) is a power series with convergence radius at least \(t\).
+\end{lemma}
+\begin{proof}
+    Let us first show that the \(n\)-th derivative exists. To this end
+    observe that
+    \[
+        \frac{d^n}{dt^n} \exp(i t x) = (ix)^n \exp(i t x).
+    \]
+    Consequently, we have \(\abs{\frac{d^n}{dt^n} \exp(i t x)} \le \abs{x}^n\) such that
+    \(\abs{X}^n\) is an integrable dominating function of the derivative
+    by assumption that \(\Exp{\abs{X}^n} < \infty\). Since the
+    finite-difference quotients are bounded by the derivative using the mean value
+    theorem we may thus apply the Dominated Convergence Theorem (DCT) to
+    interchange differentiation and expectation to obtain
+    \[
+        \frac{d^n}{dt^n} \charFct_X(t)
+        = \Exp[\Big]{\frac{d^n}{dt^n} \exp(i t X)}
+        = \Exp{(iX)^n \exp(i t X)}.
+    \]
+    We thus have that the characteristic function is \(n\)-times differentiable
+    and the representation is the Taylor expansion around zero.
+    Last assume that all moments are finite. Since the derivatives are bounded
+    by the moments
+    \[
+        \abs{\charFct_X^{(n)}(t)} \le \Exp{\abs{iX}^n \abs{\exp(i t X)}} = \Exp{\abs{X}^n},
+    \]
+    the mean value remainder with \(\xi \in (0,t)\) is bounded by
+    \[
+        \abs{R_{n-1}(t)} = \abs[\Big]{\frac{t^{n}}{n!} \charFct_X^{(n)}(\xi)}
+        \le \frac{\abs{t}^{n}}{n!} \Exp{\abs{X}^{n}}.
+    \]
+    Its convergence to zero therefore follows directly from the assumption.
 \end{proof}
 
 \subsection{The Central Limit Theorem}
