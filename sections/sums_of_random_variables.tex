@@ -335,35 +335,32 @@ Let us slow down now and build up the arguments properly. We start by
 defining ``Moment generating functions''.
 
 \begin{definition}[Moment Generating Functions]
-    The ``Moment Generating Function'' of a random variable \(X\) in a
-    Hilbertspace \(\hilbert\) with real-valued inner product is given by
+    The ``Moment Generating Function'' of a random variable \(X\) in 
+    \(\real^\dims\) is given by
     \[
-        \MGF_X(h) \coloneq \Exp{\exp(\inner{h, X})}
-        \qquad h\in \hilbert.
+        \MGF_X(t) \coloneq \Exp{\exp(\inner{t, X})}
+        \qquad t\in \complex^\dims.
     \]
     The ``characteristic function'' is given by
     \[
-        \charFct_X(h) \coloneq \Exp{\exp(i\inner{h,X})}
-        \qquad h\in \hilbert.
+        \charFct_X(t) \coloneq \MGF_X(i t) = \Exp{\exp(i\inner{t,X})}
+        \qquad t\in \real^\dims.
     \]
-    With some abuse of notation \(\charFct_X(h) = \MGF_X(i h)\).
-    Outside of probability and measure theory one typically uses \(-t\) 
-    instead of \(t\), and \(\mathcal{L}\Set{\Pr_X}(t) = \MGF_X(-t)\) is called
-    the ``Laplace transform'', \(\mathcal{F}\Set{\Pr_X}(t) = \charFct_X(-2\pi t)\)
-    the ``Fourier transform''. The logarithm
-    \[
-        \Lambda_X(t) = \log \MGF_X(t)
-    \]
-    is known as the ``Cumulant generating function'' (or log-Laplace transform).
-    Some authors define this function as \(\tilde{\Lambda}_X(t) = \log
-    \charFct_X(t)\) instead, which is also known as
-    the 2nd characteristic function.
+    Outside the field of probability theory one typically uses \(-t\) 
+    instead of \(t\), and 
+    \begin{itemize}[noitemsep]
+        \item \(\mathcal{L}\Set{\Pr_X}(t) = \MGF_X(-t)\) is the ``Laplace
+        transform'',
+        \item \(\mathcal{F}\Set{\Pr_X}(t) = \charFct_X(-2\pi t)\) is the ``Fourier
+        transform''. 
+    \end{itemize}
 \end{definition}
 
 As mentioned in the introduction the \(\MGF_X\) is called the ``Moment
 Generating Function'' because its Taylor coefficients are the moments.
-In the following we first restrict ourselves to real valued random variables to
-keep the notation simple.
+For pedagogical reasons we restrict ourselves to real valued random variables
+in the following (see Exercise \ref{ex: multivariate moment generating function}
+for the general case).
 
 \begin{lemma}[Moment generating function representation]
     Let \(X\) be a real valued random variable with \(\MGF_{X}(t) < \infty\) for
@@ -401,43 +398,6 @@ keep the notation simple.
         \qedhere
     \]
 \end{proof}
-
-With minor modifications it may be shown that a finite moment generating
-function also implies all moments \(\Exp{\abs{X_{i_1} \cdots X_{i_n}}}\) of a
-random vector \(X\) in \(\real^d\) are finite and a similar
-power series representation holds (Exercise \ref{ex: multivariate moment
-generating function}). It is straightforward to check that the Moment generating
-function moreover has the following properties (see Exercise \ref{ex: properties
-of moment generating function}).
-
-\begin{lemma}[Properties of moment generating functions]
-    Let \(X, Y\) be random variables in a Hilbert space \(\hilbert\).
-    Then
-    \begin{enumerate}[label=(\roman*)]
-        \item \(\MGF_X(0) = 1\).
-        \item \(\MGF_{X+Y}(h) = \MGF_X(h) \MGF_Y(h)\) for \(X,Y\) independent and all \(h\in \hilbert\).
-        \item \(\MGF_{aX + b}(h) = e^{\inner{h,b}} \MGF_X(a h)\)
-        for any \(a\in \real\), \(b, h\in \hilbert\).
-    \end{enumerate}
-\end{lemma}
-
-\begin{corollary}[Cumulants]
-    The moment generating function \(\MGF_X\) is finite
-    and thereby a power series if and only if the cumulant generating function
-    \(\Lambda_X(t) = \log(\MGF_X(t))\) is a
-    power series 
-    \[
-        \Lambda_X(t) = \sum_{k=1}^\infty \kappa_k \frac{t^k}{k!}.
-    \]
-    The coefficients \(\kappa_k\) of \(\Lambda_X\) are called ``cumulants''.
-\end{corollary}
-\begin{proof}
-    The argument is essentially that the composition of analytic functions
-    (power series) is analytic (cf. complex analysis). Since
-    \(\MGF_X(0) = \Exp{\abs{X}^0} = 1\) it thus sufficies that \(\log(1+x)\) is
-    a power series, which is the case.
-\end{proof}
-
 
 While the moment generating function needs all moments to exist, the
 characteristic function is always well defined since \(\abs{e^{itx}} =1\).
@@ -487,9 +447,129 @@ representation.
     Its convergence to zero therefore follows directly from the assumption.
 \end{proof}
 
+As we outlined in the beginning of this section the moment generating function
+and characteristic function characterize the distribution of a random variable.
+
+\begin{fact}[Uniqueness]
+    Let \(X, Y\) be random variables in \(\real^\dims\). Then
+    \begin{align*}
+        X \overset{d}= Y
+        \quad &\iff\quad
+        \charFct_X(t) = \charFct_Y(t)
+        \quad \forall t\in \real^\dims.
+        \intertext{
+    If the moment generating functions \(\MGF_X\) and \(\MGF_Y\)
+    are finite in a neighborhood of zero \(\ball{0}{\epsilon}\), then the following is also equivalent
+        }
+        \quad &\iff\quad
+        \quad \MGF_X(t) = \MGF_Y(t)
+        \quad \forall t\in \ball{0}{\epsilon}.
+    \end{align*}
+\end{fact}
+
+More than just uniquely characterizing distributions, they also
+characterize convergence in distribution. This is known as Lévy's continuity
+theorem.
+
+\begin{fact}[Lévy's continuity theorem]
+    Let \((X_n)_{n\in \nat}\) and \(X\) be random variables in \(\real^\dims\) then
+    the following are equivalent:
+    \begin{enumerate}[label=(\roman*),noitemsep]
+        \item \(X_n \overset{d}\to X\),
+        \item \(\charFct_{X_n}(t) \to \charFct(t)\) for all \(t\in \real^\dims\).
+    \end{enumerate}
+    Moreover, \(\charFct_{X_n}(t) \to f(t)\) for all \(t\in \real^\dims\) and \(f\) continuous at
+    \(0\) implies the existence of a random variable \(X\) with
+    \(\charFct_X(t) = f(t)\).
+\end{fact}
+\begin{proof}
+    See e.g. \citep{klenkeProbabilityTheoryComprehensive2014,kallenbergFoundationsModernProbability2002}.
+\end{proof}
+
+
 \subsection{The Central Limit Theorem}
 
 
+
+\subsection*{Exercises}
+
+\begin{exercise}[Multivariate moment generating function]
+    \label{ex: multivariate moment generating function}
+    Let \(X\) be a random vector in \(\real^d\) with \(\MGF_X(t) < \infty\)
+    for all \(h\in \ball{0}{r}\) for some radius \(r > 0\). Show that all mixed moments
+    \(\Exp{\abs{X_1^{k_1} \cdots X_d^{k_d}}}\) exist and
+    \[
+        \MGF_X(h) = \sum_{k=0}^\infty \frac{\Exp{\inner{h, X}^k}}{k!}
+        = \sum_{k_1, \dots, k_d = 0}^\infty
+        \Exp{X_1^{k_1} \cdots X_d^{k_d}}
+        \frac{h_1^{k_1} \cdots h_d^{k_d}}{k_1! \cdots k_d!}.
+    \]
+\end{exercise}
+
+\begin{exercise}[Properties of moment generating functions]
+    Let \(X, Y\) be random variables in a Hilbert space \(\hilbert\).
+    Then
+    \begin{enumerate}[label=(\alph*)]
+        \item \(\MGF_X(0) = 1\).
+        \item \(\MGF_{X+Y}(h) = \MGF_X(h) \MGF_Y(h)\) for \(X,Y\) independent and all \(h\in \hilbert\).
+        \item \(\MGF_{aX + b}(h) = e^{\inner{h,b}} \MGF_X(a h)\)
+        for any \(a\in \real\), \(b, h\in \hilbert\).
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Moment generating functions]
+    Prove the formulas for the moment generating functions in the following
+    table
+    \begin{center}
+    \def\arraystretch{1.5}
+    \begin{tabular}{l l l}
+        \(\Pr_X\)
+        &  \(\MGF_X(t)\) & \(\charFct_X(t)\)
+        \\
+        \hline
+        \(\normal{\mu, \sigma^2}\) & \(e^{\mu t + \frac12 \sigma^2 t^2}\)
+        & \(e^{i \mu t - \frac12 \sigma^2 t^2}\)
+        \\
+        \(\bernoulli(p)\) & \(1 - p + p e^{t}\)
+        & \(1 - p + p e^{i t}\)
+        \\
+        \(\Binomial(n, p)\) & \((1 - p + p e^{t})^n\)
+        & \((1 - p + p e^{i t})^n\)
+        \\
+        \(\exponential(\lambda)\) & \(\frac{\lambda}{\lambda - t}\) for \(t < \lambda\)
+        & \(\frac{\lambda}{\lambda - i t}\)
+        \\
+        \(\Poisson(\lambda)\) & \(e^{\lambda (e^{t} - 1)}\)
+        & \(e^{\lambda (e^{i t} - 1)}\) 
+    \end{tabular}
+    \end{center}
+\end{exercise}
+
+\begin{exercise}[Cumulants]
+    The logarithm of the moment generating function
+    \[
+        \Lambda_X(t) = \log \MGF_X(t)
+    \]
+    is known as the ``Cumulant generating function'' (or log-Laplace transform).
+    % Some authors define this function as \(\tilde{\Lambda}_X(t) = \log
+    % \charFct_X(t)\) instead, which is also known as
+    % the 2nd characteristic function.
+    \begin{lemma}
+        \(\MGF_X(t)\) is finite for \(t>0\) and thereby a power series if and only if the
+        cumulant generating function \(\Lambda_X(t) = \log(\MGF_X(t))\) is a
+        power series 
+        \[
+            \Lambda_X(t) = \sum_{k=1}^\infty \kappa_k \frac{t^k}{k!}.
+        \]
+    \end{lemma}
+    \begin{proof}
+        The argument is essentially that the composition of analytic functions
+        (power series) is analytic (cf. complex analysis). Since
+        \(\MGF_X(0) = \Exp{\abs{X}^0} = 1\) it thus sufficies that \(\log(1+x)\) is
+        a power series, which is the case.
+    \end{proof}
+    The coefficients \(\kappa_k\) of \(\Lambda_X\) are called ``cumulants''.
+\end{exercise}
 
 \section{Large Deviations: Concentration inequalities}
 \label{sec: concentration inequalities}
