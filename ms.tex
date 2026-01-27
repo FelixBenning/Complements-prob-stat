@@ -1,13 +1,15 @@
-\documentclass[11pt]{report}
+\documentclass[a4paper]{book}
 \input{packages.tex}
 
 \input{macros.tex}
 
+\makeatletter
+\@twosidefalse
+\makeatother
+
 % \solutiontrue % set to true to show solutions, false to hide them
 
 \begin{document}
-
-\pagestyle{plain}
 
 % First Page - Centered
 \begin{titlepage}
@@ -24,7 +26,7 @@
 
 \textbf{    {\Large Bachelor in Mathematics Program}\\[2cm]
 }
-    {\Large Summer Semester, Academic Year 2024-25}\\[1cm]
+    {\Large Summer Semester 2026}\\[1cm]
 
 \textbf{    {\Large Department of Mathematics}\\[3cm]
 }
@@ -44,8 +46,6 @@
 % \listoftheorems[ignoreall,show={example},numwidth=30pt]
 % \newpage
 
-\pagestyle{fancy}
-
 
 \input{sections/convergence.tex}
 \input{sections/sums_of_random_variables.tex}
@@ -59,8 +59,6 @@
 \appendix
 
 \newpage
-
-\fancyhead[L]{\fcolorbox{red}{yellow}{Lecture 4. March 17, 2025}}
 
 \input{sections/appendix.tex}
 

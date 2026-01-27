@@ -15,10 +15,9 @@ to the Borel-Cantelli lemmas (Section \ref{sec: borel cantelli}).
 In classical Analysis ``continuity'' is a central concept that allows
 moving limits through functions and we will study whether this is also possible
 in the probabilistic setting in Section \ref{sec: continuous mapping}.
-Putting all these concepts together we will prove the Strong Law of Large Numbers
-in Section \ref{sec: law of large numbers}. In Section \ref{sec:
-concentration inequalities} we will learn how to quantify the speed of convergence
-with tight bounds.
+
+Putting all these concepts together we will apply these concepts to
+sums of random variables in the next chapter.
 
 \section{Types of convergence}
 
@@ -47,7 +46,7 @@ this section we will define and relate them.
         \]
 
         \item \textbf{in distribution}, denoted by \(X_n \overset{d}\to X\), if
-        it satisfies one of the following equivalent conditions (\textbf{Portemanteau theorem}):
+        it satisfies one of the following equivalent conditions (\textbf{Portemanteau theorem}):\nobreak
         \begin{enumerate}[label=(B.\arabic*),leftmargin=3em]
             \item\label{it: b.lip} For all \(f\colon \domain \to \real\) bounded, Lipschitz continuous we have \eqref{eq: fun convergence},
             \item\label{it: b.cont} For all \(f\colon \domain \to \real\) bounded, continuous we have \eqref{eq: fun
@@ -129,8 +128,6 @@ other, stronger, types of convergence that have almost surely unique limits. To
 see that convergence in distribution cannot have almost surely unique limits,
 consider the fact that \(X\) and \(-X\) have the same distribution when \(X\) is
 standard normal distributed for example.
-
-\newpage
 
 \begin{theorem}[Convergence implications]
     \label{thm: convergence implications}
@@ -1970,24 +1967,31 @@ concepts the convergence of the components is sufficient.
         \item \label{it: joint conv in prob}
         if \(X_n \overset{p}\to X\) and \(Y_n \overset{p}\to Y\),
         then \((X_n, Y_n) \overset{p}\to (X,Y)\),
-        \item \label{it: joint conv law}
-        if \(X_n \overset{d}\to X\) and \(Y_n \overset{d}\to c\) \underline{for some \(c\in \real^{\dims'}\)},
-        then \((X_n, Y_n) \overset{d}\to (X,c)\).
+        \item\label{it: joint conv law slutsky}
+        (\textbf{Slutsky})
+        if \(X_n \overset{d}\to X\) and \(Y_n \overset{d}\to c\) \underline{for \(c\in \real^{\dims'}\)},
+        then \((X_n, Y_n) \overset{d}\to (X,c)\),
+
+        \item\label{it: joint conv law cramer wold}
+        (\textbf{Cramér-Wold})
+        if \(\inner{t, X_n} \overset{d}\to \inner{t,X}\) for all \(t\in \real^\dims\),
+        then \(X_n \overset{d}\to X\).
     \end{enumerate}
 \end{theorem}
 
-The statement for convergence in distribution \ref{it: joint conv law} is weaker
-on purpose as the general statement is false (Exercise \ref{ex: counterexample
+The statements for convergence in distribution \ref{it: joint conv law slutsky}
+and \ref{it: joint conv law cramer wold} are weaker on purpose as the general
+statement is false (Exercise \ref{ex: counterexample
 joint convergence}).
 
 \begin{remark}[Generalization]
-    These statements do not necessarily need to be
-    restricted to \(\real^\dims\). However for convergence of the components
-    to imply convergence of the tuple it is necessary that the metric on the product
-    space is ``compatible'' with the metrics on the components. 
-    This is already necessary in the deterministic setting (see
-    Exercise~\ref{ex: incompatible metric}). To avoid these technicalities we
-    restrict ourselves to this important special case. The
+    Except for Cramér-Wold \ref{it: joint conv law cramer wold} these statements
+    do not necessarily need to be restricted to \(\real^\dims\). However for
+    convergence of the components to imply convergence of the tuple it is
+    necessary that the metric on the product space is ``compatible'' with the
+    metrics on the components. This is already necessary in the deterministic
+    setting (see Exercise~\ref{ex: incompatible metric}). To avoid these
+    technicalities we restrict ourselves to this important special case. The
     property we use is
     \[
         \|(x, 0)\| = \|x\|
@@ -2097,7 +2101,7 @@ and \ref{thm: joint convergence}.
         &= \Prob[\Big]{\norm{X_n - X} > \tfrac\epsilon2}
         + \Prob[\Big]{\norm{Y_n - Y} > \tfrac\epsilon2} \to 0.
     \end{aligned}\]
-    Finally, for \ref{it: joint conv law} we use that \(Y_n \overset{d}\to c\)
+    For \ref{it: joint conv law slutsky} we use that \(Y_n \overset{d}\to c\)
     for some constant \(c\in \real^{\dims'}\) implies \(Y_n \overset{p}\to c\)
     by Theorem \ref{thm: convergence implications}~\ref{it: d to p}. To prove
     \((X_n, Y_n) \overset{d}\to (X,c)\) we show \ref{it: b.cont} from the Portemanteau
@@ -2112,8 +2116,12 @@ and \ref{thm: joint convergence}.
     due to \(Y_n \overset{p}\to c\), we can apply the
     pull-along lemma (Lemma \ref{lem: pull along}) to conclude that \((X_n, Y_n)
     \overset{d}\to (X,c)\).
+
+    We will delay the proof of \ref{it: joint conv law cramer wold} to Section \ref{sec: moment generating functions}
+    (Corollary \ref{cor: cramer wold}).
 \end{proof}
 
+\fxnote{move to first section?}
 \begin{lemma}[Pull along]
     \label{lem: pull along}
     \(X_n \overset{d}\to X\) and \(\norm{Y_n - X_n} \overset{p}\to 0\) implies \(Y_n \overset{d}\to X\).
