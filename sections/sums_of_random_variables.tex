@@ -1022,6 +1022,82 @@ normal distribution. To do so we require the concept of covariance matrices.
     The claim follows by Cramér-Wold (Corollary \ref{cor: cramer wold}).
 \end{proof}
 
+\begin{remark}[CLT in infinite dimension]
+    Since Lévy's continuity theorem (Fact \ref{fact: levy continuity}) does
+    not hold in infinite dimension it is more difficult to prove CLTs
+    in infinite dimensional spaces (e.g.\ function spaces). The typical
+    approach is to prove convergence of all finite dimensional projections
+    (by the multivariate CLT) and prove that the sequence of distributions
+    is in a compact set. This shows that any sequence has a converging
+    subsequence. If the limit of every subsequence is the same, then we get
+    convergence. But since the finite dimensional projections of every
+    subsequence still converge to the same limit it is possible to
+    identify the limit uniquely.
+\end{remark}
+
+\begin{remark}[\(\alpha\)-stable distributions]
+    
+\end{remark}
+
+\subsection{Special properties of the normal distribution}
+
+\begin{remark}[Uncorrelated \textbf{kind of} implies independent]
+    If \(X\) is a multivariate normal random vector and its components are
+    uncorrelated, then its covariance \(\Cov{X}\) is diagonal.
+    In Exercise \ref{ex: density of normal distribution} you will show
+    that \(\Sigma = \Cov{X}\) and consequently, \(\Sigma\) is diagonal
+    with entries \(\sigma_1^2, \ldots, \sigma_\dims^2\).
+    Choosing \(A = \diag[\sigma_1, \ldots, \sigma_\dims]\)
+    we have \(AA^\transpose = \Sigma\) and thus by Definition
+    \[
+        X \overset{d}= \mu + A Y = \begin{pmatrix}
+            \mu^{(1)} + \sigma_1 Y^{(1)} \\
+            \vdots \\
+            \mu^{(\dims)} + \sigma_\dims Y^{(\dims)}
+        \end{pmatrix}
+    \]
+    Thus every \(X^{(i)}\) is a function of only \(Y^{(i)}\) and since the
+    \(Y^{(i)}\) are independent, the \(X^{(i)}\) are independent as well.
+
+    \textbf{However}, if \(X\) and \(Y\) are both normal distributed but
+    \((X,Y)\) is not a multivariate normal random vector, then uncorrelatedness
+    does not imply independence in general (see Exercise \ref{ex: uncorrelated
+    but not independent normal}).
+\end{remark}
+
+\begin{fact}[Herschel-Maxwell characterization]
+    Let \(X\) be a random vector in \(\real^\dims\) with independent components
+    \(X^{(i)}\). Further assume \(X\) has rotation invariant distribution, that is
+    for all orthogonal \(U\in \real^{\dims\times \dims}\)
+    \[
+        X \overset{d}= U X.
+    \]
+    Then necessarily \(X\sim \normal{0, \sigma^2 \identity}\) for some \(\sigma^2 \ge 0\).
+\end{fact}
+\begin{proof}[Proofsketch]
+    Let \(\dims=2\). By rotation invariance both components \(X^{(1)}\) and
+    \(X^{(2)}\) are are identically distributed. Thus the components are iid. If
+    they have a density \(f\), then the joint density factorizes, that is
+    \[
+        f_X(x_1, x_2) = f(x_1) f(x_2)
+    \]
+    Due to rotation invariance the joint density must only depend on the
+    radius, or equivalently squared radius \(\|x\|^2 = x_1^2 + x_2^2\).
+    Thus it must be of the form
+    \[
+        f_X(x_1, x_2) = g(x_1^2 + x_2^2)
+    \]
+    Setting \(x_2=0\) we observe by the two expressions \(g(x_1^2) = f(x_1)f(0)\).
+    Thus
+    \[
+        g(x_1^2 + x_2^2) = f(x_1) f(x_2) = f(0)^2 g(x_1^2) g(x_2^2).
+    \]
+    The only functions \(g\) that satisfy \(g(x+y) = c g(x) g(y)\) are \(x\mapsto \frac1c\exp(\lambda x)\)
+    for some constants \(c, \lambda\in \real\). Since the density must integrate
+    to one we arrive at the normal distribution. An actual proof would however
+    need to justify the existence of a density.
+\end{proof}
+
 
 \subsection*{Exercises}
 
@@ -1041,6 +1117,34 @@ normal distribution. To do so we require the concept of covariance matrices.
         \item \(\charFct_{aX + b}(t) = e^{i\inner{t,b}} \charFct_X(a t)\)
         for any \(a\in \real\), \(b, t\in \hilbert\).
     \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Moment generating functions]
+    Prove the formulas for the moment generating functions in the following
+    table
+    \begin{center}
+    \def\arraystretch{1.5}
+    \begin{tabular}{l l l}
+        \(\Pr_X\)
+        &  \(\MGF_X(t)\) & \(\charFct_X(t)\)
+        \\
+        \hline
+        \(\normal{\mu, \sigma^2}\) & \(e^{\mu t + \frac12 \sigma^2 t^2}\)
+        & \(e^{i \mu t - \frac12 \sigma^2 t^2}\)
+        \\
+        \(\bernoulli(p)\) & \(1 - p + p e^{t}\)
+        & \(1 - p + p e^{i t}\)
+        \\
+        \(\Binomial(n, p)\) & \((1 - p + p e^{t})^n\)
+        & \((1 - p + p e^{i t})^n\)
+        \\
+        \(\exponential(\lambda)\) & \(\frac{\lambda}{\lambda - t}\) for \(t < \lambda\)
+        & \(\frac{\lambda}{\lambda - i t}\)
+        \\
+        \(\Poisson(\lambda)\) & \(e^{\lambda (e^{t} - 1)}\)
+        & \(e^{\lambda (e^{i t} - 1)}\) 
+    \end{tabular}
+    \end{center}
 \end{exercise}
 
 \begin{exercise}[The normal distribution]
@@ -1088,37 +1192,19 @@ normal distribution. To do so we require the concept of covariance matrices.
         \]
         
         \item Prove that \(\Exp{X} = \mu\) and \(\Cov{X} = \Sigma\).
+
+        \item Assume that \(\Sigma\) is not positive semidefinite, that is
+        \(v \Sigma v < 0\) for some vector \(v\) prove that there is no random
+        variable \(X\) with characteristic function
+        \[
+            \charFct_X(t)
+            = \exp\bigl(i \inner{\mu, t} - \tfrac12 \inner{t, \Sigma t}\bigr).
+        \]
+        \textbf{Hint:} \eqref{eq: bound on characteristic function}.
     \end{enumerate}
 
 \end{exercise}
 
-\begin{exercise}[Moment generating functions]
-    Prove the formulas for the moment generating functions in the following
-    table
-    \begin{center}
-    \def\arraystretch{1.5}
-    \begin{tabular}{l l l}
-        \(\Pr_X\)
-        &  \(\MGF_X(t)\) & \(\charFct_X(t)\)
-        \\
-        \hline
-        \(\normal{\mu, \sigma^2}\) & \(e^{\mu t + \frac12 \sigma^2 t^2}\)
-        & \(e^{i \mu t - \frac12 \sigma^2 t^2}\)
-        \\
-        \(\bernoulli(p)\) & \(1 - p + p e^{t}\)
-        & \(1 - p + p e^{i t}\)
-        \\
-        \(\Binomial(n, p)\) & \((1 - p + p e^{t})^n\)
-        & \((1 - p + p e^{i t})^n\)
-        \\
-        \(\exponential(\lambda)\) & \(\frac{\lambda}{\lambda - t}\) for \(t < \lambda\)
-        & \(\frac{\lambda}{\lambda - i t}\)
-        \\
-        \(\Poisson(\lambda)\) & \(e^{\lambda (e^{t} - 1)}\)
-        & \(e^{\lambda (e^{i t} - 1)}\) 
-    \end{tabular}
-    \end{center}
-\end{exercise}
 
 \begin{exercise}[Multivariate moment generating function]
     \label{ex: multivariate moment generating function}
@@ -1148,6 +1234,16 @@ normal distribution. To do so we require the concept of covariance matrices.
         \item \(\charFct_{X_n}(h) \to \charFct_{X}(h)\) for all \(h\in \ell^2\),
         \item \(X_n \not\overset{d}\to X\).
     \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Uncorrelated but not independent normal]
+    \label{ex: uncorrelated but not independent normal}
+    Let \(Z \sim \normal{0,1}\) and \(\epsilon \sim \uniform(\Set{-1,1})\) be independent
+    random variables and define
+    \[
+        X = Z, \qquad Y = \epsilon Z.
+    \]
+    Show that \(X\) and \(Y\) are both normal distributed and uncorrelated but not independent.
 \end{exercise}
 
 \begin{exercise}[Covariance matrices]
