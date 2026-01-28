@@ -637,26 +637,45 @@ To prove the Central Limit Theorem we now only require the compound interest
 formula.
 
 \begin{lemma}[Compound interest]
-    \label{lem: compound interest} Let \((x_n)_{n\in \nat}\) be a sequence in \(\real\)
-    with \(x_n \to x\in \real\setminus\Set{0}\). Then
+    \label{lem: compound interest} Let \((x_n)_{n\in \nat}\) be a sequence in \(\complex\)
+    with \(x_n \to x\in \complex\). Then
     \[
         \lim_{n\to\infty} (1+\tfrac{x_n}n)^n = e^{x}.
     \]
 \end{lemma}
 \begin{proof}
-    Let \(f(\lambda) = \frac1\lambda\ln(1 + \lambda)\), then by L'Hôpital's rule
+    Note that \(\exp\) is injective on the domain \(B\coloneq\Set{x+iy\in \complex: \abs{y} < \pi}\)
+    with range \(\complex\setminus \real_{\le 0}\). Since \(1+\frac{x_n}n \to
+    1\) this term eventually enters \(\complex\setminus \real_{\le
+    0}\). Using the (analytic) inverse \(\ln\) of \(\exp\) restricted to \(B\)
+    we thus have for sufficiently large \(n\)
     \[
-        \lim_{\lambda \to 0} f(\lambda)
-        = \lim_{\lambda \to 0} \frac{\ln(1 + \lambda)}{\lambda}
-        \overset{\text{L'Hôpital}}= \lim_{\lambda \to 0} \frac{\frac{1}{1 + \lambda}}{1}
-        = 1.
+        (1 + \tfrac{x_n}n)^n
+        = \exp\bigl(\ln(1 + \tfrac{x_n}n)\bigr)^n
+        = \exp\bigl(n \ln(1 + \tfrac{x_n}n)\bigr)
+        = \exp\Bigl(x_n \frac{\ln(1 + \tfrac{x_n}n)}{x_n/n}\Bigr).
     \]
-    Consequently due to \(\frac{x_n}n \to 0\) and therefore \(f(\frac{x_n}n) \to 1\) we have
+    Here we have tacitly assumed that \(x_n \neq 0\). We may
+    do this without loss of generality for the following reason:
+    If there are only finitely many \(n\) with \(x_n=0\), then
+    simply pick \(n\) large enough. In the other case
+    the subsequence \((x_{n_k})_{k\in \nat}\) with \(x_{n_k} = 0\) still
+    converges to \(x\) and consequently \(x=0\). In this case
+    we also have \(\exp(n \ln(1+x_{n_k})) = \exp(0)= \exp(x)\) so
+    we have convergence for this subsequence. We therefore only need
+    to prove convergence for the remaining \(x_n\).
+    Thus \(x_n\neq 0\) without loss of generality.
+
+    Since the exponential and product are
+    continuous it is sufficient to prove \(\frac1\lambda\ln(1 +
+    \lambda) \to 1\) as \(\lambda \to 0\), where we choose \(\lambda = \frac{x_n}n\). Since the logarithm is analytic
+    (complex differentiable)
+    at \(1\) we however have with \(\ln(1) = 0\)
     \[
-        \lim_{n\to \infty} n \ln(1 + \tfrac{x_n}n)
-        = \lim_{n\to \infty} x_n \bigl(\tfrac{n}{x_n} \ln(1 + \tfrac{x_n}n)\bigr)
-        = \lim_{n\to \infty} x_n f\bigl(\tfrac{x_n}n\bigr) = x.
-        \qedhere
+        \lim_{\lambda \to 0} \frac{\ln(1 + \lambda)}{\lambda}
+        = \lim_{\lambda \to 0} \frac{\ln(1 + \lambda) - \ln(1)}{\lambda}
+        = \ln'(1)
+        = 1. \qedhere
     \]
 \end{proof}
 
