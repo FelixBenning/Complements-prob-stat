@@ -152,19 +152,19 @@ is a linear combinations of $X_1,\cdots,X_n$. Hence it is normally distributed. 
 
 \begin{proposition}[Independence Implies Covariance $0$] 
 If $X$ and $Y$ are two independent random variables
-then $\Cov*{X,Y}=0$.
+then $\cov*{X,Y}=0$.
 \end{proposition}
 
 \begin{proof}
-$\Cov*{X,Y} = \Exp*{XY}-\Exp*{X}\Exp*{Y}$.\\
+$\cov*{X,Y} = \Exp*{XY}-\Exp*{X}\Exp*{Y}$.\\
 $\Exp*{XY} = \Exp*{X}\Exp*{Y}$.\\
-$\Cov*{X,Y} = 0$.
+$\cov*{X,Y} = 0$.
 \end{proof}
 
-\begin{example}[$\Cov*{X,Y}=0$ does not imply independence.]
+\begin{example}[$\cov*{X,Y}=0$ does not imply independence.]
 $X\sim\mathrm{N}(0,1)$.\\
 $Y=X^2$.\\
-$\Cov*{X,Y}=0$.\\
+$\cov*{X,Y}=0$.\\
 $X,Y$ not independent.
 \end{example}
 
@@ -185,7 +185,7 @@ $(X,Y)\sim\mathcal{N}(\mu_x,\mu_y,\sigma_x^2,\sigma_y^2,\rho)$ if
 \end{definition}
 
 \begin{proposition}[Covariance $0$ Implies Independence for Jointly Normal Random Variables]
-$(X,Y)$ Bivariate normal. If $\Cov*{X,Y}=0$ then $X\perp Y$.    
+$(X,Y)$ Bivariate normal. If $\cov*{X,Y}=0$ then $X\perp Y$.    
 \end{proposition}
 
 \begin{proof}
@@ -200,7 +200,7 @@ Thus when $R=1$, $Y=X$.\\\
 Then $R=-1$, $Y=-X$.\\
 Distribution of $Y$ is $\mathcal{N}(0,1)$.\\
 $X,Y$ are not jointly normal.\\
-$\Cov*{X,Y}=0$.\\
+$\cov*{X,Y}=0$.\\
 If they were jointly normal, they would be independent, but they are not independent as $X/Y$ is always $\pm 1$.
 \end{example}
 
@@ -359,7 +359,7 @@ Then $(X_1,X_2)\sim N(0,0,1,1,\rho)$.
 Suppose $(X_1,X_2)\sim\normal{0,0,1,1,\rho}$. Then we can write $X_1=Z_1$ and $X_2=\rho Z_1+\sqrt{1-\rho^2} Z_2$ where $(Z_1,Z_2)\sim\normal{0,0,1,1,0}$. Therefore,
 \begin{align*}
 \Exp*{X_2\given X_1} ={} & \Exp*{\rho Z_1+\sqrt{1-\rho^2}Z_2\given Z_1} = \rho Z_1 = \rho X_1\;.\\
-\Var*{X_2\given X_1} ={} & \Var*{\rho Z_1+\sqrt{1-\rho^2}Z_2\given Z_1} = 1-\rho^2 \;.\\
+\var*{X_2\given X_1} ={} & \var*{\rho Z_1+\sqrt{1-\rho^2}Z_2\given Z_1} = 1-\rho^2 \;.\\
 X_2|X_1 \sim{} & \normal{\rho X_1, 1-\rho^2}\;.
 \end{align*}
 \end{fact}
@@ -369,9 +369,9 @@ Suppose $(X,Y)\sim\normal{\mu_x,\mu_y,\sigma_x^2,\sigma_y^2,\rho}$.
 Then
 \begin{align*}
 \Exp*{X\given Y} ={} & \mu_x + \rho \frac{\sigma_x}{\sigma_y}(Y-\mu_y) \\
-\Var*{X\given Y} ={} & (1-\rho^2) \sigma_x \\
+\var*{X\given Y} ={} & (1-\rho^2) \sigma_x \\
 \Exp*{Y\given X} ={} & \mu_y + \rho\frac{\sigma_y}{\sigma_x} (X-\mu_x) \\
-\Var*{Y\given X} ={} & (1-\rho^2) \sigma_y^2 \\
+\var*{Y\given X} ={} & (1-\rho^2) \sigma_y^2 \\
 X|Y \sim{} & \normal{\mu_x + \rho \frac{\sigma_x}{\sigma_y}(Y-\mu_y),(1-\rho^2) \sigma_x^2} \\
 Y|X \sim{} & \normal{\mu_y + \rho \frac{\sigma_y}{\sigma_x}(X-\mu_x),(1-\rho^2) \sigma_y^2} \;.
 \end{align*}

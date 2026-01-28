@@ -42,7 +42,7 @@ Here we do not need the assumption that $X_i$s are independent. We use that $\Ex
 \noindent\textbf{Question:} What is the variance of $S_n$?\\
 \textbf{Answer:}
 \begin{equation}
-\Var*{S_n}=\Var*{X_1}+\cdots+\Var*{X_n}=1+\cdots+1=n\;.
+\var*{S_n}=\var*{X_1}+\cdots+\var*{X_n}=1+\cdots+1=n\;.
 \end{equation}
 Here we use the assumption that $X_i$s are independent; otherwise there would be the covariance terms. 
 
@@ -56,9 +56,9 @@ Technically speaking, we are only using that pairwise covariances are $0$, which
 \end{itemize}
 \end{tcolorbox}
 
-Above we used $\Var*{X_i}=1$ as the following calculation shows:
+Above we used $\var*{X_i}=1$ as the following calculation shows:
 \begin{equation}
-\Var*{X_i}=\Exp*{X_i^2}-\Bigl(\Exp*{X_i}\Bigr)^2=\Exp*{1}-0^2=1\;.
+\var*{X_i}=\Exp*{X_i^2}-\Bigl(\Exp*{X_i}\Bigr)^2=\Exp*{1}-0^2=1\;.
 \end{equation}
 
 \begin{tcolorbox}[title={Skip on first reading}]
@@ -67,11 +67,11 @@ $X$ and $Y$. Assume $\Exp*{X^2}<\infty$
 and $\Exp*{Y^2}<\infty$.
 \tcblower
 If $X$ and $Y$ are independent then 
-$\Cov*{X,Y}=0$. But the converse is
+$\cov*{X,Y}=0$. But the converse is
 not true. The converse is true in a
 very important situation: when $(X,Y)$
 is multivariate-normal. In this situation,
-$\Cov{X,Y}=0$ implies $X$ and $Y$ are independent. 
+$\cov{X,Y}=0$ implies $X$ and $Y$ are independent. 
 \end{tcolorbox}
 
 \section{Exact Distribution}
@@ -615,11 +615,11 @@ Here we do not need the assumption that $X_i$s are independent. We use that $\Ex
 \noindent\textbf{Question:} What is the variance of $S_n$?\\
 \textbf{Answer:}
 \begin{equation}
-\Var*{S_n}=\Var*{X_1}+\cdots+\Var*{X_n}=4pq+\cdots+4pq=4npq\;.
+\var*{S_n}=\var*{X_1}+\cdots+\var*{X_n}=4pq+\cdots+4pq=4npq\;.
 \end{equation}
-Here we use the assumption that $X_i$s are independent, otherwise there would be the covariance terms. Technically speaking, we are only using that pairwise covariances are $0$, which follows from the assumption of independence, but is a much weaker condition. Above we also used $\Var*{X_i}=1$ as the following calculation shows:
+Here we use the assumption that $X_i$s are independent, otherwise there would be the covariance terms. Technically speaking, we are only using that pairwise covariances are $0$, which follows from the assumption of independence, but is a much weaker condition. Above we also used $\var*{X_i}=1$ as the following calculation shows:
 \begin{equation}
-\Var*{X_i}=\Exp*{X_i^2}-\Bigl(\Exp*{X_i}\Bigr)^2=\Exp*{1}-(p-q)^2=4pq\;.
+\var*{X_i}=\Exp*{X_i^2}-\Bigl(\Exp*{X_i}\Bigr)^2=\Exp*{1}-(p-q)^2=4pq\;.
 \end{equation}
 
 \filbreak
@@ -783,7 +783,7 @@ In particular,
 \]
 and 
 \[
-\Var*{X} = \frac{1-q/p}{(q/p)^2} = (p/q)^2 - (p/q)\;.
+\var*{X} = \frac{1-q/p}{(q/p)^2} = (p/q)^2 - (p/q)\;.
 \]
 
 \newpage

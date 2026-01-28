@@ -24,6 +24,7 @@ sums of random variables in the next chapter.
 In probability theory there are several different notions of convergence and in
 this section we will define and relate them.
 
+\begin{mdframed}[innertopmargin=0pt]
 \begin{definition}[Types of Convergence]
     \label{def: types of convergence}
     A sequence of random variables \((X_n)_{n\in \nat}\) in a normed
@@ -88,6 +89,7 @@ this section we will define and relate them.
         X_n \overset{(\cdot)}\to X \quad \text{and} \quad X_n \overset{(\cdot)}\to Y \implies X \overset{\as}= Y.
     \]
 \end{definition}
+\end{mdframed}
 
 \begin{remark}[Generalization to metric spaces]
     Except for convergence in \(L^p\), the definitions may be extended in the
@@ -181,6 +183,7 @@ close friend of ours as we will make frequent use of it (or its corollary)
 in the following sections. It may be the most used inequality in probability
 theory.
 
+\begin{mdframed}[innertopmargin=0pt]
 \begin{theorem}[Markov inequality]
     \label{thm: markov inequality}
     Let \(I\subseteq \real\) be an interval, \(h\colon I\to (0, \infty)\) a
@@ -190,6 +193,7 @@ theory.
         \Prob{X \ge t} \le \frac{\Exp{h(X)}}{h(t)}.
     \]
 \end{theorem}
+\end{mdframed}
 
 \begin{corollary}[Chebyshev inequality]
     \label{cor: markov inequality Lp}
@@ -987,7 +991,7 @@ following theorem.
     \(\norm{X-Y}_{L^p} = 0\) if and only if \(\Prob{X=Y}=1 \overset{\text{def.}}\iff X\overset{\as}= Y\).
 \end{fact}
 \begin{proof}[Proofsketch]
-    Measure theory: \(f\ge 0\), \(\int f d\mu = 0\) 
+    Measure theory: \(f\ge 0\) and \(\int f d\mu = 0\) 
     implies \(\mu(f\neq 0) = 0\).
 \end{proof}
 
@@ -1217,7 +1221,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
         \item Let \(\pi : L^2 \to \real^\perp\) be the orthogonal projection
         onto \(\real^\perp\). Show that
         \[
-            \Cov{X}{Y}
+            \cov{X}{Y}
             = \inner{\pi(X), Y}_{L^2}
             = \inner{X, \pi(Y)}_{L^2}
             = \inner{\pi(X), \pi(Y)}_{L^2}
@@ -1331,7 +1335,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 
  		\textbf{Hint:}
             Use \(\E[X]=\int_0^\infty \Pr(X\ge t)dt = \int_0^\infty \Pr(X>t)dt\)
-            to prove
+            for \(X\ge 0\) to prove
             \[
                 \Exp{\abs{X-m_2}} - \Exp{\abs{X-m_1}}
                 = \int_{m_1}^{m_2} \underbrace{\Prob{X\le x} - \Prob{X>x}}_{=2F(x)-1}dx
@@ -1533,8 +1537,7 @@ its analogue for real-valued sequences.
     and use the definition of the limits superior and inferior.
 \end{proof}
 
-
-
+\begin{mdframed}[innertopmargin=0pt]
 \begin{theorem}[Borel-Cantelli Lemmas]
     \label{thm: borel-cantelli}
     Let \((A_n)_{n=1}^\infty\) be a sequence of events. Then
@@ -1548,6 +1551,7 @@ its analogue for real-valued sequences.
         \sum_{n=1}^\infty \Prob{A_n}=\infty& &\implies& &\Prob[\Big]{\limsup_{n\to \infty} A_n}=1.
     \end{alignat}
 \end{theorem}
+\end{mdframed}
 
 A direct consequence of the Borel-Cantelli lemmas \eqref{eq: borel cantelli 1} and
 \eqref{eq: borel cantelli 2} is the following \(0\)-\(1\) law.
@@ -1608,7 +1612,7 @@ Where we used that \(\sum_{n=1}^\infty \Prob{A_n} = \infty\) and \(\exp(-x)\to 0
 
 \begin{remark}[Pairwise independence]
     \label{rem: pairwise independence}
-    With significantly more effort it is possible to generalize the
+    With more effort it is possible to generalize the
     Borel-Cantelli Lemma 2 \eqref{eq: borel cantelli 2} to require only
     \underline{pairwise} independence.\fxwarning{reference: ask Leif.}
 \end{remark}
@@ -1616,6 +1620,7 @@ Where we used that \(\sum_{n=1}^\infty \Prob{A_n} = \infty\) and \(\exp(-x)\to 0
 The Borel-Cantelli lemmas now lead to the following characterization of almost
 sure convergence.
 
+\begin{mdframed}[innertopmargin=0pt]
 \begin{corollary}[Characterization of almost sure convergence]
     \label{cor: characterization of almost sure convergence}
     Let \((X_n)_{n=1}^\infty\) be a sequence of random variables and \(X\) another random variable.
@@ -1638,6 +1643,7 @@ sure convergence.
     In the independent case this implies a \(0\)-\(1\) law: If the probability of
     convergence is greater zero it must be one!
 \end{corollary}
+\end{mdframed}
 
 This corollary shows that almost sure convergence simply means that we have
 ``fast enough'' convergence in probability such that sequence of
@@ -1701,9 +1707,9 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
 
 
 \begin{proof}
-    By convergence in probability, we have for every \(\epsilon >0\),
-    in particular \(\epsilon =\frac1k\) for \(k\in \nat\), that
-    there exists an \(N_k\) such that for all \(n \ge N_k\)
+    By convergence in probability we have for every \(\epsilon >0\),
+    in particular \(\epsilon =\frac1k\), that
+    there exists \(N_k\) such that for all \(n \ge N_k\)
     \[
         \Prob{\norm{X_n - X} \ge \tfrac1k} \le \tfrac1{2^k}.
     \]
@@ -1829,10 +1835,10 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
     the ``Law of truly large numbers''.
     Prove it!
     \begin{enumerate}[label={\emph{Level \arabic*:}},leftmargin=4em,noitemsep]
-        \item Assume the keys hit are independent and uniformly distributed.
-        \item Assume the keys hit are iid with a probability distribution that
+        \item Assume the hit keys are independent and uniformly distributed.
+        \item Assume the hit keys are iid with a probability distribution that
         assigns each of the (finite) keys a positive probability.
-        \item Assume the keys hit are a stationary Markov chain whose transition
+        \item Assume the hit keys are a stationary Markov chain whose transition
         probabilities from key \(x\) to key \(y\) are positive for all pairs
         \(x,y\) from the (finite) alphabet.
     \end{enumerate}
@@ -1921,6 +1927,7 @@ functions. In essence we would like that \(f(X_n)\) converges to \(f(X)\)
 whenever \(X_n\) converges to \(X\) and \(f\) is continuous.
 Our next result shows that this is mostly the case.
 
+\begin{mdframed}[innertopmargin=0pt]
 \begin{theorem}[Continuous mapping]
     \label{thm: continuous mapping}
     Let \((\domain, \norm{\cdot})\) and \((\range, \norm{\cdot})\) be normed
@@ -1936,6 +1943,8 @@ Our next result shows that this is mostly the case.
         then \(f(X_n) \overset{L^p}\to f(X)\).
     \end{enumerate}
 \end{theorem}
+\end{mdframed}
+
 \begin{remark}[Generalization]
     The normed vectorspace is only necessary for \(L^p\) convergence. The other
     implications also hold in metric spaces.
@@ -1951,6 +1960,7 @@ if its components do. The second important result of this section
 is therefore the following theorem that shows that for most convergence
 concepts the convergence of the components is sufficient.
 
+\begin{mdframed}[innertopmargin=0pt]
 \begin{theorem}[Joint convergence]
     \label{thm: joint convergence} Let \((X_n)_{n\in \nat}\) and \(X\) be
     random variables in \(\real^\dims\) and  \((Y_n)_{n\in
@@ -1978,6 +1988,7 @@ concepts the convergence of the components is sufficient.
         then \(X_n \overset{d}\to X\).
     \end{enumerate}
 \end{theorem}
+\end{mdframed}
 
 The statements for convergence in distribution \ref{it: joint conv law slutsky}
 and \ref{it: joint conv law cramer wold} are weaker on purpose as the general

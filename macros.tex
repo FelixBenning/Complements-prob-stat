@@ -39,10 +39,12 @@
 \DeclarePairedDelimiter{\norm}{\|}{\|}
 \DeclarePairedDelimiter{\inner}{\langle}{\rangle}
 \DeclarePairedDelimiterXPP{\Exp}[1]{\E}{[}{]}{}{#1}
-\DeclarePairedDelimiterXPP{\Var}[1]{\varSymb}{[}{]}{}{#1}
-\DeclarePairedDelimiterXPP{\Cov}[2]{\covSymb}{[}{]}{}{#1, #2}
-\newcommand*{\covSymb}{\mathrm{Cov}}
-\newcommand*{\varSymb}{\mathrm{Var}}
+\DeclarePairedDelimiterXPP{\var}[1]{\varSymb}{[}{]}{}{#1}
+\DeclarePairedDelimiterXPP{\cov}[2]{\covSymb}{[}{]}{}{#1, #2}
+\DeclarePairedDelimiterXPP{\Cov}[1]{\CovSymb}{[}{]}{}{#1}
+\newcommand*{\covSymb}{\mathrm{cov}}
+\newcommand*{\varSymb}{\mathrm{var}}
+\newcommand*{\CovSymb}{\mathrm{Cov}}
 \DeclarePairedDelimiterXPP{\Prob}[1]{\Pr}{(}{)}{}{#1}
 \NewDocumentCommand{\Indicator}{s m}{%
   \IfBooleanTF{#1}
@@ -99,6 +101,7 @@
 
 % Linear Algebra
 \DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\tr}{tr}
 \DeclareMathOperator{\Span}{span}
 \newcommand{\identity}{\mathbb{I}}
 \newcommand*{\transpose}{T}
