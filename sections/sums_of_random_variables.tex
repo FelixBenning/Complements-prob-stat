@@ -370,13 +370,21 @@ If this function \(\MGF_{X_1}\) characterizes the distribution of \(X_1\) like a
 distribution function and the above converges in \(n\), then we obtain the
 limiting distribution of \(\sqrt{n}\,\mean{X}_n\). The reason \eqref{eq: means
 and moment generating functions} would converge in \(n\) is that
-\(\frac{t}{\sqrt{n}}\) converges to \(0\) so the Taylor approximation of
-\(\MGF_{X_1}\) becomes asymptotically accurate and then we essentially apply
-the compound interest formula \((1 + 0x + \frac{x^2}n)^n \to \exp(x^2)\). Here the key is, that
-the Taylor coefficients of the ``moment generating function'' \(\MGF_X\)
-will be the moments \(\Exp{X^n}\) and the first moment, the ``expectation'' is assumed
-to be zero. The behavior of the moment generating function close to
-zero is therefore determined by the Variance (second moment).
+\begin{enumerate}[label=\textbf{Step \arabic*:},itemindent=2em]
+    \item \(\frac{t}{\sqrt{n}}\) converges to \(0\) so the Taylor approximation
+    of \(\MGF_{X_1}\) becomes asymptotically accurate 
+    \item the Taylor coefficients of \(\MGF_{X_1}\) will be exactly the moments
+    \(\Exp{X_1^k}\), consequently
+    \[
+        \MGF_{X_1}(t) = \underbrace{\Exp{X^0}}_{=1} + \underbrace{\Exp{X^1}}_{=0} t + \underbrace{\Exp{X^2}}_{\sigma^2} \frac{t^2}{2} + \dots
+    \]
+    \item the last step is an application of \((1+\frac{x}n)^n \to e^x\), the
+    compound interest formula to get
+    \[
+        \MGF_{X_1}(\tfrac{t}{\sqrt{n}})^n
+        = (1 + \tfrac{\sigma^2 t^2}{2n} + \dots)^n \to \exp(\tfrac{\sigma^2 t^2}2).
+    \]
+\end{enumerate}
 A wrinkle in this strategy is that \(\Exp{\exp(tX_1)}\) may be infinite. The
 solution to this problem is to consider complex \(t\).
 
@@ -663,17 +671,17 @@ with its definition and the calculation of its characteristic function.
 \end{remark}
 \begin{proof}[Proof (Definition \ref{def: univariate normal distribution} is well defined)]
     We delay the proof that the density \eqref{eq: standard normal density} integrates to one
-    to \fxwarning{add ref}. The equivalence of the definitions of the
+    to Lemma \ref{lem: standard normal density integrates to one}. The equivalence of the definitions of the
     normal distribution follows from a calculation of the moment generating and
     characteristic functions due to the uniqueness of these functions (Fact
-    \ref{fact: uniqueness of mgf and char fct}). Let us
-    start with the moment generating function. We have assuming \ref{it: standard
-    normal}
+    \ref{fact: uniqueness of mgf and char fct}). We start with the moment
+    generating function. Assuming \ref{it: standard
+    normal} we have
     \begin{equation}
         \label{eq: mgf normal calculation}    
         \MGF_X(t) = \MGF_{\mu + \sigma Y}(t) = \Exp{e^{t(\mu + \sigma Y)}} = e^{\mu t}\MGF_Y(\sigma t)
     \end{equation}
-    and thus it suffices to calculate the moment generating function \(\MGF_Y\). We have
+    and thus it suffices to calculate the moment generating function \(\MGF_Y\),
     \[
         \MGF_Y(t)
         = \int_\real \exp(tx) \frac1{\sqrt{2\pi}}
@@ -1098,6 +1106,53 @@ normal distribution. To do so we require the concept of covariance matrices.
     need to justify the existence of a density.
 \end{proof}
 
+In light of this rotation invariant characterization the following proof that
+the normal distribution is a density is perhaps less surprising:
+
+\begin{lemma}[Standard normal density integrates to one]
+    \label{lem: standard normal density integrates to one}
+    The density of the standard normal distribution integrates to one, that is
+    \[
+        I \coloneq \int \exp\bigl(-\tfrac{x^2}{2}\bigr) dx = \sqrt{2\pi}.
+    \]
+\end{lemma}
+\begin{proof}
+We will show that $I^2=2\pi$. We observe that
+\begin{align*}
+I\times I ={} & 
+\left(\int_{-\infty}^{\infty} \exp\left(-\frac{x^2}{2}\right) \mathrm{d}x \right)
+\left(\int_{-\infty}^{\infty} \exp\left(-\frac{y^2}{2}\right) \mathrm{d}y \right)\\
+={} & 
+\int_{-\infty}^{\infty}
+\int_{-\infty}^{\infty}
+\exp\left(-\frac{x^2+y^2}{2}\right) \mathrm{d}x\mathrm{d}y
+\end{align*}
+Here the squared radius \(r^2 = x^2 + y^2\) appears naturally in the exponent.
+We evaluate this integral using polar coordinates. We change variables from $(x,y)$ to $(r,\theta)$ by using the transformation
+\[
+    x \coloneqq r \cos\theta, \qquad y \coloneqq r \sin\theta.
+\]
+The Jacobian determinant of this transformation is
+\[
+\left|\begin{pmatrix}
+\frac{\partial x}{\partial r} & \frac{\partial y}{\partial r} \\
+\frac{\partial x}{\partial \theta} & \frac{\partial y}{\partial \theta} \\
+\end{pmatrix}\right| 
+= \left|\begin{pmatrix}
+\cos\theta & \sin\theta \\
+-r\sin\theta & r\cos\theta \\
+\end{pmatrix}\right| = r(\cos^2\theta + \sin^2\theta) = r\;.
+\]
+Therefore,
+\[
+I\times I = 
+\int_{0}^\infty \int_{0}^{2\pi} e^{-\frac{r^2}{2}} \, r \, \mathrm{d}\theta \mathrm{d}r = 
+2\pi \int_0^\infty e^{-\frac{r^2}{2}} \, r \, \mathrm{d}r 
+= 2\pi \left[-e^{-\frac{r^2}{2}}\right]_{0}^{\infty}
+=  2\pi \;.
+\qedhere
+\]
+\end{proof}
 
 \subsection*{Exercises}
 
@@ -1277,6 +1332,7 @@ normal distribution. To do so we require the concept of covariance matrices.
 \end{exercise}
 
 \begin{exercise}[Cumulants]
+    \label{ex: cumulants}
     The logarithm of the moment generating function
     \[
         \Lambda_X(t) = \log \MGF_X(t)
@@ -1305,19 +1361,126 @@ normal distribution. To do so we require the concept of covariance matrices.
 \section{Large Deviations: Concentration inequalities}
 \label{sec: concentration inequalities}
 
-Observe that quantitative bounds on 
-\(
-    \Prob[\big]{\norm{X_n - X} \ge \epsilon}
-\)
-are somehow more useful than just knowing (the rate of) convergence. This
-is because \(n\), albeit possibly very large, is always finite in practice. It
-is therefore often much more meaningful to make ``probably, approximately
-correct'' (PAC) statements, that is
+In the previous section was concerned with the distribution of \emph{typical deviations} of
+the mean, which were of order \(\frac1{\sqrt{n}}\). The purpose of this section is two-fold. First, we want to understand
+how fast the probability of \emph{large deviations} of constant order \(1\) decay with \(n\).
+Second, we want more quantitative bounds on the deviation probability.
+Observe that the central limit theorem only gives an asymptotic statement:
+``If \(n\to\infty\), then...''. However in practice \(n\) is always finite.
+And we can never be sure that the normal distribution is really a good
+approximation of the distribution at finite \(n\).
+\begin{quotation}
+    ``In the long run we are all dead'' -- John Maynard Keynes 
+\end{quotation}
+It is a lucky coincidence that the tools to analyze large deviations are also
+better suited to provide quantitative bounds. Quantitative versions of the CLT
+also exist, but they come at the price of much greater difficulty.
 
+With a quantitative bound we mean that we want an explicit upper bound
+\[
+    \Prob[\big]{\norm{X_n - X} \ge \epsilon} \le \delta
+\]
+for a fixed \(n\) instead of just the statement that this probability goes to zero as
+\(n\to\infty\). Such statements are also know as ``probably, approximately
+correct'' (PAC) statements, that is
 \begin{quote}
-``with probability at least \(1-\delta\), we have \(\norm{X_n - X} < \epsilon\) for a
-specific \(n\in \nat\)''.
+``with probability at least \(1-\delta\) (probably), we have \(\norm{X_n - X} <
+\epsilon\) (approximately) for a specific \(n\in \nat\)''.
 \end{quote}
+Recall that the only tool we have used so far to bound probabilities is the
+Markov inequality (Theorem \ref{thm: markov inequality})
+\[
+    \Prob{ X \ge a} \le \frac{\Exp{h(X)}}{h(a)}
+\]
+And since probabilists are apparently not every imaginative, this is also how we
+proceed in this section. The choice \(h(x) = e^{tx}\), where \(t\ge 0\)
+ensures that \(h\) is increasing, results in the ``\textbf{Chernoff bound}''
+\[
+    \Prob{X \ge a}
+    \le \frac{\Exp{e^{t  X}}}{e^{t a}}
+    = \frac{\MGF_X(t)}{e^{t a}}
+    = \exp\bigl(-\bigl(t a - \underbrace{\log \MGF_X(t)}_{=\Lambda_X(t)}\bigr)\bigr).
+\]
+This of course assumes that \(X\) has a finite moment generating function.
+Note that we cannot use the characteristic function here, since
+the Markov inequality requires non-negative, and in particular real-valued,
+functions \(h\). We also only consider one dimensional random variables \(X\).
+The function \(\Lambda_X\) is the ``\textbf{cumulant generating function}'' or
+``log-laplace transform'' that you already encountered in Exercise \ref{ex:
+cumulants}.
+
+The key feature of the Chernoff bound is that it provides us with a parameter \(t\)
+that is not inherent to the problem of bounding \(\Prob{X \ge a}\). This allows us
+to optimize over \(t\)
+\[
+    \Lambda^+_X(a) \coloneq \sup_{t\ge 0} \bigl( t a - \Lambda_X(t) \bigr).
+\]
+And we get the optimized bound
+\[
+    \Prob{X \ge a} \le \exp\bigl(-\Lambda^+_X(a)\bigr).
+\]
+
+
+For concentration bounds we simply use
+\[\begin{aligned}
+    \Prob{\abs{X} \ge a}
+    &= \Prob{X \ge a} + \Prob{-X \ge a}
+    \\
+    &\le \exp\bigl(-\Lambda^+_X(a)\bigr) + \exp\bigl(-\Lambda^+_{-X}(a)\bigr)
+\end{aligned}\]
+Now that we developed such a nice tool, can we actually calculate \(\Lambda^+_X\) in
+practice?
+
+\subsection{Subgaussian random variables}
+
+Subgaussian random variables have tails that decay at least as fast as the
+Gaussian distribution. That is
+\[
+    \Prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{2\sigma^2}\bigr)
+\]
+While this is the intuition this bound does not interact with summation as nice
+as the cumulant generating function so we would actually like to convert this
+into a bound on the moment generating function. The following theorem
+shows that this is possible.
+
+\begin{theorem}[Sub-gaussian equivalences]
+    \label{thm: subgaussian equivalences}
+    Let \(X\) be a random variable. The following are equivalent; the
+    parameters \(K_i>0\) appearing in these statements differ from
+    each other at most a constant factor that is independent from the
+    specific \(X\).
+    \begin{enumerate}[label=(\roman*), noitemsep]
+        \item There exists \(K_1 > 0\) such that the tails of \(X\) satisfy
+        \[
+            \Prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{2K_1^2}\bigr)
+            \qquad\text{for all } t > 0.
+        \]
+        \item There exists \(K_2 > 0\) such that the moments of \(X\) satisfy
+        \[
+            \bigl(\Exp{\abs{X}^p}\bigr)^{1/p} \le K_2 \sqrt{p}
+            \qquad\text{for all } p\ge 1.
+        \]
+        \item There exists \(K_3 >0\) such that the MGF of \(X^2\) satisfies
+        \[
+            \Exp{\exp(\lambda^2 X^2)} \le \exp(K_3^2 \lambda^2)
+            \qquad\text{for all } \lambda \text{ such that } \abs{\lambda} < \frac1{K_3}.
+        \]
+        \item There exists \(K_4 > 0\) such that the MGF of \(X^2\) is
+        bounded at some point, that is
+        \[
+            \Exp{\exp\bigl(\tfrac{X^2}{K_4}\bigr)} \le 2.
+        \]
+    \end{enumerate}
+    If \(\Exp{X} = 0\), then these are also equivalent to
+    \begin{enumerate}[label=(\roman*), resume, noitemsep]
+        \item There exists \(K_5 > 0\) such that the MGF of \(X\) satisfies
+        \[
+            \Exp{\exp(t X)} \le \exp\bigl(\tfrac{K_5^2 t^2}2\bigr)
+            \qquad\text{for all } t\in \real.
+        \]
+    \end{enumerate} 
+\end{theorem}
+
 
 The main tool to obtain sharp bounds on probabilities is 
 
