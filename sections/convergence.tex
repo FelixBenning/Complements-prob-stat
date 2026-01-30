@@ -1016,74 +1016,78 @@ following theorem.
     \]
 \end{remark}
 
-The key result to prove the seminorm properties in Theorem \ref{thm: seminorm properties}
-is the following inequality.
-
-\begin{theorem}[Hölder's inequality]
-    \label{thm: Hölder inequality}
-    For \(p,q >1\) with \(\frac1p + \frac1q = 1\) we have
-    for \(X \in \cL^p(\real)\) and \(Y\in \cL^q(\real)\) 
+It turns out that proving the seminorm properties (Theorem \ref{thm: seminorm
+properties}), is easier in a more general setting. Observe that
+\[
+    \norm{X}_{L^p} = \inf\Set[\Big]{\lambda > 0 : \Exp[\Big]{\bigl(\tfrac{\norm{X}}{\lambda}\bigr)^p} \le 1}.
+\]
+consequently with \(\psi(x) = x^p\) the \(L^p\) norm is a special case of
+an ``Orlicz norm''.
+\begin{definition}[Orclitz norm]
+    \label{def: orlicz norm}
+    Let \(\psi\colon [0,\infty) \to [0,\infty)\) be a non-decreasing, convex function
+    with \(\psi(0) = 0\) and \(\lim_{x\to \infty} \psi(x) = \infty\). Then we define
+    for \(X\colon \Omega \to \domain\)
     \[
-        \Exp{\abs{XY}} \le \Exp{\abs{X}^p}^{\frac1p}\Exp{\abs{Y}^q}^{\frac1q} = \norm{X}_{L^p} \norm{Y}_{L^q}.
+        \norm{X}_{\psi} \coloneq \inf\Set[\Big]{\lambda > 0 : \Exp[\Big]{\psi\bigl(\tfrac{\norm{X}}{\lambda}\bigr)} \le 1}.
     \]
+    Orclitz spaces are naturally \(\cL^\psi \coloneq \Set{X\colon \Omega \to \domain : \norm{X}_{\psi} < \infty}\).
+\end{definition}
+
+\begin{theorem}
+    The Orclitz norm is a seminorm.
 \end{theorem}
 \begin{proof}
-    Exercise \ref{ex: hölder's inequality}.
+    That the Orclitz norm is non-negative by definition of the infimum. The scaling
+    property follows from
+    \[\begin{aligned}
+        \norm{\alpha X}_{\psi}
+        &= \inf\Set[\Big]{\lambda > 0 : \Exp[\Big]{\psi\bigl(\tfrac{\abs{\alpha}\norm{X}}{\lambda}\bigr)} \le 1}
+        \\
+        \overset{\mu=\frac{\lambda}{\abs{\alpha}}}&= \abs{\alpha} \inf\Set[\Big]{\mu > 0 : \Exp[\Big]{\psi\bigl(\tfrac{\norm{X}}{\mu}\bigr)} \le 1}
+        &= |\alpha| \norm{X}_{\psi}.
+    \end{aligned}
+    \]
+
+    Let \(a\coloneq \norm{X}_{\psi}\) and \(b\coloneq \norm{Y}_{\psi}\). Then
+    for any \(\epsilon >0\) we have by definition of the Orlicz norm
+    \begin{equation}
+        \label{eq: orlicz epsilon}     
+        \Exp{\psi\bigl(\tfrac{\norm{X}}{a + \epsilon}\bigr)} \le 1,
+        \quad\text{and}\quad
+        \Exp{\psi\bigl(\tfrac{\norm{Y}}{b + \epsilon}\bigr)} \le 1.
+    \end{equation}
+    Using \(\lambda = \frac{a+\epsilon}{a+b+2\epsilon}\in[0,1]\) and thereby \(1-\lambda = \frac{b+\epsilon}{a+b+2\epsilon}\) we get
+    \[
+        \frac{\norm{X}+\norm{Y}}{a + b + 2\epsilon} = \lambda \frac{\norm{X}}{a + \epsilon} + (1-\lambda) \frac{\norm{Y}}{b + \epsilon}.
+    \]
+    By now we use that \(\psi\) is non-decreasing and convex:
+    \[\begin{aligned}
+        \Exp[\Big]{\psi\Bigl(\frac{\norm{X+Y}}{a + b + 2\epsilon}\Bigr)}
+        \overset{\text{non-dec.}}&\le \Exp[\Big]{\psi\Bigl(\frac{\norm{X}+\norm{Y}}{a + b + 2\epsilon}\Bigr)}
+        \\
+        \overset{\text{conv.}}&\le \lambda \Exp[\Big]{\psi\Bigl(\frac{X}{a + \epsilon}\Bigr)} + (1-\lambda) \Exp[\Big]{\psi\Bigl(\frac{Y}{b + \epsilon}\Bigr)}
+        \\
+        \overset{\ref{eq: orlicz epsilon}}&\le \lambda + (1-\lambda) = 1.
+    \end{aligned}
+    \]
+    Thus by definition of the Orlicz norm we have shown
+    \[
+        \norm{X + Y}_{\psi} \le a + b + 2\epsilon
+        \overset{\text{def.}}= \norm{X}_{\psi} + \norm{Y}_{\psi} + 2\epsilon.
+    \]
+    As this is true for any \(\epsilon > 0\), we have shown the triangle inequality.
 \end{proof}
 
-Using this inequality we can now prove Theorem \ref{thm: seminorm properties}
+Again we have that the norm of differences is only zero for almost surely equal
+random variables.
 
-\begin{proof}[Proof of Theorem \ref{thm: seminorm properties}]
-    The properties \ref{it: positive} and \ref{it: scaling} follow
-    directly from the definition and are left as an exercise. For
-    the norm domination \eqref{eq: Lp norm domination}
-    we assume without loss of generality for \(p< q\). We use \(r \coloneq
-    \frac{q}p>1\) and \(s \coloneq \frac{p}{q-p}>1\) such that \(\frac1{r} +
-    \frac1{s} = 1\). Then
-    \[
-    \begin{aligned}
-        \norm{X}_{L^p}^p = \Exp{\norm{X}^p}
-        &= \Exp{\abs{\norm{X}^p \cdot 1}}
-        \\
-        \overset{\text{Hölder}}&\le \Exp{\norm{X}^{pr}}^{\frac1r} \Exp{1^s}^{\frac1s}
-        = \Exp{\norm{X}^q}^{\frac{p}q}
-        = \norm{X}_{L^q}^p.
-    \end{aligned}
-    \]
-    Taking the \(p\)-th root implies the claim.
-    What is left is only the triangle inequality \ref{it: triangle inequality},
-    which is the most difficult part to prove. Due to this difficulty
-    it has its own name the ``Minkowski inequality''. We start with a
-    simple application of the triangle inequality for real numbers:
-    \[\begin{aligned}
-        \norm{X+ Y}_{L^p}^p
-        &= \Exp{\norm{X + Y}^p}
-        \\
-        &\le \Exp[\Big]{\norm{X+Y}^{p-1} \norm{X}} + \Exp[\Big]{\norm{X+Y}^{p-1} \norm{Y}}.
-    \end{aligned}
-    \]
-    We then define
-    \(q \coloneq \frac{p}{p-1}\) such that \(\frac1p + \frac1q = 1\).
-    We may therefore apply Hölder's inequality to both terms to get
-    for the first term
-    \[
-        \Exp[\big]{\norm{X+Y}^{p-1} \norm{X}}
-        \overset{\text{Hölder}}\le \Exp[\Big]{\norm{X+Y}^{q(p-1)}}^{\frac1q} \Exp{\norm{X}^p}^{\frac1p}
-        = \norm{X+Y}_{L^p}^{p/q} \norm{X}_{L^p},
-    \]
-    and similarly \(\Exp[\big]{\norm{X+Y}^{p-1} \norm{Y}} \le \norm{X+Y}_{L^p}^{p/q}
-    \norm{Y}_{L^p}\) for the second.
-    Thus
-    \[
-        \norm{X+ Y}_{L^p}^p
-        \le \norm{X+Y}_{L^p}^{p/q} (\norm{X}_{L^p} + \norm{Y}_{L^p}).
-    \]
-    Since \(p - \frac{p}q = 1\) we can divide by \(\norm{X+Y}_{L^p}^{p/q}\)
-    to obtain
-    \[
-        \norm{X+ Y}_{L^p} = \norm{X+ Y}_{L^p}^{p-\frac{p}q} \le \norm{X}_{L^p} + \norm{Y}_{L^p}.
-        \qedhere
-    \]
+\begin{fact}
+    \(\norm{X-Y}_\psi = 0\) if and only if \(X\overset{\as}= Y\).
+\end{fact}
+\begin{proof}[Proofsketch]
+    This uses the property \(\lim_{x\to\infty} \psi(x) = \infty\) as \(\lambda
+    \to 0\) explodes the input if \(\norm{X}\) is non-zero.
 \end{proof}
 
 \begin{fact}[\(L^p\) is a Banach space]
@@ -1139,7 +1143,12 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
             In particular for \(x = a\) we have the claim.
         \end{solution}
 
-        \item Prove ``Hölder's inequality'' (Theorem \ref{thm: Hölder inequality})
+        \item Prove ``Hölder's inequality'' 
+        For \(p,q >1\) with \(\frac1p + \frac1q = 1\) we have
+        for \(X \in \cL^p(\real)\) and \(Y\in \cL^q(\real)\) 
+        \[
+            \Exp{\abs{XY}} \le \Exp{\abs{X}^p}^{\frac1p}\Exp{\abs{Y}^q}^{\frac1q} = \norm{X}_{L^p} \norm{Y}_{L^q}.
+        \]
 
         \textbf{Hint:} Apply Young's inequality to \(a =
         \frac{\norm{X}}{\norm{X}_{L^p}}\) and \(b = \frac{\norm{Y}}{\norm{Y}_{L^q}}\).
