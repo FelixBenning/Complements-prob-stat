@@ -310,7 +310,7 @@ assumption that the random variables are in \(L^1\).
 
 
 
-\section{Typical Deviations}
+\section{Typical Deviations: the central limit theorem}
 \marginpar{\red{Lecture 4}}
 
 In the previous section we have seen that the mean \(\mean{X}_n =
@@ -1157,13 +1157,14 @@ I\times I =
 \subsection*{Exercises}
 
 \begin{exercise}[Properties of moment generating functions]
+    \label{ex: properties moment generating functions}
     Let \(X, Y\) be random variables in a Hilbert space \(\hilbert\).
     Then
     \begin{enumerate}[label=(\alph*)]
         \item \(\MGF_X(0) = 1\).
-        \item \(\MGF_{X+Y}(h) = \MGF_X(h) \MGF_Y(h)\) for \(X,Y\) independent and all \(h\in \hilbert\).
         \item \(\MGF_{aX + b}(h) = e^{\inner{h,b}} \MGF_X(a h)\)
-        for any \(a\in \real\), \(b, h\in \hilbert\).
+        for any \(a\in \real\), \(b, h\in \hilbert\),
+        \item \(\MGF_{X+Y}(h) = \MGF_X(h) \MGF_Y(h)\) for \(X,Y\) independent and all \(h\in \hilbert\).
     \end{enumerate}
     Similarly we have for the characteristic function
     \begin{enumerate}[label=(\alph*), resume]
@@ -1331,34 +1332,7 @@ I\times I =
     \end{enumerate}
 \end{exercise}
 
-\begin{exercise}[Cumulants]
-    \label{ex: cumulants}
-    The logarithm of the moment generating function
-    \[
-        \Lambda_X(t) = \log \MGF_X(t)
-    \]
-    is known as the ``Cumulant generating function'' (or log-Laplace transform).
-    % Some authors define this function as \(\tilde{\Lambda}_X(t) = \log
-    % \charFct_X(t)\) instead, which is also known as
-    % the 2nd characteristic function.
-    \begin{lemma}
-        \(\MGF_X(t)\) is finite for \(t>0\) and thereby a power series if and only if the
-        cumulant generating function \(\Lambda_X(t) = \log(\MGF_X(t))\) is a
-        power series 
-        \[
-            \Lambda_X(t) = \sum_{k=1}^\infty \kappa_k \frac{t^k}{k!}.
-        \]
-    \end{lemma}
-    \begin{proof}
-        The argument is essentially that the composition of analytic functions
-        (power series) is analytic (cf. complex analysis). Since
-        \(\MGF_X(0) = \Exp{\abs{X}^0} = 1\) it thus sufficies that \(\log(1+x)\) is
-        a power series, which is the case.
-    \end{proof}
-    The coefficients \(\kappa_k\) of \(\Lambda_X\) are called ``cumulants''.
-\end{exercise}
-
-\section{Large Deviations: Concentration inequalities}
+\section{Large Deviations and concentration inequalities}
 \label{sec: concentration inequalities}
 
 In the previous section was concerned with the distribution of \emph{typical deviations} of
@@ -1390,7 +1364,7 @@ correct'' (PAC) statements, that is
 Recall that the only tool we have used so far to bound probabilities is the
 Markov inequality (Theorem \ref{thm: markov inequality})
 \[
-    \Prob{ X \ge a} \le \frac{\Exp{h(X)}}{h(a)}
+    \Prob{ X \ge a} \le \tfrac{\Exp{h(X)}}{h(a)}.
 \]
 And since probabilists are apparently not every imaginative, this is also how we
 proceed in this section. The choice \(h(x) = e^{tx}\), where \(t\ge 0\)
@@ -1401,13 +1375,13 @@ ensures that \(h\) is increasing, results in the ``\textbf{Chernoff bound}''
     = \frac{\MGF_X(t)}{e^{t a}}
     = \exp\bigl(-\bigl(t a - \underbrace{\log \MGF_X(t)}_{=\Lambda_X(t)}\bigr)\bigr).
 \]
-This of course assumes that \(X\) has a finite moment generating function.
-Note that we cannot use the characteristic function here, since
-the Markov inequality requires non-negative, and in particular real-valued,
-functions \(h\). We also only consider one dimensional random variables \(X\).
-The function \(\Lambda_X\) is the ``\textbf{cumulant generating function}'' or
-``log-laplace transform'' that you already encountered in Exercise \ref{ex:
-cumulants}.
+If the moment generating function of \(X\) is not finite, then this bound is
+of course vacuous. Note that we cannot use the characteristic function here,
+since the Markov inequality requires non-negative, and in particular
+real-valued, functions \(h\). We also only consider one dimensional random
+variables \(X\).  The function \(\Lambda_X\) is the ``\textbf{cumulant
+generating function}'' (CGF) or ``log-laplace transform'' that will be our main object
+of study in this section.
 
 The key feature of the Chernoff bound is that it provides us with a parameter \(t\)
 that is not inherent to the problem of bounding \(\Prob{X \ge a}\). This allows for
@@ -1420,20 +1394,68 @@ The optimized bound is then given by
     \label{eq: chernoff bound}    
     \Prob{X \ge a} \le \exp\bigl(-\Lambda^+_X(a)\bigr).
 \end{equation}
-For concentration bounds we will simply use
-\[\begin{aligned}
-    \Prob{\abs{X} \ge a}
-    &= \Prob{X \ge a} + \Prob{-X \ge a}
-    \\
-    &\le \exp\bigl(-\Lambda^+_X(a)\bigr) + \exp\bigl(-\Lambda^+_{-X}(a)\bigr)
-\end{aligned}\]
-For the calculation of \(\Lambda_X^+\) a few nice properties of the cumulant
-generating function \(\Lambda_X\) are useful.
-\begin{lemma}[Properties of the cumulant generating function]
-    Let \(X\) be a random variable. Then
+
+\begin{example}[The normal distribution]
+    Let \(X \sim \normal{\mu, \sigma^2}\). 
+    Recall that the moment generating function of the normal distribution was
+    \(\MGF_X(t) = \exp(\mu t + \frac12 \sigma^2 t^2)\) (Definition \ref{def:
+    univariate normal distribution}). Its CGF is then given by the quadratic
+    polynomial
+    \[
+        \Lambda_X(t) = \mu t + \tfrac12 \sigma^2 t^2.
+    \]
+    Thus
+    \[\begin{aligned}
+        \Lambda_X^+(a)
+        = \sup_{t\ge 0} \bigl(t a - \mu t - \tfrac12 \sigma^2 t^2\bigr)
+        &= \sup_{t\ge 0} \bigl(t (a - \mu) - \tfrac12 \sigma^2 t^2\bigr)
+        \\
+        &= \begin{cases}
+        \frac{(a - \mu)^2}{2\sigma^2}
+        \qquad &\text{for } a \ge \mu,
+        \\
+        0 &\text{for } a \le \mu.
+        \end{cases}
+    \end{aligned}\]
+    The last step follows from simple optimization -- setting the derivative to zero.
+    Observe that if \(\Lambda_X^+(a) = 0\), then the Chernoff bound \eqref{eq: chernoff bound}
+    is \(1\) which is not very helpful since probabilities are always bounded by \(1\).
+    The only useful case is thus \(a \ge \mu\), in which we get that
+    the tail of the normal distribution decays like a squared exponential in the
+    distance \((a-\mu)\) to the mean, that is
+    \[
+        \Prob{X \ge a}
+        \le \exp\bigl(- \tfrac{(a - \mu)^2}{2\sigma^2}\bigr)
+        \qquad\text{for } a \ge \mu.
+    \]
+    Or equivalently, with \(\epsilon = a - \mu > 0\)
+    \[
+        \Prob{X - \mu \ge \epsilon}
+        \le \exp(-\tfrac{\epsilon^2}{2\sigma^2})
+        \qquad\text{for } \epsilon \ge 0.
+    \]
+\end{example}
+
+% For concentration bounds we will simply use
+% \[\begin{aligned}
+%     \Prob{\abs{X} \ge a}
+%     &= \Prob{X \ge a} + \Prob{-X \ge a}
+%     \\
+%     &\le \exp\bigl(-\Lambda^+_X(a)\bigr) + \exp\bigl(-\Lambda^+_{-X}(a)\bigr)
+% \end{aligned}\]
+
+While these tail bounds on the normal distribution are nice, the real power of
+the Chernoff bound and the CGFs lies in their
+interaction with sums of independent random variables. Following
+directly from the corresponding properties of the MGF the CGF has the following
+basic properties (Exercise \ref{ex: properties moment generating functions}).
+
+
+\begin{lemma}[Basic properties]
+    Let \(X\) be a random variable. Then the cumulant generating function
+    \(\Lambda_X(t) = \log \MGF_X(t)\) has the following properties:
     \begin{enumerate}[label=(\roman*), noitemsep]
         \item \(\Lambda_X(0) = 0\).
-        \item \(\Lambda_X\) is convex.
         \item \(\Lambda_{aX + b}(t) = b t + \Lambda_X(a t)\) for any \(a, b \in \real\).
         \item\label{it: cumulant independent sums} Let \(Y\) be \underline{independent} from \(X\), then
         \[
@@ -1449,12 +1471,12 @@ generating function \(\Lambda_X\) are useful.
 \end{lemma}
 
 \begin{definition}[Cumulants]
-    The ``cumulants'' \(\cumulant_n^X\) are the coefficients of the Taylor
+    If they exist, the ``cumulants'' \(\cumulant_n^X\) are the coefficients of the Taylor
     series of the cumulant generating function
     \[
         \Lambda_X(t)
         = \sum_{n=1}^\infty \cumulant_n^X \frac{t^n}{n!}
-        = \sum_{n=1}^\infty \Lambda_X^{(n)}(0) \frac{t^n}{n!}
+        = \sum_{n=1}^\infty \Lambda_X^{(n)}(0) \frac{t^n}{n!}.
     \]
 \end{definition}
 
@@ -1470,16 +1492,16 @@ Bienaymé}) represents this property for the second order cumulants, since
 \(\cumulant_2^X = \var{X}\).
 
 \begin{remark}[Cumulants of normal distribution]
-    Recall that the moment generating function of the normal
-    distribution was \(\MGF_X(t) = \exp(\mu t + \frac12 \sigma^2 t^2)\)
-    (Definition \ref{def: univariate normal distribution}). Its cumulant generating function is consequently given by
+    Recall that the cumulant generating function of the 
+    normal distribution is a quadratic polynomial
     \[
-        \Lambda_X(t) = \mu t + \frac12 \sigma^2 t^2
+        \Lambda_X(t) = \mu t + \frac12 \sigma^2 t^2.
     \]
-    and thus all cumulants of order three and higher are zero! It is the only
-    distribution with this property and one can show that the cumulants of order
+    Thus all cumulants of order three and higher are zero! It is the only
+    distribution with this property. One can show that the cumulants of order
     three and higher vanish for \(\sqrt{n}\, \mean{X}_n\) as \(n\to\infty\)
-    (Exercise \ref{ex: cumulant CLT}).
+    (Exercise \ref{ex: cumulant CLT}) and thereby proof a weak form of the
+    central limit theorem.
 \end{remark}
 
 \begin{lemma}
@@ -1506,8 +1528,8 @@ Bienaymé}) represents this property for the second order cumulants, since
     \]
 \end{proof}
 
-Using the Chernoff bound \eqref{eq: chernoff bound} and the previous lemma we
-obtain exponential concentration bounds for the mean. Specifically,
+This Lemma with the Chernoff bound \eqref{eq: chernoff bound} implies
+exponential concentration bounds for the mean. Specifically,
 let \(X_1, \ldots, X_n\) be independent copies of the random variable \(X\) and
 \(\mean{X}_n\) their mean. Then
 \begin{equation}
@@ -1521,115 +1543,74 @@ so we would expect that \(\Lambda_X^+(a) = 0\) for \(a \le \Exp{X}\). And this
 should make us suspicious: Is \(\Lambda_X^+(a) > 0\) true for any \(a\) or is this
 bound useless?
 
-\begin{example}[The normal distribution]
-    Let \(X \sim \normal{\mu, \sigma^2}\). Then its cumulant generating function is
+\subsection{Large Deviations}
+
+\begin{definition}
+    The \emph{Fenchel-Legendre transform} of \(\CGF\) is given by
     \[
-        \Lambda_X(t) = \mu t + \tfrac12 \sigma^2 t^2.
+        \CGF^*(a) = \sup_{t\in \real^\dims} \Set[\big]{\langle t, a\rangle - \CGF(t)}.
     \]
-    Thus
-    \[\begin{aligned}
-        \Lambda_X^+(a)
-        = \sup_{t\ge 0} \bigl(t a - \mu t - \tfrac12 \sigma^2 t^2\bigr)
-        &= \sup_{t\ge 0} \bigl(t (a - \mu) - \tfrac12 \sigma^2 t^2\bigr)
-        \\
-        &= \begin{cases}
-        \frac{(a - \mu)^2}{2\sigma^2}
-        \qquad &\text{for } a > \mu,
-        \\
-        0 &\text{for } a \le \mu.
-        \end{cases}
-    \end{aligned}\]
-    The last step follows from simple optimization -- setting the derivative to zero.
-    Consequently, we have that the tail of the normal distribution decays
-    like a squared exponential in the distance \((a-\mu)\) to the mean
-    \[
-        \Prob{X \ge a}
-        \le \exp\bigl(- \tfrac{(a - \mu)^2}{2\sigma^2}\bigr)
-        \qquad\text{for } a > \mu.
-    \]
-    And by \eqref{eq: exponential concentration of the mean}
-    also have
-    \[
-        \Prob{\mean{X}_n \ge a}
-        \le \exp\bigl(-n \tfrac{(a - \mu)^2}{2\sigma^2}\bigr)
-        \qquad\text{for } a > \mu.
-    \]
-\end{example}
+\end{definition}
+
+\begin{theorem}[Cramér]
+    
+\end{theorem}
 
 \subsection{Subgaussian random variables}
 
 Subgaussian random variables have tails that decay at least as fast as the
 Gaussian distribution. That is
 \[
-    \Prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{2\sigma^2}\bigr)
+    \Prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{2\sigma^2}\bigr).
 \]
-While this is the intuition this bound does not interact with summation as nice
-as the cumulant generating function so we would actually like to convert this
-into a bound on the moment generating function. The following theorem
-shows that this is possible.
-
-\begin{theorem}[Sub-gaussian equivalences]
-    \label{thm: subgaussian equivalences}
-    Let \(X\) be a random variable. The following are equivalent; the
-    parameters \(K_i>0\) appearing in these statements differ from
-    each other at most a constant factor that is independent from the
-    specific \(X\).
-    \begin{enumerate}[label=(\roman*), noitemsep]
-        \item \textbf{Tail decay} There exists \(K_1 > 0\) such that the tails of \(X\) satisfy
-        \[
-            \Prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{2K_1^2}\bigr)
-            \qquad\text{for all } t > 0.
-        \]
-        \item \textbf{Moment decay} There exists \(K_2 > 0\) such that the moments of \(X\) satisfy
-        \[
-            \Exp{\abs{X}^p} \le K_2\, p\Gamma(\tfrac{p}2)
-            \qquad\text{for all } p\ge 1.
-        \]
-        or
-        \[
-            \bigl(\Exp{\abs{X}^p}\bigr)^{1/p} \le K_2 \sqrt{p}
-            \qquad\text{for all } p\ge 1.
-        \]
-        \item There exists \(K_3 >0\) such that the MGF of \(X^2\) satisfies
-        \[
-            \Exp{\exp(\lambda^2 X^2)} \le \exp(K_3^2 \lambda^2)
-            \qquad\text{for all } \lambda \text{ such that } \abs{\lambda} < \tfrac1{K_3}.
-        \]
-        \item \textbf{Orclitz norm} There exists \(K_4 > 0\) such that
-        \[
-            \Exp{\exp\bigl(\tfrac{X^2}{K_4^2}\bigr)} \le 2.
-        \]
-        That is for \(\psi_2(x) = \exp(x^2) - 1\) the Orclitz norm is finite
-        \[
-            \norm{X}_{\psi_2} \coloneq \inf\Set{t > 0 : \Exp{\psi_2(\abs{X}/t)} \le 1}
-            \le K_4.
-        \]
-    \end{enumerate}
-    If \(\Exp{X} = 0\), then these are also equivalent to
-    \begin{enumerate}[label=(\roman*), resume, noitemsep]
-        \item There exists \(K_5 > 0\) such that the MGF of \(X\) satisfies
-        \[
-            \Exp{\exp(t X)} \le \exp\bigl(\tfrac{K_5^2 t^2}2\bigr)
-            \qquad\text{for all } t\in \real.
-        \]
-    \end{enumerate} 
-\end{theorem}
+An important example would be bounded random variables, since the probability 
+that \(\abs{X} \ge t\) eventually drops to zero.
+Unfortunately tail bounds like this do not interact
+well with summation of random variables. We would therefore prefer bounds on the
+CGF instead to get tight bounds on the convergence rate of the mean. We will
+start by defining such bounds and find out later (Theorem \ref{thm: subgaussian
+equivalences}) that this is actually equivalent to the tail bound above in some
+sense.
 
 \begin{definition}[Variance proxy]
-    Let 
+    Let \(X\) be a \underline{centered} random variable, then
+    the \emph{variance proxy} of \(X\) is defined as
     \[
-        \sigma_X^2 \coloneq \inf\Set{\lambda \ge 0 : \Lambda_X(t) \le \tfrac{\lambda^2t^2}2 \quad \forall t}
+        \varProx{X} \coloneq \inf\Set{\lambda \ge 0 : \Lambda_X(t) \le \tfrac{\lambda^2t^2}2 \quad \forall t}
     \]
 \end{definition}
-\begin{remark}
-    Careful: The variance proxy is not a norm!
-\end{remark}
+
+Since the cumulant generating function of a normal distribution with variance
+\(\sigma^2\) is given by
+\[
+    \Lambda_X(t) = \log \MGF_X(t) = \tfrac{\sigma^2t^2}{2},
+\]
+the variance proxy \(\varProx{X}\) coincides with the variance \(\sigma^2\) in
+this case.
+
+\begin{lemma}[Basic properties of variance proxy]
+    Let \(X\) be a \underline{centered} random variable
+    \begin{enumerate}[label=(\roman*), noitemsep]
+        \item \(\varProx{a X} = a^2 \varProx{X}\) for any \(a\in \real\).
+        \item\label{it: variance proxy independent sums} Let \(Y\) be \underline{independent} from \(X\), then
+        \[
+            \varProx{X+Y} = \varProx{X} + \varProx{Y}.
+        \]
+    \end{enumerate}
+    In particular for the mean \(\mean{X}_n\) of independent centered \(X_i\),
+    we have
+    \[
+        \varProx{\mean{X}_n} = \frac1{n^2} \sum_{i=1}^n \varProx{X_i}
+        \overset{\substack{\text{identical}\\\text{distributed}}}= \frac{\varProx{X_1}}n.
+    \]
+\end{lemma}
+
 
 \begin{lemma}[Hoeffding's Lemma]
     Let \(X\) be a centered, bounded random variable, that is 
     \(\Exp{X}=0\) and \(X\in [a,b]\) with probability one. Then
     \[
-        \sigma_X^2 \le \frac{(b-a)^2}4.
+        \varProx{X} \le \tfrac{(b-a)^2}4.
     \]
 \end{lemma}
 \begin{proof}
@@ -1712,17 +1693,84 @@ shows that this is possible.
     the Taylor expansion with \eqref{eq: rademacher are worst offender}.
 \end{proof}
 
+\begin{theorem}[General Hoeffding's inequality]
+    Let \(X_1, \ldots, X_n\) be independent random variables, then we have
+    for all \(\epsilon > 0\)
+    \[
+        \Prob{\mean{X}_n - \Exp{\mean{X}_n} \ge \epsilon}
+        \le \exp\Bigl(-\frac{n \epsilon^2}{2\frac1n\sum_{i=1}^n \varProx{X_i}}\Bigr).
+    \]
+\end{theorem}
 
-The main tool to obtain sharp bounds on probabilities is 
+\begin{corollary}[Hoeffding's inequality for bounded random variables]
+    Let \(X_1, \ldots, X_n\) be independent random variables contained in
+    \([a,b]\), then we have
+    \[
+        \Prob[\Big]{\abs[\big]{\mean{X}_n - \Exp{\mean{X}_n}} \ge \epsilon}
+        \le 2 \exp\Bigl(-\frac{2n\epsilon^2}{(b-a)^2}\Bigr)
+    \]
+\end{corollary}
 
-Ideas:
-\begin{enumerate}
-    \item Large deviations: Normal deviations of order \(\sqrt{\frac1N}\) (Bienaymé)
-    \item Moment generating function, Cumulant generating function (interact well with sums)
-    \item Subgaussian: (Variance proxy norm, Orclitz Norm, Hoeffding)
-    \item Subexponential: (Bernstein inequality)
-    \item Gaussian concentration inequality for Lipschitz functions (Borel-TIS)
-\end{enumerate}
+\begin{theorem}[Subgaussian characterization]
+    \label{thm: subgaussian equivalences}
+    Let \(X\) be a random variable. The following are equivalent:
+    \begin{enumerate}[label=(\roman*), noitemsep]
+        \item \textbf{Tail decay:} There exists \(K_1 > 0\) such that the tails of \(X\) satisfy
+        \[
+            \Prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{2K_1^2}\bigr)
+            \qquad\text{for all } t > 0.
+        \]
+        \item \textbf{Moment decay:} There exists \(K_2 > 0\) such that the moments of \(X\) satisfy
+        \[
+            \Exp{\abs{X}^p} \le K_2\, p\Gamma(\tfrac{p}2)
+            \qquad\text{for all } p\ge 1.
+        \]
+        or equivalently,
+        \[
+            \bigl(\Exp{\abs{X}^p}\bigr)^{1/p} \le K_2' \sqrt{p}
+            \qquad\text{for all } p\ge 1.
+        \]
+        \item \textbf{\(X^2\) sub-exponential:} There exists \(K_3 >0\) such that the MGF of \(X^2\) satisfies
+        \[
+            \Exp{\exp(t^2 X^2)} \le \exp(K_3^2 t^2)
+            \qquad\text{for all } t \text{ with } \abs{t} < \tfrac1{K_3}.
+        \]
+        \item \textbf{Orlicz norm:} There exists \(K_4 > 0\) such that
+        \[
+            \Exp{\exp\bigl(\tfrac{X^2}{K_4^2}\bigr)} \le 2.
+        \]
+        In other words: for \(\psi_2(x) \coloneq \exp(x^2) - 1\) the Orlicz
+        norm (Definition \ref{def: orlicz norm}) is finite \[
+            \norm{X}_{\psi_2} \coloneq \inf\Set{t > 0 : \Exp{\psi_2(\tfrac{\abs{X}}t)} \le 1}
+            \le K_4 < \infty.
+        \]
+    \end{enumerate}
+    If \(\Exp{X} = 0\), then these are also equivalent to
+    \begin{enumerate}[label=(\roman*), resume, noitemsep]
+        \item\textbf{Variance proxy:} There exists \(K_5 > 0\) such that the MGF of \(X\) satisfies
+        \[
+            \Lambda_X(t) \le \tfrac{K_5^2 t^2}2
+            \qquad\text{for all } t\in \real.
+        \]
+        That is \(\varProx{X} \le K_5^2\).
+    \end{enumerate} 
+    The parameters \(K_i>0\) appearing in these statements differ from
+    each other by at most a constant factor that is independent from the
+    specific \(X\).
+\end{theorem}
+
+\subsection{Subexponential random variables}
+
+\begin{theorem}[Subexponential characterization]
+    
+\end{theorem}
+
+\begin{theorem}[Bernstein inequality]
+    
+\end{theorem}
+
+
+\subsection{Borel-TIS?}
 
 \subsection*{Exercises}
 

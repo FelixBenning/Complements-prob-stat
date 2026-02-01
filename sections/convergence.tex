@@ -1023,7 +1023,7 @@ properties}), is easier in a more general setting. Observe that
 \]
 consequently with \(\psi(x) = x^p\) the \(L^p\) norm is a special case of
 an ``Orlicz norm''.
-\begin{definition}[Orclitz norm]
+\begin{definition}[Orlicz norm]
     \label{def: orlicz norm}
     Let \(\psi\colon [0,\infty) \to [0,\infty)\) be a non-decreasing, convex function
     with \(\psi(0) = 0\) and \(\lim_{x\to \infty} \psi(x) = \infty\). Then we define
@@ -1031,14 +1031,14 @@ an ``Orlicz norm''.
     \[
         \norm{X}_{\psi} \coloneq \inf\Set[\Big]{\lambda > 0 : \Exp[\Big]{\psi\bigl(\tfrac{\norm{X}}{\lambda}\bigr)} \le 1}.
     \]
-    Orclitz spaces are naturally \(\cL^\psi \coloneq \Set{X\colon \Omega \to \domain : \norm{X}_{\psi} < \infty}\).
+    Orlicz spaces are naturally \(\cL^\psi \coloneq \Set{X\colon \Omega \to \domain : \norm{X}_{\psi} < \infty}\).
 \end{definition}
 
 \begin{theorem}
-    The Orclitz norm is a seminorm.
+    The Orlicz norm is a seminorm.
 \end{theorem}
 \begin{proof}
-    That the Orclitz norm is non-negative by definition of the infimum. The scaling
+    That the Orlicz norm is non-negative by definition of the infimum. The scaling
     property follows from
     \[\begin{aligned}
         \norm{\alpha X}_{\psi}
@@ -1086,7 +1086,7 @@ random variables.
     \(\norm{X}_\psi = 0\) if and only if \(X\overset{\as}= 0\).
 \end{fact}
 \begin{proof}[Proofsketch]
-    If \(X \overset{\as} 0\), then \(\psi(0)=0\) implies the Orclitz
+    If \(X \overset{\as} 0\), then \(\psi(0)=0\) implies the Orlicz
     norm is zero. The other direction uses the property \(\lim_{x\to\infty}
     \psi(x) = \infty\) as \(\lambda \to 0\) explodes the input if \(\norm{X}\)
     is non-zero.
