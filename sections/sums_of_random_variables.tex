@@ -1410,26 +1410,151 @@ The function \(\Lambda_X\) is the ``\textbf{cumulant generating function}'' or
 cumulants}.
 
 The key feature of the Chernoff bound is that it provides us with a parameter \(t\)
-that is not inherent to the problem of bounding \(\Prob{X \ge a}\). This allows us
-to optimize over \(t\)
+that is not inherent to the problem of bounding \(\Prob{X \ge a}\). This allows for
+an optimization over \(t\)
 \[
-    \Lambda^+_X(a) \coloneq \sup_{t\ge 0} \bigl( t a - \Lambda_X(t) \bigr).
+    \Lambda^+_X(a) \coloneq \sup_{t\ge 0} \bigl( t a - \Lambda_X(t) \bigr)
 \]
-And we get the optimized bound
-\[
+The optimized bound is then given by
+\begin{equation}
+    \label{eq: chernoff bound}    
     \Prob{X \ge a} \le \exp\bigl(-\Lambda^+_X(a)\bigr).
-\]
-
-
-For concentration bounds we simply use
+\end{equation}
+For concentration bounds we will simply use
 \[\begin{aligned}
     \Prob{\abs{X} \ge a}
     &= \Prob{X \ge a} + \Prob{-X \ge a}
     \\
     &\le \exp\bigl(-\Lambda^+_X(a)\bigr) + \exp\bigl(-\Lambda^+_{-X}(a)\bigr)
 \end{aligned}\]
-Now that we developed such a nice tool, can we actually calculate \(\Lambda^+_X\) in
-practice?
+For the calculation of \(\Lambda_X^+\) a few nice properties of the cumulant
+generating function \(\Lambda_X\) are useful.
+\begin{lemma}[Properties of the cumulant generating function]
+    Let \(X\) be a random variable. Then
+    \begin{enumerate}[label=(\roman*), noitemsep]
+        \item \(\Lambda_X(0) = 0\).
+        \item \(\Lambda_X\) is convex.
+        \item \(\Lambda_{aX + b}(t) = b t + \Lambda_X(a t)\) for any \(a, b \in \real\).
+        \item\label{it: cumulant independent sums} Let \(Y\) be \underline{independent} from \(X\), then
+        \[
+            \Lambda_{X+Y}(t) = \Lambda_X(t) + \Lambda_Y(t)
+        \]
+    \end{enumerate}
+    If the moment generating function is finite in a neighborhood of zero,
+    then \(\Lambda_X\) is infinitely often differentiable and
+    \begin{enumerate}[label=(\roman*), resume, noitemsep]
+        \item \(\Lambda_X'(0) = \Exp{X}\),
+        \item \(\Lambda_X''(0) = \var{X}\)
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}[Cumulants]
+    The ``cumulants'' \(\cumulant_n^X\) are the coefficients of the Taylor
+    series of the cumulant generating function
+    \[
+        \Lambda_X(t)
+        = \sum_{n=1}^\infty \cumulant_n^X \frac{t^n}{n!}
+        = \sum_{n=1}^\infty \Lambda_X^{(n)}(0) \frac{t^n}{n!}
+    \]
+\end{definition}
+
+Due to property \ref{it: cumulant independent sums} of the cumulant generating
+function, cumulants have the nice property
+\[
+    \cumulant_n^{X+Y} = \cumulant_n^X + \cumulant_n^Y
+\]
+for independent random variables \(X\) and \(Y\).
+This property is what makes them ``nicer'' compared to the moments that make
+up the coefficients of the moment generating function. Bienaymé (Lemma \ref{lem:
+Bienaymé}) represents this property for the second order cumulants, since
+\(\cumulant_2^X = \var{X}\).
+
+\begin{remark}[Cumulants of normal distribution]
+    Recall that the moment generating function of the normal
+    distribution was \(\MGF_X(t) = \exp(\mu t + \frac12 \sigma^2 t^2)\)
+    (Definition \ref{def: univariate normal distribution}). Its cumulant generating function is consequently given by
+    \[
+        \Lambda_X(t) = \mu t + \frac12 \sigma^2 t^2
+    \]
+    and thus all cumulants of order three and higher are zero! It is the only
+    distribution with this property and one can show that the cumulants of order
+    three and higher vanish for \(\sqrt{n}\, \mean{X}_n\) as \(n\to\infty\)
+    (Exercise \ref{ex: cumulant CLT}).
+\end{remark}
+
+\begin{lemma}
+    Let \(X_1, \ldots, X_n\) be independent copies of the random variable \(X\)
+    and \(\mean{X}_n\) their mean, then
+    \[
+        \Lambda_{\mean{X}_n}^+(t) = n \Lambda_X^+(t)
+    \]
+\end{lemma}
+\begin{proof}
+    Since the cumulant generating function of the sum \(\sum_{i=1}^n X_i\)
+    is \(n \Lambda_X(t)\) by independence, \ref{it: cumulant independent sums} and
+    the fact that the \(X_i\) are identically distributed, we have by the scaling property
+    \[
+        \Lambda_{\mean{X}_n}(t) = n \Lambda_X\bigl(\tfrac{t}n\bigr).
+    \]
+    Consequently
+    \[
+        \Lambda_{\mean{X}_n}^+(a)
+        = \sup_{t\ge 0} \bigl(n \tfrac{t}n a - n \Lambda_X(\tfrac{t}n)\bigr)
+        \overset{s=\frac{t}n}= n \sup_{s\ge 0} \bigl(s a - \Lambda_X(s)\bigr)
+        = n \Lambda_X^+(a).
+        \qedhere
+    \]
+\end{proof}
+
+Using the Chernoff bound \eqref{eq: chernoff bound} and the previous lemma we
+obtain exponential concentration bounds for the mean. Specifically,
+let \(X_1, \ldots, X_n\) be independent copies of the random variable \(X\) and
+\(\mean{X}_n\) their mean. Then
+\begin{equation}
+    \label{eq: exponential concentration of the mean}
+    \Prob{\mean{X}_n \ge a}
+    \le \exp\bigl(-n \Lambda_X^+(a)\bigr).
+\end{equation}
+Now if \(\Lambda_X^+(a) > 0\), then the probability that the mean exceeds \(a\)
+decays exponentially in \(n\). This would of course be weird if \(a \le \Exp{X}\)
+so we would expect that \(\Lambda_X^+(a) = 0\) for \(a \le \Exp{X}\). And this
+should make us suspicious: Is \(\Lambda_X^+(a) > 0\) true for any \(a\) or is this
+bound useless?
+
+\begin{example}[The normal distribution]
+    Let \(X \sim \normal{\mu, \sigma^2}\). Then its cumulant generating function is
+    \[
+        \Lambda_X(t) = \mu t + \tfrac12 \sigma^2 t^2.
+    \]
+    Thus
+    \[\begin{aligned}
+        \Lambda_X^+(a)
+        = \sup_{t\ge 0} \bigl(t a - \mu t - \tfrac12 \sigma^2 t^2\bigr)
+        &= \sup_{t\ge 0} \bigl(t (a - \mu) - \tfrac12 \sigma^2 t^2\bigr)
+        \\
+        &= \begin{cases}
+        \frac{(a - \mu)^2}{2\sigma^2}
+        \qquad &\text{for } a > \mu,
+        \\
+        0 &\text{for } a \le \mu.
+        \end{cases}
+    \end{aligned}\]
+    The last step follows from simple optimization -- setting the derivative to zero.
+    Consequently, we have that the tail of the normal distribution decays
+    like a squared exponential in the distance \((a-\mu)\) to the mean
+    \[
+        \Prob{X \ge a}
+        \le \exp\bigl(- \tfrac{(a - \mu)^2}{2\sigma^2}\bigr)
+        \qquad\text{for } a > \mu.
+    \]
+    And by \eqref{eq: exponential concentration of the mean}
+    also have
+    \[
+        \Prob{\mean{X}_n \ge a}
+        \le \exp\bigl(-n \tfrac{(a - \mu)^2}{2\sigma^2}\bigr)
+        \qquad\text{for } a > \mu.
+    \]
+\end{example}
 
 \subsection{Subgaussian random variables}
 
@@ -1450,12 +1575,17 @@ shows that this is possible.
     each other at most a constant factor that is independent from the
     specific \(X\).
     \begin{enumerate}[label=(\roman*), noitemsep]
-        \item There exists \(K_1 > 0\) such that the tails of \(X\) satisfy
+        \item \textbf{Tail decay} There exists \(K_1 > 0\) such that the tails of \(X\) satisfy
         \[
             \Prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{2K_1^2}\bigr)
             \qquad\text{for all } t > 0.
         \]
-        \item There exists \(K_2 > 0\) such that the moments of \(X\) satisfy
+        \item \textbf{Moment decay} There exists \(K_2 > 0\) such that the moments of \(X\) satisfy
+        \[
+            \Exp{\abs{X}^p} \le K_2\, p\Gamma(\tfrac{p}2)
+            \qquad\text{for all } p\ge 1.
+        \]
+        or
         \[
             \bigl(\Exp{\abs{X}^p}\bigr)^{1/p} \le K_2 \sqrt{p}
             \qquad\text{for all } p\ge 1.
@@ -1463,12 +1593,16 @@ shows that this is possible.
         \item There exists \(K_3 >0\) such that the MGF of \(X^2\) satisfies
         \[
             \Exp{\exp(\lambda^2 X^2)} \le \exp(K_3^2 \lambda^2)
-            \qquad\text{for all } \lambda \text{ such that } \abs{\lambda} < \frac1{K_3}.
+            \qquad\text{for all } \lambda \text{ such that } \abs{\lambda} < \tfrac1{K_3}.
         \]
-        \item There exists \(K_4 > 0\) such that the MGF of \(X^2\) is
-        bounded at some point, that is
+        \item \textbf{Orclitz norm} There exists \(K_4 > 0\) such that
         \[
-            \Exp{\exp\bigl(\tfrac{X^2}{K_4}\bigr)} \le 2.
+            \Exp{\exp\bigl(\tfrac{X^2}{K_4^2}\bigr)} \le 2.
+        \]
+        That is for \(\psi_2(x) = \exp(x^2) - 1\) the Orclitz norm is finite
+        \[
+            \norm{X}_{\psi_2} \coloneq \inf\Set{t > 0 : \Exp{\psi_2(\abs{X}/t)} \le 1}
+            \le K_4.
         \]
     \end{enumerate}
     If \(\Exp{X} = 0\), then these are also equivalent to
@@ -1484,9 +1618,99 @@ shows that this is possible.
 \begin{definition}[Variance proxy]
     Let 
     \[
-        \norm{X}_{vp} \coloneq \inf\Set{\lambda \ge 0 : \Lambda_X(t) \le \tfrac{\lambda^2t^2}2 \quad \forall t}
+        \sigma_X^2 \coloneq \inf\Set{\lambda \ge 0 : \Lambda_X(t) \le \tfrac{\lambda^2t^2}2 \quad \forall t}
     \]
 \end{definition}
+\begin{remark}
+    Careful: The variance proxy is not a norm!
+\end{remark}
+
+\begin{lemma}[Hoeffding's Lemma]
+    Let \(X\) be a centered, bounded random variable, that is 
+    \(\Exp{X}=0\) and \(X\in [a,b]\) with probability one. Then
+    \[
+        \sigma_X^2 \le \frac{(b-a)^2}4.
+    \]
+\end{lemma}
+\begin{proof}
+    The first step of the proof is to show that the variance proxy is largest
+    for the distribution that only takes the boundary values \(a\) and \(b\).
+    For this we use the convexity of the exponential function. 
+    Choosing \(p_x=\frac{x-b}{b-a}\in [0,1]\) for \(x\in [a,b]\) implies
+    \[
+        \exp(t x) \le p_x \exp(t b) + (1-p_x) \exp(t a).
+    \]
+    Plugging in \(X\) and taking the expectation this implies
+    \[\begin{aligned}
+        \Exp{\exp(t X)}
+        &\le \Exp{p_X} \exp(t b) + \Exp{1-p_X} \exp(t a)
+        \\
+        &= \Exp{\tfrac{X-a}{b-a}} \exp(t b) + \Exp{\tfrac{b-X}{b-a}} \exp(t a)
+        \\
+        &= \tfrac{-a}{b-a}\exp(t b) + \tfrac{b}{b-a}\exp(t a)
+        &&= \Exp{\exp(t Y)}
+    \end{aligned}
+    \]
+    Observe that the last line is exactly the MGF of a random variable \(Y\)
+    with
+    \[
+        \Pr(Y=b) = p,
+        \qquad
+        \Pr(Y=a) = 1-p,
+        \qquad p \coloneq \tfrac{-a}{b-a}.
+    \]
+    Note that \(a\le 0=\Exp{X} \le b\) and thus \(p\in [0,1]\).
+    Taking the logarithm on both sides we obtain
+    \begin{equation}
+        \label{eq: rademacher are worst offender}
+        \Lambda_X(t) \le \Lambda_Y(t) \overset{!}\le \tfrac{\lambda^2 t^2}{2}
+        \qquad \forall t\ge 0.
+    \end{equation}
+    The smallest such \(\lambda\) is the variance proxy of \(Y\).
+    If we prove it is bounded by \(\frac{(b-a)^2}{4}\) we finish the proof.
+    We begin by calculating the cumulant generating function of \(Y\) 
+    \[\begin{aligned}
+        \Lambda_Y(t)
+        = \log(p e^{t b} + (1-p) e^{t a})
+        &= \log\bigl(e^{ta}(p e^{t (b-a)} + 1-p)\bigr)
+        \\
+        &= ta + \log(pe^{t(b-a)}+1-p).
+    \end{aligned}
+    \]
+    Taylor's theorem with mean value reminder implies for some \(\xi\)
+    \[
+        \Lambda_Y(t) = \Lambda_Y(0) + \Lambda_Y'(0)t + \Lambda_Y''(\xi)\tfrac{t^2}{2}.
+    \]
+    So \(\Lambda_Y(0) = \Lambda_Y'(0)=0\) and \(\abs{\Lambda_Y''(\xi)} \le \lambda\)
+    would do the job to get \eqref{eq: rademacher are worst offender}. To
+    make the calculations easier we would like to assume \((b-a)=1\).
+    We can do so without loss of generality by the change of variables
+    \(h=t(b-a)\), where \(p= \frac{-a}{b-a}\) implies \(-ph= ta\)
+    and thus
+    \[
+        \Lambda_Y(t)
+        = -ph +  \log\bigl(p e^{h} + 1-p\bigr) \eqcolon \phi(h).
+    \]
+    Since \(\Lambda_Y'(t) = \phi'(h) \frac{dh}{dt}\) with \(\frac{dh}{dt} =
+    (b-a)\) it is sufficient to calculate the derivatives of \(\phi\) given by 
+    \begin{align*}
+        \phi'(h) &= \frac{pe^h}{pe^h +1-p} -p,
+        \\
+        \phi''(h) &= \frac{pe^h}{pe^h +1-p} - \frac{(pe^h)^2}{(pe^h +1-p)^2} = q(h)(1-q(h))
+    \end{align*}
+    with \(q(h) \coloneqq \frac{pe^h}{pe^h +1-p}\in [0,1]\) for all \(h\in \real\). Since \(q(1-q)\) is maximized at
+    \(q=\frac12\) by the value \(\frac14\) we have \(\abs{\phi''(h)} \le \frac14\) for all \(h\in \real\).
+    This implies
+    \begin{alignat*}{2}
+        \Lambda_Y(0) &= \phi(0) &&= 0
+        \\
+        \Lambda_Y'(0) &= \phi'(0)(b-a) &&= 0
+        \\
+        \abs{\Lambda_Y''(\xi)} &= \abs{\phi''(\xi)}(b-a)^2 &&\le \tfrac{(b-a)^2}4
+    \end{alignat*}
+    In the last equation we used the chain rule again and finish the proof by comparing
+    the Taylor expansion with \eqref{eq: rademacher are worst offender}.
+\end{proof}
 
 
 The main tool to obtain sharp bounds on probabilities is 
@@ -1499,4 +1723,26 @@ Ideas:
     \item Subexponential: (Bernstein inequality)
     \item Gaussian concentration inequality for Lipschitz functions (Borel-TIS)
 \end{enumerate}
+
+\subsection*{Exercises}
+
+\begin{exercise}[Cumulant CLT]
+    \label{ex: cumulant CLT}
+    Let \(X_1, X_2, \ldots\) be independent copies of a random variable
+    \(X\) with mean \(\mu\), variance \(\sigma^2\) and finite moments of all orders.
+    Let \(\mean{X}_n = \frac1n \sum_{i=1}^n X_i\) be the empirical mean.
+    Show that the cumulants \(\cumulant_k^{\sqrt{n}(\mean{X}_n - \mu)}\)
+    of the random variable \(\sqrt{n}(\mean{X}_n - \mu)\) satisfy
+    \[
+        \cumulant_1^{\sqrt{n}(\mean{X}_n - \mu)} = 0,
+        \qquad
+        \cumulant_2^{\sqrt{n}(\mean{X}_n - \mu)} = \sigma^2,
+        \qquad
+        \cumulant_k^{\sqrt{n}(\mean{X}_n - \mu)} \to 0
+        \quad\text{for } k \ge 3.
+    \]
+    Conclude that the cumulant generating function of
+    \(\sqrt{n}(\mean{X}_n - \mu)\) converges to the cumulant generating function
+    of the normal distribution \(\normal{0, \sigma^2}\).
+\end{exercise}
 

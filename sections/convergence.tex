@@ -1083,11 +1083,13 @@ Again we have that the norm of differences is only zero for almost surely equal
 random variables.
 
 \begin{fact}
-    \(\norm{X-Y}_\psi = 0\) if and only if \(X\overset{\as}= Y\).
+    \(\norm{X}_\psi = 0\) if and only if \(X\overset{\as}= 0\).
 \end{fact}
 \begin{proof}[Proofsketch]
-    This uses the property \(\lim_{x\to\infty} \psi(x) = \infty\) as \(\lambda
-    \to 0\) explodes the input if \(\norm{X}\) is non-zero.
+    If \(X \overset{\as} 0\), then \(\psi(0)=0\) implies the Orclitz
+    norm is zero. The other direction uses the property \(\lim_{x\to\infty}
+    \psi(x) = \infty\) as \(\lambda \to 0\) explodes the input if \(\norm{X}\)
+    is non-zero.
 \end{proof}
 
 \begin{fact}[\(L^p\) is a Banach space]
