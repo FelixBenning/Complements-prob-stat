@@ -1369,9 +1369,8 @@ Markov inequality (Theorem \ref{thm: markov inequality})
 \[
     \Prob{ X \ge a} \le \tfrac{\Exp{h(X)}}{h(a)}.
 \]
-And since probabilists are apparently not every imaginative, this is also how we
-proceed in this section. The choice \(h(x) = e^{tx}\), with \(t\ge 0\)
-such that \(h\) is non-decreasing, results in the ``\textbf{Chernoff bound}''
+The choice \(h(x) = e^{tx}\), with \(t\ge 0\) such that \(h\) is
+non-decreasing, results in the ``\textbf{Chernoff bound}''
 \[
     \Prob{X \ge a}
     \le \frac{\Exp{e^{t  X}}}{e^{t a}}
@@ -1379,18 +1378,17 @@ such that \(h\) is non-decreasing, results in the ``\textbf{Chernoff bound}''
     = \exp\bigl(-\bigl(t a - \underbrace{\log \MGF_X(t)}_{=\Lambda_X(t)}\bigr)\bigr).
 \]
 If the moment generating function of \(X\) is not finite, then this bound is
-of course vacuous. Note that we cannot use the characteristic function here,
+of course useless. Note that we cannot use the characteristic function here,
 since the Markov inequality requires non-negative, and in particular
-real-valued, functions \(h\). We also only consider one dimensional random
-variables \(X\).  The function \(\Lambda_X\) is the ``\textbf{cumulant
+real-valued, functions \(h\). The function \(\Lambda_X\) is the ``\textbf{cumulant
 generating function}'' (CGF) or ``log-laplace transform'' that will be our main object
 of study in this section.
 
 The key feature of the Chernoff bound is that it provides us with a parameter \(t\)
 that is not inherent to the problem of bounding \(\Prob{X \ge a}\). This allows for
-an optimization over \(t\)
+an optimization over \(t\), resulting in the \textbf{Legendre transform}
 \[
-    \Lambda^+_X(a) \coloneq \sup_{t\ge 0} \bigl( t a - \Lambda_X(t) \bigr)
+    \Lambda^+_X(a) \coloneq \sup_{t\ge 0} \bigl( t a - \Lambda_X(t) \bigr).
 \]
 The optimized bound is then given by
 \begin{equation}
@@ -1407,7 +1405,7 @@ The optimized bound is then given by
     \[
         \Lambda_X(t) = \mu t + \tfrac12 \sigma^2 t^2.
     \]
-    Thus
+    Thus the Legendre transform is
     \[\begin{aligned}
         \Lambda_X^+(a)
         = \sup_{t\ge 0} \bigl(t a - \mu t - \tfrac12 \sigma^2 t^2\bigr)
@@ -1433,7 +1431,7 @@ The optimized bound is then given by
         \le \exp\bigl(- \tfrac{(a - \mu)^2}{2\sigma^2}\bigr)
         \qquad\text{for } a \ge \mu.
     \]
-    Or equivalently, with \(\epsilon = a - \mu > 0\)
+    Or equivalently, with \(\epsilon = a - \mu > 0\) we get quickly decaying bound in \(\epsilon\)
     \[
         \Prob{X - \mu \ge \epsilon}
         \le \exp(-\tfrac{\epsilon^2}{2\sigma^2})
@@ -1446,36 +1444,43 @@ translate well into multiple dimension where the ordering is lost.
 We have seen in the example above that the maximizer \(t^\star\) is positive
 whenever \(a\ge \mu\) or equivalently \(\epsilon = a - \mu \ge 0\).
 This implies that for \(a\ge \mu\) the function \(\CGF_X^+(a)\) coincides
-with the \textbf{Fenchel-Legendre} transform 
+with the \textbf{convex conjugate}, also known as ``Fenchel-Legendre transform''
+of \(\CGF_X\) given by
 \[
     \CGF_X^*(a) \coloneq \sup_{t\in \real} \bigl(t a - \CGF_X(t)\bigr)
-    \Bigl[\ge \CGF_X^+(a)= \sup_{t \ge 0} \bigl(t a - \CGF_X(t)\bigr)\Bigr].
+    \qquad \Bigl(\ge \CGF_X^+(a)= \sup_{t \ge 0} \bigl(t a - \CGF_X(t)\bigr)\Bigr).
 \]
-of \(\CGF_X\). We fill find that this holds in general and not just the normal
-distribution. To understand the Fenchel-Legendre transform for \(a\le \mu\),
-observe that in this case \(-a \ge -\mu = \Exp{-X}\). Consequently,
-\[
-\begin{aligned}
-    \CGF_{-X}^+(-a)
-    = \sup_{t\ge 0} \bigl(t (-a) - \CGF_{-X}(t)\bigr)
-    &= \sup_{t\ge 0} \bigl(-ta - \CGF_{X}(-t)\bigr)
-    \\
-    &= \sup_{s\le 0} \bigl(sa - \CGF_{X}(s)\bigr)
-    = \Lambda_X^*(a),
-\end{aligned}
-\]
-where we use \(\CGF_{-X}(t) = \log\Exp{e^{t(-X)}}= \CGF_X(-t)\).
-So in essence
-\begin{alignat}{3}
-    \Prob{X \ge a} &\le \exp\bigl(-\Lambda_X^*(a)\bigr) &\text{for }a &\ge \mu,
-    \\ 
-    \Prob{X \le a} = \Prob{-X \ge -a} &\le \exp\bigl(-\Lambda_{X}^*(a)\bigr)\qquad &\text{for } a &\le \mu.
-\end{alignat}
-Why is this useful? Well consider
-\[
-    \Prob{\abs{X-\mu} \in [a,b]}
-\]
-with \(a \le 0 \le b\).
+\begin{warning}
+    For \(a\le \mu\) the bound \(\Prob{X \ge a} \le \exp(-\CGF_X^*(a))\) is
+    false! Here \(\CGF_X^*(a) > \CGF_X^+(a) = 0\).  However since
+   \(\CGF_X^+(a)=0\) is a useless bound anyway, we simply need to avoid this
+    case.
+\end{warning}
+
+% To understand the convex conjugate for \(a\le \mu\), observe that in this case
+% \(-a \ge -\mu = \Exp{-X}\). Consequently,
+% \[
+% \begin{aligned}
+%     \CGF_{-X}^+(-a)
+%     = \sup_{t\ge 0} \bigl(t (-a) - \CGF_{-X}(t)\bigr)
+%     &= \sup_{t\ge 0} \bigl(-ta - \CGF_{X}(-t)\bigr)
+%     \\
+%     &= \sup_{s\le 0} \bigl(sa - \CGF_{X}(s)\bigr)
+%     = \Lambda_X^*(a),
+% \end{aligned}
+% \]
+% where we use \(\CGF_{-X}(t) = \log\Exp{e^{t(-X)}}= \CGF_X(-t)\).
+% So in essence
+% \begin{alignat}{3}
+%     \Prob{X \ge a} &\le \exp\bigl(-\Lambda_X^*(a)\bigr) &\text{for }a &\ge \mu,
+%     \\ 
+%     \Prob{X \le a} = \Prob{-X \ge -a} &\le \exp\bigl(-\Lambda_{X}^*(a)\bigr)\qquad &\text{for } a &\le \mu.
+% \end{alignat}
+% Why is this useful? For \(a \le \mu \le b\) consider
+% \[
+%     \Prob{X \in (a,b)^\complement}
+%     = \Prob{X \le a} + \Prob{X \ge b}
+% \]
 
 % For concentration bounds we will simply use
 % \[\begin{aligned}
@@ -1485,32 +1490,35 @@ with \(a \le 0 \le b\).
 %     &\le \exp\bigl(-\Lambda^+_X(a)\bigr) + \exp\bigl(-\Lambda^+_{-X}(a)\bigr)
 % \end{aligned}\]
 
-\subsection{The cumulant generating function}
+\subsection{The cumulant generating function and its convex conjugate}
+
+With the motivation above let us now formalize this procedure in multiple dimensions.
 
 \begin{definition}[Cumulant generating function]
-    The \textbf{cumulant generating function} (CGF) of a random variable
-    \(X\) is defined as the logarithm of its moment generating function
+    The \textbf{cumulant generating function} (CGF) of a random variable \(X\)
+    in a Hilbertspace is defined as the logarithm of its moment generating
+    function
     \[
         \Lambda_X(t) \coloneq \log \MGF_X(t)
         = \log \Exp{e^{\inner{t, X}}}.
     \]
 \end{definition}
-The real power of the Chernoff bound and the CGFs lies in their
-interaction with sums of independent random variables. Following
-directly from the corresponding properties of the MGF the CGF has the following
-basic properties (Exercise \ref{ex: properties moment generating functions}).
+
+Since they are closely related to the MGF, the CGF also interacts very well with
+independent sums.
 
 
 \begin{lemma}[Basic properties]
     Let \(X\) be a random variable. Then the cumulant generating function
     \(\Lambda_X(t) = \log \MGF_X(t)\) has the following properties:
     \begin{enumerate}[label=(\roman*), noitemsep]
-        \item \(\Lambda_X(0) = 0\).
-        \item \(\Lambda_{aX + b}(t) = b t + \Lambda_X(a t)\) for any \(a, b \in \real\).
+        \item\label{it: cgf 0=0} \(\Lambda_X(0) = 0\).
+        \item\label{it: cgf linear} \(\Lambda_{aX + b}(t) = \inner{b, t} + \Lambda_X(\inner{a, t})\) for any \(a \in \real\), \(b,t\in \hilbert\).
         \item\label{it: cumulant independent sums} Let \(Y\) be \underline{independent} from \(X\), then
         \[
             \Lambda_{X+Y}(t) = \Lambda_X(t) + \Lambda_Y(t)
         \]
+        \item\label{it: cgf convex} \(\Lambda_X\) is convex.
     \end{enumerate}
     If the moment generating function is finite in a neighborhood of zero,
     then \(\Lambda_X\) is infinitely often differentiable and
@@ -1519,40 +1527,43 @@ basic properties (Exercise \ref{ex: properties moment generating functions}).
         \item \(\Lambda_X''(0) = \var{X}\)
     \end{enumerate}
 \end{lemma}
+\begin{proof}
+    For \ref{it: cgf 0=0}-\ref{it: cumulant independent sums} follow from the
+    corresponding properties of the MGF (Exercise \ref{ex: properties moment
+    generating functions}) by application of the logarithm.  For example,
+    \(\CGF_X(0)=0\) follows directly from \(\MGF_X(0)=1\). For convexity
+    let \(t, s\in \hilbert\) and \(\lambda \in [0,1]\). 
+    Using Hölder's inequality (Exercise \ref{ex: hölder's inequality}) with \(p
+    = \frac1\lambda\) and \(q = \frac1{1-\lambda}\) such that \(\frac1p +
+    \frac1q = 1\) we obtain
+    \[\begin{aligned}
+        \Lambda_X(\lambda t + (1-\lambda) s)
+        &= \log \Exp{e^{\inner{\lambda t + (1-\lambda) s, X}}}
+        \\
+        \overset{\text{Hölder}}&\le \log \Exp{(e^{ \lambda\inner{t, X}})^{p}}^{\frac1p} \Exp{(e^{(1-\lambda)\inner{s, X}})^{q}}^{\frac1q}
+        \\
+        \overset{p=\frac1\lambda}&= \log \Exp{e^{\inner{t, X}}}^{\lambda} \Exp{e^{\inner{s, X}}}^{1-\lambda}
+        = \lambda \Lambda_X(t) + (1-\lambda) \Lambda_X(s).
+    \end{aligned}\]
+    The derivatives are straightforward calculations using the derivatives of the MGF
+    and the chain rule. That is
+    \begin{alignat*}{3}
+        \Lambda_X'(t)
+        &= \frac{\MGF_X'(t)}{\MGF_X(t)}
+        \qquad &\implies &\Lambda_X'(0) = \Exp{X},
+        \\
+        \Lambda_X''(t)
+        &= \frac{\MGF_X''(t)}{\MGF_X(t)} - \frac{(\MGF_X'(t))^2}{(\MGF_X(t))^2}
+        \qquad &\implies &\Lambda_X''(0)
+        \begin{aligned}[t]
+        &= \Exp{X^2} - (\Exp{X})^2
+        \\
+        &= \var{X}.
+        \end{aligned}
+    \end{alignat*}
 
-\begin{definition}[Cumulants]
-    If they exist, the ``cumulants'' \(\cumulant_n^X\) are the coefficients of the Taylor
-    series of the cumulant generating function
-    \[
-        \Lambda_X(t)
-        = \sum_{n=1}^\infty \cumulant_n^X \frac{t^n}{n!}
-        = \sum_{n=1}^\infty \Lambda_X^{(n)}(0) \frac{t^n}{n!}.
-    \]
-\end{definition}
+\end{proof}
 
-Due to property \ref{it: cumulant independent sums} of the cumulant generating
-function, cumulants have the nice property
-\[
-    \cumulant_n^{X+Y} = \cumulant_n^X + \cumulant_n^Y
-\]
-for independent random variables \(X\) and \(Y\).
-This property is what makes them ``nicer'' compared to the moments that make
-up the coefficients of the moment generating function. Bienaymé (Lemma \ref{lem:
-Bienaymé}) represents this property for the second order cumulants, since
-\(\cumulant_2^X = \var{X}\).
-
-\begin{remark}[Cumulants of normal distribution]
-    Recall that the cumulant generating function of the 
-    normal distribution is a quadratic polynomial
-    \[
-        \Lambda_X(t) = \mu t + \frac12 \sigma^2 t^2.
-    \]
-    Thus all cumulants of order three and higher are zero! It is the only
-    distribution with this property. One can show that the cumulants of order
-    three and higher vanish for \(\sqrt{n}\, \mean{X}_n\) as \(n\to\infty\)
-    (Exercise \ref{ex: cumulant CLT}) and thereby proof a weak form of the
-    central limit theorem.
-\end{remark}
 
 \begin{lemma}
     Let \(X_1, \ldots, X_n\) be independent copies of the random variable \(X\)
@@ -1592,6 +1603,16 @@ decays exponentially in \(n\). This would of course be weird if \(a \le \Exp{X}\
 so we would expect that \(\Lambda_X^+(a) = 0\) for \(a \le \Exp{X}\). And this
 should make us suspicious: Is \(\Lambda_X^+(a) > 0\) true for any \(a\) or is this
 bound useless?
+
+\begin{definition}[Convex conjugate]
+    The \textbf{convex conjugate} of a function \(f\colon \hilbert \to \real\)
+    is defined as
+    \[
+        f^*(a) \coloneq \sup_{t\in \hilbert} \bigl(\inner{t, a} - f(t)\bigr).
+    \]
+    
+\end{definition}
+
 
 \subsection{Large Deviations}
 
@@ -1824,6 +1845,39 @@ this case.
 
 \subsection*{Exercises}
 
+\begin{definition}[Cumulants]
+    If they exist, the ``cumulants'' \(\cumulant_n^X\) are the coefficients of the Taylor
+    series of the cumulant generating function
+    \[
+        \Lambda_X(t)
+        = \sum_{n=1}^\infty \cumulant_n^X \frac{t^n}{n!}
+        = \sum_{n=1}^\infty \Lambda_X^{(n)}(0) \frac{t^n}{n!}.
+    \]
+\end{definition}
+
+Due to property \ref{it: cumulant independent sums} of the cumulant generating
+function, cumulants have the nice property
+\[
+    \cumulant_n^{X+Y} = \cumulant_n^X + \cumulant_n^Y
+\]
+for independent random variables \(X\) and \(Y\).
+This property is what makes them ``nicer'' compared to the moments that make
+up the coefficients of the moment generating function. Bienaymé (Lemma \ref{lem:
+Bienaymé}) represents this property for the second order cumulants, since
+\(\cumulant_2^X = \var{X}\).
+
+\begin{remark}[Cumulants of normal distribution]
+    Recall that the cumulant generating function of the 
+    normal distribution is a quadratic polynomial
+    \[
+        \Lambda_X(t) = \mu t + \frac12 \sigma^2 t^2.
+    \]
+    Thus all cumulants of order three and higher are zero! It is the only
+    distribution with this property. One can show that the cumulants of order
+    three and higher vanish for \(\sqrt{n}\, \mean{X}_n\) as \(n\to\infty\)
+    (Exercise \ref{ex: cumulant CLT}) and thereby proof a weak form of the
+    central limit theorem.
+\end{remark}
 \begin{exercise}[Cumulant CLT]
     \label{ex: cumulant CLT}
     Let \(X_1, X_2, \ldots\) be independent copies of a random variable
