@@ -919,10 +919,10 @@ normal distribution. To do so we require the concept of covariance matrices.
 \begin{remark}[Non-negative eigenvalue interpretation]
     Recall from Linear Algebra that a symmetric matrix always admits an
     eigenvalue decomposition with orthogonal eigenvectors and real eigenvalues.
-    That is \(\Sigma = U \Lambda U^\transpose\), where the columns of
+    That is \(\Sigma = U \CGF U^\transpose\), where the columns of
     the orthonormal matrix \(U\) are the orthonormal eigenvectors \(u_i\) and
     the eigenvalues \(\lambda_i\) are the entries of the diagonal matrix
-    \(\Lambda\). Thus all eigenvalues of a positive semidefinite matrix
+    \(\CGF\). Thus all eigenvalues of a positive semidefinite matrix
     are non-negative since
     \[
         0\le u_i^\transpose \Sigma u_i = \lambda_i \|u_i\|^2 = \lambda_i.
@@ -984,8 +984,8 @@ normal distribution. To do so we require the concept of covariance matrices.
 \begin{proof}[Proof (Definition \ref{def: multivariate normal distribution} is well defined)]
     We will first show that for any symmetric positive semidefinite matrix \(\Sigma\)
     there exists a matrix \(A\) with \(A A^\transpose = \Sigma\),
-    specifically we may choose \(A = U \Lambda^{1/2}\) using the
-    eigenvalue decomposition \(\Sigma = U \Lambda U^\transpose\).
+    specifically we may choose \(A = U \CGF^{1/2}\) using the
+    eigenvalue decomposition \(\Sigma = U \CGF U^\transpose\).
     Thus \ref{it: multivariate standard normal} is well defined for
     any symmetric positive semidefinite \(\Sigma\).
     Next we show that \ref{it: multivariate standard normal} implies 
@@ -1411,12 +1411,12 @@ non-decreasing, results in the ``\textbf{Chernoff bound}''
     \Prob{X \ge a}
     \le \frac{\Exp{e^{t  X}}}{e^{t a}}
     = \frac{\MGF_X(t)}{e^{t a}}
-    = \exp\bigl(-\bigl(t a - \underbrace{\log \MGF_X(t)}_{=\Lambda_X(t)}\bigr)\bigr).
+    = \exp\bigl(-\bigl(t a - \underbrace{\log \MGF_X(t)}_{=\CGF_X(t)}\bigr)\bigr).
 \]
 If the moment generating function of \(X\) is not finite, then this bound is
 of course useless. Note that we cannot use the characteristic function here,
 since the Markov inequality requires non-negative, and in particular
-real-valued, functions \(h\). The function \(\Lambda_X\) is the ``\textbf{cumulant
+real-valued, functions \(h\). The function \(\CGF_X\) is the ``\textbf{cumulant
 generating function}'' (CGF) or ``log-laplace transform'' that will be our main object
 of study in this section.
 
@@ -1424,12 +1424,12 @@ The key feature of the Chernoff bound is that it provides us with a parameter \(
 that is not inherent to the problem of bounding \(\Prob{X \ge a}\). This allows for
 an optimization over \(t\), resulting in the \textbf{Legendre transform}
 \[
-    \Lambda^+_X(a) \coloneq \sup_{t\ge 0} \bigl( t a - \Lambda_X(t) \bigr).
+    \CGF^+_X(a) \coloneq \sup_{t\ge 0} \bigl( t a - \CGF_X(t) \bigr).
 \]
 The optimized bound is then given by
 \begin{equation}
     \label{eq: chernoff bound}    
-    \Prob{X \ge a} \le \exp\bigl(-\Lambda^+_X(a)\bigr).
+    \Prob{X \ge a} \le \exp\bigl(-\CGF^+_X(a)\bigr).
 \end{equation}
 
 \begin{example}[The normal distribution]
@@ -1439,11 +1439,11 @@ The optimized bound is then given by
     univariate normal distribution}). Its CGF is then given by the quadratic
     polynomial
     \[
-        \Lambda_X(t) = \mu t + \tfrac12 \sigma^2 t^2.
+        \CGF_X(t) = \mu t + \tfrac12 \sigma^2 t^2.
     \]
     Thus the Legendre transform is
     \[\begin{aligned}
-        \Lambda_X^+(a)
+        \CGF_X^+(a)
         = \sup_{t\ge 0} \bigl(t a - \mu t - \tfrac12 \sigma^2 t^2\bigr)
         &= \sup_{t\ge 0} \bigl(t (a - \mu) - \tfrac12 \sigma^2 t^2\bigr)
         \\
@@ -1457,7 +1457,7 @@ The optimized bound is then given by
     The last step follows from simple optimization. The first order condition
     results in the aximizer \(t^\star = \frac{a - \mu}{\sigma^2}\), which is greater
     zero if and only if \(a \ge \mu\).
-    Observe that if \(\Lambda_X^+(a) = 0\), then the Chernoff bound \eqref{eq: chernoff bound}
+    Observe that if \(\CGF_X^+(a) = 0\), then the Chernoff bound \eqref{eq: chernoff bound}
     is \(1\) which is not very helpful since probabilities are always bounded by \(1\).
     The only useful case is thus \(a \ge \mu\), in which we get that
     the tail of the normal distribution decays like a squared exponential in the
@@ -1502,15 +1502,15 @@ of \(\CGF_X\) given by
 %     &= \sup_{t\ge 0} \bigl(-ta - \CGF_{X}(-t)\bigr)
 %     \\
 %     &= \sup_{s\le 0} \bigl(sa - \CGF_{X}(s)\bigr)
-%     = \Lambda_X^*(a),
+%     = \CGF_X^*(a),
 % \end{aligned}
 % \]
 % where we use \(\CGF_{-X}(t) = \log\Exp{e^{t(-X)}}= \CGF_X(-t)\).
 % So in essence
 % \begin{alignat}{3}
-%     \Prob{X \ge a} &\le \exp\bigl(-\Lambda_X^*(a)\bigr) &\text{for }a &\ge \mu,
+%     \Prob{X \ge a} &\le \exp\bigl(-\CGF_X^*(a)\bigr) &\text{for }a &\ge \mu,
 %     \\ 
-%     \Prob{X \le a} = \Prob{-X \ge -a} &\le \exp\bigl(-\Lambda_{X}^*(a)\bigr)\qquad &\text{for } a &\le \mu.
+%     \Prob{X \le a} = \Prob{-X \ge -a} &\le \exp\bigl(-\CGF_{X}^*(a)\bigr)\qquad &\text{for } a &\le \mu.
 % \end{alignat}
 % Why is this useful? For \(a \le \mu \le b\) consider
 % \[
@@ -1523,145 +1523,213 @@ of \(\CGF_X\) given by
 %     \Prob{\abs{X} \ge a}
 %     &= \Prob{X \ge a} + \Prob{-X \ge a}
 %     \\
-%     &\le \exp\bigl(-\Lambda^+_X(a)\bigr) + \exp\bigl(-\Lambda^+_{-X}(a)\bigr)
+%     &\le \exp\bigl(-\CGF^+_X(a)\bigr) + \exp\bigl(-\CGF^+_{-X}(a)\bigr)
 % \end{aligned}\]
 
-\subsection{The cumulant generating function and its convex conjugate}
+\subsection{Large Deviations}
+\marginpar{\red{Lecture 6}}
 
 With the motivation above let us now formalize this procedure in multiple dimensions.
 
 \begin{definition}[Cumulant generating function]
     The \textbf{cumulant generating function} (CGF) of a random variable \(X\)
-    in a Hilbertspace is defined as the logarithm of its moment generating
+    in a Hilbertspace \(\hilbert\) is defined as the logarithm of its moment generating
     function
     \[
-        \Lambda_X(t) \coloneq \log \MGF_X(t)
+        \CGF_X(t) \coloneq \log \MGF_X(t)
         = \log \Exp{e^{\inner{t, X}}}.
     \]
+    Note that since \(\exp(x) \ge 0\) the MGF is always defined but possibly infinite,
+    and thus the CGF also always well defined but possibly infinite. We further
+    define the functions
+    \begin{align*}
+        \tag{concave-convex function}
+        \Phi_X(t, a) &\coloneq \inner{t, a} - \CGF_X(t)
+        \\
+        \tag{convex conjugate}
+        \CGF_X^*(a) &\coloneq \sup_{t\in \hilbert} \Phi(t, a)
+    \end{align*}
 \end{definition}
+
+Observe that \(\Phi_X\) is a concave-convex function if \(\CGF_X\) is convex,
+which is the case (see Lemma \ref{lem: check sion's conditions} below).
+The function \(\CGF_X^*\) is the convex conjugate of \(\CGF_X\), which entails a
+lot of nice structure (Exercise \ref{ex: convex conjugate}).
+
+\begin{proposition}
+    \label{prop: general LDP upper}
+    Let \(A\subseteq \hilbert\) be a \underline{compact convex} set, then 
+    \[
+        \Prob{X \in A} \le \exp\bigl(-\inf_{a\in A} \CGF_X^*(a)\bigr).
+    \]
+\end{proposition}
+\begin{proof}
+    Then
+    \(
+        \inner{t, x} - \inf_{a\in A} \inner{t, a} \ge 0
+    \)
+    for all \(x\in A\) and any \(t\in \hilbert\). Since \(e^\lambda \ge 1\)
+    for all \(\lambda \ge 0\) we have
+    \[\begin{aligned}
+        \Pr[X \in A] = \Exp{\Indicator{X \in A}}
+        &\le \Exp[\Big]{\exp\bigl(\inner{t, X} - \inf_{a\in A} \inner{t, a}\bigr)}
+        \\
+        &= \MGF_X(t)\exp\bigl(- \inf_{a\in A} \inner{t, a}\bigr) 
+        \\
+        &= \exp\Bigl(- \bigl(\inf_{a\in A} \inner{t, a}-\CGF_X(t)\bigr)\Bigr) 
+        = \exp(- \inf_{a\in A} \Phi_X(t, a)).
+    \end{aligned}
+    \]
+    Since this bound holds for any \(t\in \hilbert\) we have by Sion's
+    minimax theorem (Fact \ref{fact: sion's minimax theorem}) and Lemma
+    \ref{lem: check sion's conditions}
+    \[\begin{aligned}[b]
+        \Pr[X \in A]
+        &\le \exp\Bigl(- \sup_{t \in \hilbert} \inf_{a\in A} \Phi_X(t, a)\Bigr)
+        \\
+        \overset{\text{Sion}}&=
+        \exp\Bigl(- \inf_{a\in A} \sup_{t \in \hilbert} \Phi_X(t, a)\Bigr)
+        = \exp\bigl(- \inf_{a\in A} \CGF_X^*(a)\bigr).
+    \end{aligned}
+    \qedhere
+    \]
+\end{proof}
+
+\begin{fact}[Sion's minimax theorem {\citep[e.g.][]{komiyaElementaryProofSions1988}}]
+    \label{fact: sion's minimax theorem}
+    Let \(\cX\) be a \underline{compact convex} subset of a topological vectorspace and
+    \(\cY\) a convex subset of a topological vectorspace. Let
+    \(f \colon \cX \times \cY \to \real\) be a function such that
+    \begin{enumerate}[label=(\roman*), noitemsep]
+        \item for each \(y \in \cY\), \(f(\cdot, y)\) is upper semicontinuous and quasi-concave on \(\cX\),
+        \item for each \(x \in \cX\), \(f(x, \cdot)\) is lower semicontinuous and quasi-convex on \(\cY\).
+    \end{enumerate}
+    Then
+    \[
+        \sup_{x \in \cX} \inf_{y \in \cY} f(x, y)
+        = \inf_{y \in \cY} \sup_{x \in \cX} f(x, y);
+    \]
+\end{fact}
+
+\begin{lemma}[Check Sion's conditions]
+    \label{lem: check sion's conditions}
+    \(\Phi(t, a) = \inner{t, a} - \CGF_X(t)\) satisfies the conditions of Sion's minimax theorem.
+\end{lemma}
+\begin{proof}
+    The function \(\Phi_X\) is trivially continuous and convex in \(a\) since
+    the inner product is continuous and linear in \(a\). We need to check that the cumulant generating function \(\CGF_X\) is
+    \begin{enumerate}[label={(\roman*)}, nosep]
+        \item lower semicontinuous
+        \item convex
+    \end{enumerate}
+    Then the function \(\Phi_X\) is upper semicontinuous and concave in \(t\).
+    Lower semicontinuity
+    of \(\CGF_X\) follows from Fatou's lemma (measure theory):
+    \[\begin{aligned}
+        \liminf_{n\to \infty} \CGF_X(\lambda_n)
+        &= \log \liminf_{n\to \infty} \Exp{\exp(\inner{\lambda_n, X})}
+        \\
+        \overset{\text{Fatou}}&\ge \log \Exp{\liminf_{n\to \infty} \exp(\inner{\lambda_n, X})}
+        = \CGF_X(\lambda).
+    \end{aligned}
+    \]
+    Convexity of \(\CGF_X\) follows from Hölder's inequality (Exercise \ref{ex: hölder's inequality}).
+    Specifically, for any \(t, s\in \hilbert\) and any \(\alpha\in[0,1]\) we choose
+    \(p = \frac1\alpha\) and \(q = \frac1{1-\alpha}\) such that \(\frac1p
+    + \frac1q = 1\), then
+    \[\begin{aligned}[b]
+        \CGF_X(\alpha t + (1-\alpha) s)
+        &= \log \Exp{e^{\inner{\alpha t + (1-\alpha) s, X}}}
+        \\
+        \overset{\text{Hölder}}&\le \log \Exp{(e^{ \alpha\inner{t, X}})^{p}}^{\frac1p} \Exp{(e^{(1-\alpha)\inner{s, X}})^{q}}^{\frac1q}
+        \\
+        \overset{p=\frac1\alpha}&= \log \Exp{e^{\inner{t, X}}}^{\alpha} \Exp{e^{\inner{s, X}}}^{1-\alpha}
+        = \alpha \CGF_X(t) + (1-\alpha) \CGF_X(s).
+    \end{aligned}
+    \qedhere
+    \]
+\end{proof}
+
+In finite dimensions we can extend Proposition \ref{prop: general LDP upper} to
+\emph{closed} convex sets.
+
+\begin{mdframed}[innertopmargin=0pt]
+\begin{theorem}[Generalized Chernoff bound]
+    \label{thm: chernoff bound in R^d}
+    Let \(A\subseteq \real^\dims\) be a \underline{closed}, \underline{convex} set, then 
+    \[
+        \Prob{X \in A} \le \exp\bigl(-\inf_{a\in A} \CGF_X^*(a)\bigr).
+    \]
+\end{theorem}
+\end{mdframed}
+\begin{proof}
+    Let \((K_n)_{n\in \nat}\) be an increasing sequence of convex compact sets
+    with \(K_n \uparrow \real^\dims\) (this does not exist in infinite
+    dimension!). Then by continuity of probability measures
+    (Remark \ref{rem: continuity of probability})
+    \[\begin{aligned}[b]
+        \Pr[X\in A]
+        &\le \lim_{n\to \infty} \Pr[X \in A \cap K_n] + \underbrace{\Pr[X \notin K_n]}_{\to 0}
+        \\
+        &\le \lim_{n\to \infty} \exp\bigl(- \inf_{a\in A \cap K_n} \CGF_X^*(a)\bigr)
+        \le \exp\bigl(- \inf_{a\in A} \CGF_X^*(a)\bigr).
+    \end{aligned}
+    \qedhere
+    \]
+\end{proof}
+
 
 Since they are closely related to the MGF, the CGF also interacts very well with
 independent sums.
 
-
-\begin{lemma}[Basic properties]
-    Let \(X\) be a random variable. Then the cumulant generating function
-    \(\Lambda_X(t) = \log \MGF_X(t)\) has the following properties:
-    \begin{enumerate}[label=(\roman*), noitemsep]
-        \item\label{it: cgf 0=0} \(\Lambda_X(0) = 0\).
-        \item\label{it: cgf linear} \(\Lambda_{aX + b}(t) = \inner{b, t} + \Lambda_X(\inner{a, t})\) for any \(a \in \real\), \(b,t\in \hilbert\).
-        \item\label{it: cumulant independent sums} Let \(Y\) be \underline{independent} from \(X\), then
-        \[
-            \Lambda_{X+Y}(t) = \Lambda_X(t) + \Lambda_Y(t)
-        \]
-        \item\label{it: cgf convex} \(\Lambda_X\) is convex.
-    \end{enumerate}
-    If the moment generating function is finite in a neighborhood of zero,
-    then \(\Lambda_X\) is infinitely often differentiable and
-    \begin{enumerate}[label=(\roman*), resume, noitemsep]
-        \item \(\Lambda_X'(0) = \Exp{X}\),
-        \item \(\Lambda_X''(0) = \var{X}\)
-    \end{enumerate}
-\end{lemma}
-\begin{proof}
-    For \ref{it: cgf 0=0}-\ref{it: cumulant independent sums} follow from the
-    corresponding properties of the MGF (Exercise \ref{ex: properties moment
-    generating functions}) by application of the logarithm.  For example,
-    \(\CGF_X(0)=0\) follows directly from \(\MGF_X(0)=1\). For convexity
-    let \(t, s\in \hilbert\) and \(\lambda \in [0,1]\). 
-    Using Hölder's inequality (Exercise \ref{ex: hölder's inequality}) with \(p
-    = \frac1\lambda\) and \(q = \frac1{1-\lambda}\) such that \(\frac1p +
-    \frac1q = 1\) we obtain
-    \[\begin{aligned}
-        \Lambda_X(\lambda t + (1-\lambda) s)
-        &= \log \Exp{e^{\inner{\lambda t + (1-\lambda) s, X}}}
-        \\
-        \overset{\text{Hölder}}&\le \log \Exp{(e^{ \lambda\inner{t, X}})^{p}}^{\frac1p} \Exp{(e^{(1-\lambda)\inner{s, X}})^{q}}^{\frac1q}
-        \\
-        \overset{p=\frac1\lambda}&= \log \Exp{e^{\inner{t, X}}}^{\lambda} \Exp{e^{\inner{s, X}}}^{1-\lambda}
-        = \lambda \Lambda_X(t) + (1-\lambda) \Lambda_X(s).
-    \end{aligned}\]
-    The derivatives are straightforward calculations using the derivatives of the MGF
-    and the chain rule. That is
-    \begin{alignat*}{3}
-        \Lambda_X'(t)
-        &= \frac{\MGF_X'(t)}{\MGF_X(t)}
-        \qquad &\implies &\Lambda_X'(0) = \Exp{X},
-        \\
-        \Lambda_X''(t)
-        &= \frac{\MGF_X''(t)}{\MGF_X(t)} - \frac{(\MGF_X'(t))^2}{(\MGF_X(t))^2}
-        \qquad &\implies &\Lambda_X''(0)
-        \begin{aligned}[t]
-        &= \Exp{X^2} - (\Exp{X})^2
-        \\
-        &= \var{X}.
-        \end{aligned}
-    \end{alignat*}
-
-\end{proof}
-
-
 \begin{lemma}
     Let \(X_1, \ldots, X_n\) be independent copies of the random variable \(X\)
     and \(\mean{X}_n\) their mean, then
-    \[
-        \Lambda_{\mean{X}_n}^+(t) = n \Lambda_X^+(t)
-    \]
+    \begin{equation}
+        \label{eq: cumulant generating function of the mean}
+        \CGF_{\mean{X}_n}(t) = n \CGF_X\bigl(\tfrac{t}n\bigr)
+        \qquad\text{and}\qquad
+        \CGF_{\mean{X}_n}^*(t) = n \CGF_X^*(t).
+    \end{equation}
 \end{lemma}
 \begin{proof}
+    \red{TODO}
     Since the cumulant generating function of the sum \(\sum_{i=1}^n X_i\)
-    is \(n \Lambda_X(t)\) by independence, \ref{it: cumulant independent sums} and
+    is \(n \CGF_X(t)\) by independence, \ref{it: cumulant independent sums} and
     the fact that the \(X_i\) are identically distributed, we have by the scaling property
-    \[
-        \Lambda_{\mean{X}_n}(t) = n \Lambda_X\bigl(\tfrac{t}n\bigr).
-    \]
     Consequently
     \[
-        \Lambda_{\mean{X}_n}^+(a)
-        = \sup_{t\ge 0} \bigl(n \tfrac{t}n a - n \Lambda_X(\tfrac{t}n)\bigr)
-        \overset{s=\frac{t}n}= n \sup_{s\ge 0} \bigl(s a - \Lambda_X(s)\bigr)
-        = n \Lambda_X^+(a).
+        \CGF_{\mean{X}_n}^+(a)
+        = \sup_{t\ge 0} \bigl(n \tfrac{t}n a - n \CGF_X(\tfrac{t}n)\bigr)
+        \overset{s=\frac{t}n}= n \sup_{s\ge 0} \bigl(s a - \CGF_X(s)\bigr)
+        = n \CGF_X^+(a).
         \qedhere
     \]
 \end{proof}
 
-This Lemma with the Chernoff bound \eqref{eq: chernoff bound} implies
+This Lemma with the Chernoff bound Theorem \ref{thm: chernoff bound in R^d} implies
 exponential concentration bounds for the mean. Specifically,
 let \(X_1, \ldots, X_n\) be independent copies of the random variable \(X\) and
 \(\mean{X}_n\) their mean. Then
 \begin{equation}
     \label{eq: exponential concentration of the mean}
     \Prob{\mean{X}_n \ge a}
-    \le \exp\bigl(-n \Lambda_X^+(a)\bigr).
+    \le \exp\bigl(-n \CGF_X^+(a)\bigr).
 \end{equation}
-Now if \(\Lambda_X^+(a) > 0\), then the probability that the mean exceeds \(a\)
+Now if \(\CGF_X^+(a) > 0\), then the probability that the mean exceeds \(a\)
 decays exponentially in \(n\). This would of course be weird if \(a \le \Exp{X}\)
-so we would expect that \(\Lambda_X^+(a) = 0\) for \(a \le \Exp{X}\). And this
-should make us suspicious: Is \(\Lambda_X^+(a) > 0\) true for any \(a\) or is this
+so we would expect that \(\CGF_X^+(a) = 0\) for \(a \le \Exp{X}\). And this
+should make us suspicious: Is \(\CGF_X^+(a) > 0\) true for any \(a\) or is this
 bound useless?
 
-\begin{definition}[Convex conjugate]
-    The \textbf{convex conjugate} of a function \(f\colon \hilbert \to \real\)
-    is defined as
-    \[
-        f^*(a) \coloneq \sup_{t\in \hilbert} \bigl(\inner{t, a} - f(t)\bigr).
-    \]
+
+\begin{fact}[Cramér]
     
-\end{definition}
+\end{fact}
 
-
-\subsection{Large Deviations}
-
-\begin{definition}
-    The \emph{Fenchel-Legendre transform} of \(\CGF\) is given by
-    \[
-        \CGF^*(a) = \sup_{t\in \real^\dims} \Set[\big]{\langle t, a\rangle - \CGF(t)}.
-    \]
-\end{definition}
-
-\begin{theorem}[Cramér]
+\begin{fact}[Gärtner Ellis]
     
-\end{theorem}
+\end{fact}
 
 \subsection{Subgaussian random variables}
 
@@ -1683,14 +1751,14 @@ sense.
     Let \(X\) be a \underline{centered} random variable, then
     the \emph{variance proxy} of \(X\) is defined as
     \[
-        \varProx{X} \coloneq \min\Set{\lambda \ge 0 : \Lambda_X(t) \le \tfrac{\lambda^2t^2}2 \quad \forall t}
+        \varProx{X} \coloneq \min\Set{\lambda \ge 0 : \CGF_X(t) \le \tfrac{\lambda^2t^2}2 \quad \forall t}
     \]
 \end{definition}
 
 Since the cumulant generating function of a normal distribution with variance
 \(\sigma^2\) is given by
 \[
-    \Lambda_X(t) = \log \MGF_X(t) = \tfrac{\sigma^2t^2}{2},
+    \CGF_X(t) = \log \MGF_X(t) = \tfrac{\sigma^2t^2}{2},
 \]
 the variance proxy \(\varProx{X}\) coincides with the variance \(\sigma^2\) in
 this case.
@@ -1751,14 +1819,14 @@ this case.
     Taking the logarithm on both sides we obtain
     \begin{equation}
         \label{eq: rademacher are worst offender}
-        \Lambda_X(t) \le \Lambda_Y(t) \overset{!}\le \tfrac{\lambda^2 t^2}{2}
+        \CGF_X(t) \le \CGF_Y(t) \overset{!}\le \tfrac{\lambda^2 t^2}{2}
         \qquad \forall t\ge 0.
     \end{equation}
     The smallest such \(\lambda\) is the variance proxy of \(Y\).
     If we prove it is bounded by \(\frac{(b-a)^2}{4}\) we finish the proof.
     We begin by calculating the cumulant generating function of \(Y\) 
     \[\begin{aligned}
-        \Lambda_Y(t)
+        \CGF_Y(t)
         = \log(p e^{t b} + (1-p) e^{t a})
         &= \log\bigl(e^{ta}(p e^{t (b-a)} + 1-p)\bigr)
         \\
@@ -1767,19 +1835,19 @@ this case.
     \]
     Taylor's theorem with mean value reminder implies for some \(\xi\)
     \[
-        \Lambda_Y(t) = \Lambda_Y(0) + \Lambda_Y'(0)t + \Lambda_Y''(\xi)\tfrac{t^2}{2}.
+        \CGF_Y(t) = \CGF_Y(0) + \CGF_Y'(0)t + \CGF_Y''(\xi)\tfrac{t^2}{2}.
     \]
-    So \(\Lambda_Y(0) = \Lambda_Y'(0)=0\) and \(\abs{\Lambda_Y''(\xi)} \le \lambda\)
+    So \(\CGF_Y(0) = \CGF_Y'(0)=0\) and \(\abs{\CGF_Y''(\xi)} \le \lambda\)
     would do the job to get \eqref{eq: rademacher are worst offender}. To
     make the calculations easier we would like to assume \((b-a)=1\).
     We can do so without loss of generality by the change of variables
     \(h=t(b-a)\), where \(p= \frac{-a}{b-a}\) implies \(-ph= ta\)
     and thus
     \[
-        \Lambda_Y(t)
+        \CGF_Y(t)
         = -ph +  \log\bigl(p e^{h} + 1-p\bigr) \eqcolon \phi(h).
     \]
-    Since \(\Lambda_Y'(t) = \phi'(h) \frac{dh}{dt}\) with \(\frac{dh}{dt} =
+    Since \(\CGF_Y'(t) = \phi'(h) \frac{dh}{dt}\) with \(\frac{dh}{dt} =
     (b-a)\) it is sufficient to calculate the derivatives of \(\phi\) given by 
     \begin{align*}
         \phi'(h) &= \frac{pe^h}{pe^h +1-p} -p,
@@ -1790,11 +1858,11 @@ this case.
     \(q=\frac12\) by the value \(\frac14\) we have \(\abs{\phi''(h)} \le \frac14\) for all \(h\in \real\).
     This implies
     \begin{alignat*}{2}
-        \Lambda_Y(0) &= \phi(0) &&= 0
+        \CGF_Y(0) &= \phi(0) &&= 0
         \\
-        \Lambda_Y'(0) &= \phi'(0)(b-a) &&= 0
+        \CGF_Y'(0) &= \phi'(0)(b-a) &&= 0
         \\
-        \abs{\Lambda_Y''(\xi)} &= \abs{\phi''(\xi)}(b-a)^2 &&\le \tfrac{(b-a)^2}4
+        \abs{\CGF_Y''(\xi)} &= \abs{\phi''(\xi)}(b-a)^2 &&\le \tfrac{(b-a)^2}4
     \end{alignat*}
     In the last equation we used the chain rule again and finish the proof by comparing
     the Taylor expansion with \eqref{eq: rademacher are worst offender}.
@@ -1856,7 +1924,7 @@ this case.
     \begin{enumerate}[label=(\roman*), resume, noitemsep]
         \item\textbf{Variance proxy:} There exists \(K_5 > 0\) such that the MGF of \(X\) satisfies
         \[
-            \Lambda_X(t) \le \tfrac{K_5^2 t^2}2
+            \CGF_X(t) \le \tfrac{K_5^2 t^2}2
             \qquad\text{for all } t\in \real.
         \]
         That is \(\varProx{X} \le K_5^2\).
@@ -1885,9 +1953,9 @@ this case.
     If they exist, the ``cumulants'' \(\cumulant_n^X\) are the coefficients of the Taylor
     series of the cumulant generating function
     \[
-        \Lambda_X(t)
+        \CGF_X(t)
         = \sum_{n=1}^\infty \cumulant_n^X \frac{t^n}{n!}
-        = \sum_{n=1}^\infty \Lambda_X^{(n)}(0) \frac{t^n}{n!}.
+        = \sum_{n=1}^\infty \CGF_X^{(n)}(0) \frac{t^n}{n!}.
     \]
 \end{definition}
 
@@ -1906,7 +1974,7 @@ Bienaymé}) represents this property for the second order cumulants, since
     Recall that the cumulant generating function of the 
     normal distribution is a quadratic polynomial
     \[
-        \Lambda_X(t) = \mu t + \frac12 \sigma^2 t^2.
+        \CGF_X(t) = \mu t + \frac12 \sigma^2 t^2.
     \]
     Thus all cumulants of order three and higher are zero! It is the only
     distribution with this property. One can show that the cumulants of order
@@ -1934,3 +2002,51 @@ Bienaymé}) represents this property for the second order cumulants, since
     of the normal distribution \(\normal{0, \sigma^2}\).
 \end{exercise}
 
+\begin{exercise}[Basic properties]
+    Let \(X\) be a random variable. Then the cumulant generating function
+    \(\CGF_X(t) = \log \MGF_X(t)\) has the following properties:
+    \begin{enumerate}[label=(\roman*), noitemsep]
+        \item\label{it: cgf 0=0} \(\CGF_X(0) = 0\).
+        \item\label{it: cgf linear} \(\CGF_{aX + b}(t) = \inner{b, t} + \CGF_X(\inner{a, t})\) for any \(a \in \real\), \(b,t\in \hilbert\).
+        \item\label{it: cumulant independent sums} Let \(Y\) be \underline{independent} from \(X\), then
+        \[
+            \CGF_{X+Y}(t) = \CGF_X(t) + \CGF_Y(t)
+        \]
+    \end{enumerate}
+    If the moment generating function is finite in a neighborhood of zero,
+    then \(\CGF_X\) is infinitely often differentiable and
+    \begin{enumerate}[label=(\roman*), resume, noitemsep]
+        \item \(\CGF_X'(0) = \Exp{X}\),
+        \item \(\CGF_X''(0) = \var{X}\)
+    \end{enumerate}
+
+    \begin{solution}
+        For \ref{it: cgf 0=0}-\ref{it: cumulant independent sums} follow from the
+        corresponding properties of the MGF (Exercise \ref{ex: properties moment
+        generating functions}) by application of the logarithm.  For example,
+        \(\CGF_X(0)=0\) follows directly from \(\MGF_X(0)=1\). For convexity
+        let \(t, s\in \hilbert\) and \(\lambda \in [0,1]\). 
+
+        The derivatives are straightforward calculations using the derivatives of the MGF
+        and the chain rule. That is
+        \begin{alignat*}{3}
+            \CGF_X'(t)
+            &= \frac{\MGF_X'(t)}{\MGF_X(t)}
+            \qquad &\implies &\CGF_X'(0) = \Exp{X},
+            \\
+            \CGF_X''(t)
+            &= \frac{\MGF_X''(t)}{\MGF_X(t)} - \frac{(\MGF_X'(t))^2}{(\MGF_X(t))^2}
+            \qquad &\implies &\CGF_X''(0)
+            \begin{aligned}[t]
+            &= \Exp{X^2} - (\Exp{X})^2
+            \\
+            &= \var{X}.
+            \end{aligned}
+        \end{alignat*}
+    \end{solution}
+\end{exercise}
+
+\begin{exercise}[Convex conjugate]
+    \label{ex: convex conjugate}
+    
+\end{exercise}
