@@ -310,7 +310,7 @@ assumption that the random variables are in \(L^1\).
 
 
 
-\section{Typical Deviations: The central limit theorem}
+\section{Typical Deviations}
 \marginpar{\red{Lecture 4}}
 
 In the previous section we have seen that the mean \(\mean{X}_n =
@@ -415,7 +415,7 @@ defining ``Moment generating functions''.
 
 As mentioned in the introduction the \(\MGF_X\) is called the ``Moment
 Generating Function'' because its Taylor coefficients are the moments.
-For pedagogical reasons we restrict ourselves to real valued random variables
+For simplicity we restrict ourselves to real valued random variables
 in the following (see Exercise \ref{ex: multivariate moment generating function}
 for the general case).
 
@@ -520,6 +520,7 @@ representation.
 
 As we outlined in the beginning of this section the moment generating function
 and characteristic function characterize the distribution of a random variable.
+This is a non-trivial fact from measure theory.
 
 \begin{fact}[Uniqueness]
     \label{fact: uniqueness of mgf and char fct}
@@ -778,8 +779,10 @@ formula in the complex case. This is the following Lemma.
         = \exp\bigl(n \ln(1 + \tfrac{x_n}n)\bigr)
         = \exp\Bigl(x_n \frac{\ln(1 + \tfrac{x_n}n)}{x_n/n}\Bigr).
     \]
+    \vspace*{-2ex}
+    \begin{mdframed}[innertopmargin=0pt,innerbottommargin=0pt,rightline=false,topline=false,bottomline=false]
     Here we have tacitly assumed that \(x_n \neq 0\). We may
-    do this without loss of generality for the following reason:
+    do this without loss of generality:
     If there are only finitely many \(n\) with \(x_n=0\), then
     simply pick \(n\) large enough. In the other case
     the subsequence \((x_{n_k})_{k\in \nat}\) with \(x_{n_k} = 0\) still
@@ -788,12 +791,11 @@ formula in the complex case. This is the following Lemma.
     we have convergence for this subsequence. We therefore only need
     to prove convergence for the remaining \(x_n\).
     Thus \(x_n\neq 0\) without loss of generality.
-
-    Since the exponential and product are
-    continuous it is sufficient to prove \(\frac1\lambda\ln(1 +
+    \end{mdframed}
+    Due to continuity it is sufficient to prove \(\frac1\lambda\ln(1 +
     \lambda) \to 1\) as \(\lambda \to 0\), where we choose \(\lambda = \frac{x_n}n\). Since the logarithm is analytic
     (complex differentiable)
-    at \(1\) we however have with \(\ln(1) = 0\)
+    at \(1\) we however have
     \[
         \lim_{\lambda \to 0} \frac{\ln(1 + \lambda)}{\lambda}
         = \lim_{\lambda \to 0} \frac{\ln(1 + \lambda) - \ln(1)}{\lambda}
@@ -826,6 +828,38 @@ distribution is stable under addition.
     \qedhere
     \]
 \end{proof}
+
+\begin{remark}[Infinitely divisible distributions]
+    Let \(X_1, X_2, \dots\) be iid random variables.  If the distribution of the
+    sum is the same as an individual summand \(X_i\) up to location and scaling,
+    that is
+    \[
+        X_1 + \dots + X_n \overset{d} = a_n X_1 + b_n,
+    \]
+    then the distribution of \(X_i\) is called \textbf{stable}. Since 
+    the limit in \(n\) must still have this distribution, the CLT means that the
+    normal distribution is the \emph{only} distribution with finite variance
+    that has this property with \(a_n = n^{1/2}\). Fact: Without loss of generality the scaling can
+    always be chosen to be of the form \(a_n = n^{1/\alpha}\) \citep[Thm.~16.22]{klenkeProbabilityTheoryComprehensive2014}.
+    And for every \(\alpha\in (0, 2]\) there is exactly one stable distribution,
+    the \(\alpha\)-stable distribution. The normal distribution is thus the
+    only \(2\)-stable distribution. For \(\alpha\in (0,2)\) the tails
+    decay according to a power law, roughly
+    \[
+        \Prob{\abs{X} >t} \sim t^{-\alpha} \qquad t\to \infty.
+    \]
+    Any distribution that is the limit of rescaled iid sums must be
+    \(\alpha\)-stable. This can be seen by grouping the summands into \(n\)
+    block of increasing size and observing that each block converges. Thus the
+    sum of blocks has the same distribution as the original sum up to location
+    and scale. A different name for \(\alpha\)-stable distributions are the
+    ``infinitely divisible distributions'' since they can always be written as
+    the sum of an arbitrary number of iid random variables. Being the limit of
+    sums and being stable are thus equivalent concepts.
+\end{remark}
+
+\subsection{The Multivariate Central Limit Theorem}
+\marginpar{\red{Lecture 5}}
 
 For the multivariate central limit theorem we need to introduce the multivariate
 normal distribution. To do so we require the concept of covariance matrices.
@@ -1043,9 +1077,6 @@ normal distribution. To do so we require the concept of covariance matrices.
     identify the limit uniquely.
 \end{remark}
 
-\begin{remark}[\(\alpha\)-stable distributions]
-    
-\end{remark}
 
 \subsection{Special properties of the normal distribution}
 
@@ -1098,12 +1129,17 @@ normal distribution. To do so we require the concept of covariance matrices.
     Setting \(x_2=0\) we observe by the two expressions \(g(x_1^2) = f(x_1)f(0)\).
     Thus
     \[
-        g(x_1^2 + x_2^2) = f(x_1) f(x_2) = f(0)^2 g(x_1^2) g(x_2^2).
+        g(x_1^2 + x_2^2) = f(x_1) f(x_2) = \frac{g(x_1^2)}{f(0)} \frac{g(x_2^2)}{f(0)}.
     \]
-    The only functions \(g\) that satisfy \(g(x+y) = c g(x) g(y)\) are \(x\mapsto \frac1c\exp(\lambda x)\)
-    for some constants \(c, \lambda\in \real\). Since the density must integrate
-    to one we arrive at the normal distribution. An actual proof would however
-    need to justify the existence of a density.
+    The only functions \(g\) that satisfy \(g(x+y) = \frac1c g(x) g(y)\) are \(x\mapsto c\exp(\lambda x)\)
+    for \(\lambda\in \real\). Thus
+    \[
+        f(x_1) = \frac{g(x_1^2)}{f(0)} = \frac{c}{f(0)} \exp(\lambda x_1^2)
+        = f(0) \exp(\lambda x_1^2).
+    \]
+    Since the density must integrate to one we rule out \(\lambda \ge 0\) and
+    arrive at the normal distribution. An actual proof would
+    however need to justify the existence of a density.
 \end{proof}
 
 In light of this rotation invariant characterization the following proof that
@@ -1647,7 +1683,7 @@ sense.
     Let \(X\) be a \underline{centered} random variable, then
     the \emph{variance proxy} of \(X\) is defined as
     \[
-        \varProx{X} \coloneq \inf\Set{\lambda \ge 0 : \Lambda_X(t) \le \tfrac{\lambda^2t^2}2 \quad \forall t}
+        \varProx{X} \coloneq \min\Set{\lambda \ge 0 : \Lambda_X(t) \le \tfrac{\lambda^2t^2}2 \quad \forall t}
     \]
 \end{definition}
 
