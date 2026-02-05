@@ -1896,14 +1896,16 @@ independent sums.
 \end{proof}
 
 The Lemma above immediately implies exponential convergence to the mean
+\begin{mdframed}[innertopmargin=0pt]
 \begin{corollary}
     Let \(A\subseteq \real^\dims\) be a closed convex set, then
     \[
         \Prob[\big]{\mean{X}_n \in A} \le \exp\bigl(-n \inf_{a\in A} \CGF_X^*(a)\bigr).
     \]
 \end{corollary}
-
-In the one-dimensional case we can easily get concentration bounds from this:
+\end{mdframed}
+In the one-dimensional case we get concentration bounds from this:
+\begin{mdframed}[innertopmargin=0pt]
 \begin{theorem}[Concentration bound for the mean]
     Let \(X_1, \ldots, X_n\) be independent copies of the random variable \(X\)
     with expectation \(\mu=\Exp{X}\) in \(\real\) and \(\mean{X}_n\) their mean,
@@ -1912,6 +1914,8 @@ In the one-dimensional case we can easily get concentration bounds from this:
         \Prob[\Big]{\abs[\big]{\mean{X}_n - \mu} \ge t} \le 2 \exp\Bigl(-n \inf_{\abs{a-\mu}\ge t} \CGF_X^*(a)\Bigr).
     \]
 \end{theorem}
+\end{mdframed}
+
 \begin{proof}
     Since the sets \((-\infty, \mu - t]\) and \([\mu + t, \infty)\) are closed
     and convex we have
@@ -1939,6 +1943,7 @@ parts. This has however no bearing on the exponential rate of convergence:
 With this less `sharp' view, we can remove the convexity assumption on the set.
 In particular this exponential rate is tight.
 
+\begin{mdframed}[innertopmargin=0pt]
 \begin{fact}[Cramér]
     Let \(X_1, \ldots, X_n\) be independent copies of the random variable \(X\) 
     in \(\real^\dims\) and \(\mean{X}_n\) their mean. Let \(A\) be a closed (but
@@ -1955,6 +1960,7 @@ In particular this exponential rate is tight.
         \lim_{n\to\infty} \frac1n \log \Prob[\big]{\mean{X}_n \in B} = -\inf_{a\in B} \CGF_X^*(a).
     \]
 \end{fact}
+\end{mdframed}
 
 The lower bound shows that the exponential rate is tight. The upper bound is obtained for
 arbitrary closed sets by covering the set with convex sets and using the fact
@@ -2103,7 +2109,7 @@ this case.
 
 \begin{mdframed}[innertopmargin=0pt]
 \begin{theorem}[General Hoeffding's inequality]
-    Let \(X_1, \ldots, X_n\) be independent random variables, then we have
+    Let \(X_1, \ldots, X_n\) be independent random variables in \(\real\), then we have
     for all \(\epsilon > 0\)
     \[
         \Prob[\Big]{\mean{X}_n - \Exp{\mean{X}_n} \ge \epsilon}
