@@ -1180,35 +1180,35 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 \end{exercise}
 
 \begin{exercise}[\(L^2\)-Hilbertspace]
-    Let \(X,Y\) be \(\cL^2\) random variables in a Hilbert space \((\hilbert, \inner{\cdot, \cdot})\).
+    Let \(X,Y\) be \(\cL^2\) random variables in a Hilbert space \((\hilbert, \scp{\cdot, \cdot})\).
     Show that 
     \[
-        \langle [X], [Y] \rangle_{L^2} \coloneq \langle X, Y\rangle_{L^2} \coloneq \Exp{\inner{X,Y}}
+        \langle [X], [Y] \rangle_{L^2} \coloneq \langle X, Y\rangle_{L^2} \coloneq \Exp{\scp{X,Y}}
     \]
     defines an inner product on \(L^2\) which induces the norm \(\norm{\cdot}_{L^2}\).
     \begin{solution}
-        Clearly \(\inner{X, X}_{L^2} = \norm{X}_{L^2}^2\) so the inner product induces
+        Clearly \(\scp{X, X}_{L^2} = \norm{X}_{L^2}^2\) so the inner product induces
         the norm \(\norm{\cdot}_{L^2}\). We need to show the inner product properties:
         \begin{enumerate}[label=(\roman*)]
             \item\label{it: inner product positive}
-            \(\inner{X, X}_{L^2} \ge 0\) with equality if and only if \([X]=0 \overset{\text{Fact } \ref{fact: Lp zero norm}}\iff X=0\) a.s.
+            \(\scp{X, X}_{L^2} \ge 0\) with equality if and only if \([X]=0 \overset{\text{Fact } \ref{fact: Lp zero norm}}\iff X=0\) a.s.
             \\ \null \hfill (positive definiteness)
             \item\label{it: inner product symmetry}
-            \(\inner{X, Y}_{L^2} = \inner{Y, X}_{L^2}\).
+            \(\scp{X, Y}_{L^2} = \scp{Y, X}_{L^2}\).
             \hfill (symmetry)
             \item\label{it: inner product linearity}
-            \(\inner{aX + bY, Z}_{L^2} = a \inner{X, Z}_{L^2} + b \inner{Y, Z}_{L^2}\)
+            \(\scp{aX + bY, Z}_{L^2} = a \scp{X, Z}_{L^2} + b \scp{Y, Z}_{L^2}\)
             for all \(a,b\in \real\).
             \hfill (linearity in first argument)
         \end{enumerate}
-        Property \ref{it: inner product positive} follows from \(\inner{X, X}_{L^2} = \norm{X}_{L^2}^2\)
+        Property \ref{it: inner product positive} follows from \(\scp{X, X}_{L^2} = \norm{X}_{L^2}^2\)
         and this property is established in Theorem \ref{thm: seminorm properties} and
         Fact \ref{fact: Lp zero norm}.
         Property \ref{it: inner product symmetry} follows from the
         commutativity of multiplication. Property \ref{it: inner product linearity}
         follows from the linearity of expectation.
         \(L^2\) is further a complete normed space by Fact \ref{fact: Lp complete}.
-        Consequently, \((L^2, \inner{\cdot, \cdot}_{L^2})\) is a Hilbert space.
+        Consequently, \((L^2, \scp{\cdot, \cdot}_{L^2})\) is a Hilbert space.
     \end{solution}
 \end{exercise}
 
@@ -1233,9 +1233,9 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
         onto \(\real^\perp\). Show that
         \[
             \cov{X}{Y}
-            = \inner{\pi(X), Y}_{L^2}
-            = \inner{X, \pi(Y)}_{L^2}
-            = \inner{\pi(X), \pi(Y)}_{L^2}
+            = \scp{\pi(X), Y}_{L^2}
+            = \scp{X, \pi(Y)}_{L^2}
+            = \scp{\pi(X), \pi(Y)}_{L^2}
         \]
         In particular \(\covSymb\) coincides with the inner product on \(\real^\perp\)!
 
@@ -1247,7 +1247,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
     \end{enumerate}
     \begin{remark}[Generalization to Hilbert spaces]
         The same arguments work if we replace \(\real\) by any Hilbert space
-        \((\hilbert, \inner{\cdot, \cdot})\).
+        \((\hilbert, \scp{\cdot, \cdot})\).
     \end{remark}
 \end{exercise}
 
@@ -1996,7 +1996,7 @@ concepts the convergence of the components is sufficient.
 
         \item\label{it: joint conv law cramer wold}
         (\textbf{Cramér-Wold})
-        if \(\inner{t, X_n} \overset{d}\to \inner{t,X}\) for all \(t\in \real^\dims\),
+        if \(\scp{t, X_n} \overset{d}\to \scp{t,X}\) for all \(t\in \real^\dims\),
         then \(X_n \overset{d}\to X\).
     \end{enumerate}
 \end{theorem}

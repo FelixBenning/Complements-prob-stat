@@ -20,7 +20,7 @@ The reason for this strategy is that it is often easiest to calculate
 expectations.  For example \(\norm{X - \E[X]}_{L^2} = \sqrt{\var{X}}\). 
 In this section we illustrate this strategy by implementing it for the
 law of large numbers. It turns out that the natural domain to work in
-is a Hilbert space \((\hilbert, \inner{\cdot, \cdot})\) as it allows
+is a Hilbert space \((\hilbert, \scp{\cdot, \cdot})\) as it allows
 the definition of the covariance and variance in a natural way.
 
 \begin{remark}[Expectation in multiple dimensions]
@@ -57,7 +57,7 @@ the definition of the covariance and variance in a natural way.
     Let \(X, Y \in \cL^2(\hilbert)\), then their \textbf{covariance}
     and \textbf{variance} are defined as
     \[
-        \cov{X}{Y} \coloneq \Exp[\Big]{\inner[\big]{X-\Exp{X}, Y-\Exp{Y}}}
+        \cov{X}{Y} \coloneq \Exp[\Big]{\scp[\big]{X-\Exp{X}, Y-\Exp{Y}}}
         \quad \text{and} \quad
         \var{X} \coloneq \cov{X}{X}.
     \]
@@ -92,7 +92,7 @@ The variance of sums or random variables is straightforward to calculate:
     \[
         \var[\Big]{\sum_{i=1}^n X_i}
         % = \Exp[\Big]{\norm[\Big]{\sum_{i=1}^n Y_i}^2}
-        = \sum_{i,j=1}^n \Exp[\big]{\inner{Y_i, Y_j}}
+        = \sum_{i,j=1}^n \Exp[\big]{\scp{Y_i, Y_j}}
         = \sum_{i,j=1}^n \cov{X_i}{X_j}.
     \]
     With \(\var{X_i} = \cov{X_i}{X_i}\) the first result follows from a split of the sum.
@@ -395,12 +395,12 @@ defining ``Moment generating functions''.
     The ``Moment Generating Function'' of a random variable \(X\) in 
     \(\real^\dims\) is given by
     \[
-        \MGF_X(t) \coloneq \Exp{\exp(\inner{t, X})}
+        \MGF_X(t) \coloneq \Exp{\exp(\scp{t, X})}
         \qquad t\in \complex^\dims.
     \]
     The ``characteristic function'' is given by
     \[
-        \charFct_X(t) \coloneq \MGF_X(i t) = \Exp{\exp(i\inner{t,X})}
+        \charFct_X(t) \coloneq \MGF_X(i t) = \Exp{\exp(i\scp{t,X})}
         \qquad t\in \real^\dims.
     \]
     Outside the field of probability theory one typically uses \(-t\) 
@@ -574,13 +574,13 @@ theorem.
 
 \begin{proof}[Proofsketch (Lévy's continuity theorem)]
     ``\ref{it: Lévy's cont d} \(\Rightarrow\) \ref{it: Lévy's cont char}''
-    follows from Euler's formula \(\exp(i\inner{t, x}) = \cos(\inner{t, x}) + i \sin(\inner{t, x})\) since both \(\cos\) and \(\sin\) 
+    follows from Euler's formula \(\exp(i\scp{t, x}) = \cos(\scp{t, x}) + i \sin(\scp{t, x})\) since both \(\cos\) and \(\sin\) 
     are bounded and continuous functions and thus by \ref{it: b.cont}
     \begin{equation}
         \label{eq: char function convergence}    
         \charFct_{X_n}(t)
-        = \Exp{\exp(i\inner{t, X_n})}
-        \to \Exp{\exp(i\inner{t, X})}
+        = \Exp{\exp(i\scp{t, X_n})}
+        \to \Exp{\exp(i\scp{t, X})}
         = \charFct_X(t).
     \end{equation}
     ``\ref{it: Lévy's cont d} \(\Rightarrow\) \ref{it: Lévy's cont char}'' is significantly
@@ -598,7 +598,7 @@ multivariate results.
     \label{cor: cramer wold}
     Let \((X_n)_{n\in \nat}\) and \(X\) be random variables in \(\real^\dims\). Then
     \[
-        \inner{t, X_n} \overset{d}\to \inner{t, X} \quad \forall t \in \real^\dims
+        \scp{t, X_n} \overset{d}\to \scp{t, X} \quad \forall t \in \real^\dims
         \quad \iff \quad
         X_n \overset{d}\to X.
     \]
@@ -893,7 +893,7 @@ normal distribution. To do so we require the concept of covariance matrices.
     Let \(X\) be a random variable in \(\real^\dims\) with covariance matrix
     \(\Sigma = \Cov{X}\). Then \(\Sigma\) is \underline{symmetric} and
     \underline{positive semidefinite}, that is \(\Sigma = \Sigma^\transpose\)
-    and \(\inner{v, \Sigma v} \ge 0\) for all \(v\in \real^\dims\).
+    and \(\scp{v, \Sigma v} \ge 0\) for all \(v\in \real^\dims\).
 \end{lemma}
 \begin{proof}
     The expectation is applied entrywise and as \(Y Y^\transpose\) is always
@@ -901,18 +901,18 @@ normal distribution. To do so we require the concept of covariance matrices.
     To see positive semidefiniteness observe that for any \(v\in \real^\dims\)
     \[
         v^\transpose \Sigma v = \Exp[\big]{v^\transpose Y Y^\transpose v}
-        = \Exp{\inner{Y, v}^2} \ge 0.
+        = \Exp{\scp{Y, v}^2} \ge 0.
         \qedhere
     \]
 \end{proof}
 \begin{remark}[Variance interpretation]
     Positive semidefiniteness has the interpretation that all linear
-    combinations \(\inner{v, X}\) of \(X\) have non-negative variance, because
-    due to \(\inner{Y, v} = \inner{X, v} - \Exp{\inner{X,v}}\) we have
+    combinations \(\scp{v, X}\) of \(X\) have non-negative variance, because
+    due to \(\scp{Y, v} = \scp{X, v} - \Exp{\scp{X,v}}\) we have
     \[
         v^\transpose \Sigma v
-        = \Exp{\inner{Y, v}^2}
-        = \var{\inner{X, v}}.
+        = \Exp{\scp{Y, v}^2}
+        = \var{\scp{X, v}}.
     \]
 \end{remark}
 
@@ -944,19 +944,19 @@ normal distribution. To do so we require the concept of covariance matrices.
         \(A\in \real^{\dims\times k}\) satisfies \(A A^\transpose = \Sigma\),
 
         \item\label{it: multivariate linear normal}
-        \(\inner{t, X} \sim \normal[\big]{\inner{t, \mu}, \inner{t, \Sigma t}}\)
+        \(\scp{t, X} \sim \normal[\big]{\scp{t, \mu}, \scp{t, \Sigma t}}\)
         for all \(t\in \real^\dims\),
 
         \item\label{it: multivariate mgf normal}
         \(
             \MGF_X(t)
-            = \exp\bigl(\inner{\mu, t} + \tfrac12 \inner{t, \Sigma t}\bigr),
+            = \exp\bigl(\scp{\mu, t} + \tfrac12 \scp{t, \Sigma t}\bigr),
         \)
 
         \item\label{it: multivariate char fct normal}
         \(
             \charFct_X(t)
-            = \exp\bigl(i \inner{\mu, t} - \tfrac12 \inner{t, \Sigma t}\bigr).
+            = \exp\bigl(i \scp{\mu, t} - \tfrac12 \scp{t, \Sigma t}\bigr).
         \)
     \end{enumerate}
 \end{definition}
@@ -965,7 +965,7 @@ normal distribution. To do so we require the concept of covariance matrices.
     If \(\Sigma\) is strictly positive definite, that is one of the following
     equivalent conditions holds:
     \begin{enumerate}[label={(\roman*)},noitemsep]
-        \item \(\inner{v, \Sigma v} > 0\) for all \(v\neq 0\)
+        \item \(\scp{v, \Sigma v} > 0\) for all \(v\neq 0\)
         \item all eigenvalues \(\lambda_i\) of \(\Sigma\) are strictly positive
         \item \(\Sigma\) is invertible
         \item \(\det(\Sigma) > 0\),
@@ -974,10 +974,10 @@ normal distribution. To do so we require the concept of covariance matrices.
     \[
         f_X(x)
         = \frac1{\sqrt{(2\pi)^\dims \det(\Sigma)}}
-        \exp\Bigl(-\tfrac12 \inner[\big]{x - \mu, \Sigma^{-1}(x - \mu)}\Bigr).
+        \exp\Bigl(-\tfrac12 \scp[\big]{x - \mu, \Sigma^{-1}(x - \mu)}\Bigr).
     \]
     The interpretation of the case \(v^\transpose \Sigma v = 0\) is that the
-    linear combination \(\inner{v,X}\) of \(X\) has zero variance. While
+    linear combination \(\scp{v,X}\) of \(X\) has zero variance. While
     \(\sigma^2=0\) seems like a degenerate case that may be avoided, trying to
     avoid that any linear combination has zero variance is much more awkward.
 \end{remark}
@@ -991,37 +991,37 @@ normal distribution. To do so we require the concept of covariance matrices.
     Next we show that \ref{it: multivariate standard normal} implies 
     \ref{it: multivariate linear normal}. As
     \[
-        \inner{t, X}
-        \overset{d}= \inner{t, \mu + A Y}
-        = \inner{t, \mu} + \inner{A^\transpose t, Y}
-        = \inner{t, \mu} + \sum_{i=1}^k (A^\transpose t)^{(i)} Y^{(i)},
+        \scp{t, X}
+        \overset{d}= \scp{t, \mu + A Y}
+        = \scp{t, \mu} + \scp{A^\transpose t, Y}
+        = \scp{t, \mu} + \sum_{i=1}^k (A^\transpose t)^{(i)} Y^{(i)},
     \]
     Since the \(Y^{(i)}\) are independent standard normal random variables, we have that
     all their functions \(\sigma_i Y^{(i)}\) with \(\sigma_i \coloneq (A^\transpose t)^{(i)}\)
     are independent. By definition of the univariate normal distribution
     we moreover have \(\sigma_i Y^{(i)} \sim \normal{0, \sigma_i^2}\). Since
-    \(\inner{t, X}\) is deterministic it is also independent from the rest and
+    \(\scp{t, X}\) is deterministic it is also independent from the rest and
     may be viewed as a normal random variable with zero variance. Consequently
     we have by the stability of the normal distribution under addition (Lemma \ref{lem: sum stability of normal distribution})
-    that \(\inner{t, X} \sim \normal{\inner{t, \mu}, \sum_{i=1}^k \sigma_i^2}\).
+    that \(\scp{t, X} \sim \normal{\scp{t, \mu}, \sum_{i=1}^k \sigma_i^2}\).
     Finally, we have
     \[
         \sum_{i=1}^k \sigma_i^2
         = \sum_{i=1}^k \bigl((A^\transpose t)^{(i)}\bigr)^2
         = \|A^\transpose t\|^2
-        = \inner{t, A A^\transpose t}
-        = \inner{t, \Sigma t}.
+        = \scp{t, A A^\transpose t}
+        = \scp{t, \Sigma t}.
     \]
     Finally, we calculate the moment generating and characteristic functions
     function and characteristic function from \ref{it: multivariate linear
     normal}. This concludes the proof with the uniqueness of these functions
     (Fact \ref{fact: uniqueness of mgf and char fct}). We have that
     \[
-        \MGF_X(t) = \Exp{\exp(\inner{t, X})}
-        = \MGF_{\inner{t, X}}(1)
-        = \exp\bigl(\inner{t, \mu} + \tfrac12 \inner{t, \Sigma t}\bigr),
+        \MGF_X(t) = \Exp{\exp(\scp{t, X})}
+        = \MGF_{\scp{t, X}}(1)
+        = \exp\bigl(\scp{t, \mu} + \tfrac12 \scp{t, \Sigma t}\bigr),
     \]
-    using \(\inner{t, X} \sim \normal{\inner{t, \mu}, \inner{t, \Sigma t}}\)
+    using \(\scp{t, X} \sim \normal{\scp{t, \mu}, \scp{t, \Sigma t}}\)
     and the moment generating function of the univariate normal distribution.
     We get the characteristic function with the same trick.
 \end{proof}
@@ -1043,22 +1043,22 @@ normal distribution. To do so we require the concept of covariance matrices.
     central limit theorem using Cramér-Wold (Corollary \ref{cor: cramer wold}).
     Let \(t\in \real^\dims\), then
     \[
-        \inner[\big]{t, \sqrt{n}(\mean{X}_n - \mu)}
-        = \inner[\Big]{t, \frac1{\sqrt{n}} \sum_{k=1}^n X_k - \mu}
-        = \frac1{\sqrt{n}}\sum_{k=1}^n \bigl(\inner{t, X_k} - \inner{t, \mu}\bigr)
+        \scp[\big]{t, \sqrt{n}(\mean{X}_n - \mu)}
+        = \scp[\Big]{t, \frac1{\sqrt{n}} \sum_{k=1}^n X_k - \mu}
+        = \frac1{\sqrt{n}}\sum_{k=1}^n \bigl(\scp{t, X_k} - \scp{t, \mu}\bigr)
     \]
-    Since the \(\inner{t, X_k}\) are independent univariate copies of the random
-    variable \(\inner{t, X}\) with mean \(\inner{t, \mu}\) and variance
+    Since the \(\scp{t, X_k}\) are independent univariate copies of the random
+    variable \(\scp{t, X}\) with mean \(\scp{t, \mu}\) and variance
     \[
-        \var{\inner{t,X}}
-        = \Exp{\inner{t, X - \mu}^2}
+        \var{\scp{t,X}}
+        = \Exp{\scp{t, X - \mu}^2}
         = \Exp{t^\transpose (X - \mu)(X - \mu)^\transpose t}
         = t^\transpose \Sigma t,
     \]
     we may apply the univariate central limit theorem (Theorem \ref{thm: univariate central limit theorem})
     to obtain
     \[
-        \inner{t, \sqrt{n}(\mean{X}_n - \mu)}
+        \scp{t, \sqrt{n}(\mean{X}_n - \mu)}
         \overset{d}\to \normal{0, t^\transpose \Sigma t}.
     \]
     The claim follows by Cramér-Wold (Corollary \ref{cor: cramer wold}).
@@ -1198,7 +1198,7 @@ I\times I =
     Then
     \begin{enumerate}[label=(\alph*)]
         \item \(\MGF_X(0) = 1\).
-        \item \(\MGF_{aX + b}(h) = e^{\inner{h,b}} \MGF_X(a h)\)
+        \item \(\MGF_{aX + b}(h) = e^{\scp{h,b}} \MGF_X(a h)\)
         for any \(a\in \real\), \(b, h\in \hilbert\),
         \item \(\MGF_{X+Y}(h) = \MGF_X(h) \MGF_Y(h)\) for \(X,Y\) independent and all \(h\in \hilbert\).
     \end{enumerate}
@@ -1206,7 +1206,7 @@ I\times I =
     \begin{enumerate}[label=(\alph*), resume]
         \item \(\abs{\charFct_X(t)}\le 1\) and \(\charFct_X(0) = 1\).
         \item \(\charFct_{X+Y}(t) = \charFct_X(t) \charFct_Y(t)\) for \(X,Y\) independent and all \(t\in \hilbert\).
-        \item \(\charFct_{aX + b}(t) = e^{i\inner{t,b}} \charFct_X(a t)\)
+        \item \(\charFct_{aX + b}(t) = e^{i\scp{t,b}} \charFct_X(a t)\)
         for any \(a\in \real\), \(b, t\in \hilbert\).
     \end{enumerate}
 \end{exercise}
@@ -1221,9 +1221,6 @@ I\times I =
         &  \(\MGF_X(t)\) & \(\charFct_X(t)\)
         \\
         \hline
-        \(\normal{\mu, \sigma^2}\) & \(e^{\mu t + \frac12 \sigma^2 t^2}\)
-        & \(e^{i \mu t - \frac12 \sigma^2 t^2}\)
-        \\
         \(\bernoulli(p)\) & \(1 - p + p e^{t}\)
         & \(1 - p + p e^{i t}\)
         \\
@@ -1280,7 +1277,7 @@ I\times I =
         \[
             f_X(x)
             = \frac1{\sqrt{(2\pi)^\dims \det(\Sigma)}}
-            \exp\Bigl(-\tfrac12 \inner[\big]{x - \mu, \Sigma^{-1}(x - \mu)}\Bigr).
+            \exp\Bigl(-\tfrac12 \scp[\big]{x - \mu, \Sigma^{-1}(x - \mu)}\Bigr).
         \]
         
         \item Prove that \(\Exp{X} = \mu\) and \(\Cov{X} = \Sigma\).
@@ -1290,7 +1287,7 @@ I\times I =
         variable \(X\) with characteristic function
         \[
             \charFct_X(t)
-            = \exp\bigl(i \inner{\mu, t} - \tfrac12 \inner{t, \Sigma t}\bigr).
+            = \exp\bigl(i \scp{\mu, t} - \tfrac12 \scp{t, \Sigma t}\bigr).
         \]
         \textbf{Hint:} \eqref{eq: bound on characteristic function}.
     \end{enumerate}
@@ -1304,7 +1301,7 @@ I\times I =
     for all \(h\in \ball{0}{r}\) for some radius \(r > 0\). Show that all mixed moments
     \(\Exp{\abs{X_1^{k_1} \cdots X_d^{k_d}}}\) exist and
     \[
-        \MGF_X(h) = \sum_{k=0}^\infty \frac{\Exp{\inner{h, X}^k}}{k!}
+        \MGF_X(h) = \sum_{k=0}^\infty \frac{\Exp{\scp{h, X}^k}}{k!}
         = \sum_{k_1, \dots, k_d = 0}^\infty
         \Exp{X_1^{k_1} \cdots X_d^{k_d}}
         \frac{h_1^{k_1} \cdots h_d^{k_d}}{k_1! \cdots k_d!}.
@@ -1319,7 +1316,7 @@ I\times I =
     \[
         \ell^2 = \Set[\Big]{(x_n)_{n\in \nat} \mid \sum_{n=1}^\infty x_n^2 < \infty}
         \qquad\text{with}\qquad
-        \inner{x, y} = \sum_{n=1}^\infty x_n y_n.
+        \scp{x, y} = \sum_{n=1}^\infty x_n y_n.
     \]
     Let \(X=0\in \ell^2\) be the deterministic zero vector. Show that
     \begin{enumerate}[label=(\alph*), noitemsep]
@@ -1539,7 +1536,7 @@ and its properties in multiple dimensions.
     function
     \[\tag{CGF}
         \CGF_X(t) \coloneq \log \MGF_X(t)
-        = \log \Exp{e^{\inner{t, X}}}.
+        = \log \Exp{e^{\scp{t, X}}}.
     \]
     Due to \(\exp(x) > 0\) the MGF \(\MGF_X\) is always defined with values in \((0,
     \infty]\). Thus the CGF is defined for all \(t\in \hilbert\) with values in \((-\infty,
@@ -1552,7 +1549,7 @@ and its properties in multiple dimensions.
     We further define the functions for \(t,a\in \hilbert\)
     \begin{align*}
         \tag{concave-convex helper}
-        \Phi_X(t, a) &\coloneq \inner{t, a} - \CGF_X(t)
+        \Phi_X(t, a) &\coloneq \scp{t, a} - \CGF_X(t)
         \\
         \tag{convex conjugate of \(\CGF_X\)}
         \CGF_X^*(a) &\coloneq \sup_{t\in \hilbert} \Phi(t, a)
@@ -1573,7 +1570,7 @@ and its properties in multiple dimensions.
     The CGF interacts nicely with sums (the key in the analysis of the mean)
     \begin{enumerate}[label=\normalfont{(\arabic*)}, noitemsep, resume]
         \item\label{it: CGF sum independent} \(\CGF_{X+Y}(t) = \CGF_X(t) + \CGF_Y(t)\) for \(X,Y\) independent and all \(t\in \hilbert\).
-        \item\label{it: CGF affine} \(\CGF_{aX + b}(t) = \inner{t, b} + \CGF_X(a t)\)
+        \item\label{it: CGF affine} \(\CGF_{aX + b}(t) = \scp{t, b} + \CGF_X(a t)\)
         for any \(a\in \real\), \(b, t\in \hilbert\).
     \end{enumerate}
     Let \(\hilbert=\real^\dims\) and assume \(U \subseteq \cD_{\CGF_X}\) is an open
@@ -1610,11 +1607,11 @@ and its properties in multiple dimensions.
     + \frac1q = 1\), then
     \[\begin{aligned}[b]
         \CGF_X(\alpha t + (1-\alpha) s)
-        &= \log \Exp{e^{\inner{\alpha t + (1-\alpha) s, X}}}
+        &= \log \Exp{e^{\scp{\alpha t + (1-\alpha) s, X}}}
         \\
-        \overset{\text{Hölder}}&\le \log \Exp{(e^{ \alpha\inner{t, X}})^{p}}^{\frac1p} \Exp{(e^{(1-\alpha)\inner{s, X}})^{q}}^{\frac1q}
+        \overset{\text{Hölder}}&\le \log \Exp{(e^{ \alpha\scp{t, X}})^{p}}^{\frac1p} \Exp{(e^{(1-\alpha)\scp{s, X}})^{q}}^{\frac1q}
         \\
-        \overset{p=\frac1\alpha}&= \log \Exp{e^{\inner{t, X}}}^{\alpha} \Exp{e^{\inner{s, X}}}^{1-\alpha}
+        \overset{p=\frac1\alpha}&= \log \Exp{e^{\scp{t, X}}}^{\alpha} \Exp{e^{\scp{s, X}}}^{1-\alpha}
         = \alpha \CGF_X(t) + (1-\alpha) \CGF_X(s).
     \end{aligned}
     \]
@@ -1623,9 +1620,9 @@ and its properties in multiple dimensions.
     theory):
     \[\begin{aligned}[b]
         \liminf_{n\to \infty} \CGF_X(t_n)
-        &= \log \liminf_{n\to \infty} \Exp{\exp(\inner{t_n, X})}
+        &= \log \liminf_{n\to \infty} \Exp{\exp(\scp{t_n, X})}
         \\
-        \overset{\text{Fatou}}&\ge \log \Exp{\liminf_{n\to \infty} \exp(\inner{t_n, X})}
+        \overset{\text{Fatou}}&\ge \log \Exp{\liminf_{n\to \infty} \exp(\scp{t_n, X})}
         = \CGF_X(t).
     \end{aligned}
     \qedhere
@@ -1655,17 +1652,17 @@ This explains its name and this property is crucial for the following bound.
 \begin{proof}
     Then
     \(
-        \inner{t, x} - \inf_{a\in A} \inner{t, a} \ge 0
+        \scp{t, x} - \inf_{a\in A} \scp{t, a} \ge 0
     \)
     for all \(x\in A\) and any \(t\in \hilbert\). Since \(e^\lambda \ge 1\)
     for all \(\lambda \ge 0\) we have
     \[\begin{aligned}
         \Pr[X \in A] = \Exp{\Indicator{X \in A}}
-        &\le \Exp[\Big]{\exp\bigl(\inner{t, X} - \inf_{a\in A} \inner{t, a}\bigr)}
+        &\le \Exp[\Big]{\exp\bigl(\scp{t, X} - \inf_{a\in A} \scp{t, a}\bigr)}
         \\
-        &= \MGF_X(t)\exp\bigl(- \inf_{a\in A} \inner{t, a}\bigr) 
+        &= \MGF_X(t)\exp\bigl(- \inf_{a\in A} \scp{t, a}\bigr) 
         \\
-        &= \exp\Bigl(- \bigl(\inf_{a\in A} \inner{t, a}-\CGF_X(t)\bigr)\Bigr) 
+        &= \exp\Bigl(- \bigl(\inf_{a\in A} \scp{t, a}-\CGF_X(t)\bigr)\Bigr) 
         = \exp(- \inf_{a\in A} \Phi_X(t, a)).
     \end{aligned}
     \]
@@ -1702,7 +1699,7 @@ This explains its name and this property is crucial for the following bound.
 
 \begin{lemma}[Check Sion's conditions]
     \label{lem: check sion's conditions}
-    \(\Phi(t, a) = \inner{t, a} - \CGF_X(t)\) satisfies the conditions of Sion's minimax theorem.
+    \(\Phi(t, a) = \scp{t, a} - \CGF_X(t)\) satisfies the conditions of Sion's minimax theorem.
 \end{lemma}
 \begin{proof}
     The function \(\Phi_X\) is trivially continuous and convex in \(a\) since
@@ -1769,15 +1766,15 @@ plus}).
 \paragraph*{Understanding the convex conjugate} Recall that a convex function
 \(\Lambda\) has the property that it lies above its supporting hyperplanes. That is 
 \[
-    \Lambda(t) \ge \inner[\big]{t-s, \nabla \Lambda(s)} + \Lambda(s)
-    = \underbrace{\inner[\big]{t, \nabla \Lambda(s)}}_{\text{hyperplane}}
-    - \underbrace{\bigl(\inner[\big]{s, \nabla \Lambda(s)} - \Lambda(s)\bigr)}_{\eqcolon c(s) \quad\text{(intercept)}}.
+    \Lambda(t) \ge \scp[\big]{t-s, \nabla \Lambda(s)} + \Lambda(s)
+    = \underbrace{\scp[\big]{t, \nabla \Lambda(s)}}_{\text{hyperplane}}
+    - \underbrace{\bigl(\scp[\big]{s, \nabla \Lambda(s)} - \Lambda(s)\bigr)}_{\eqcolon c(s) \quad\text{(intercept)}}.
 \]
 The convex conjugate \(\Lambda^*\) is essentially the map from the gradient to
 the intercept, \(\nabla \Lambda(s) \mapsto c(s)\). That is
 \[
-    \Bigl(\Lambda(t) \ge \inner{t, a} - c\qquad \forall t \in \hilbert\Bigr)
-    \iff c \ge \bigl(\sup_{t \in \hilbert} \inner{t, a} - \Lambda(t)\bigr) = \Lambda^*(a).
+    \Bigl(\Lambda(t) \ge \scp{t, a} - c\qquad \forall t \in \hilbert\Bigr)
+    \iff c \ge \bigl(\sup_{t \in \hilbert} \scp{t, a} - \Lambda(t)\bigr) = \Lambda^*(a).
 \]
 So the smallest intercept that ensures the hyperplane is below the function is
 exactly the convex conjugate. Being the smallest intercept it ensure the hyperplane
@@ -1787,13 +1784,13 @@ if \(\Lambda\) is differentiable, then
     \label{eq: gradient of cgf star}    
     \Lambda^*\bigl(\nabla\Lambda(t)\bigr)
     = c(t)
-    = \inner[\big]{t, \nabla \Lambda(t)} - \Lambda(t).
+    = \scp[\big]{t, \nabla \Lambda(t)} - \Lambda(t).
 \end{equation}
 Recall that if the essential domain of \(\CGF_X\) contains an open
 neighborhood of \(0\), then \(\nabla \CGF_X(0) = \Exp{X}\) and consequently
 \begin{equation}
     \label{eq: cgf star at expected value}    
-    \CGF_X^*\bigl(\Exp{X}\bigr) = \CGF_X^*\bigl(\nabla \CGF_X(0)\bigr) = \inner{0, \nabla \CGF_X(0)} - \CGF_X(0) = 0.
+    \CGF_X^*\bigl(\Exp{X}\bigr) = \CGF_X^*\bigl(\nabla \CGF_X(0)\bigr) = \scp{0, \nabla \CGF_X(0)} - \CGF_X(0) = 0.
 \end{equation}
 So up to the issue with the domain it is sufficient to prove that \(\CGF_X\)
 is non-negative and convex to get that \(\Exp{X}\) is its minimizer.
@@ -1808,7 +1805,7 @@ is non-negative and convex to get that \(\Exp{X}\) is its minimizer.
         \item\label{it: cgf* lower semicontinuous} \(\Lambda^*\) is lower semicontinuous,
         \item\label{it: cgf* duality} \(\Lambda^{**} = \Lambda\) if \(\Lambda\) is convex and lower semicontinuous (Fenchel-Moreau Thm.),
         \item\label{it: cgf* gradient} If \(\Lambda\) is
-        differentiable in \(t\in \hilbert\), then \(\nabla \Lambda^*(\nabla \Lambda(t)) = \inner{t, \nabla \Lambda(t)} - \Lambda(t)\)
+        differentiable in \(t\in \hilbert\), then \(\Lambda^*(\nabla \Lambda(t)) = \scp{t, \nabla \Lambda(t)} - \Lambda(t)\)
         \item\label{it: cgf* minimum at expected value} If \(\Lambda(0) = 0\), then \(\Lambda^*(a) \ge 0\) for all \(a\in \hilbert\).
     \end{enumerate}
     Moreover for \(\Lambda = \CGF_X\) we have
@@ -1831,10 +1828,10 @@ is non-negative and convex to get that \(\Exp{X}\) is its minimizer.
     For \ref{it: cgf* convex} choose \(\lambda\in [0,1]\) and \(a, b\in \hilbert\). Then
     \[\begin{aligned}
         \Lambda^*(\lambda a + (1-\lambda) b)
-        &= \sup_{t\in \hilbert} \bigl(\lambda \inner[\big]{t, a} + (1-\lambda) \inner[\big]{t, b} - \Lambda(t)\bigr)
+        &= \sup_{t\in \hilbert} \bigl(\lambda \scp[\big]{t, a} + (1-\lambda) \scp[\big]{t, b} - \Lambda(t)\bigr)
         \\
-        &\le \lambda \sup_{t\in \hilbert} \bigl(\inner{t, a} - \Lambda(t)\bigr)
-        + (1-\lambda) \sup_{t\in \hilbert} \bigl(\inner{t, b} - \Lambda(t)\bigr)
+        &\le \lambda \sup_{t\in \hilbert} \bigl(\scp{t, a} - \Lambda(t)\bigr)
+        + (1-\lambda) \sup_{t\in \hilbert} \bigl(\scp{t, b} - \Lambda(t)\bigr)
         \\
         &= \lambda \Lambda^*(a) + (1-\lambda) \Lambda^*(b).
     \end{aligned}
@@ -1842,21 +1839,21 @@ is non-negative and convex to get that \(\Exp{X}\) is its minimizer.
     For \ref{it: cgf* lower semicontinuous} let \(a_n \to a\). For any fixed \(t\in \hilbert\) we have
     \[
         \liminf_{n\to \infty} \Lambda^*(a_n)
-        \overset{\text{Def.~}\Lambda^*}\ge \liminf_{n\to \infty}\; \inner{t, a_n} - \Lambda(t)
-        = \inner{t, a} - \Lambda(t).
+        \overset{\text{Def.~}\Lambda^*}\ge \liminf_{n\to \infty}\; \scp{t, a_n} - \Lambda(t)
+        = \scp{t, a} - \Lambda(t).
     \]
     Since this holds for any \(t\in \hilbert\), it also holds for the supremum
     \[
-        \liminf_{n\to \infty} \Lambda^*(a_n) \ge \sup_{t\in \hilbert} \bigl(\inner{t, a} - \Lambda(t)\bigr) = \Lambda^*(a).
+        \liminf_{n\to \infty} \Lambda^*(a_n) \ge \sup_{t\in \hilbert} \bigl(\scp{t, a} - \Lambda(t)\bigr) = \Lambda^*(a).
     \]
     We will not prove \ref{it: cgf* duality}. See \fxwarning{reference!}. We have already proven
     \ref{it: cgf* gradient} in \eqref{eq: gradient of cgf star}. For \ref{it: cgf* minimum at expected value} observe that
     \[
-        \Lambda^*(a) = \sup_{t\in \hilbert} \bigl(\inner{t, a} - \Lambda(t)\bigr)
-        \ge \inner{0, a} - \Lambda(0) = 0.
+        \Lambda^*(a) = \sup_{t\in \hilbert} \bigl(\scp{t, a} - \Lambda(t)\bigr)
+        \ge \scp{0, a} - \Lambda(0) = 0.
     \]
     \ref{it: cgf* trivial essential domain} follows directly from the definition
-    as \(\inner{t, a} - \CGF_X(t) = -\infty\) for all \(t \neq 0\). Consequently
+    as \(\scp{t, a} - \CGF_X(t) = -\infty\) for all \(t \neq 0\). Consequently
     the supremum chooses \(t=0\).  \ref{it: cgf* open essential domain} was already
     shown in \eqref{eq: cgf star at expected value}.
 \end{proof}
@@ -1881,9 +1878,9 @@ independent sums.
     the exponential with independent sums
     \[\begin{aligned}
         \CGF_{\mean{X}_n}(t)
-        &= \log \Exp[\Big]{\exp\Bigl(\inner[\Big]{t, \frac1n \sum_{i=1}^n X_i}\Bigr)}
+        &= \log \Exp[\Big]{\exp\Bigl(\scp[\Big]{t, \frac1n \sum_{i=1}^n X_i}\Bigr)}
         \\
-        &= \log \Exp[\Big]{\prod_{i=1}^n e^{\inner{\frac{t}n, X_i}}}
+        &= \log \Exp[\Big]{\prod_{i=1}^n e^{\scp{\frac{t}n, X_i}}}
         \overset{\iid}= \log \MGF_X\bigl(\tfrac{t}n\bigr)^n
         = n \CGF_X\bigl(\tfrac{t}n\bigr).
     \end{aligned}
@@ -1891,21 +1888,80 @@ independent sums.
     The second claim follows from the first by a change of variable
     \[
         \CGF_{\mean{X}_n}^*(a)
-        = \sup_{t\in \hilbert} \bigl(n \inner{\tfrac{t}n, a} - n \CGF_X\bigl(\tfrac{t}n\bigr)\bigr)
-        \overset{s=\frac{t}n}= n \sup_{s\in \hilbert} \bigl(\inner{s, a} - \CGF_X(s)\bigr)
+        = \sup_{t\in \hilbert} \bigl(n \scp{\tfrac{t}n, a} - n \CGF_X\bigl(\tfrac{t}n\bigr)\bigr)
+        \overset{s=\frac{t}n}= n \sup_{s\in \hilbert} \bigl(\scp{s, a} - \CGF_X(s)\bigr)
         = n \CGF_X^*(a).
         \qedhere
     \]
 \end{proof}
 
+The Lemma above immediately implies exponential convergence to the mean
+\begin{corollary}
+    Let \(A\subseteq \real^\dims\) be a closed convex set, then
+    \[
+        \Prob[\big]{\mean{X}_n \in A} \le \exp\bigl(-n \inf_{a\in A} \CGF_X^*(a)\bigr).
+    \]
+\end{corollary}
+
+In the one-dimensional case we can easily get concentration bounds from this:
+\begin{theorem}[Concentration bound for the mean]
+    Let \(X_1, \ldots, X_n\) be independent copies of the random variable \(X\)
+    with expectation \(\mu=\Exp{X}\) in \(\real\) and \(\mean{X}_n\) their mean,
+    then for any \(t > 0\)
+    \[
+        \Prob[\Big]{\abs[\big]{\mean{X}_n - \mu} \ge t} \le 2 \exp\Bigl(-n \inf_{\abs{a-\mu}\ge t} \CGF_X^*(a)\Bigr).
+    \]
+\end{theorem}
+\begin{proof}
+    Since the sets \((-\infty, \mu - t]\) and \([\mu + t, \infty)\) are closed
+    and convex we have
+    \[\begin{aligned}[b]
+        \Prob[\big]{\abs{\mean{X}_n - \mu} \ge t}
+        &= \Prob{\mean{X}_n \ge t + \mu} + \Prob{\mean{X}_n \le \mu - t}
+        \\
+        &\le \exp\bigl(-n \inf_{a \ge t+\mu}\CGF_X^*(a)\bigr) + \exp\bigl(-n \inf_{a \le \mu - t}\CGF_{X}^*(a)\bigr)
+        \\
+        &\le 2 \exp\Bigl(-n \min\Set[\Big]{\inf_{a-\mu \ge t}\CGF_X^*(a), \inf_{a-\mu \le -t}\CGF_X^*(a)}\Bigr)
+        \\
+        &= 2 \exp\Bigl(-n \inf_{\abs{a-\mu}\ge t} \CGF_X^*(a)\Bigr).
+    \end{aligned}
+    \qedhere
+    \]
+\end{proof}
+
+Observe that the factor \(2\) appears since the set \((-\infty, \mu - t]
+\cup [\mu + t, \infty)\) is not convex and we had to split it into two convex
+parts. This has however no bearing on the exponential rate of convergence:
+\[
+    \frac1n \log \Prob[\big]{\abs{\mean{X}_n - \mu} \ge t}
+    \le \underbrace{\frac{\log{2}}n}_{\to 0} - \inf_{\abs{a-\mu}\ge t} \CGF_X^*(a)
+\]
+With this less `sharp' view, we can remove the convexity assumption on the set.
+In particular this exponential rate is tight.
 
 \begin{fact}[Cramér]
-    
+    Let \(X_1, \ldots, X_n\) be independent copies of the random variable \(X\) 
+    in \(\real^\dims\) and \(\mean{X}_n\) their mean. Let \(A\) be a closed (but
+    not necessarily convex) set, then
+    \[
+        \limsup_{n\to\infty} \frac1n \log \Prob[\big]{\mean{X}_n \in A} \le -\inf_{a\in A} \CGF_X^*(a).
+    \]
+    Moreover for any open set \(U\)
+    \[
+        \liminf_{n\to\infty} \frac1n \log \Prob[\big]{\mean{X}_n \in U} \ge -\inf_{a\in U} \CGF_X^*(a).
+    \]
+    In particular, for any set \(B\) that does not have isolated points, i.e.~\(\closure{\interior{B}} = \closure{B}\),
+    \[
+        \lim_{n\to\infty} \frac1n \log \Prob[\big]{\mean{X}_n \in B} = -\inf_{a\in B} \CGF_X^*(a).
+    \]
 \end{fact}
 
-\begin{fact}[Gärtner Ellis]
-    
-\end{fact}
+The lower bound shows that the exponential rate is tight. The upper bound is obtained for
+arbitrary closed sets by covering the set with convex sets and using the fact
+that the factor (like the \(2\) we got) goes to zero when the logarithm and
+\(\frac1n\) is applied.
+However this covering argument does incur a cost at finite \(n\) that cannot be
+avoided! \fxwarning{exercise!}
 
 \subsection{Subgaussian random variables}
 \marginpar{\red{Lecture 7}}
@@ -2186,7 +2242,7 @@ Bienaymé}) represents this property for the second order cumulants, since
     \(\CGF_X(t) = \log \MGF_X(t)\) has the following properties:
     \begin{enumerate}[label=(\roman*), noitemsep]
         \item\label{it: cgf 0=0} \(\CGF_X(0) = 0\).
-        \item\label{it: cgf linear} \(\CGF_{aX + b}(t) = \inner{b, t} + \CGF_X(\inner{a, t})\) for any \(a \in \real\), \(b,t\in \hilbert\).
+        \item\label{it: cgf linear} \(\CGF_{aX + b}(t) = \scp{b, t} + \CGF_X(\scp{a, t})\) for any \(a \in \real\), \(b,t\in \hilbert\).
         \item\label{it: cumulant independent sums} Let \(Y\) be \underline{independent} from \(X\), then
         \[
             \CGF_{X+Y}(t) = \CGF_X(t) + \CGF_Y(t)
