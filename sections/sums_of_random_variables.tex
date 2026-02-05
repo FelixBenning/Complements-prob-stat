@@ -1368,7 +1368,7 @@ I\times I =
     \end{enumerate}
 \end{exercise}
 
-\section{Large Deviations and concentration inequalities}
+\section{Large Deviations and concentration}
 \label{sec: concentration inequalities}
 
 In the previous section was concerned with the distribution of \emph{typical deviations} of
@@ -1403,15 +1403,15 @@ correct'' (PAC) statements, that is
 Recall that the only tool we have used so far to bound probabilities is the
 Markov inequality (Theorem \ref{thm: markov inequality})
 \[
-    \Prob{ X \ge a} \le \tfrac{\Exp{h(X)}}{h(a)}.
+    \Prob{X \ge x} \le \tfrac{\Exp{h(X)}}{h(x)}.
 \]
 The choice \(h(x) = e^{tx}\), with \(t\ge 0\) such that \(h\) is
 non-decreasing, results in the ``\textbf{Chernoff bound}''
 \[
-    \Prob{X \ge a}
-    \le \frac{\Exp{e^{t  X}}}{e^{t a}}
-    = \frac{\MGF_X(t)}{e^{t a}}
-    = \exp\bigl(-\bigl(t a - \underbrace{\log \MGF_X(t)}_{=\CGF_X(t)}\bigr)\bigr).
+    \Prob{X \ge x}
+    \le \frac{\Exp{e^{t  X}}}{e^{t x}}
+    = \frac{\MGF_X(t)}{e^{t x}}
+    = \exp\bigl(-\bigl(t x - \underbrace{\log \MGF_X(t)}_{=\CGF_X(t)}\bigr)\bigr).
 \]
 If the moment generating function of \(X\) is not finite, then this bound is
 of course useless. Note that we cannot use the characteristic function here,
@@ -1424,17 +1424,17 @@ The key feature of the Chernoff bound is that it provides us with a parameter \(
 that is not inherent to the problem of bounding \(\Prob{X \ge a}\). This allows for
 an optimization over \(t\), resulting in the \textbf{Legendre transform}
 \[
-    \CGF^+_X(a) \coloneq \sup_{t\ge 0} \bigl( t a - \CGF_X(t) \bigr).
+    \CGF^+_X(x) \coloneq \sup_{t\ge 0} \bigl( t x - \CGF_X(t) \bigr).
 \]
 The optimized bound is then given by
 \begin{equation}
     \label{eq: chernoff bound}    
-    \Prob{X \ge a} \le \exp\bigl(-\CGF^+_X(a)\bigr).
+    \Prob{X \ge x} \le \exp\bigl(-\CGF^+_X(x)\bigr).
 \end{equation}
 
 \begin{example}[The normal distribution]
     Let \(X \sim \normal{\mu, \sigma^2}\). 
-    Recall that the moment generating function of the normal distribution was
+    Recall that the MGF of the normal distribution was
     \(\MGF_X(t) = \exp(\mu t + \frac12 \sigma^2 t^2)\) (Definition \ref{def:
     univariate normal distribution}). Its CGF is then given by the quadratic
     polynomial
@@ -1443,31 +1443,31 @@ The optimized bound is then given by
     \]
     Thus the Legendre transform is
     \[\begin{aligned}
-        \CGF_X^+(a)
-        = \sup_{t\ge 0} \bigl(t a - \mu t - \tfrac12 \sigma^2 t^2\bigr)
-        &= \sup_{t\ge 0} \bigl(t (a - \mu) - \tfrac12 \sigma^2 t^2\bigr)
+        \CGF_X^+(x)
+        = \sup_{t\ge 0} \bigl(t x - \mu t - \tfrac12 \sigma^2 t^2\bigr)
+        &= \sup_{t\ge 0} \bigl(t (x - \mu) - \tfrac12 \sigma^2 t^2\bigr)
         \\
         &= \begin{cases}
-        \frac{(a - \mu)^2}{2\sigma^2}
-        \qquad &\text{for } a \ge \mu,
+        \frac{(x - \mu)^2}{2\sigma^2}
+        \qquad &\text{for } x \ge \mu,
         \\
-        0 &\text{for } a \le \mu.
+        0 &\text{for } x \le \mu.
         \end{cases}
     \end{aligned}\]
     The last step follows from simple optimization. The first order condition
-    results in the aximizer \(t^\star = \frac{a - \mu}{\sigma^2}\), which is greater
-    zero if and only if \(a \ge \mu\).
-    Observe that if \(\CGF_X^+(a) = 0\), then the Chernoff bound \eqref{eq: chernoff bound}
+    results in the maximizer \(t^\star = \frac{x - \mu}{\sigma^2}\), which is greater
+    zero if and only if \(x \ge \mu\).
+    Observe that if \(\CGF_X^+(x) = 0\), then the Chernoff bound \eqref{eq: chernoff bound}
     is \(1\) which is not very helpful since probabilities are always bounded by \(1\).
-    The only useful case is thus \(a \ge \mu\), in which we get that
+    The only useful case is thus \(x \ge \mu\), in which we get that
     the tail of the normal distribution decays like a squared exponential in the
-    distance \((a-\mu)\) to the mean, that is
+    distance \((x-\mu)\) to the mean, that is
     \[
-        \Prob{X \ge a}
-        \le \exp\bigl(- \tfrac{(a - \mu)^2}{2\sigma^2}\bigr)
-        \qquad\text{for } a \ge \mu.
+        \Prob{X \ge x}
+        \le \exp\bigl(- \tfrac{(x - \mu)^2}{2\sigma^2}\bigr)
+        \qquad\text{for } x \ge \mu.
     \]
-    Or equivalently, with \(\epsilon = a - \mu > 0\) we get quickly decaying bound in \(\epsilon\)
+    Or equivalently, with \(\epsilon = x - \mu > 0\) we get a quickly decaying bound in \(\epsilon\)
     \[
         \Prob{X - \mu \ge \epsilon}
         \le \exp(-\tfrac{\epsilon^2}{2\sigma^2})
@@ -1478,18 +1478,19 @@ The optimized bound is then given by
 Since \(\CGF_X^+\) is defined as a supremum over all \(t\ge 0\), it does not
 translate well into multiple dimension where the ordering is lost.
 We have seen in the example above that the maximizer \(t^\star\) is positive
-whenever \(a\ge \mu\) or equivalently \(\epsilon = a - \mu \ge 0\).
-This implies that for \(a\ge \mu\) the function \(\CGF_X^+(a)\) coincides
+whenever \(x\ge \mu\) or equivalently \(\epsilon = x - \mu \ge 0\).
+This implies that for \(x\ge \mu\) the function \(\CGF_X^+(x)\) coincides
 with the \textbf{convex conjugate}, also known as ``Fenchel-Legendre transform''
 of \(\CGF_X\) given by
 \[
-    \CGF_X^*(a) \coloneq \sup_{t\in \real} \bigl(t a - \CGF_X(t)\bigr)
-    \qquad \Bigl(\ge \CGF_X^+(a)= \sup_{t \ge 0} \bigl(t a - \CGF_X(t)\bigr)\Bigr).
+    \CGF_X^*(x) \coloneq \sup_{t\in \real} \bigl(t x - \CGF_X(t)\bigr)
+    \qquad \Bigl(\ge \CGF_X^+(x)= \sup_{t \ge 0} \bigl(t x - \CGF_X(t)\bigr)\Bigr).
 \]
 \begin{warning}
-    For \(a\le \mu\) the bound \(\Prob{X \ge a} \le \exp(-\CGF_X^*(a))\) is
-    false! Here \(\CGF_X^*(a) > \CGF_X^+(a) = 0\).  However since
-   \(\CGF_X^+(a)=0\) is a useless bound anyway, we simply need to avoid this
+    \label{warn: difference between CGF star and plus}
+    For \(x\le \mu\) the bound \(\Prob{X \ge x} \le \exp(-\CGF_X^*(x))\) is
+    false! Here \(\CGF_X^*(x) > \CGF_X^+(x) = 0\).  However since
+   \(\CGF_X^+(x)=0\) is a useless bound anyway, we simply need to avoid this
     case.
 \end{warning}
 
@@ -1529,33 +1530,119 @@ of \(\CGF_X\) given by
 \subsection{Large Deviations}
 \marginpar{\red{Lecture 6}}
 
-With the motivation above let us now formalize this procedure in multiple dimensions.
+We proceed with a more formal introduction of the cumulant generating function
+and its properties in multiple dimensions.
 
 \begin{definition}[Cumulant generating function]
     The \textbf{cumulant generating function} (CGF) of a random variable \(X\)
     in a Hilbertspace \(\hilbert\) is defined as the logarithm of its moment generating
     function
-    \[
+    \[\tag{CGF}
         \CGF_X(t) \coloneq \log \MGF_X(t)
         = \log \Exp{e^{\inner{t, X}}}.
     \]
-    Note that since \(\exp(x) \ge 0\) the MGF is always defined but possibly infinite,
-    and thus the CGF also always well defined but possibly infinite. We further
-    define the functions
+    Due to \(\exp(x) > 0\) the MGF \(\MGF_X\) is always defined with values in \((0,
+    \infty]\). Thus the CGF is defined for all \(t\in \hilbert\) with values in \((-\infty,
+    \infty]\). We denote its effective domain
+    by
+    \[
+        \tag{effective domain}
+        \cD_{\CGF_X} \coloneq \Set{t \in \hilbert: \CGF_X(t) < \infty} = \cD_{\MGF_X} \supseteq \Set{0}.
+    \]
+    We further define the functions for \(t,a\in \hilbert\)
     \begin{align*}
-        \tag{concave-convex function}
+        \tag{concave-convex helper}
         \Phi_X(t, a) &\coloneq \inner{t, a} - \CGF_X(t)
         \\
-        \tag{convex conjugate}
+        \tag{convex conjugate of \(\CGF_X\)}
         \CGF_X^*(a) &\coloneq \sup_{t\in \hilbert} \Phi(t, a)
     \end{align*}
 \end{definition}
 
-Observe that \(\Phi_X\) is a concave-convex function if \(\CGF_X\) is convex,
-which is the case (see Lemma \ref{lem: check sion's conditions} below).
-The function \(\CGF_X^*\) is the convex conjugate of \(\CGF_X\), which entails a
-lot of nice structure (Exercise \ref{ex: convex conjugate}).
+\begin{lemma}[Properties of the CGF]
+    \label{lem: properties of CGF}
+    Let \(X\) be a random variable in a Hilbertspace \(\hilbert\). Then
+    \begin{enumerate}[label=\normalfont{(\arabic*)}, noitemsep]
+        \item\label{it: CGF(0)=0} \(\CGF_X(0) = 0\),
+        \item\label{it: CGF convex} \(\CGF_X\) is convex,
+        \item\label{it: CGF lower semicontinuous} \(\CGF_X\) is lower semicontinuous, i.e.\ \(\liminf\limits_{n\to\infty} \CGF_X(t_n) \ge \CGF_X(t)\) for any \(t_n\to t\),
+        in other words: the CGF takes the bottom value at jump points
 
+        \item\label{it: CGF effective domain is convex} \(\cD_{\CGF_X}\) is a convex set that contains the origin \(0\),
+    \end{enumerate} 
+    The CGF interacts nicely with sums (the key in the analysis of the mean)
+    \begin{enumerate}[label=\normalfont{(\arabic*)}, noitemsep, resume]
+        \item\label{it: CGF sum independent} \(\CGF_{X+Y}(t) = \CGF_X(t) + \CGF_Y(t)\) for \(X,Y\) independent and all \(t\in \hilbert\).
+        \item\label{it: CGF affine} \(\CGF_{aX + b}(t) = \inner{t, b} + \CGF_X(a t)\)
+        for any \(a\in \real\), \(b, t\in \hilbert\).
+    \end{enumerate}
+    Let \(\hilbert=\real^\dims\) and assume \(U \subseteq \cD_{\CGF_X}\) is an open
+    set with \(0\in U\), then
+    \begin{enumerate}[label=\normalfont{(\arabic*)}, noitemsep, resume]
+        \item\label{it: CGF analytic} \(\CGF_X\) is analytic (a power series) on \(U\), specifically for \(\dims=1\)
+        \[
+            \CGF_X(t)
+            = \sum_{k=1}^\infty \CGF_X^{(k)}(0)\frac{t^k}{k!}
+            \qquad \forall t\in O.
+        \]
+        The coefficient \(\cumulant_k(X) \coloneq \CGF_X^{(k)}(0)\) is called the \(k\)-th \textbf{cumulant} of \(X\).
+        For \(X,Y\) independent we have by \ref{it: CGF sum independent},
+        \[
+            \cumulant_k(X+Y) = \cumulant_k(X) + \cumulant_k(Y).
+        \]
+        \item\label{it: CGF gradient and Hessian} \(\nabla \CGF_X(0) = \Exp{X}\) and \(\nabla^2\CGF_X(0) = \Cov{X}\).
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    \ref{it: CGF(0)=0}, \ref{it: CGF sum independent} and \ref{it: CGF affine}
+    are easy to verify and also follow from the equivalent properties of the MGF
+    (Exercise \ref{ex: properties moment generating functions}). For \ref{it:
+    CGF analytic} recall that the MGF is analytic on the interior of its
+    effective domain (Lemma \ref{lem: moment generating function representation}
+    and Exercise \ref{ex: multivariate
+    moment generating function}) and the \(\log\) is analytic on \((0,
+    \infty)\), therefore the CGF is also analytic there. Then \ref{it: CGF
+    gradient and Hessian} follows from \(\log \MGF_X(t)\) and the chain rule.
+    
+    Convexity of \(\CGF_X\), \ref{it: CGF convex}, follows from Hölder's inequality (Exercise \ref{ex: hölder's inequality}).
+    Specifically, for any \(t, s\in \hilbert\) and any \(\alpha\in[0,1]\) we choose
+    \(p = \frac1\alpha\) and \(q = \frac1{1-\alpha}\) such that \(\frac1p
+    + \frac1q = 1\), then
+    \[\begin{aligned}[b]
+        \CGF_X(\alpha t + (1-\alpha) s)
+        &= \log \Exp{e^{\inner{\alpha t + (1-\alpha) s, X}}}
+        \\
+        \overset{\text{Hölder}}&\le \log \Exp{(e^{ \alpha\inner{t, X}})^{p}}^{\frac1p} \Exp{(e^{(1-\alpha)\inner{s, X}})^{q}}^{\frac1q}
+        \\
+        \overset{p=\frac1\alpha}&= \log \Exp{e^{\inner{t, X}}}^{\alpha} \Exp{e^{\inner{s, X}}}^{1-\alpha}
+        = \alpha \CGF_X(t) + (1-\alpha) \CGF_X(s).
+    \end{aligned}
+    \]
+    The convexity of the effective domain, \ref{it: CGF effective domain is convex}, follows directly.
+    Lower semicontinuity of \(\CGF_X\), \ref{it: CGF lower semicontinuous}, follows from Fatou's lemma (measure
+    theory):
+    \[\begin{aligned}[b]
+        \liminf_{n\to \infty} \CGF_X(t_n)
+        &= \log \liminf_{n\to \infty} \Exp{\exp(\inner{t_n, X})}
+        \\
+        \overset{\text{Fatou}}&\ge \log \Exp{\liminf_{n\to \infty} \exp(\inner{t_n, X})}
+        = \CGF_X(t).
+    \end{aligned}
+    \qedhere
+    \]
+\end{proof}
+
+\begin{remark}[Often the CGF is non-negative]
+    If \(\Exp{X} = 0\), then the slope of the CGF at \(0\) is zero, that is \(\nabla \CGF_X(0) = 0\).
+    Since the CGF is convex and the second derivative \(\Cov{X}\) is positive definite,
+    this implies it must be non-negative everywhere. For \(\Exp{X} \neq 0\)
+    this is obviously not the case.
+\end{remark}
+
+Observe that \(\Phi_X\) is thus a concave-convex function since \(\CGF_X\) is convex.
+This explains its name and this property is crucial for the following bound.
+
+\begin{mdframed}[innertopmargin=0pt]
 \begin{proposition}
     \label{prop: general LDP upper}
     Let \(A\subseteq \hilbert\) be a \underline{compact convex} set, then 
@@ -1563,6 +1650,8 @@ lot of nice structure (Exercise \ref{ex: convex conjugate}).
         \Prob{X \in A} \le \exp\bigl(-\inf_{a\in A} \CGF_X^*(a)\bigr).
     \]
 \end{proposition}
+\end{mdframed}
+
 \begin{proof}
     Then
     \(
@@ -1617,37 +1706,10 @@ lot of nice structure (Exercise \ref{ex: convex conjugate}).
 \end{lemma}
 \begin{proof}
     The function \(\Phi_X\) is trivially continuous and convex in \(a\) since
-    the inner product is continuous and linear in \(a\). We need to check that the cumulant generating function \(\CGF_X\) is
-    \begin{enumerate}[label={(\roman*)}, nosep]
-        \item lower semicontinuous
-        \item convex
-    \end{enumerate}
-    Then the function \(\Phi_X\) is upper semicontinuous and concave in \(t\).
-    Lower semicontinuity
-    of \(\CGF_X\) follows from Fatou's lemma (measure theory):
-    \[\begin{aligned}
-        \liminf_{n\to \infty} \CGF_X(\lambda_n)
-        &= \log \liminf_{n\to \infty} \Exp{\exp(\inner{\lambda_n, X})}
-        \\
-        \overset{\text{Fatou}}&\ge \log \Exp{\liminf_{n\to \infty} \exp(\inner{\lambda_n, X})}
-        = \CGF_X(\lambda).
-    \end{aligned}
-    \]
-    Convexity of \(\CGF_X\) follows from Hölder's inequality (Exercise \ref{ex: hölder's inequality}).
-    Specifically, for any \(t, s\in \hilbert\) and any \(\alpha\in[0,1]\) we choose
-    \(p = \frac1\alpha\) and \(q = \frac1{1-\alpha}\) such that \(\frac1p
-    + \frac1q = 1\), then
-    \[\begin{aligned}[b]
-        \CGF_X(\alpha t + (1-\alpha) s)
-        &= \log \Exp{e^{\inner{\alpha t + (1-\alpha) s, X}}}
-        \\
-        \overset{\text{Hölder}}&\le \log \Exp{(e^{ \alpha\inner{t, X}})^{p}}^{\frac1p} \Exp{(e^{(1-\alpha)\inner{s, X}})^{q}}^{\frac1q}
-        \\
-        \overset{p=\frac1\alpha}&= \log \Exp{e^{\inner{t, X}}}^{\alpha} \Exp{e^{\inner{s, X}}}^{1-\alpha}
-        = \alpha \CGF_X(t) + (1-\alpha) \CGF_X(s).
-    \end{aligned}
-    \qedhere
-    \]
+    the inner product is continuous and linear in \(a\).
+    Since \(\CGF_X\) is lower semicontinuous and convex (Lemma \ref{lem:
+    properties of CGF}) it follows that
+    the function \(\Phi_X\) is upper semicontinuous and concave in \(t\).
 \end{proof}
 
 In finite dimensions we can extend Proposition \ref{prop: general LDP upper} to
@@ -1664,7 +1726,7 @@ In finite dimensions we can extend Proposition \ref{prop: general LDP upper} to
 \end{mdframed}
 \begin{proof}
     Let \((K_n)_{n\in \nat}\) be an increasing sequence of convex compact sets
-    with \(K_n \uparrow \real^\dims\) (this does not exist in infinite
+    with \(K_n \uparrow \real^\dims\) (this does not necessarily exist in infinite
     dimension!). Then by continuity of probability measures
     (Remark \ref{rem: continuity of probability})
     \[\begin{aligned}[b]
@@ -1678,6 +1740,128 @@ In finite dimensions we can extend Proposition \ref{prop: general LDP upper} to
     \]
 \end{proof}
 
+\paragraph*{Comparison with the one-dimensional motivation}
+Let us compare the generalized Chernoff bound with the Chernoff bound
+we obtained in the one-dimensional case. The one dimensional bound \eqref{eq: chernoff bound}
+was
+\[
+    \Prob{X \ge x} \le \exp\bigl(-\CGF_X^+(x)\bigr)
+    \Bigl(= \exp\bigl(-\CGF_X^*(x)\bigr) \qquad \text{for } x \ge \Exp{X}\Bigr).
+\]
+Using the closed, convex set \(A=[x, \infty)\) in the generalized Chernoff bound we get
+\[
+    \Prob{X \ge x} \le \exp\bigl(-\inf_{a\ge x} \CGF_X^*(a)\bigr).
+\]
+Since \(\CGF_X^*(x) \ge \inf_{a\ge x} \CGF_X^*(a)\) it may appear
+that we obtained a worse bound. However the key to understand here is that the
+function \(\CGF_X^*(a)\) is monotonically increasing after \(\Exp{X}\) (Lemma \ref{lem: properties of cgf*}) 
+and therefore
+\[
+    \CGF_X^*(x) = \inf_{a\ge x} \CGF_X^*(a) \quad \text{for all } x \ge \Exp{X}.
+\]
+More specifically, we will see in the following that the expected value \(\Exp{X}\)
+is the minimizer of \(\CGF_X^*(a)\) and that \(\CGF_X^*(a)\) is also convex and therefore
+monotonically increasing for \(a \ge \Exp{X}\). Observe that for \(x< \Exp{X}\)
+the minimizer is the expected value and we do not have the problem to ensure \(x
+\ge \Exp{X}\) anymore (cf.~Warning \ref{warn: difference between CGF star and
+plus}).
+
+\paragraph*{Understanding the convex conjugate} Recall that a convex function
+\(\Lambda\) has the property that it lies above its supporting hyperplanes. That is 
+\[
+    \Lambda(t) \ge \inner[\big]{t-s, \nabla \Lambda(s)} + \Lambda(s)
+    = \underbrace{\inner[\big]{t, \nabla \Lambda(s)}}_{\text{hyperplane}}
+    - \underbrace{\bigl(\inner[\big]{s, \nabla \Lambda(s)} - \Lambda(s)\bigr)}_{\eqcolon c(s) \quad\text{(intercept)}}.
+\]
+The convex conjugate \(\Lambda^*\) is essentially the map from the gradient to
+the intercept, \(\nabla \Lambda(s) \mapsto c(s)\). That is
+\[
+    \Bigl(\Lambda(t) \ge \inner{t, a} - c\qquad \forall t \in \hilbert\Bigr)
+    \iff c \ge \bigl(\sup_{t \in \hilbert} \inner{t, a} - \Lambda(t)\bigr) = \Lambda^*(a).
+\]
+So the smallest intercept that ensures the hyperplane is below the function is
+exactly the convex conjugate. Being the smallest intercept it ensure the hyperplane
+is touching the function at some point (cf.~\(t=s\) above). In particular,
+if \(\Lambda\) is differentiable, then
+\begin{equation}
+    \label{eq: gradient of cgf star}    
+    \Lambda^*\bigl(\nabla\Lambda(t)\bigr)
+    = c(t)
+    = \inner[\big]{t, \nabla \Lambda(t)} - \Lambda(t).
+\end{equation}
+Recall that if the essential domain of \(\CGF_X\) contains an open
+neighborhood of \(0\), then \(\nabla \CGF_X(0) = \Exp{X}\) and consequently
+\begin{equation}
+    \label{eq: cgf star at expected value}    
+    \CGF_X^*\bigl(\Exp{X}\bigr) = \CGF_X^*\bigl(\nabla \CGF_X(0)\bigr) = \inner{0, \nabla \CGF_X(0)} - \CGF_X(0) = 0.
+\end{equation}
+So up to the issue with the domain it is sufficient to prove that \(\CGF_X\)
+is non-negative and convex to get that \(\Exp{X}\) is its minimizer.
+
+
+\begin{lemma}[Properties of the convex conjugate]
+    \label{lem: properties of cgf*}
+    The convex conjugate \(\Lambda^*\) of an arbitrary function \(\Lambda\)
+    satisfies
+    \begin{enumerate}[label=\normalfont{(\arabic*)}, noitemsep]
+        \item\label{it: cgf* convex} \(\Lambda^*\) is convex,
+        \item\label{it: cgf* lower semicontinuous} \(\Lambda^*\) is lower semicontinuous,
+        \item\label{it: cgf* duality} \(\Lambda^{**} = \Lambda\) if \(\Lambda\) is convex and lower semicontinuous (Fenchel-Moreau Thm.),
+        \item\label{it: cgf* gradient} If \(\Lambda\) is
+        differentiable in \(t\in \hilbert\), then \(\nabla \Lambda^*(\nabla \Lambda(t)) = \inner{t, \nabla \Lambda(t)} - \Lambda(t)\)
+        \item\label{it: cgf* minimum at expected value} If \(\Lambda(0) = 0\), then \(\Lambda^*(a) \ge 0\) for all \(a\in \hilbert\).
+    \end{enumerate}
+    Moreover for \(\Lambda = \CGF_X\) we have
+    \begin{enumerate}[label=\normalfont{(\arabic*)}, noitemsep, resume]
+        \item\label{it: cgf* trivial essential domain} If \(\cD_{\CGF_X} = \Set{0}\), then \(\CGF_X \equiv 0\).
+        \item\label{it: cgf* open essential domain} If \(U \subseteq \cD_{\CGF_X}\) is an open set with \(0\in U\), then
+        \(\CGF_X^*(\Exp{X})=0\).
+        In particular, the expectation \(\Exp{X}\) is a minimizer of \(\CGF_X^*\).
+    \end{enumerate}
+\end{lemma}
+
+\begin{remark}
+    Between \ref{it: cgf* trivial essential domain} and \ref{it: cgf* open
+    essential domain} there is a gap that is very annoying to treat formally,
+    but offers little insight.
+    See \fxwarning{reference or exercise?}
+\end{remark}
+
+\begin{proof}
+    For \ref{it: cgf* convex} choose \(\lambda\in [0,1]\) and \(a, b\in \hilbert\). Then
+    \[\begin{aligned}
+        \Lambda^*(\lambda a + (1-\lambda) b)
+        &= \sup_{t\in \hilbert} \bigl(\lambda \inner[\big]{t, a} + (1-\lambda) \inner[\big]{t, b} - \Lambda(t)\bigr)
+        \\
+        &\le \lambda \sup_{t\in \hilbert} \bigl(\inner{t, a} - \Lambda(t)\bigr)
+        + (1-\lambda) \sup_{t\in \hilbert} \bigl(\inner{t, b} - \Lambda(t)\bigr)
+        \\
+        &= \lambda \Lambda^*(a) + (1-\lambda) \Lambda^*(b).
+    \end{aligned}
+    \]
+    For \ref{it: cgf* lower semicontinuous} let \(a_n \to a\). For any fixed \(t\in \hilbert\) we have
+    \[
+        \liminf_{n\to \infty} \Lambda^*(a_n)
+        \overset{\text{Def.~}\Lambda^*}\ge \liminf_{n\to \infty}\; \inner{t, a_n} - \Lambda(t)
+        = \inner{t, a} - \Lambda(t).
+    \]
+    Since this holds for any \(t\in \hilbert\), it also holds for the supremum
+    \[
+        \liminf_{n\to \infty} \Lambda^*(a_n) \ge \sup_{t\in \hilbert} \bigl(\inner{t, a} - \Lambda(t)\bigr) = \Lambda^*(a).
+    \]
+    We will not prove \ref{it: cgf* duality}. See \fxwarning{reference!}. We have already proven
+    \ref{it: cgf* gradient} in \eqref{eq: gradient of cgf star}. For \ref{it: cgf* minimum at expected value} observe that
+    \[
+        \Lambda^*(a) = \sup_{t\in \hilbert} \bigl(\inner{t, a} - \Lambda(t)\bigr)
+        \ge \inner{0, a} - \Lambda(0) = 0.
+    \]
+    \ref{it: cgf* trivial essential domain} follows directly from the definition
+    as \(\inner{t, a} - \CGF_X(t) = -\infty\) for all \(t \neq 0\). Consequently
+    the supremum chooses \(t=0\).  \ref{it: cgf* open essential domain} was already
+    shown in \eqref{eq: cgf star at expected value}.
+\end{proof}
+
+\paragraph*{Large deviation principle for the mean}
 
 Since they are closely related to the MGF, the CGF also interacts very well with
 independent sums.
@@ -1693,34 +1877,26 @@ independent sums.
     \end{equation}
 \end{lemma}
 \begin{proof}
-    \red{TODO}
-    Since the cumulant generating function of the sum \(\sum_{i=1}^n X_i\)
-    is \(n \CGF_X(t)\) by independence, \ref{it: cumulant independent sums} and
-    the fact that the \(X_i\) are identically distributed, we have by the scaling property
-    Consequently
+    The first claim follows by simple calculation and the nice interaction of
+    the exponential with independent sums
+    \[\begin{aligned}
+        \CGF_{\mean{X}_n}(t)
+        &= \log \Exp[\Big]{\exp\Bigl(\inner[\Big]{t, \frac1n \sum_{i=1}^n X_i}\Bigr)}
+        \\
+        &= \log \Exp[\Big]{\prod_{i=1}^n e^{\inner{\frac{t}n, X_i}}}
+        \overset{\iid}= \log \MGF_X\bigl(\tfrac{t}n\bigr)^n
+        = n \CGF_X\bigl(\tfrac{t}n\bigr).
+    \end{aligned}
+    \]
+    The second claim follows from the first by a change of variable
     \[
-        \CGF_{\mean{X}_n}^+(a)
-        = \sup_{t\ge 0} \bigl(n \tfrac{t}n a - n \CGF_X(\tfrac{t}n)\bigr)
-        \overset{s=\frac{t}n}= n \sup_{s\ge 0} \bigl(s a - \CGF_X(s)\bigr)
-        = n \CGF_X^+(a).
+        \CGF_{\mean{X}_n}^*(a)
+        = \sup_{t\in \hilbert} \bigl(n \inner{\tfrac{t}n, a} - n \CGF_X\bigl(\tfrac{t}n\bigr)\bigr)
+        \overset{s=\frac{t}n}= n \sup_{s\in \hilbert} \bigl(\inner{s, a} - \CGF_X(s)\bigr)
+        = n \CGF_X^*(a).
         \qedhere
     \]
 \end{proof}
-
-This Lemma with the Chernoff bound Theorem \ref{thm: chernoff bound in R^d} implies
-exponential concentration bounds for the mean. Specifically,
-let \(X_1, \ldots, X_n\) be independent copies of the random variable \(X\) and
-\(\mean{X}_n\) their mean. Then
-\begin{equation}
-    \label{eq: exponential concentration of the mean}
-    \Prob{\mean{X}_n \ge a}
-    \le \exp\bigl(-n \CGF_X^+(a)\bigr).
-\end{equation}
-Now if \(\CGF_X^+(a) > 0\), then the probability that the mean exceeds \(a\)
-decays exponentially in \(n\). This would of course be weird if \(a \le \Exp{X}\)
-so we would expect that \(\CGF_X^+(a) = 0\) for \(a \le \Exp{X}\). And this
-should make us suspicious: Is \(\CGF_X^+(a) > 0\) true for any \(a\) or is this
-bound useless?
 
 
 \begin{fact}[Cramér]
@@ -1732,6 +1908,7 @@ bound useless?
 \end{fact}
 
 \subsection{Subgaussian random variables}
+\marginpar{\red{Lecture 7}}
 
 Subgaussian random variables have tails that decay at least as fast as the
 Gaussian distribution. That is
@@ -1868,11 +2045,12 @@ this case.
     the Taylor expansion with \eqref{eq: rademacher are worst offender}.
 \end{proof}
 
+\begin{mdframed}[innertopmargin=0pt]
 \begin{theorem}[General Hoeffding's inequality]
     Let \(X_1, \ldots, X_n\) be independent random variables, then we have
     for all \(\epsilon > 0\)
     \[
-        \Prob{\mean{X}_n - \Exp{\mean{X}_n} \ge \epsilon}
+        \Prob[\Big]{\mean{X}_n - \Exp{\mean{X}_n} \ge \epsilon}
         \le \exp\Bigl(-\frac{n \epsilon^2}{2\frac1n\sum_{i=1}^n \varProx{X_i}}\Bigr).
     \]
 \end{theorem}
@@ -1885,6 +2063,7 @@ this case.
         \le 2 \exp\Bigl(-\frac{2n\epsilon^2}{(b-a)^2}\Bigr)
     \]
 \end{corollary}
+\end{mdframed}
 
 \begin{theorem}[Subgaussian characterization]
     \label{thm: subgaussian equivalences}
