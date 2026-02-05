@@ -1020,28 +1020,29 @@ following theorem.
 \end{remark}
 
 It turns out that proving the seminorm properties (Theorem \ref{thm: seminorm
-properties}), is easier in a more general setting. Observe that
+properties}), is easier in a more general setting. Specifically, since
+deterministic values may be moved outside of the expectation, we have
 \[
     \norm{X}_{L^p} = \inf\Set[\Big]{\lambda > 0 : \Exp[\Big]{\bigl(\tfrac{\norm{X}}{\lambda}\bigr)^p} \le 1}.
 \]
-consequently with \(\psi(x) = x^p\) the \(L^p\) norm is a special case of
+With \(\psi(x) = x^p\) the \(L^p\) norm is thus a special case of
 an ``Orlicz norm''.
 \begin{definition}[Orlicz norm]
     \label{def: orlicz norm}
     Let \(\psi\colon [0,\infty) \to [0,\infty)\) be a non-decreasing, convex function
     with \(\psi(0) = 0\) and \(\lim_{x\to \infty} \psi(x) = \infty\). Then we define
-    for \(X\colon \Omega \to \domain\)
+    for \(X\colon \Omega \to \domain\) the \textbf{Orlicz norm}
     \[
         \norm{X}_{\psi} \coloneq \inf\Set[\Big]{\lambda > 0 : \Exp[\Big]{\psi\bigl(\tfrac{\norm{X}}{\lambda}\bigr)} \le 1}.
     \]
-    Orlicz spaces are naturally \(\cL^\psi \coloneq \Set{X\colon \Omega \to \domain : \norm{X}_{\psi} < \infty}\).
+    The \textbf{Orlicz spaces} are given by \(\cL^\psi \coloneq \Set{X\colon \Omega \to \domain : \norm{X}_{\psi} < \infty}\).
 \end{definition}
 
 \begin{theorem}
     The Orlicz norm is a seminorm.
 \end{theorem}
 \begin{proof}
-    That the Orlicz norm is non-negative by definition of the infimum. The scaling
+    The Orlicz norm is non-negative by definition of the infimum. The scaling
     property follows from
     \[\begin{aligned}
         \norm{\alpha X}_{\psi}
@@ -1064,7 +1065,7 @@ an ``Orlicz norm''.
     \[
         \frac{\norm{X}+\norm{Y}}{a + b + 2\epsilon} = \lambda \frac{\norm{X}}{a + \epsilon} + (1-\lambda) \frac{\norm{Y}}{b + \epsilon}.
     \]
-    By now we use that \(\psi\) is non-decreasing and convex:
+    Finally, using that \(\psi\) is non-decreasing and convex:
     \[\begin{aligned}
         \Exp[\Big]{\psi\Bigl(\frac{\norm{X+Y}}{a + b + 2\epsilon}\Bigr)}
         \overset{\text{non-dec.}}&\le \Exp[\Big]{\psi\Bigl(\frac{\norm{X}+\norm{Y}}{a + b + 2\epsilon}\Bigr)}
@@ -1089,7 +1090,7 @@ random variables.
     \(\norm{X}_\psi = 0\) if and only if \(X\overset{\as}= 0\).
 \end{fact}
 \begin{proof}[Proofsketch]
-    If \(X \overset{\as} 0\), then \(\psi(0)=0\) implies the Orlicz
+    If \(X \overset{\as}= 0\), then \(\psi(0)=0\) implies the Orlicz
     norm is zero. The other direction uses the property \(\lim_{x\to\infty}
     \psi(x) = \infty\) as \(\lambda \to 0\) explodes the input if \(\norm{X}\)
     is non-zero.
@@ -1217,7 +1218,8 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 
 \begin{exercise}[Expectation -- Projection in \(L^2\)]
     \label{ex: projection in L2}
-    Identify deterministic random variables with \(\real \subseteq \cL^2(\real)\). Then identify \(\real\) with \(\Set{[x]:
+    Identify deterministic random variables with real numbers  such that \(\real
+    \subseteq \cL^2(\real)\). Then identify \(\real\) with \(\Set{[x]:
     x\in\real} \subseteq L^2\) such that \(\real \subseteq L^2(\real)\).
     \begin{enumerate}[label=(\alph*), noitemsep]
         \item Show that \(\real\) and \(\real^\perp \coloneq \Set{[X] \in L^2 :
