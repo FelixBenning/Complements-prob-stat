@@ -1435,6 +1435,7 @@ The optimized bound is then given by
 \end{equation}
 
 \begin{example}[The normal distribution]
+    \label{ex: chernoff bound for normal distribution}
     Let \(X \sim \normal{\mu, \sigma^2}\). 
     Recall that the MGF of the normal distribution was
     \(\MGF_X(t) = \exp(\mu t + \frac12 \sigma^2 t^2)\) (Definition \ref{def:
@@ -1718,7 +1719,7 @@ In finite dimensions we can extend Proposition \ref{prop: general LDP upper} to
 \emph{closed} convex sets.
 
 \begin{mdframed}[innertopmargin=0pt]
-\begin{theorem}[Generalized Chernoff bound]
+\begin{theorem}[General Chernoff bound]
     \label{thm: chernoff bound in R^d}
     Let \(A\subseteq \real^\dims\) be a \underline{closed}, \underline{convex} set, then 
     \[
@@ -1967,11 +1968,14 @@ In particular this exponential rate is tight.
 \end{fact}
 \end{mdframed}
 
-The lower bound shows that the exponential rate is tight. The upper bound is obtained for
+The lower bound shows that the exponential rate is tight. Since \(U\)
+is open it is proven by taking a small ball around the point \(a\in U\) that minimizes \(\CGF_X^*(a)\) and
+lower bounding the probability of this ball.
+The upper bound is obtained for
 arbitrary closed sets by covering the set with convex sets and using the fact
 that the factor (like the \(2\) we got) goes to zero when the logarithm and
 \(\frac1n\) is applied.
-However this covering argument does incur a cost at finite \(n\) that cannot be
+However this covering argument does incur a subexponential cost at finite \(n\) that cannot be
 avoided! \fxwarning{exercise!}
 
 \subsection{Subgaussian random variables}
@@ -1982,20 +1986,23 @@ Gaussian distribution. That is
 \[
     \Prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{2\sigma^2}\bigr).
 \]
-An important example would be bounded random variables, since the probability 
+Recall that we obtained this bound on the tails of the normal distribution using
+a Chernoff bound and the CGF of the normal distribution in \eqref{ex: chernoff
+bound for normal distribution}.
+An important example of subgaussian random variables
+are bounded random variables, since the probability 
 that \(\abs{X} \ge t\) eventually drops to zero.
 Unfortunately tail bounds like this do not interact
 well with summation of random variables. We would therefore prefer bounds on the
 CGF instead to get tight bounds on the convergence rate of the mean. We will
-start by defining such bounds and find out later (Theorem \ref{thm: subgaussian
-equivalences}) that this is actually equivalent to the tail bound above in some
-sense.
+start with such bounds and find out later (Theorem \ref{thm: subgaussian
+equivalences}) that this is actually equivalent to the tail bound above.
 
 \begin{definition}[Variance proxy]
     Let \(X\) be a \underline{centered} random variable, then
     the \emph{variance proxy} of \(X\) is defined as
     \[
-        \varProx{X} \coloneq \min\Set{\lambda \ge 0 : \CGF_X(t) \le \tfrac{\lambda^2t^2}2 \quad \forall t}
+        \varProx{X} \coloneq \min\Set{\lambda \ge 0 : \CGF_X(t) \le \tfrac{\lambda t^2}2 \quad \forall t}
     \]
 \end{definition}
 
@@ -2007,24 +2014,89 @@ Since the cumulant generating function of a normal distribution with variance
 the variance proxy \(\varProx{X}\) coincides with the variance \(\sigma^2\) in
 this case.
 
+
 \begin{lemma}[Basic properties of variance proxy]
-    Let \(X\) be a \underline{centered} random variable
+    Let \(X\) and \(Y\) be \underline{centered} random variables with variance proxies \(\varProx{X}\) and \(\varProx{Y}\), then
     \begin{enumerate}[label=(\roman*), noitemsep]
-        \item \(\varProx{a X} = a^2 \varProx{X}\) for any \(a\in \real\).
+        \item\label{it: var proxy scaling} \(\varProx{a X} = a^2 \varProx{X}\) for any \(a\in \real\), in particular \(\varProx{-X} = \varProx{X}\),
         \item\label{it: variance proxy independent sums} Let \(Y\) be \underline{independent} from \(X\), then
         \[
-            \varProx{X+Y} = \varProx{X} + \varProx{Y}.
+            \varProx{X+Y} \le \varProx{X} + \varProx{Y}.
         \]
     \end{enumerate}
     In particular for the mean \(\mean{X}_n\) of independent centered \(X_i\),
     we have
-    \[
-        \varProx{\mean{X}_n} = \frac1{n^2} \sum_{i=1}^n \varProx{X_i}
+    \begin{equation}
+        \label{eq: variance proxy of the mean}
+        \varProx{\mean{X}_n} \le \frac1{n^2} \sum_{i=1}^n \varProx{X_i}
         \overset{\substack{\text{identical}\\\text{distributed}}}= \frac{\varProx{X_1}}n.
-    \]
+    \end{equation}
 \end{lemma}
+\begin{proof}
+    The first property follows from the scaling property of the CGF, that is
+    \[
+        \CGF_{a X}(t) = \CGF_X(a t) \le \tfrac{\varProx{X} (a t)^2}2 = \tfrac{(a^2 \varProx{X}) t^2}2.
+    \]
+    of course by definition of the variance proxy as a minimum we only obtain
+    \(\varProx{aX} \le a^2 \varProx{X}\). To get the lower bound use the same
+    argument with \(a^{-1}\) to obtain \(\varProx{X} \le a^{-2} \varProx{aX}\).
+    The sum property follows from the identical
+    sum property of the CGF for independent random variables, that is
+    \[
+        \CGF_{X+Y}(t) = \CGF_X(t) + \CGF_Y(t) \le \tfrac{\varProx{X} t^2}2 + \tfrac{\varProx{Y} t^2}2 = \tfrac{(\varProx{X} + \varProx{Y}) t^2}2.
+        \qedhere
+    \]
 
+\end{proof}
 
+The variance proxy can then be used for the following tail bound:
+
+\begin{mdframed}[innertopmargin=0pt]
+\begin{theorem}[General Hoeffding's inequality]
+    Let \(X_1, \ldots, X_n\) be independent random variables in \(\real\) with
+    variance proxies \(\varProx{X_i}\), then for all \(\epsilon > 0\)
+    \[
+        \Prob[\Big]{\mean{X}_n - \Exp{\mean{X}_n} \ge \epsilon}
+        \le \exp\Bigl(-\frac{n \epsilon^2}{2\frac1n\sum_{i=1}^n \varProx{X_i}}\Bigr).
+    \]
+\end{theorem}
+\end{mdframed}
+\begin{proof}
+    It is sufficient to prove for a centered random variable \(X\) with variance
+    proxy \(\varProx{X}\) that
+    \begin{equation}
+        \label{eq: var prox tail bound}    
+        \Prob{X \ge \epsilon} \le \exp\bigl(-\tfrac{\epsilon^2}{2\varProx{X}}\bigr),
+    \end{equation}
+    because an application to \(X = \mean{X}_n - \Exp{\mean{X}_n}\) with
+    \eqref{eq: variance proxy of the mean} would then give the desired result.
+    For \eqref{eq: var prox tail bound} we simply use a Chernoff bound. 
+    Specifically, by definition of the variance proxy \(\CGF_X(t) \le \frac{\varProx{X} t^2}2\) for all \(t\in \real\).
+    We therefore obtain the following bound for the convex conjugate
+    \begin{equation}
+        \label{eq: bound on cgf star by variance proxy}    
+        \CGF_X^*(a)
+        = \sup_{t\in \real} \bigl(t a - \CGF_X(t)\bigr)
+        \ge \sup_{t\in \real} \bigl(t a - \tfrac{\varProx{X} t^2}2\bigr)
+        = \tfrac{a^2}{2\varProx{X}}.
+    \end{equation}
+    The last equation follows by the same optimization step of the quadratic
+    polynomial in \(t\) as we performed when we calculated this bound for the
+    normal distribution in Example \ref{ex: chernoff bound for normal
+    distribution}. Then clearly by Chernoff's bound (Thm.~\ref{thm: chernoff bound in R^d})
+    \[
+        \Prob{X\ge \epsilon} = \Prob{X \in [\epsilon , \infty)}
+        \overset{\text{Thm.~\ref{thm: chernoff bound in R^d}}}\le \exp\bigl(-\inf_{a \ge \epsilon}\CGF_X^*(a)\bigr)
+        \overset{\text{\eqref{eq: bound on cgf star by variance proxy}}}\le \exp\bigl(-\tfrac{\epsilon^2}{2\varProx{X}}\bigr).
+        \qedhere
+    \]
+\end{proof}
+
+Of course the variance proxy is only useful if we can actually calculate it for
+interesting random variables. The following lemma shows that for bounded random
+variables the variance proxy may be bounded.
+
+\begin{mdframed}[innertopmargin=0pt]
 \begin{lemma}[Hoeffding's Lemma]
     Let \(X\) be a centered, bounded random variable, that is 
     \(\Exp{X}=0\) and \(X\in [a,b]\) with probability one. Then
@@ -2032,6 +2104,7 @@ this case.
         \varProx{X} \le \tfrac{(b-a)^2}4.
     \]
 \end{lemma}
+\end{mdframed}
 \begin{proof}
     The first step of the proof is to show that the variance proxy is largest
     for the distribution that only takes the boundary values \(a\) and \(b\).
@@ -2113,16 +2186,8 @@ this case.
 \end{proof}
 
 \begin{mdframed}[innertopmargin=0pt]
-\begin{theorem}[General Hoeffding's inequality]
-    Let \(X_1, \ldots, X_n\) be independent random variables in \(\real\), then we have
-    for all \(\epsilon > 0\)
-    \[
-        \Prob[\Big]{\mean{X}_n - \Exp{\mean{X}_n} \ge \epsilon}
-        \le \exp\Bigl(-\frac{n \epsilon^2}{2\frac1n\sum_{i=1}^n \varProx{X_i}}\Bigr).
-    \]
-\end{theorem}
-
 \begin{corollary}[Hoeffding's inequality for bounded random variables]
+    \label{cor: hoeffding's inequality for bounded random variables}
     Let \(X_1, \ldots, X_n\) be independent random variables contained in
     \([a,b]\), then we have
     \[
@@ -2131,54 +2196,216 @@ this case.
     \]
 \end{corollary}
 \end{mdframed}
+\begin{proof}
+    Observe that \(\varProx{X_i} \le \frac{(b-a)^2}4\) for all \(i\) by Hoeffding's lemma and thus
+    \[
+        \Prob[\Big]{\mean{X}_n - \Exp{\mean{X}_n} \ge \epsilon}
+        \le \exp\Bigl(-\frac{n \epsilon^2}{2\frac1n\sum_{i=1}^n \varProx{X_i}}\Bigr)
+        \le \exp\Bigl(-\frac{2n\epsilon^2}{(b-a)^2}\Bigr).
+    \]
+    Since \(-X_i\) is contained in \([-b, -a]\) we also have \(\varProx{-X_i} \le \frac{(b-a)^2}4\)
+    and obtain the same bound for \(-(\mean{X}_n - \Exp{\mean{X}_n})\). This leads
+    to the factor \(2\) by a union bound.
+\end{proof}
+
+Recall that we have promised that this variance proxy is actually equivalent
+to tail bounds. This is the content of the following theorem.
 
 \begin{theorem}[Subgaussian characterization]
     \label{thm: subgaussian equivalences}
     Let \(X\) be a random variable. The following are equivalent:
     \begin{enumerate}[label=(\roman*), noitemsep]
-        \item \textbf{Tail decay:} There exists \(K_1 > 0\) such that the tails of \(X\) satisfy
+        \item\label{it: subgaussian tail decay}
+        \textbf{Tail decay:} There exists \(K_1 > 0\) such that the tails of \(X\) satisfy
         \[
-            \Prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{2K_1^2}\bigr)
+            \Prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{K_1^2}\bigr)
             \qquad\text{for all } t > 0.
         \]
-        \item \textbf{Moment decay:} There exists \(K_2 > 0\) such that the moments of \(X\) satisfy
+        \item\label{it: subgaussian moment decay}
+        \textbf{Moment decay:} There exists \(K_2 > 0\) such that the moments of \(X\) satisfy
         \[
-            \Exp{\abs{X}^p} \le K_2\, p\Gamma(\tfrac{p}2)
+            \Exp{\abs{X}^p} \le K_2^p p \Gamma(\tfrac{p}2)
             \qquad\text{for all } p\ge 1.
         \]
         or equivalently,
         \[
-            \bigl(\Exp{\abs{X}^p}\bigr)^{1/p} \le K_2' \sqrt{p}
+            \norm{X}_{L^p} = \bigl(\Exp{\abs{X}^p}\bigr)^{1/p} \le K_2' \sqrt{p}
             \qquad\text{for all } p\ge 1.
         \]
-        \item \textbf{\(X^2\) sub-exponential:} There exists \(K_3 >0\) such that the MGF of \(X^2\) satisfies
+        \item\label{it: subgaussian X^2 sub-exponential}
+        \textbf{\(X^2\) sub-exponential:} There exists \(K_3 >0\) such that the MGF of \(X^2\) satisfies
         \[
-            \Exp{\exp(t^2 X^2)} \le \exp(K_3^2 t^2)
+            \MGF_{X^2}(t^2) = \Exp{\exp(t^2 X^2)} \le \exp(K_3^2 t^2)
             \qquad\text{for all } t \text{ with } \abs{t} < \tfrac1{K_3}.
         \]
-        \item \textbf{Orlicz norm:} There exists \(K_4 > 0\) such that
+        \item\label{it: subgaussian orlicz norm}
+        \textbf{Orlicz norm:} There exists \(K_4 > 0\) such that
         \[
             \Exp{\exp\bigl(\tfrac{X^2}{K_4^2}\bigr)} \le 2.
         \]
-        In other words: for \(\psi_2(x) \coloneq \exp(x^2) - 1\) the Orlicz
-        norm (Definition \ref{def: orlicz norm}) is finite \[
-            \norm{X}_{\psi_2} \coloneq \inf\Set{t > 0 : \Exp{\psi_2(\tfrac{\abs{X}}t)} \le 1}
+        In other words: The Orlicz norm (Definition \ref{def: orlicz norm})
+        corresponding to the convex function \(\psi_2(x) \coloneq \exp(x^2) - 1\) is finite
+        \[
+            \norm{X}_{\psi_2} \coloneq \inf\Set{t > 0 :
+            \Exp{\psi_2(\tfrac{\abs{X}}t)} \le 1}
             \le K_4 < \infty.
         \]
     \end{enumerate}
     If \(\Exp{X} = 0\), then these are also equivalent to
     \begin{enumerate}[label=(\roman*), resume, noitemsep]
-        \item\textbf{Variance proxy:} There exists \(K_5 > 0\) such that the MGF of \(X\) satisfies
+        \item\label{it: subgaussian variance proxy}
+        \textbf{Variance proxy:} There exists \(K_5 > 0\) such that the MGF of \(X\) satisfies
         \[
-            \CGF_X(t) \le \tfrac{K_5^2 t^2}2
+            \CGF_X(t) \le K_5^2 t^2
             \qquad\text{for all } t\in \real.
         \]
-        That is \(\varProx{X} \le K_5^2\).
+        That is \(\varProx{X} \le 2K_5^2 < \infty\).
     \end{enumerate} 
     The parameters \(K_i>0\) appearing in these statements differ from
     each other by at most a constant factor that is independent from the
-    specific \(X\).
+    specific \(X\). Specifically,
+    \begin{center}
+        \def\arraystretch{1.4}
+        \hspace{-0.7em}
+        \begin{tabular}{r r | r r r r r r}
+            & \multicolumn{1}{c}{} & \multicolumn{6}{c}{have}
+            \\
+            & &\(K_1\) & \(K_2\) & \(K_2'\) & \(K_3\) & \(K_4\) & \(K_5\)
+            \\
+            \cline{2-8}
+            \multirow{6}{*}{want}
+            & \(K_1\) & \(\textcolor{gray}1\) & \textcolor{gray}{\(\sqrt{3}\)} &  & & \(1\) & \(2\)
+            \\
+            & \(K_2\) & \(1\) & \(\textcolor{gray}1\)
+            \\ 
+            & \(K_2'\) & \textcolor{gray}{\(\frac{3}{\sqrt{2}}\)} & \(\frac{3}{\sqrt{2}}\)  & \(\textcolor{gray}1\)
+            \\
+            & \(K_3\) & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)} & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)} & \(2\sqrt{e}\) & \(\textcolor{gray}1\)
+            \\
+            & \(K_4\) & \textcolor{gray}{\(\sqrt{3}\)} &\(\sqrt{3}\)  & \textcolor{gray}{\(\frac{2\sqrt{e}}{\sqrt{\ln 2}}\)} & \(\frac1{\sqrt{\ln 2}}\) & \(\textcolor{gray}1\)
+            \\
+            & \(K_5\) & &  & & \(1\) & & \(\textcolor{gray}1\)
+        \end{tabular}
+        \hspace{0.5em}
+        \begin{minipage}{0.3\textwidth}
+        if you \underline{have} \(K_j\) and \underline{want} the constant \(K_i\), then the
+        table lists a constant \(c_{ij}\) such that
+        \[
+            K_i \le c_{ij} K_j.
+        \]
+        The gray entries follow from the other entries using chains.
+        \end{minipage}
+    \end{center}
 \end{theorem}
+
+\begin{proof}[Proof {\citep[Prop.~2.5.2]{vershyninHighDimensionalProbabilityIntroduction2018}}]
+    The equivalence clearly follows if we bound the \(c_{ij}\) for sufficient
+    combinations of \(i\) and \(j\) such that loops may be formed.
+
+    ``\ref{it: subgaussian tail decay} \(\Rightarrow\) \ref{it: subgaussian moment decay}''
+    Let us start with \(K_1\)
+    \[\begin{aligned}
+        \Exp{\abs{X}^p}
+        &= \int_0^\infty \Prob{\abs{X}^p \ge u} du
+        \mathrlap{= \int_0^\infty \Prob{\abs{X} \ge u^{1/p}} du}
+        \\
+        &= \int_0^\infty \Prob{\abs{X} \ge t} p t^{p-1} dt
+        & (u=t^p)
+        \\
+        &\le p \int_0^\infty 2\exp(-\tfrac{t^2}{K_1^2}) t^{p-1} dt
+        \\
+        &= K_1^p p \int_0^\infty e^{-s} s^{\frac{p}2 - 1} ds
+        & \Bigl(s = (\tfrac{t}{K_1})^2, dt = \tfrac{K_1}{2} s^{-\frac12} ds\Bigr)
+        \\
+        \overset{\text{def.}}&= K_1^p p \Gamma(\tfrac{p}2).
+    \end{aligned}
+    \]
+    So clearly \(K_2 \le K_1\) (i.e. \(c_{21} = 1\)). Observe that
+    we could have assumed \(K_1=1\) without loss of generality by bounding the
+    scaled random variable \(X/K_1\). We will do so from now on.
+    
+    To get \(K_2'\) from \(K_2\) we use a bound on the Gamma function
+    \(\Gamma(x)\le 3x^x\) for
+    \(x\ge \tfrac12\) \citep{vershyninHighDimensionalProbabilityIntroduction2018}. Then we have
+    \[
+        \bigl(p\Gamma(\tfrac{p}2)\bigr)^{\frac1p}
+        \le \bigl(3p(\tfrac{p}2)^{\frac{p}2}\bigr)^{\frac1p}
+        = \sqrt{\frac{p}2} (3p)^{\frac1p}
+        \le \frac{\max_{p\ge 1} f(p)}{\sqrt{2}} \sqrt{p}
+    \]
+    with \(f(x) = (3x)^{\frac1x} = \exp(\frac1x\ln(3x))\). Its derivative is given by
+    \[
+        f'(x) = f(x) \tfrac1{x^2}(1- \ln(3x)) \le 0 \qquad \text{for } x \ge 1.
+    \]
+    Consequently the maximizer is \(f(1) = 3\) and thus
+    \(K_2' \le K_2 \frac{3}{\sqrt{2}}\).
+
+    ``\ref{it: subgaussian moment decay} \(\Rightarrow\) \ref{it: subgaussian X^2 sub-exponential}''
+    To get \(K_3\) from \(K_2'\) observe that by the series expansion of the exponential
+    function
+    \[
+        \Exp{\exp(t^2 X^2)}
+        = \Exp[\Big]{1+\sum_{k=1}^\infty \frac{(t^2 X^2)^k}{k!}}
+        =1+ \sum_{k=1}^\infty \frac{t^{2k} \Exp{X^{2k}}}{k!}
+    \]
+    using the assumption \(\Exp{X^{2k}} \le (2k)^{\frac{2k}2}\) with \(K_2'=1\) and
+    Stirling's approximation \(k! \ge (\tfrac{k}e)^k\) this results in
+    \[
+        \Exp{\exp(t^2 X^2)}
+        \le 1+ \sum_{k=1}^\infty \frac{t^{2k} (2k)^k}{(k/e)^k}
+        = 1 + \sum_{k=1}^\infty (2e t^2)^k
+        = \frac1{1-2e t^2},
+    \]
+    assuming \(2e t^2 < 1\). Further assuming \(2e t^2 \le \frac12\) and using
+    the inequality \(\frac1{1-x} \le e^{2x}\) for \(x\in [0, \frac12]\) we have
+    \[
+        \Exp{\exp(t^2 X^2)} \le \exp(4e t^2) \qquad \text{for } t < \tfrac1{2\sqrt{e}}.
+    \]
+    Consequently \(K_3 \le 2\sqrt{e} K_2'\).
+
+    ``\ref{it: subgaussian X^2 sub-exponential} \(\Rightarrow\) \ref{it: subgaussian orlicz norm}''
+    Let \(c=K_3/\sqrt{\ln 2}\) such that \(\frac1c \le \frac1{K_3}\)
+    and therefore
+    \[
+        \Exp{\exp{X^2/c^2}} \le \exp(K_3^2/c^2) = \exp(\ln 2) = 2.
+    \]
+    Consequently \(K_4 \le c= \frac{K_3}{\sqrt{\ln 2}}\).
+    
+    ``\ref{it: subgaussian orlicz norm} \(\Rightarrow\) \ref{it: subgaussian
+    tail decay}'' Using Markov's inequality (Theorem \ref{thm: markov
+    inequality}) on \(h(x) = e^{x^2}\) we have for \(t > 0\)
+    \[
+        \Prob{\abs{X} \ge t} \le \tfrac{\Exp{\exp(X^2)}}{\exp(t^2)}
+        \le 2 \exp(-t^2) \qquad \text{assuming } K_4 = 1.
+    \]
+    Consequently, \(K_1 \le K_4\).
+
+    ``\ref{it: subgaussian X^2 sub-exponential}'' \(\Rightarrow\) ``\ref{it: subgaussian variance proxy}''
+    We assume \(K_3=1\) again
+    and use the inequality \(e^x \le x + e^{x^2}\) for \(x\in \real\) to get
+    \[
+        \Exp{\exp(t X)}
+        \le \Exp{t X + \exp(t^2 X^2)}
+        \overset{\Exp{X}=0}= \Exp{\exp(t^2 X^2)}
+        \le \exp(t^2).
+    \]
+    The last inequality only holds for \(\abs{t} < \frac1{K_3} = 1\). Now assume
+    \(\abs{t} \ge \frac1{K_3}\). Using the inequality \(2tx \le t^2 + x^2\), we get
+    \[
+        \Exp{\exp(t X)}
+        \le e^{\frac{t^2}2}\Exp{e^{\tfrac{X^2}2}}
+        \le e^{\frac{t^2}2} e^{\tfrac12} \overset{\abs{t}\ge 1}\le e^{t^2}
+    \]
+    The penultimate inequality follows from \(\frac12 \le \frac1{K_3} =1\).
+    As we have covered both case we get \(K_5 \le K_3\).
+
+    ``\ref{it: subgaussian variance proxy} \(\Rightarrow\) \ref{it: subgaussian tail decay}''
+    Since \(\varProx{X} \le 2K_5\) we have by \eqref{eq: var prox tail bound}
+    \[
+        \Prob{X \ge t} \le \exp\bigl(-\tfrac{t^2}{4K_5^2}\bigr).
+    \]
+    Taking the same bound for \(-X\) we get \(K_1 \le 2K_5\).
+\end{proof}
 
 \subsection{Subexponential random variables}
 
