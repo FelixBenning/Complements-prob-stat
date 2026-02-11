@@ -2006,12 +2006,12 @@ equivalences}) that this is actually equivalent to the tail bound above.
     \]
 \end{definition}
 
-Since the cumulant generating function of a normal distribution with variance
-\(\sigma^2\) is given by
+The cumulant generating function of a centered normal distribution with variance
+\(\sigma^2\) is
 \[
-    \CGF_X(t) = \log \MGF_X(t) = \tfrac{\sigma^2t^2}{2},
+    \CGF_X(t) = \log \MGF_X(t) = \tfrac{\sigma^2t^2}{2}.
 \]
-the variance proxy \(\varProx{X}\) coincides with the variance \(\sigma^2\) in
+The variance proxy \(\varProx{X}\) therefore coincides with the variance \(\sigma^2\) in
 this case.
 
 
@@ -2052,7 +2052,8 @@ this case.
 The variance proxy can then be used for the following tail bound:
 
 \begin{mdframed}[innertopmargin=0pt]
-\begin{theorem}[General Hoeffding's inequality]
+\begin{theorem}[General Hoeffding inequality]
+    \label{thm: general hoeffding inequality}
     Let \(X_1, \ldots, X_n\) be independent random variables in \(\real\) with
     variance proxies \(\varProx{X_i}\), then for all \(\epsilon > 0\)
     \[
@@ -2181,13 +2182,14 @@ variables the variance proxy may be bounded.
         \\
         \abs{\CGF_Y''(\xi)} &= \abs{\phi''(\xi)}(b-a)^2 &&\le \tfrac{(b-a)^2}4
     \end{alignat*}
-    In the last equation we used the chain rule again and finish the proof by comparing
-    the Taylor expansion with \eqref{eq: rademacher are worst offender}.
+    In the last equation we used the chain rule again to obtain \(\CGF_Y''(\xi) = \phi''(\xi)(b-a)^2\). 
+    A comparison of the the Taylor expansion with \eqref{eq: rademacher are worst
+    offender} finishes the proof.
 \end{proof}
 
 \begin{mdframed}[innertopmargin=0pt]
-\begin{corollary}[Hoeffding's inequality for bounded random variables]
-    \label{cor: hoeffding's inequality for bounded random variables}
+\begin{corollary}[Hoeffding inequality for bounded random variables]
+    \label{cor: hoeffding inequality for bounded random variables}
     Let \(X_1, \ldots, X_n\) be independent random variables contained in
     \([a,b]\), then we have
     \[
@@ -2209,8 +2211,18 @@ variables the variance proxy may be bounded.
 \end{proof}
 
 Recall that we have promised that this variance proxy is actually equivalent
-to tail bounds. This is the content of the following theorem.
+the tail bound
+\[
+    \Prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{2\sigma^2}\bigr)
+\]
+for some \(\sigma^2\).  Observe that taking \(n=1\) in the general Hoeffding
+inequality (Theorem \ref{thm: general hoeffding inequality}), we already get
+this bound with \(\sigma^2 = \varProx{X}\) and consequently every distribution that satisfies a Hoeffding's
+inequality must have such a tail. In the following we will see that
+this tail decay and a finite variance proxy are actually equivalent among other
+equivalent characterizations of subgaussian random variables.
 
+\begin{mdframed}[innertopmargin=0pt]
 \begin{theorem}[Subgaussian characterization]
     \label{thm: subgaussian equivalences}
     Let \(X\) be a random variable. The following are equivalent:
@@ -2263,40 +2275,80 @@ to tail bounds. This is the content of the following theorem.
     \end{enumerate} 
     The parameters \(K_i>0\) appearing in these statements differ from
     each other by at most a constant factor that is independent from the
-    specific \(X\). Specifically,
+    specific \(X\).
     \begin{center}
+        \hspace{-1em}
+        \scalebox{0.9}{
         \def\arraystretch{1.4}
-        \hspace{-0.7em}
-        \begin{tabular}{r r | r r r r r r}
-            & \multicolumn{1}{c}{} & \multicolumn{6}{c}{have}
+        \begin{tabular}{r r | c c c c c c}
+            & \multicolumn{1}{c}{} & \multicolumn{6}{c}{\normalfont have}
             \\
             & &\(K_1\) & \(K_2\) & \(K_2'\) & \(K_3\) & \(K_4\) & \(K_5\)
             \\
             \cline{2-8}
-            \multirow{6}{*}{want}
-            & \(K_1\) & \(\textcolor{gray}1\) & \textcolor{gray}{\(\sqrt{3}\)} &  & & \(1\) & \(2\)
+            \multirow{6}{*}{\rotatebox{90}{\normalfont want}}
+            & \(K_1\)
+            & \(\textcolor{gray}1\)
+            & \textcolor{gray}{\(\sqrt{3}\)}
+            & \textcolor{gray}{\(\frac{2\sqrt{e}}{\sqrt{\ln 2}}\)}
+            & \textcolor{gray}{\(\frac1{\sqrt{\ln 2}}\)}
+            & \textcolor{magenta}{\(1\)}
+            & \textcolor{blue}{\(2\)}
             \\
-            & \(K_2\) & \(1\) & \(\textcolor{gray}1\)
+            & \(K_2\)
+            & \textcolor{magenta}{\(1\)}
+            & \(\textcolor{gray}1\)
+            & \textcolor{gray}{\(\frac{2\sqrt{e}}{\sqrt{\ln 2}}\)}
+            & \textcolor{gray}{\(\frac1{\sqrt{\ln 2}}\)}
+            & \textcolor{gray}{\(1\)} & \textcolor{gray}{\(2\)}
             \\ 
-            & \(K_2'\) & \textcolor{gray}{\(\frac{3}{\sqrt{2}}\)} & \(\frac{3}{\sqrt{2}}\)  & \(\textcolor{gray}1\)
+            & \(K_2'\)
+            & \textcolor{gray}{\(\frac{3}{\sqrt{2}}\)}
+            & \textcolor{magenta}{\(\frac{3}{\sqrt{2}}\)}
+            & \(\textcolor{gray}1\)
+            & \textcolor{gray}{\(\frac3{\sqrt{2\ln 2}}\)}
+            & \textcolor{gray}{\(\frac{3}{\sqrt{2}}\)}
+            & \textcolor{gray}{\(3\sqrt{2}\)}
             \\
-            & \(K_3\) & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)} & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)} & \(2\sqrt{e}\) & \(\textcolor{gray}1\)
+            & \(K_3\)
+            & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
+            & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
+            & \textcolor{magenta}{\(2\sqrt{e}\)}
+            & \(\textcolor{gray}1\)
+            & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
+            & \textcolor{gray}{\(\frac{12\sqrt{e}}{\sqrt{2}}\)}
             \\
-            & \(K_4\) & \textcolor{gray}{\(\sqrt{3}\)} &\(\sqrt{3}\)  & \textcolor{gray}{\(\frac{2\sqrt{e}}{\sqrt{\ln 2}}\)} & \(\frac1{\sqrt{\ln 2}}\) & \(\textcolor{gray}1\)
+            & \(\mathllap{\norm{X}_{\psi_2}\! \sim}K_4\)
+            & \textcolor{gray}{\(\sqrt{3}\)}
+            &\(\sqrt{3}\)
+            & \textcolor{gray}{\(\frac{2\sqrt{e}}{\sqrt{\ln 2}}\)}
+            & \textcolor{magenta}{\(\frac1{\sqrt{\ln 2}}\)}
+            & \(\textcolor{gray}1\)
+            & \textcolor{gray}{\(2\sqrt{3}\)}
             \\
-            & \(K_5\) & &  & & \(1\) & & \(\textcolor{gray}1\)
+            & \(\mathllap{\sqrt{\frac{\varProx{X}}2} \sim} K_5\)
+            & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
+            & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
+            & \textcolor{gray}{\(2\sqrt{e}\)}
+            & \textcolor{blue}{\(1\)}
+            & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
+            & \(\textcolor{gray}1\)
         \end{tabular}
-        \hspace{0.5em}
-        \begin{minipage}{0.3\textwidth}
-        if you \underline{have} \(K_j\) and \underline{want} the constant \(K_i\), then the
-        table lists a constant \(c_{ij}\) such that
+        \hspace{0.1em}
+        \begin{minipage}{0.32\textwidth}
+        If you \underline{want} \(K_i\) and \underline{have}
+        \(K_j\), then the table lists a \(c_{ij}\) such that
         \[
             K_i \le c_{ij} K_j.
         \]
-        The gray entries follow from the other entries using chains.
+        The \textcolor{gray}{gray} entries follow from the other entries. The \textcolor{magenta}{magenta}
+        entries prove equivalence of \(K_1\) to \(K_4\) and the
+        \textcolor{blue}{blue} entries tie in \(K_5\).
         \end{minipage}
+        }
     \end{center}
 \end{theorem}
+\end{mdframed}
 
 \begin{proof}[Proof {\citep[Prop.~2.5.2]{vershyninHighDimensionalProbabilityIntroduction2018}}]
     The equivalence clearly follows if we bound the \(c_{ij}\) for sufficient
@@ -2324,7 +2376,7 @@ to tail bounds. This is the content of the following theorem.
     we could have assumed \(K_1=1\) without loss of generality by bounding the
     scaled random variable \(X/K_1\). We will do so from now on.
     
-    To get \(K_2'\) from \(K_2\) we use a bound on the Gamma function
+    To get \(K_2'\) from \(K_2\) we use a bound on the Gamma function,
     \(\Gamma(x)\le 3x^x\) for
     \(x\ge \tfrac12\) \citep{vershyninHighDimensionalProbabilityIntroduction2018}. Then we have
     \[
@@ -2400,12 +2452,66 @@ to tail bounds. This is the content of the following theorem.
     As we have covered both case we get \(K_5 \le K_3\).
 
     ``\ref{it: subgaussian variance proxy} \(\Rightarrow\) \ref{it: subgaussian tail decay}''
-    Since \(\varProx{X} \le 2K_5\) we have by \eqref{eq: var prox tail bound}
+    Since \(\varProx{X} \le 2K_5^2\) we have by the general Hoeffding inequality for \(n=1\), that is \eqref{eq: var prox tail bound}
     \[
         \Prob{X \ge t} \le \exp\bigl(-\tfrac{t^2}{4K_5^2}\bigr).
     \]
-    Taking the same bound for \(-X\) we get \(K_1 \le 2K_5\).
+    Taking the same bound for \(-X\) we get \(K_1^2 \le 4K_5^2\) and thus \(K_1 \le 2 K_5\).
 \end{proof}
+
+\begin{remark}[Sums of (in)dependent subgaussian random variables]
+    Since the Orcliz norm is a norm
+    (Theorem \ref{thm: orlicz seminorm}), it holds for all (possibly dependent)
+    random variables \(X\) and \(Y\)
+    \[
+        \norm{X+Y}_{\psi_2} \le \norm{X}_{\psi_2} + \norm{Y}_{\psi_2}.
+    \]
+    In comparison the sum stability of the variance proxy only holds for
+    independent random variables, that is
+    \[
+        \varProx{X+Y} \le \varProx{X} + \varProx{Y}
+        \qquad \text{for } X, Y \text{ independent}.
+    \]
+    This may look like an advantage of the Orcliz norm but note that \(\varProx{X}\)
+    is something like a squared norm, as \(\varProx{aX} = a^2 \varProx{X}\),
+    while \(\norm{aX}_{\psi_2} = \abs{a} \norm{X}_{\psi_2}\).
+    Put another way, since \(\norm{X}_{\psi_2}\) is the smallest \(K_4\),
+    and \(\sqrt{\varProx{X}}\) is the smallest \(K_5\) up to the constant
+    \(\sqrt{2}\) due to \(\sqrt{\varProx{X}}\le 2K_5^2\), we have by
+    the equivalence of constants
+    \[
+        \norm{X}_{\psi_2} \le c_0 \sqrt{\varProx{X}} \le c_1 \norm{X}_{\psi_2}
+    \]
+    and thus for independent \(X\) and \(Y\)
+    \[
+        \norm{X + Y}_{\psi_2}^2 \le c_0^2 \varProx{X+Y} \le c_0^2 (\varProx{X} + \varProx{Y})
+        \le c_1^2 (\norm{X}_{\psi_2}^2 + \norm{Y}_{\psi_2}^2).
+    \]
+    This bound is generally better than if we applied the triangle inequality inside
+    the square due to the removal of the cross term
+    \(2\norm{X}_{\psi_2}\norm{Y}_{\psi_2}\), that is
+    \[
+        \norm{X}_{\psi_2}^2 + \norm{Y}_{\psi_2}^2 \le (\norm{X}_{\psi_2} + \norm{Y}_{\psi_2})^2.
+    \]
+    In other words: the sum stability of the squared norm is better than the sum
+    stability of the norm itself. This is particularly visible for the mean in
+    the case of iid \(X_i\)
+    \[
+        \norm{\mean{X}_n}_{\psi_2} \le c_0 \sqrt{\varProx{\mean{X}_n}}
+        = c_0 \sqrt{\red{\frac1{n^2}} \sum_{i=1}^n \varProx{X_i}}
+        =  \frac{c_0}{\sqrt{n}} \underbrace{\sqrt{\frac1n \sum_{i=1}^n \varProx{X_i}}}_{= \varProx{X_i}}
+        \in \bigO(\tfrac1{\sqrt{n}}),
+    \]
+    which is a much better bound asymptotically than the general triangle inequality
+    \[
+        \norm{\mean{X}_n}_{\psi_2} \le \frac1n \sum_{i=1}^n \norm{X_i}_{\psi_2} = \norm{X_i}_{\psi_2} \in \bigO(1).
+    \]
+    \textbf{Rule of thumb}: work with the variance proxy if the variables are independent
+    and with the Orlicz norm if they are not. The translation between
+    these view points may however introduce constants, which can in certain
+    circumstances be larger than the gains from this change of view.
+\end{remark}
+
 
 \subsection{Subexponential random variables}
 
