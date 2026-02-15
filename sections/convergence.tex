@@ -533,7 +533,7 @@ implications above.
 
 \begin{exercise}[Convergence in distribution but not probability \Coffeecup]
     \label{ex: convergence in distribution but not in probability}
-    Let \(X\sim \normal{0,1}\) and define
+    Let \(X\) be a random variable with \(\Prob{X=-1} = \frac12\) and \(\Prob{X=1}=\frac12\).
     \[
         X_n \coloneq (-1)^n X
     \]
@@ -542,15 +542,8 @@ implications above.
         \item \(X_n \xrightarrow{d} X\)
         \begin{solution}
             Observe that the distribution of \(X\) is symmetric, that is
-            \[\begin{aligned}
-                \Pr(-X \le x) &= \Pr(X \ge -x)
-                \\
-                &= \int_{-x}^\infty \frac{1}{\sqrt{2\pi}} e^{-t^2/2} \, dt
-                \\
-                \overset{y=-t}&= \int_{-\infty}^x \frac{1}{\sqrt{2\pi}} e^{-y^2/2} \, dy
-                \\
-                &= \Pr(X \le x).
-            \end{aligned}
+            \[
+                \Pr(-X \le x) = \Pr(X \le x) \qquad \forall x\in \real.
             \]
             Consequently, for any \(x \in \real\) we have \(\Pr(X_n \le x) = \Pr(X \le x)\).
             In particular this implies \(\Pr(X_n \le x) \to \Pr(X \le x)\) for all \(x\).
@@ -558,17 +551,10 @@ implications above.
 
         \item \(X_n\) does not converge in probability to \(X\).
         \begin{solution}
-            We have for \(\epsilon > 0\) and every odd \(n\)
-            \[\begin{aligned}
-                \Pr(|X_n - X| \ge \epsilon)
-                &= \Pr(2\abs{X} \ge \epsilon)
-                \\
-                &= \Prob[\big]{\abs{X} \ge \epsilon/2}
-                \\
-                &= 2\int_0^{\epsilon/2} \frac{1}{\sqrt{2\pi}} e^{-t^2/2} \, dt.
-                \\
-                &\ge 2 \frac{\epsilon}2 \frac{1}{\sqrt{2\pi}} e^{-(\frac{\epsilon}2)^2/2} >0.
-            \end{aligned}
+            We have for \(\epsilon = 1\) and every odd \(n\)
+            \[
+                \Prob{\abs{X - X_n} \ge \epsilon}
+                = \Prob{2\abs{X} \ge 1} = 1
             \]
             The sequence \(\Pr(|X_n - X| \ge \epsilon)\) thus does not converge to \(0\).
         \end{solution}
@@ -805,10 +791,13 @@ implications above.
         previous parts.
 
         \begin{solution}
-            Similarly as in Exercise \ref{ex: convergence in distribution but not in probability}
-            we may chose \(X\sim \normal{0,1}\) and since \(X_n \coloneq X\)
-            converges both to \(X\) and \(-X\) in distribution the limit is clearly
-            not unique as \(\Prob{X = -X} = \Prob{X=0}= 0\).
+            We may choose \(X\) as in Exercise \ref{ex: convergence in distribution but not in probability}.
+            Since \(X_n \coloneq X\) converges both to \(X\) and \(-X\) in
+            distribution the limit is clearly not unique as
+            \[
+                \Prob{X = -X} = \Prob{X=0}= 0.
+                \qedhere
+            \]
         \end{solution}
     \end{enumerate}
 \end{exercise}
