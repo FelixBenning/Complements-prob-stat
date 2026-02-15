@@ -531,7 +531,7 @@ implications above.
 
 \subsection*{Exercises}
 
-\begin{exercise}[Convergence in distribution but not probability]
+\begin{exercise}[Convergence in distribution but not probability \Coffeecup]
     \label{ex: convergence in distribution but not in probability}
     Let \(X\sim \normal{0,1}\) and define
     \[
@@ -575,7 +575,7 @@ implications above.
     \end{enumerate}
 \end{exercise}
 
-\begin{exercise}[Convergence in probability but not \(L^p\)]
+\begin{exercise}[Convergence in probability but not \(L^p\) \Coffeecup]
     \label{ex: convergence in probability but not in Lp}
     Let \(U\sim \uniform(0,1)\) be a standard uniform random variable and define
     \[
@@ -621,7 +621,7 @@ implications above.
         \end{enumerate}
 \end{exercise}
 
-\begin{exercise}[Convergence in \(L^p\) but not almost surely] 
+\begin{exercise}[Convergence in \(L^p\) but not almost surely \Coffeecup\Coffeecup] 
     \label{ex: convergence in Lp but not as}
     Let \(U\sim \uniform(0,1)\) be a standard uniform random variable.
     We will scan the interval for \(U\) with increasingly fine measurements. Specifically,
@@ -700,19 +700,25 @@ implications above.
     \end{enumerate}
 \end{exercise}
 
-\begin{exercise}[Stochastic convergence sometimes implies \(L^p\)]
+\begin{exercise}[Stochastic convergence sometimes implies \(L^p\) \Coffeecup]
     \label{ex: p to Lp when bounded}
     Assume that \(X_n\) and \(X\) are bounded random variables. That is 
     \(\sup_n\|X_n\| \le c\) and \(\|X\|\le c\) with probability one for some \(c
     \in \real\). Show that then \(X_n \overset{p}\to X\) implies \(X_n
     \overset{L^p}\to X\).
+    \begin{remark}
+        This is a weak form of the dominated convergence theorem, where the constant
+        is the dominating function.
+    \end{remark}
     \begin{solution}
         We have for every \(\epsilon > 0\)
-        \[
+        \[\begin{aligned}
             \Exp[\big]{\norm{X_n - X}^p}
-            = \Exp[\big]{\norm{X_n - X}^p \Indicator{\norm{X_n - X} < \epsilon}}
+            &= \Exp[\big]{\norm{X_n - X}^p \Indicator{\norm{X_n - X} < \epsilon}}
             + \Exp[\big]{\norm{X_n - X}^p \Indicator{\norm{X_n - X} \ge \epsilon}}
-            \le \epsilon^p + (2c)^p \Prob[\big]{\norm{X_n - X} \ge \epsilon}.
+            \\
+            &\le \epsilon^p + (2c)^p \Prob[\big]{\norm{X_n - X} \ge \epsilon}.
+        \end{aligned}
         \]
         Due to \(X_n \overset{p}\to X\) the second term converges to \(0\)
         and we thus have
@@ -723,7 +729,7 @@ implications above.
     \end{solution}
 \end{exercise}
 
-\begin{exercise}[Stochastic triangle inequality]
+\begin{exercise}[Stochastic triangle inequality \Coffeecup]
     \label{ex: stochastic triangle}
     Let \(X,Y,Z\) be random variables. Show for all \(\epsilon > 0\)
     \[
@@ -751,29 +757,63 @@ implications above.
 \end{exercise}
 
 
-\begin{exercise}[Stochastic limits are unique]
+\begin{exercise}[Stochastic limits are unique \Coffeecup\Coffeecup]
     \label{ex: unique stochastic limits}
     Show that
     \begin{enumerate}[label=(\alph*),noitemsep]
         \item if \(X_n \overset{p}\to X\) and \(X_n \overset{p}\to Y\), then
         \(\Prob{X = Y}=1\).
+
+        \textbf{Hint:} How is uniqueness of limits proven in analysis?
+        \begin{solution}
+            We have for any \(\epsilon > 0\) and any \(n\in \nat\) by the
+            stochastic triangle inequality (Exercise \ref{ex: stochastic
+            triangle})
+            \[\begin{aligned}
+                \Prob{\norm{X - Y} \ge \epsilon}
+                \le \underbrace{\Prob{\norm{X - X_n} \ge \tfrac\epsilon2}}_{\to 0} + \underbrace{\Prob{\norm{X_n - Y} \ge \tfrac\epsilon2}}_{\to 0},
+            \end{aligned}
+            \]
+            Since this inequality holds for any \(n\in \nat\) and \(X_n\)
+            converges to both \(X\) and \(Y\) in probability, this term must
+            therefore be equal to zero. That is \(\Prob{\norm{X - Y} \ge
+            \epsilon} = 0\) for any \(\epsilon > 0\). Since this is true for any
+            \(\epsilon > 0\) we have by continuity of the probability measure
+            \[
+                \Prob{X \neq Y} = \Prob[\Big]{\bigcup_{n\in \nat}\norm{X - Y} > \frac1n} = \lim_{n\to\infty} \Prob{\norm{X - Y} \ge \tfrac1n} = 0.
+            \]
+        \end{solution}
     \end{enumerate}
     Deduce
     \begin{enumerate}[label=(\alph*), resume,noitemsep]
         \item if \(X_n \overset{\as}\to X\) and \(X_n \overset{\as}\to Y\), then \(\Prob{X = Y}=1,\)
         \item if \(X_n \overset{L^p}\to X\) and \(X_n \overset{L^p}\to Y\), then \(\Prob{X = Y}=1.\)
+        \begin{solution}
+            If \(X_n \overset{\as}\to X\) and \(X_n \overset{\as}\to Y\), then
+            \(X_n \overset{p}\to X\) and \(X_n \overset{p}\to Y\) by Theorem
+            \ref{thm: convergence implications} \ref{it: as to p}. The claim
+            then follows from the previous part. Similarly for \(L^p\) convergence.
+        \end{solution}
     \end{enumerate}
     Finally, 
     \begin{enumerate}[label=(\alph*), resume, noitemsep]
         \item show that the statement is not true for convergence in
         distribution.
+
+        \textbf{Hint:} Clearly \(X_n\) must converge in distribution but not
+        in probability as the limits would otherwise be almost surely equal by the
+        previous parts.
+
+        \begin{solution}
+            Similarly as in Exercise \ref{ex: convergence in distribution but not in probability}
+            we may chose \(X\sim \normal{0,1}\) and since \(X_n \coloneq X\)
+            converges both to \(X\) and \(-X\) in distribution the limit is clearly
+            not unique as \(\Prob{X = -X} = \Prob{X=0}= 0\).
+        \end{solution}
     \end{enumerate}
-    \noindent\textbf{Hint:} Recall the proof of unique deterministic limits in Analysis
-    and use the stochastic triangle inequality (Exercise \ref{ex: stochastic
-    triangle}).
 \end{exercise}
 
-\begin{exercise}[Stochastic Simulation and Quantiles]
+\begin{exercise}[Stochastic Simulation and Quantiles \Coffeecup\Coffeecup]
     \label{ex: stochastic simulation}
     The goal is to simulate a random variable \(X\) with distribution 
     function \(F(x) = \Prob{X \le x}\) using a standard uniform random variable
@@ -783,23 +823,105 @@ implications above.
     \]
     Show that
     \begin{enumerate}[label=(\alph*), noitemsep]
-        \item if \(F\) is invertible, then \(F^{\leftarrow}(p) = F^{-1}(p)\) for all
+        \item\label{it: quantile if invertible} if \(F\) is invertible, then \(F^{\leftarrow}(p) = F^{-1}(p)\) for all
         \(p \in (0,1)\),
-        \item \(F^{\leftarrow}\) is non-decreasing,
-        \item \(F^{\leftarrow}(F(x)) \le x\) for all \(x \in \real\),
-        \item \(F(F^{\leftarrow}(p)) \ge p\) for all \(p \in (0,1)\),
-        \item \(F^{\leftarrow}(p) \le x\) if and only if \(p \le F(x)\),
+        \begin{solution}
+            Since \(F\) is monotonically increasing as a distribution
+            function and additionally invertible, it is strict monotonically
+            increasing. That is
+            \[
+                F(x) < F(y) \quad \text{for all } x < y.
+            \]
+            So clearly for all \(x< F^{-1}(p)\) we have \(F(x) < p\) and
+            therefore they are not contained in the set \(\Set{x\in \real : F(x)
+            \ge p}\). This implies \(F^{-1}(p)\) is the smallest element in this set
+            and consequently \(F^{\leftarrow}(p) = F^{-1}(p)\).
+        \end{solution}
+
+        \item\label{it: monotonicity} \(F^{\leftarrow}\) is non-decreasing,
+        \begin{solution}
+            Let \(p < q\). Then for any \(x \in \real\) such that \(F(x) \ge q\)
+            we also have \(F(x) \ge p\). Consequently,
+            \[
+                \Set{x \in \real : F(x) \ge q} \subseteq \Set{x \in \real : F(x) \ge p},
+            \]
+            This implies the infimum of the former is greater than the infimum of the latter
+            and thus
+            \[
+                F^{\leftarrow}(p) = \inf\{x \in \real : F(x) \ge p\} \le \inf\{x \in \real : F(x) \ge q\} = F^{\leftarrow}(q).
+                \qedhere
+            \]
+        \end{solution}
+
+        \item\label{it: F-(F(x)) le x} \(F^{\leftarrow}(F(x)) \le x\) for all \(x \in \real\),
+        \begin{solution}
+            Since \(x\in \Set{y\in \real : F(y) \ge F(x)}\), we have
+            \[
+                x \ge \inf\Set{y\in \real : F(y) \ge F(x)} = F^{\leftarrow}(F(x)).
+                \qedhere
+            \]
+        \end{solution}
+
+        \item\label{it: F(F-(p)) > p} \(F(F^{\leftarrow}(p)) \ge p\) for all \(p \in (0,1)\),
+        \begin{solution}
+            Let \(x_n \in \Set{x\in \real : F(x) \ge p}\) be a sequence with \(x_n \downarrow F^{\leftarrow}(p)\). Then
+            by right-continuity of the distribution function \(F\)
+            \[
+                p \le \lim_{n\to \infty} F(x_n)
+                = F\Bigl(\lim_{n\to \infty} x_n\Bigr)
+                = F(F^{\leftarrow}(p)).
+                \qedhere
+            \]
+        \end{solution}
+
+        \item\label{it: F-(p)< x iff p<F(x)} \(F^{\leftarrow}(p) \le x\) if and only if \(p \le F(x)\),
+        \begin{solution}
+            Assume \(F^{\leftarrow}(p) \le x\). Then by \ref{it: F(F-(p)) > p} 
+            and the monotonicity of \(F\) we have
+            \[
+                p \overset{\ref{it: F(F-(p)) > p}}\le F(F^{\leftarrow}(p)) \le F(x).
+            \]
+            For the opposite direction assume \(p\le F(x)\), then by the
+            monotonicity of \(F^{\leftarrow}\) \ref{it: monotonicity}
+            and \ref{it: F-(F(x)) le x} we have
+            \[
+                F^{\leftarrow}(p) \overset{\ref{it: monotonicity}}\le F^{\leftarrow}(F(x)) \overset{\ref{it: F-(F(x)) le x}}\le x.
+                \qedhere
+            \]
+        \end{solution}
+
         \item\label{it: inverse transform sampling}
         \(X\coloneq F^{\leftarrow}(U) \sim F\) for a standard uniform \(U\sim \uniform(0,1)\), i.e.\ 
         \[
             F(x) = \Prob{X \le x}
             \qquad \forall x \in \real.
         \]
+        \begin{solution}
+            We simply use \ref{it: F-(p)< x iff p<F(x)} and the definition of \(U\) to get
+            \[
+                \Prob{X \le x}
+                = \Prob{F^{\leftarrow}(U) \le x}
+                \overset{\ref{it: F-(p)< x iff p<F(x)}}\le \Prob{U \le F(x)}
+                = \int_0^{F(x)} 1 \, du
+                = F(x).
+                \qedhere
+            \]
+        \end{solution}
+
         \item Propose a way to simulate an exponential distribution \(X \sim
         \exponential(\lambda)\) using a standard uniform random variable \(U\sim
         \uniform(0,1)\).
-        \item\label{it: inverse transform sampling dual} Show \(F(X) \sim \uniform(0,1)\) for \(X\sim  F\)
-        (This is the dual property of \ref{it: inverse transform sampling}).
+        \begin{solution}
+            The CDF of an exponential distribution is \(F(x) = 1 - e^{-\lambda x}\) for \(x \ge 0\).
+            Since this function is invertible on \([0, \infty]\) we use
+            \ref{it: quantile if invertible}. To get
+            \[
+                F^{\leftarrow}(p) = -\tfrac{1}{\lambda} \log(1-p).
+            \]
+            Using \(U \sim \uniform(0,1)\) we thus set \(X = F^{\leftarrow}(U)\),
+            and finish by \ref{it: inverse transform sampling}.
+        \end{solution}
+
     \end{enumerate}
     The function \(F^{\leftarrow}\) is also called a \emph{quantile function} of
     the distribution function \(F\). The reason for this is
@@ -808,24 +930,149 @@ implications above.
         \item \(Q(p) \coloneq (-\infty, F^{\leftarrow}(p)]\) is the smallest
         interval of the form \((-\infty, a]\) such that \(\Prob{X \in (-\infty,
         a]} \ge p\) for \(X\sim F\). We say that \(Q(p)\) is a \(p\)-quantile.
+        \begin{solution}
+            For any \(a < F^{\leftarrow}(p)\) we have by definition of \(F^{\leftarrow}\) that
+            \(F(a) < p\) and thus
+            \[
+                \Prob{X \in (-\infty, a]} = F(a) < p.
+            \]
+            However for \(a=F^{\leftarrow}(p)\) we have \(F(a)\ge p\) by
+            \ref{it: F(F-(p)) > p}.  Consequently, \(F^{\leftarrow}(p)\) is the
+            smallest \(a\) such that \(\Prob{X \in (-\infty, a]} \ge p\).
+        \end{solution}
+
     \end{enumerate}
 \end{exercise}
 
-\begin{exercise}[Skorokhod's representation theorem]
+\begin{exercise}[Monotone functions have at most countably many discontinuities \Coffeecup\Coffeecup\Coffeecup]
+    \label{ex: monotone functions have countably many discontinuities}
+    Let \(F\colon \real \to \real\) be a non-decreasing function.
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item Let \(x\in \real\). Prove that the limit
+        \[
+            F_-(x) \coloneq \lim_{n\to \infty} F(x_n)
+        \]
+        exists for any sequence \((x_n)_{n\in \nat} \subseteq \real\) with \(x_n < x\)
+        and \(x_n \to x\). Prove that this limit is the same for any such
+        sequence such that \(F_-(x)\) is well-defined.
+        Also prove that \(F_+(x) \coloneq \lim_{y\downarrow x} F(y)\) is
+        well-defined.
+
+        \textbf{Hint:} Consider monotonically increasing sequences \(x_n\) first.
+        Then prove that the liminf and limsup coincide for general sequences
+        using monotone subsequences.
+        \begin{solution}
+            Let \(x_n\uparrow x\) be a monotonically increasing sequence. Then
+            \(F(x_n)\) is also monotonically increasing and thus assumes a limit.
+            We will prove \(\lim_n F(x_n) \le \lim_n F(y_n)\)
+            for another monotonically increasing sequence \(y_n\uparrow x\).
+            Since \(x_n\) and \(y_n\) are exchangeable we then also have equality.
+            Now for any \(n\in \nat\) there exists an \(m_n\in \nat\) such that
+            \(x_n \le y_{m_n} \le x\) as \(x_n < x\) and \(y_n\to x\). Consequently
+            since \(F\) is non-decreasing we have
+            \[
+                \lim_{n\to\infty} F(x_n) \le \lim_{n\to\infty}F(y_{m_n}) \overset{\text{subsequence}}= \lim_{n\to\infty}F(y_n).
+            \]
+            Thus we have proven that the limit of monotonically increasing
+            sequences is unique and denoted by \(F_-(x)\). Let \(x_n \to x\) with \(x_n < x\) be an
+            arbitrary sequence. Let \(x_{n_k}\) be a subsequence with
+            \[
+                F(x_{n_k}) \to \liminf_{n\to\infty} F(x_n)
+            \]
+            Since \(x_{n_k} \to x\) and \(x_{n_k} < x\) we can find a monotonically increasing subsequence.
+            This subsequence converges to \(F_-(x)\) and since it must have the
+            same limit as the original sequence \(x_{n_k}\) we have
+            \[
+                \liminf_{n\to\infty} F(x_n) = F_-(x).       
+            \]
+            The same argument works for the limsup. Thus the limit exists and is
+            given by \(F_-(x)\). The exact same argument also works for
+            \(F_+(x)\) with decreasing sequences.
+        \end{solution}
+
+        \item Prove that \(F\) is continuous at \(x\) if and only
+        if \(F_-(x) = F_+(x)\) (\(F\) only has jump discontinuities).
+        \begin{solution}
+            Clearly we have \(F_-(x) = F_+(x)\) if \(F\) is continuous.  So we
+            only need to prove \(F\) continuous in \(x\) when this equality
+            holds true.  Note that
+            \(F_-(x) \le F(x) \le F_+(x)\) since \(F\) is non-decreasing.
+            So if we have the equality then by a sandwich argument they are
+            both equal to \(F(x)\). Let us assume equality. To prove
+            sequential continuity in \(x\) we choose a sequence \(x_n\to x\).
+            This sequence can be split into the parts that are smaller than \(x\)
+            converging to \(F_-(x)\), the parts that are equal to \(x\),
+            converging to \(F(x)\) and the parts that are larger than \(x\)
+            converging to \(F_+(x)\). Since all these limits coincide the entire
+            sequence converges to \(F(x)\). Consequently \(F\) is continuous in
+            \(x\).
+        \end{solution}
+
+        \item Prove that \(F\) restricted to a compact interval \([a,b]\)
+        has only countably many jumps (places where \(F_-(x) < F_+(x)\)).
+
+        \textbf{Hint:} How many jumps are there of size greater than \(1/n\)?
+        \begin{solution}
+            Since \(F(b) - F(a)\) is finite and \(F\) monotonically increasing,
+            there are at most \(\lceil n(F(b)-F(a))\rceil\) jumps of size
+            \(\frac1n\). Thus for any \(n\in \nat\) the number of jumps of greater
+            size is finite. This implies that the discontinuity set
+            \[
+                D_F = \Set{x: F_-(x) \neq F_+(x)} = \bigcup_{n\in \nat} \Set[\big]{x: F_+(x) - F_-(x) > \tfrac1n}
+            \]
+            is countable.
+        \end{solution}
+
+        \item Prove that \(F\) has only countably many discontinuities.
+        \begin{solution}
+            Since \(F\) only has countably many discontinuities in each
+            interval \([n, n+1]\) for \(n\in \integer\) and the countable union
+            of countable sets is countable, we have that the set of all
+            discontinuities is at most countable.
+        \end{solution}
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Skorokhod's representation theorem \Coffeecup\Coffeecup]
     \label{ex: skorokhod representation}
     Let \((X_n)_{n \in \nat}\) be a sequence of random variables in \(\real\)
     such that \(X_n \xrightarrow{d} X\). Show that there exist random variables
     \((Y_n)_{n\in \nat}\) and \(Y\), where the \(Y_n\) and \(Y\) are all defined on the
     same probability space such that
-    \begin{enumerate}[label=(\alph*), noitemsep]
+    \begin{enumerate}[label=(\roman*), noitemsep]
         \item \(Y_n \overset{d}= X_n\) for all \(n\in \nat\) and \(Y \overset{d}= X\),
         \item \(Y_n \overset{\as}\to Y\).
     \end{enumerate}
-    \textbf{Hint:} Use \(F_n(x) = \Prob{X_n \le x}\) and Exercise \ref{ex: stochastic simulation}.
+    \textbf{Hint:} Use \(F_n(x) = \Prob{X_n \le x}\), Exercise \ref{ex:
+    stochastic simulation} and that a monotonous function has at most countably
+    many discontinuities (Exercise \ref{ex: monotone functions have countably
+    many discontinuities}).
     \begin{remark}
         We assume \(X_n\) in \(\real\) to simplify the proof. Skorokhod's representation 
         theorem holds in much greater generality.
     \end{remark}
+    \begin{solution}
+        Choose \(U\sim \uniform(0,1)\) and define
+        \[
+            Y_n \coloneq F_n^{\leftarrow}(U)
+            \quad \text{and}\quad
+            Y = F^{\leftarrow}(U)
+        \] where \(F_n\) are the distribution functions of \(X_n\) and \(F\) the
+        one of \(X\). Then by Exercise \ref{ex: stochastic simulation} we have
+        \(Y_n \overset{d}= X_n\) for all \(n\in \nat\) and
+        \(Y \overset{d}= X\).  It remains to show that \(Y_n \overset{\as}\to
+        Y\). Since \(X_n \overset{d}\to X\) in distribution, we have that
+        \(F_n(x) \to F(x)\) for all \(x\in \real\) at which \(F\) is continuous.
+        Since the set \(D_F\) of discontinuity points of \(F\) is countable, we have
+        \[
+            \Prob{U \in D_F} = \sum_{x\in D_F}\Prob{U = x} = 0.
+        \]
+        And for all \(\omega \in \Set{U \notin D_F}\) we have
+        \[
+            Y_n(\omega) = F_n(U(\omega)) \to F(U(\omega))=Y(\omega)
+        \]
+        Consequently, \(\Prob{ Y_n \to Y } = \Prob{U \notin D_F} = 1\) and thus \(Y_n \overset{\as}\to Y\).
+    \end{solution}
 \end{exercise}
 
 \begin{exercise}[Lipschitz continuous bump functions]
@@ -850,10 +1097,44 @@ implications above.
         and thereby the claim.
         \end{solution}
 
-        \item \(x\mapsto (1-\frac{x}\epsilon)_+\) is \(\frac1\epsilon\)-Lipschitz continuous.
+        \item \(x\mapsto x_+ = \max\Set{x,0}\) is \(1\)-Lipschitz continuous.
+        \begin{solution}
+            Choose \(x,y\in \real\), without loss of generality
+            assume \(x \ge y\). If \(y\le x\le 0\), then \(x_+ = y_+ = 0\) and thus
+            \(
+                \abs{x_+ - y_+} = 0 \le \abs{x-y}. 
+            \)
+
+            If \(x\ge 0\), then
+            \(
+                \abs{x_+ - y_+} = x - y_+ \le x-y = \abs{x-y}.
+            \)
+        \end{solution}
+
+        \item If \(f\) is \(L_1\) Lipschitz continuous and \(g\) is \(L_2\) Lipschitz continuous, then
+        \(f\circ g\) is \(L_1L_2\)-Lipschitz continuous.
+        \begin{solution}
+            We have for any \(x,y\in \domain\)
+            \[
+                \abs{f(g(x)) - f(g(y))}
+                \le L_1 \abs{g(x) - g(y)}
+                \le L_1L_2 \abs{x-y}.
+                \qedhere
+            \]
+        \end{solution}
+
 
         \item the bump function \(\Indicator{A}^\epsilon(x) = (1 - \frac{\metric(x,A)}\epsilon)_+\)
         is \(\frac1\epsilon\)-Lipschitz continuous.
+        \begin{solution}
+            \(f_1(x) = \metric(x,A)\) is \(1\)-Lipschitz continuous,
+            \(f_2(x) = 1 - \frac{x}{\epsilon}\) is \(\frac1\epsilon\)-Lipschitz continuous
+            as a Linear function, and \(f_3(x) = x_+\) is \(1\)-Lipschitz continuous. Consequently
+            \[
+                f_3 \circ f_2 \circ f_1(x) = \Indicator{A}^\epsilon(x)
+            \]
+            is \(\frac1\epsilon\)-Lipschitz continuous by the previous part.
+        \end{solution}
     \end{enumerate}
 \end{exercise}
 
@@ -1447,9 +1728,8 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
     While a monotonous function is only defined on ordered sets, convexity
     generalizes to higher dimensions. This idea is used in
     \citep{hallinDistributionQuantileFunctions2021} to define higher dimensional
-    distribution (and quantile) functions as the unique gradient of a convex function
-    that satisfies Property \ref{it: inverse transform sampling dual} (or resp.\
-    Property \ref{it: inverse transform sampling}) of Exercise \ref{ex:
+    quantile functions as the unique gradient of a convex function
+    that satisfies Property \ref{it: inverse transform sampling} of Exercise \ref{ex:
     stochastic simulation}.
 \end{remark}
 
