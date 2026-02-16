@@ -290,7 +290,7 @@ assumption that the random variables are in \(L^1\).
 
 \subsection*{Exercises}
 
-\begin{exercise}[Uncorrelated vs independent]
+\begin{exercise}[Uncorrelated vs independent \Coffeecup\Coffeecup]
     Prove that two random variables \(X\) and \(Y\) 
     are 
     \begin{enumerate}[label=(\alph*),noitemsep]
@@ -405,21 +405,21 @@ where \(P_t^i\) is the price of the asset \(i\) at time \(t\) and
     Which one captures the long term growth of the investment better?
 \end{exercise}
 
-\begin{exercise}[Systemic risk \Coffeecup\Coffeecup]
+\begin{exercise}[Diversification and systemic risk \Coffeecup\Coffeecup]
     In this exercise we will only model a single time step from \(t=0\) to
     \(t=1\) and write \(R^i = R_0^i\), cf.~\eqref{eq: return definition}. Moreover we assume for \(\alpha^i,
     \beta^i \in \real\)
     \[
         R^i = 1
         + \underbrace{\alpha^i}_{\substack{\text{expected}\\ \text{return}}}
-        + \underbrace{\beta^i F}_{\substack{\text{systemic}\\\text{risk}}}
+        + \underbrace{\beta^i M}_{\substack{\text{systemic}\\\text{risk}}}
         + \underbrace{\epsilon^i}_{\substack{\text{specific}\\\text{risk}}},
     \]
-    where \(F\) is a random variable modelling the ``market risk'' or ``systemic
+    where \(M\) is a random variable modelling the ``market risk'' or ``systemic
     risk'' and \(\epsilon^i\) is a random variable modelling the ``specific
-    risk'' of the asset \(i\). We assume that the random variables \(F\) and
+    risk'' of the asset \(i\). We assume that the random variables \(M\) and
     \(\epsilon^1, \dots, \epsilon^n\) are uncorrelated with zero mean. Without
-    loss of generality we assume that the variance of \(F\) is one -- simply move
+    loss of generality we assume that the variance of \(M\) is one -- simply move
     the variance into \(\beta^i\). We also assume that the variance of
     \(\epsilon^i\) is bounded by \(\sigma_\epsilon^2\). For simplicity we
     further assume \(\alpha^i = \alpha\) and \(\beta^i = \beta\) for all \(i\).
@@ -438,8 +438,6 @@ where \(P_t^i\) is the price of the asset \(i\) at time \(t\) and
         \textbf{Hint:} Lemma \ref{lem: Bienaymé}.
     \end{enumerate}
 \end{exercise}
-
-
 
 \section{Typical Deviations}
 \marginpar{\red{Lecture 4}}
