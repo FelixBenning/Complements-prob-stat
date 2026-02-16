@@ -64,12 +64,12 @@ this section we will define and relate them.
         \end{equation}
         \begin{enumerate}[label=(S.\arabic*), nosep,leftmargin=3em]
             \item\label{it: s.closed} For all \underline{closed} sets \(A\) we have
-            \[\limsup_{n\in \nat} \Prob{X_n \in A} \le \Pr(X \in A).\]
+            \[\limsup_{n\in \nat} \Prob{X_n \in A} \le \Prob{X \in A}.\]
             \item\label{it: s.open} For all \underline{open} sets \(O\) we have 
-            \[\liminf_{n\in \nat }\Prob{X_n \in O} \ge \Pr(X \in O).\]
+            \[\liminf_{n\in \nat }\Prob{X_n \in O} \ge \Prob{X \in O}.\]
             \item\label{it: s.zero boundary} For all \underline{measurable} sets \(B\) with \underline{\(\Prob{X \in \partial B} = 0\)} we have
             \[
-                \lim_{n \to \infty} \Pr(X_n \in B) = \Pr(X \in B).
+                \lim_{n \to \infty} \Prob{X_n \in B} = \Prob{X \in B}.
             \]
         \end{enumerate}
         If \(\domain = \real\) the following condition is also equivalent:
@@ -113,7 +113,7 @@ may gain probability mass at the boundary. If the boundary has zero mass
 in the limit however, then the probabilities converge.
 The convergence of distribution functions is just a special case, since
 \[
-    \Pr(X_n \le x) = \Pr(X_n \in (-\infty, x]).
+    \Prob{X_n \le x} = \Prob{X_n \in (-\infty, x]}.
 \]
 So we simply consider the sets \((-\infty, x]\) for all \(x\in \real\)
 for which the boundary \(\{x\}\) has zero probability mass in the limit.
@@ -420,20 +420,20 @@ implications above.
         &\le \Exp{\Indicator{A}^\epsilon(X_n)}
         \\
         \overset{\ref{it: b.lip}}&\to \Exp{\Indicator{A}^\epsilon(X)} \le \Exp{\Indicator{A_\epsilon}(X)}
-        = \Pr(X \in A_\epsilon),
+        = \Prob{X \in A_\epsilon},
     \end{aligned}
     \]
     Thus for every \(\epsilon >0\) we have
     \(
-        \limsup_{n\to \infty} \Pr(X_n \in A) \le \Pr(X \in A_\epsilon).
+        \limsup_{n\to \infty} \Prob{X_n \in A} \le \Prob{X \in A_\epsilon}.
     \)
     Since this is true for any \(\epsilon >0\) define
     \(B_m \coloneq A_{\frac1m}\), then we have
     \[
-        \limsup_{n\to \infty} \Pr(X_n \in A)
-        \le \lim_{m\to\infty}\Pr(X \in B_m)
-        = \Pr\Bigl(X \in \bigcap_{m\in \nat} B_m\Bigr)
-        = \Pr(X \in A),
+        \limsup_{n\to \infty} \Prob{X_n \in A}
+        \le \lim_{m\to\infty}\Prob{X \in B_m}
+        = \Prob[\Big]{X \in \bigcap_{m\in \nat} B_m}
+        = \Prob{X \in A},
     \]
     where we recall that \(\lim_{N\to \infty}
     \Prob{A_N} = \Prob[\big]{\bigcap_{N\in \nat} A_N}\) for a decreasing
@@ -933,7 +933,7 @@ implications above.
     \end{enumerate}
 \end{exercise}
 
-\begin{exercise}[Monotone functions have at most countably many discontinuities \Coffeecup\Coffeecup\Coffeecup]
+\begin{exercise}[Monotone functions have countable discontinuities \Coffeecup\Coffeecup\Coffeecup]
     \label{ex: monotone functions have countably many discontinuities}
     Let \(F\colon \real \to \real\) be a non-decreasing function.
     \begin{enumerate}[label=(\alph*), noitemsep]
@@ -1012,7 +1012,7 @@ implications above.
             is countable.
         \end{solution}
 
-        \item Prove that \(F\) has only countably many discontinuities.
+        \item Prove that \(F\) has at most countably many discontinuities.
         \begin{solution}
             Since \(F\) only has countably many discontinuities in each
             interval \([n, n+1]\) for \(n\in \integer\) and the countable union
@@ -1100,7 +1100,7 @@ implications above.
             \)
         \end{solution}
 
-        \item If \(f\) is \(L_1\) Lipschitz continuous and \(g\) is \(L_2\) Lipschitz continuous, then
+        \item If \(f\) is \(L_1\)-Lipschitz continuous and \(g\) is \(L_2\)-Lipschitz continuous, then
         \(f\circ g\) is \(L_1L_2\)-Lipschitz continuous.
         \begin{solution}
             We have for any \(x,y\in \domain\)
@@ -1530,24 +1530,24 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 \begin{exercise}[Median -- Projection in \(L^1\)]
 	We define the median of \(X\) to be the set
     \[
-        \bM[X] \coloneq \Set[\Big]{m \in \real : \Prob{X \ge m} \wedge \Prob{X\le m} \ge \tfrac12}
+        \median[X] \coloneq \Set[\Big]{m \in \real : \Prob{X \ge m} \wedge \Prob{X\le m} \ge \tfrac12}
     \]
     where \(x\wedge y = \min\Set{x,y}\). 
 	\begin{enumerate}[label=(\alph*), noitemsep]
-        \item Show that if \(a,b\in \bM[X]\), then \((a,b) \subseteq \bM[X]\).
-        That is \(\bM[X]\) is an interval!
+        \item Show that if \(a,b\in \median[X]\), then \((a,b) \subseteq \median[X]\).
+        That is \(\median[X]\) is an interval!
 
         \item The next goal is to show that the median interval is closed
         and characterize the upper and lower bound. Prove for \(F(x) = \Prob{X\le x}\)
         \begin{alignat*}{2}
-            \max \bM[X] &= \inf \Set{x \in \real : F(x) > \tfrac12}
+            \max \median[X] &= \inf \Set{x \in \real : F(x) > \tfrac12}
             &&\eqcolon \overline{M},
             \\
-            \min \bM[X] &= \inf \Set{x \in \real : F(x) \ge \tfrac12} \overset{\text{def.}}= F^{\leftarrow}(\tfrac12)
+            \min \median[X] &= \inf \Set{x \in \real : F(x) \ge \tfrac12} \overset{\text{def.}}= F^{\leftarrow}(\tfrac12)
             &&\eqcolon \underline{M}.
         \end{alignat*}
-        This has two components: \(\overline{M}\) and \(\underline{M}\) are the boundaries of \(\bM[X]\)
-        and they are contained in \(\bM[X]\).
+        This has two components: \(\overline{M}\) and \(\underline{M}\) are the boundaries of \(\median[X]\)
+        and they are contained in \(\median[X]\).
 
         \textbf{Hint:} Use \(\Prob{X < x} = \Prob{\bigcup_{k\in \nat}\Set{X \le x - \tfrac1k}}\) and the continuity of measure.
         \begin{solution}
@@ -1570,7 +1570,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
             \end{aligned}
             \]
             as any \(x< \overline{M}\) has the property \(F(x) \le \tfrac12\).
-            Consequently, \(\overline{M} \in \bM[X]\).
+            Consequently, \(\overline{M} \in \median[X]\).
             As we have not used the strict inequalities due to the limits, the
             same arguments work for the minimum \(\underline{M} = \inf\Set{x\in
             \real F(x) \ge \tfrac12}\). We only replace \(F(x) > \tfrac12\) by
@@ -1581,9 +1581,9 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
             \[
                 \Prob{X \ge m} = 1 - F(m) < \tfrac12 \qquad \forall m > \overline{M}.
             \]
-            This implies \(\overline{M} = \max \bM[X]\).
+            This implies \(\overline{M} = \max \median[X]\).
             Similarly, we have for any \(m < \underline{M}\) that \(F(m) < \tfrac12\)
-            and therefore \(\underline{M} = \min \bM[X]\).
+            and therefore \(\underline{M} = \min \median[X]\).
         \end{solution}
 
         \item\label{it: characterization of distribution function} Prove that
@@ -1613,7 +1613,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 
 		\item Assuming \(X\in \cL^1\) prove that the median minimizes the \(L^1\) error, i.e.
         \[
-            \bM[X] =\arg\min_{m} \E[|X-m|].
+            \median[X] =\arg\min_{m} \E[|X-m|].
         \]
 		% If you wish to prove the general
 		% case, note that \(f(m)=2F_X(m)-1\) is right-continuous and monotonously
@@ -1621,7 +1621,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 		% of discontinuities.
 
  		\textbf{Hint:}
-            Use \(\E[X]=\int_0^\infty \Pr(X\ge t)dt = \int_0^\infty \Pr(X>t)dt\)
+            Use \(\E[X]=\int_0^\infty \Prob{X\ge t}dt = \int_0^\infty \Prob{X>t}dt\)
             for \(X\ge 0\) to prove
             \[
                 \Exp{\abs{X-m_2}} - \Exp{\abs{X-m_1}}
@@ -1901,7 +1901,7 @@ Where we used that \(\sum_{n=1}^\infty \Prob{A_n} = \infty\) and \(\exp(-x)\to 0
     \label{rem: pairwise independence}
     With more effort it is possible to generalize the
     Borel-Cantelli Lemma 2 \eqref{eq: borel cantelli 2} to require only
-    \underline{pairwise} independence.\fxwarning{reference: ask Leif.}
+    \underline{pairwise} independence \citep{doeringStochastik2022}.
 \end{remark}
 
 The Borel-Cantelli lemmas now lead to the following characterization of almost

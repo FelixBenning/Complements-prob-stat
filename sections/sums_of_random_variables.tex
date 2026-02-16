@@ -290,30 +290,156 @@ assumption that the random variables are in \(L^1\).
 
 \subsection*{Exercises}
 
-\begin{exercise}[Strong law of large numbers in \(L^4\)]
+\begin{exercise}[Uncorrelated vs independent]
+    Prove that two random variables \(X\) and \(Y\) 
+    are 
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item uncorrelated if they are independent,
+        \item independent if \(f(X)\) and \(g(Y)\) are uncorrelated for all
+        bounded measurable functions \(f\) and \(g\).
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Strong law of large numbers in \(L^4\) \Coffeecup\Coffeecup]
     \label{ex: strong law of large numbers in L4}
     Let \((X_n)_{n\in \nat}\) be a sequence of independent and identically
-    distributed random variables in \(\cL^4\). Bound the centered fourth moment
-    \(\|\mean{X}_n - \E[X]\|_{L^4}^4\) to prove the strong law of large numbers.
+    distributed random variables in \(\cL^4(\real)\). Bound the centered fourth moment
+    \(\|\mean{X}_n - \E[X_1]\|_{L^4}^4\) to prove the strong law of large numbers.
 
-    \noindent\textbf{Hint:} Assume \(\E[X] = 0\) without loss of generality.
+    \noindent\textbf{Hint:} Assume \(\E[X_1] = 0\) without loss of generality.
+
+    \begin{solution}
+        Assume that the random variables are centered without loss of generality.
+        For indices \(i,j,k,l\), where \(i\) is not equal to any of the others
+        we have by independence
+        \[
+            \Exp{X_i X_j X_k X_l} = \Exp{X_i}\Exp{X_jX_k X_l} = 0.
+        \]
+        So clearly, if there is an index that does not appear twice the expectation is zero.
+        This implies
+        \[\begin{aligned}
+            \norm{\mean{X}_n}_{L^4}^4
+            &= \Exp[\Big]{\abs[\Big]{\frac1n \sum_{i=1}^n X_i}^4}
+            \\
+            &= \frac1{n^4} \sum_{i,j,k,l=1}^n \E[X_i X_j X_k X_l].
+            & (\abs{x}^4=x^4)
+            \\
+            &= \frac1{n^4} \Bigl(
+                \sum_{i=1}^n \Exp{X_i^4}
+                + \sum_{\substack{i,j=1\\i\neq j}}^n \Exp{X_i^2}\Exp{X_j^2}
+            \Bigr)
+            & (\text{no single index})
+            \\
+            &=
+            \frac1{n^4}\Bigl(n\Exp{X_1^4} + \frac{n(n-1)}{2} (\Exp{X_1^2})^2\Bigr)
+            &(\text{identical distributed})
+            \\
+            &\le \frac{C}{n^2}.
+        \end{aligned}
+        \]
+        With \(C = \E[X_1^4] + \frac12 (\E[X_1^2])^2 < \infty\). Consequently, we have
+        by Chebyshev's inequality for \(p=4\) (Corollary \ref{cor: markov inequality Lp})
+        \[
+            \Prob{\norm{\mean{X}_n} > \epsilon} \le \frac{\norm{\mean{X}_n}_{L^4}^4}{\epsilon^4} \le \frac{C}{\epsilon^4 n^2}.
+        \]
+        Since this is summable in \(n\) we have by Corollary \ref{cor:
+        characterization of almost sure convergence} that \(\mean{X}_n
+        \overset{\as}\to 0\).
+    \end{solution}
 \end{exercise}
 
 \begin{exercise}[Asymptotic equipartition property]
     
 \end{exercise}
 
-\begin{exercise}[Products of random variables]
-    
+
+\begin{exercise}[Products of random variables \Coffeecup]
+    This entire section is about sums of random variables. In this exercise we want
+    to demonstrate that these results can be easily translated to products of
+    random variables with the help of the logarithm. For
+    \((X_n)_{n\in \nat}\) independent and identically distributed random variables
+    with \(X_n > 0\) and \(\Exp{|\ln(X_1)|} < \infty\) prove that the
+    `geometric mean' converges almost surely to the `geometric expectation',
+    that is'
+    \[
+        \Bigl(\prod_{i=1}^n X_i \Bigr)^\frac1n
+        \overset{\as}\to \exp\bigl(\Exp[\big]{\ln(X_1)}\bigr).
+    \]
+
+    \begin{solution}
+        Observe that the logarithm of the geometric mean converges by the law of
+        large numbers to the expectation of the logarithm, that is
+        \[
+            \ln\Bigl(\Bigl(\prod_{i=1}^n X_i \Bigr)^\frac1n\Bigr)
+            = \frac1n \sum_{i=1}^n \ln(X_i)
+            \overset{\as}\to \Exp[\big]{\ln(X_1)}.
+        \]
+        Since \(\exp(x)\) is continuous the claim follows from continuous mapping.
+    \end{solution}
+
 \end{exercise}
 
-\begin{exercise}[Minimum variance portfolio]
-    
+\paragraph*{Finance application}
+
+In the following two exercises we want to model a financial market with \(n\)
+assets. Each asset \(i\) has returns
+\begin{equation}
+    \label{eq: return definition}    
+    R_t^i = \tfrac{P_{t+1}^i}{P_t^i},
+\end{equation}
+where \(P_t^i\) is the price of the asset \(i\) at time \(t\) and
+\(P_{t+1}^i\) is the price of the asset at time \(t+1\).
+
+\begin{exercise}[Long term investment returns \Coffeecup]
+    In this exercise we restrict ourselves to a single asset.
+    That is \(n=1\) and we write \(R_t = R_t^1\) for the return of the asset at
+    time \(t\), cf.~\eqref{eq: return definition}.
+    Assume that the returns \(R_0, R_1, \dots\) are independent and identically
+    distributed with \(\Exp{|\ln(R_1)|} < \infty\). Compare the
+    geometric mean with the arithmetic mean, that is
+    \[
+        \Bigl(\prod_{t=0}^{n-1} R_t\Bigr)^\frac1n
+        \quad \text{vs.} \quad
+        \frac1n\sum_{t=0}^{n-1} R_t.
+    \]
+    Which one captures the long term growth of the investment better?
 \end{exercise}
 
-\begin{exercise}[Long term investment returns]
-    
+\begin{exercise}[Systemic risk \Coffeecup\Coffeecup]
+    In this exercise we will only model a single time step from \(t=0\) to
+    \(t=1\) and write \(R^i = R_0^i\), cf.~\eqref{eq: return definition}. Moreover we assume for \(\alpha^i,
+    \beta^i \in \real\)
+    \[
+        R^i = 1
+        + \underbrace{\alpha^i}_{\substack{\text{expected}\\ \text{return}}}
+        + \underbrace{\beta^i F}_{\substack{\text{systemic}\\\text{risk}}}
+        + \underbrace{\epsilon^i}_{\substack{\text{specific}\\\text{risk}}},
+    \]
+    where \(F\) is a random variable modelling the ``market risk'' or ``systemic
+    risk'' and \(\epsilon^i\) is a random variable modelling the ``specific
+    risk'' of the asset \(i\). We assume that the random variables \(F\) and
+    \(\epsilon^1, \dots, \epsilon^n\) are uncorrelated with zero mean. Without
+    loss of generality we assume that the variance of \(F\) is one -- simply move
+    the variance into \(\beta^i\). We also assume that the variance of
+    \(\epsilon^i\) is bounded by \(\sigma_\epsilon^2\). For simplicity we
+    further assume \(\alpha^i = \alpha\) and \(\beta^i = \beta\) for all \(i\).
+
+    We consider the portfolio \(P\) that invests equally in all assets such that
+    the portfolio return is given by
+    \[
+        R^P = \frac1n \sum_{i=1}^n R^i.
+    \]
+    Prove that
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item The expected return of the portfolio is given by \(\Exp{R^P} = 1 + \alpha\).
+        \item The variance of the portfolio approaches \(\beta^2\) as the
+        diversification grows, that is \(n\to \infty\). 
+
+        \textbf{Hint:} Lemma \ref{lem: Bienaymé}.
+    \end{enumerate}
 \end{exercise}
+
+
 
 \section{Typical Deviations}
 \marginpar{\red{Lecture 4}}

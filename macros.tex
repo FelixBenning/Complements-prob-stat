@@ -43,10 +43,10 @@
 \DeclarePairedDelimiterXPP{\var}[1]{\varSymb}{[}{]}{}{#1}
 \DeclarePairedDelimiterXPP{\cov}[2]{\covSymb}{[}{]}{}{#1, #2}
 \DeclarePairedDelimiterXPP{\Cov}[1]{\CovSymb}{[}{]}{}{#1}
-\newcommand*{\covSymb}{\mathrm{cov}}
-\newcommand*{\varSymb}{\mathrm{var}}
-\newcommand*{\CovSymb}{\mathrm{Cov}}
-\DeclarePairedDelimiterXPP{\Prob}[1]{\Pr}{(}{)}{}{#1}
+\newcommand*{\covSymb}{\mathsf{cov}}
+\newcommand*{\varSymb}{\mathsf{var}}
+\newcommand*{\CovSymb}{\mathsf{Cov}}
+\DeclarePairedDelimiterXPP{\Prob}[1]{\Pr}{\{}{\}}{}{#1}
 \NewDocumentCommand{\Indicator}{s m}{%
   \IfBooleanTF{#1}
     {\mathbf{1}_{\left\{#2\right\}}} % starred: wrap in braces
@@ -78,9 +78,9 @@
 \newcommand*{\metric}{d}
 
 % Probability
-\newcommand{\E}{\mathbb{E}}
-\newcommand*{\bM}{\mathbb{M}}
-\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\E}{\mathsf{E}}
+\newcommand*{\median}{\mathsf{M}}
+\renewcommand{\Pr}{\mathsf{P}}
 \newcommand*{\density}{\varphi}
 \DeclareMathOperator{\iid}{iid}
 \newcommand*{\given}{\mid}
