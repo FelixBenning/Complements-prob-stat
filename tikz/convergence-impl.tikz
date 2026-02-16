@@ -17,7 +17,7 @@
         \draw[dashed, very thick, gray] 
         ($(m-1-2.north east)!0.5!(m-1-3.north west) + (0.1, 1.2)$) -- 
         ($(m-1-2.south east)!0.5!(m-1-3.south west) + (0.1, -2.3)$)
-        node[midway, fill=white, text=gray, font=\footnotesize, xshift=-32,yshift=-55] {\(X\) a.s.\ unique};
+        node[midway, fill=white, text=gray, font=\footnotesize, xshift=-37,yshift=-55] {\(X\) a.s.\ unique \ref{it: uniqueness of limits}};
     }
 ]
     % --- Row 1 ---

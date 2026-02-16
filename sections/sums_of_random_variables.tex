@@ -1787,7 +1787,7 @@ This explains its name and this property is crucial for the following bound.
     for all \(x\in A\) and any \(t\in \hilbert\). Since \(e^\lambda \ge 1\)
     for all \(\lambda \ge 0\) we have
     \[\begin{aligned}
-        \Pr[X \in A] = \Exp{\Indicator{X \in A}}
+        \Prob{X \in A} = \Exp{\Indicator{X \in A}}
         &\le \Exp[\Big]{\exp\bigl(\scp{t, X} - \inf_{a\in A} \scp{t, a}\bigr)}
         \\
         &= \MGF_X(t)\exp\bigl(- \inf_{a\in A} \scp{t, a}\bigr) 
@@ -1800,7 +1800,7 @@ This explains its name and this property is crucial for the following bound.
     minimax theorem (Fact \ref{fact: sion's minimax theorem}) and Lemma
     \ref{lem: check sion's conditions}
     \[\begin{aligned}[b]
-        \Pr[X \in A]
+        \Prob{X \in A}
         &\le \exp\Bigl(- \sup_{t \in \hilbert} \inf_{a\in A} \Phi_X(t, a)\Bigr)
         \\
         \overset{\text{Sion}}&=
@@ -1857,8 +1857,8 @@ In finite dimensions we can extend Proposition \ref{prop: general LDP upper} to
     dimension!). Then by continuity of probability measures
     (Remark \ref{rem: continuity of probability})
     \[\begin{aligned}[b]
-        \Pr[X\in A]
-        &\le \lim_{n\to \infty} \Pr[X \in A \cap K_n] + \underbrace{\Pr[X \notin K_n]}_{\to 0}
+        \Prob{X \in A}
+        &\le \lim_{n\to \infty} \Prob{X \in A \cap K_n} + \underbrace{\Prob{X \notin K_n}}_{\to 0}
         \\
         &\le \lim_{n\to \infty} \exp\bigl(- \inf_{a\in A \cap K_n} \CGF_X^*(a)\bigr)
         \le \exp\bigl(- \inf_{a\in A} \CGF_X^*(a)\bigr).
@@ -2442,7 +2442,7 @@ equivalent characterizations of subgaussian random variables.
             & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
             & \textcolor{gray}{\(\frac{12\sqrt{e}}{\sqrt{2}}\)}
             \\
-            & \(\mathllap{\norm{X}_{\psi_2}\! \sim}K_4\)
+            & \(\mathllap{\norm{X}_{\psi_2}\! \le}K_4\)
             & \textcolor{gray}{\(\sqrt{3}\)}
             &\(\sqrt{3}\)
             & \textcolor{gray}{\(\frac{2\sqrt{e}}{\sqrt{\ln 2}}\)}
@@ -2450,7 +2450,7 @@ equivalent characterizations of subgaussian random variables.
             & \(\textcolor{gray}1\)
             & \textcolor{gray}{\(2\sqrt{3}\)}
             \\
-            & \(\mathllap{\sqrt{\frac{\varProx{X}}2} \sim} K_5\)
+            & \(\mathllap{\sqrt{\frac{\varProx{X}}2} \le} K_5\)
             & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
             & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
             & \textcolor{gray}{\(2\sqrt{e}\)}
