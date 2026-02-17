@@ -300,6 +300,29 @@ assumption that the random variables are in \(L^1\).
     \end{enumerate}
 \end{exercise}
 
+\begin{exercise}[Mean of indicators \Coffeecup]
+    \label{ex: mean of indicators}
+    Let \((X_n)_{n\in \nat}\) be a sequence of independent and identically
+    distributed random variables in \(\real\) with distribution function \(F\).
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item Let \(A\) be a measurable set and \(Y_i \coloneq \Indicator{X_i \in A}\).
+        Prove that
+        \[
+            \frac1n \sum_{i=1}^n Y_i \overset{\as}\to \Prob{X_1 \in A}
+            \qquad (n \to \infty).
+        \]
+        \item Define the empirical distribution function
+        \[
+            F_n(x) \coloneq \frac1n \sum_{i=1}^n \Indicator{X_i \le x}.
+        \]
+        Prove that for any \(x_1, \dots, x_k \in \real\)
+        \[
+            (F_n(x_1), \dots, F_n(x_k)) \overset{\as}\to (F(x_1), \dots, F(x_k))
+            \qquad (n \to \infty).
+        \]
+    \end{enumerate}
+\end{exercise}
+
 \begin{exercise}[Strong law of large numbers in \(L^4\) \Coffeecup\Coffeecup]
     \label{ex: strong law of large numbers in L4}
     Let \((X_n)_{n\in \nat}\) be a sequence of independent and identically
@@ -351,7 +374,6 @@ assumption that the random variables are in \(L^1\).
 \begin{exercise}[Asymptotic equipartition property]
     
 \end{exercise}
-
 
 \begin{exercise}[Products of random variables \Coffeecup]
     This entire section is about sums of random variables. In this exercise we want
@@ -432,12 +454,57 @@ where \(P_t^i\) is the price of the asset \(i\) at time \(t\) and
     Prove that
     \begin{enumerate}[label=(\alph*),noitemsep]
         \item The expected return of the portfolio is given by \(\E{R^P} = 1 + \alpha\).
-        \item The variance of the portfolio approaches \(\beta^2\) as the
+        \item The variance of the portfolio approaches \(\beta^2\) from above as the
         diversification grows, that is \(n\to \infty\). 
 
         \textbf{Hint:} Lemma \ref{lem: Bienaymé}.
     \end{enumerate}
 \end{exercise}
+
+\begin{exercise}[Glivenko-Cantelli theorem \Coffeecup\Coffeecup\Coffeecup]
+    This exercise is an extension of Exercise \ref{ex: mean of indicators} where
+    we want to prove the Glivenko-Cantelli theorem, which says that the empirical
+    distribution function \(F_n\) converges uniformly to the distribution function.
+    That is not just at finitely many points but at all points simultaneously.
+    \begin{mdframed}[innertopmargin=0pt]
+    \begin{theorem}[Glivenko-Cantelli]
+        \label{thm: glivenko cantelli}
+        Let \((X_n)_{n\in \nat}\) be a sequence of iid random
+        variables in \(\real\) with distribution function \(F\) and empirical 
+        distribution function \(F_n\). Then
+        \[
+            \sup_{x\in \real}\abs{F_n(x) - F(x)} \overset{\as}\to 0.
+        \]
+    \end{theorem}
+    \end{mdframed}
+    You will prove this theorem in three steps:
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item Define the functions \(G(x) \coloneq \Prob{X_1 < x}\) and \(G_n(x) \coloneq \frac1n \sum_{i=1}^n \Indicator{X_i < x}\)
+        and prove for any \(x_1, \dots, x_k \in \real\)
+        \[\begin{aligned}
+            &(F_n(x_1), \dots, F_n(x_k), G_n(x_1), \dots, G_n(x_k))
+            \\
+            &\overset{\as}\to (F(x_1), \dots, F(x_k), G(x_1), \dots, G(x_k)).
+        \end{aligned}
+        \]
+        Deduce
+        \begin{equation}
+            \label{eq: discretization max to zero}            
+            R_n \coloneq \max_{i\in \Set{1,\dots, k}} \max\Set[\big]{\abs{F_n(x_i) - F(x_i)}, \abs{G_n(x_i) - G(x_i)}} \overset{\as}\to 0.
+        \end{equation}
+
+        \item Recall the properties of the quantile function \(F^\leftarrow\) (Exercise \ref{ex: stochastic simulation})
+        and choose \(x_1, \dots, x_{k-1}\) as \(x_i \coloneq F^\leftarrow\bigl(\frac{i}k\bigr)\).
+        Use \eqref{eq: discretization max to zero} to prove that
+        almost surely (for all \(\omega \in N^\complement\) for some set \(N\) with \(\Prob{N}=0\))
+        \[
+            \limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} \le \frac1k + \limsup_{n\to \infty}R_n \le \frac1k.
+        \]
+
+        \item Deduce the ``Glivenko-Cantelli theorem'' with a union bound over \(k\).
+    \end{enumerate}
+\end{exercise}
+
 
 \section{Typical Deviations}
 \marginpar{\red{Lecture 4}}
