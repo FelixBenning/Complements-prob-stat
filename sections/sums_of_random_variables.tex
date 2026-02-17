@@ -814,7 +814,7 @@ multivariate results.
     \scalebox{0.7}{
     \input{tikz/standard-normal.tikz}
     }
-    \caption{Standard normal density \(f_X\) from \eqref{eq: standard normal density}}
+    \caption{Standard normal density \(\density_X\) from \eqref{eq: standard normal density}}
 \end{wrapfigure} 
 We will now characterize the asymptotic distribution of the rescaled mean using
 Lévy's continuity theorem. With the benefit of historical hindsight we already
@@ -827,7 +827,7 @@ with its definition and the calculation of its characteristic function.
     distributed} if it has density
     \begin{equation}
         \label{eq: standard normal density}
-        f_X(x)
+        \density_X(x)
         = \frac1{\sqrt{2\pi}}
         \exp\bigl(-\tfrac{x^2}{2}\bigr).
     \end{equation}
@@ -857,7 +857,7 @@ with its definition and the calculation of its characteristic function.
     We do not require \(\sigma^2 > 0\) in the definition! However, if
     \(\sigma^2>0\), then by Exercise \ref{ex: density of normal distribution} \(X\sim \normal{\mu, \sigma^2}\) has density
     \[
-        f_X(x) = \frac1{\sqrt{2\pi \sigma^2}}
+        \density_X(x) = \frac1{\sqrt{2\pi \sigma^2}}
         \exp\bigl(-\tfrac{(x-\mu)^2}{2\sigma^2}\bigr).
     \]
     This is usually taken as the definition of the normal distribution. However
@@ -1312,26 +1312,26 @@ normal distribution. To do so we require the concept of covariance matrices.
 \begin{proof}[Proofsketch]
     Let \(\dims=2\). By rotation invariance both components \(X^{(1)}\) and
     \(X^{(2)}\) are are identically distributed. Thus the components are iid. If
-    they have a density \(f\), then the joint density factorizes, that is
+    they have a density \(\density\), then the joint density factorizes, that is
     \[
-        f_X(x_1, x_2) = f(x_1) f(x_2)
+        \density_X(x_1, x_2) = \density(x_1) \density(x_2)
     \]
     Due to rotation invariance the joint density must only depend on the
     radius, or equivalently squared radius \(\|x\|^2 = x_1^2 + x_2^2\).
     Thus it must be of the form
     \[
-        f_X(x_1, x_2) = g(x_1^2 + x_2^2)
+        \density_X(x_1, x_2) = g(x_1^2 + x_2^2)
     \]
-    Setting \(x_2=0\) we observe by the two expressions \(g(x_1^2) = f(x_1)f(0)\).
+    Setting \(x_2=0\) we observe by the two expressions \(g(x_1^2) = \density(x_1)\density(0)\).
     Thus
     \[
-        g(x_1^2 + x_2^2) = f(x_1) f(x_2) = \frac{g(x_1^2)}{f(0)} \frac{g(x_2^2)}{f(0)}.
+        g(x_1^2 + x_2^2) = \density(x_1) \density(x_2) = \frac{g(x_1^2)}{\density(0)} \frac{g(x_2^2)}{\density(0)}.
     \]
     The only functions \(g\) that satisfy \(g(x+y) = \frac1c g(x) g(y)\) are \(x\mapsto c\exp(\lambda x)\)
     for \(\lambda\in \real\). Thus
     \[
-        f(x_1) = \frac{g(x_1^2)}{f(0)} = \frac{c}{f(0)} \exp(\lambda x_1^2)
-        = f(0) \exp(\lambda x_1^2).
+        \density(x_1) = \frac{g(x_1^2)}{\density(0)} = \frac{c}{\density(0)} \exp(\lambda x_1^2)
+        = \density(0) \exp(\lambda x_1^2).
     \]
     Since the density must integrate to one we rule out \(\lambda \ge 0\) and
     arrive at the normal distribution. An actual proof would
@@ -1350,17 +1350,14 @@ the normal distribution is a density is perhaps less surprising:
 \end{lemma}
 \begin{proof}
 We will show that $I^2=2\pi$. We observe that
-\begin{align*}
-I\times I ={} & 
-\left(\int_{-\infty}^{\infty} \exp\left(-\frac{x^2}{2}\right) \mathrm{d}x \right)
-\left(\int_{-\infty}^{\infty} \exp\left(-\frac{y^2}{2}\right) \mathrm{d}y \right)\\
-={} & 
-\int_{-\infty}^{\infty}
-\int_{-\infty}^{\infty}
-\exp\left(-\frac{x^2+y^2}{2}\right) \mathrm{d}x\mathrm{d}y
-\end{align*}
+\[
+I^2 =
+    \Bigl(\int \exp\bigl(-\tfrac{x^2}{2}\bigr) dx \Bigr)
+    \Bigl(\int \exp\bigl(-\tfrac{y^2}{2}\bigr) dy \Bigr)
+    =\iint \exp\bigl(-\tfrac{x^2+y^2}{2}\bigr) dx dy.
+\]
 Here the squared radius \(r^2 = x^2 + y^2\) appears naturally in the exponent.
-We evaluate this integral using polar coordinates. We change variables from $(x,y)$ to $(r,\theta)$ by using the transformation
+We evaluate this integral using polar coordinates. We change variables from $(x,y)$ to $(r,\theta)$ using the transformation
 \[
     x \coloneqq r \cos\theta, \qquad y \coloneqq r \sin\theta.
 \]
@@ -1373,15 +1370,15 @@ The Jacobian determinant of this transformation is
 = \left|\begin{pmatrix}
 \cos\theta & \sin\theta \\
 -r\sin\theta & r\cos\theta \\
-\end{pmatrix}\right| = r(\cos^2\theta + \sin^2\theta) = r\;.
+\end{pmatrix}\right| = r(\cos^2\theta + \sin^2\theta) = r.
 \]
 Therefore,
 \[
-I\times I = 
-\int_{0}^\infty \int_{0}^{2\pi} e^{-\frac{r^2}{2}} \, r \, \mathrm{d}\theta \mathrm{d}r = 
-2\pi \int_0^\infty e^{-\frac{r^2}{2}} \, r \, \mathrm{d}r 
+I^2 = 
+\int_{0}^\infty \int_{0}^{2\pi} e^{-\frac{r^2}{2}} \, r \, d\theta dr
+=  2\pi \int_0^\infty e^{-\frac{r^2}{2}} \, r \, dr 
 = 2\pi \left[-e^{-\frac{r^2}{2}}\right]_{0}^{\infty}
-=  2\pi \;.
+= 2\pi.
 \qedhere
 \]
 \end{proof}
