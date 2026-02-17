@@ -187,15 +187,13 @@ theory.
 \begin{mdframed}[innertopmargin=0pt]
 \begin{theorem}[Markov inequality]
     \label{thm: markov inequality}
-    Let \(I\subseteq \real\) be an interval, \(h\colon I\to (0, \infty)\) a
+    For an interval \(I\subseteq \real\) let \(h\colon I\to (0, \infty)\) be a
     non-decreasing function and \(X\) an \(I\)-valued random variable.
     Then for all \(t \in I\) we have
     \[
         \Prob{X \ge t} \le \frac{\E{h(X)}}{h(t)}.
     \]
 \end{theorem}
-\end{mdframed}
-
 \begin{corollary}[Chebyshev inequality]
     \label{cor: markov inequality Lp}
     We have for all \(t > 0\)
@@ -204,21 +202,21 @@ theory.
         \le \frac{\E[\Big]{\norm[\big]{X-\E{X}}^p}}{t^p}.
     \]
 \end{corollary}
+\end{mdframed}
+\begin{remark}[Historical note]
+    The case \(p=2\) is the classical ``Chebyshev inequality'', which
+    is older than Markov's inequality.  Markov was Chebyshev's student and the
+    classical ``Markov inequality'' is the one from Theorem \ref{thm: markov
+    inequality} with \(h(x) = x\). The generalizations above are best known
+    as Markov's inequality but also referred to as Chebyshev's inequality by
+    some authors. We try to compromise with the Corollary covering a
+    special case.
+\end{remark}
 
-\begin{proof}
+\begin{proof}[Proof of Corollary \ref{cor: markov inequality Lp}]
     Markov inequality applied to \(\tilde X = \norm{X - \E{X}}\) 
     and \(h(x) = x^p\) with \(I = [0, \infty)\).
 \end{proof}
-
-\begin{remark}[Historical note]
-    The case \(p=2\) is the classical ``Chebyshev inequality''.
-    Markov was Chebyshev's student and the classical
-    ``Markov inequality'' is the one from Theorem \ref{thm: markov inequality}
-    with \(h(x) = x\). The generalizations above are best known
-    as Markov's inequality but also referred to as Chebyshev's inequality by
-    some authors. We try to compromise with the Corollary covering a
-    special case. Though historically Chebyshev's inequality came first.
-\end{remark}
 
 \begin{proof}[Proof of Theorem \ref{thm: markov inequality}]
     Since \(h\) is non-decreasing and \(t, X \in I\)
@@ -524,7 +522,56 @@ implications above.
     arguments to \(-f\) we obtain the lower bound and consequently
     \(\E{f(X_n)} \to \E{f(X)}\).
 
-    ``\ref{it: df} \(\Rightarrow\) \ref{it: s.open}'': See Appendix \ref{sec: appendix portmanteau}.
+    ``\ref{it: df} \(\Rightarrow\) \ref{it: b.lip}'':
+    Let \(F(x) = \Prob{X\le x}\) and \(F_n(x) = \Prob{X_n \le x}\) be the
+    distribution functions of \(X\) and \(X_n\). We need to deduce from
+    \(F_n(x) \to F(x)\) for all \(x\in \real\) with \(\Prob{X = x} = 0\) that
+    \[
+        \E{f(X_n)} \to \E{f(X)}
+    \]
+    for all bounded, Lipschitz continuous functions \(f\colon \real \to \real\).
+    If \(f\) has Lipschitz constant \(L\), then by considering \(\frac1L f\) and
+    linearity of the expectation we may assume without loss of generality that
+    \(L=1\). Similarly, we may assume it is bounded by \(1\). Let \(\epsilon > 0\) and choose \(N\) large enough that it is possible to choose
+    \(y_0 < \ldots < y_N\) such that
+    \[
+        F(y_0) \le \epsilon,\quad F(y_N) \ge 1 - \epsilon,
+        \quad\text{and}\quad
+        y_{i+1} - y_i < \epsilon\quad  \text{ for all } i.
+    \]
+    There are only countably many points where \(\Prob{X = y} \neq 0\),
+    since the number of points where \(\Prob{X=y} \ge \tfrac1m\) is finite and a
+    countable union (over \(m\)) of finite sets is countable.  We may therefore
+    choose \(y_i\) such that \(\Prob{X = y_i} = 0\) for all \(i\).
+    For all \(x\in (y_{i-1}, y_i]\) we then have
+    \[
+        \abs{f(x) - f(y_i)} \overset{1\text{-Lip}}\le \abs{x-y_i} < \epsilon,
+    \]
+    and thus \(f(x) \le f(y_i) + \epsilon \le f(x)\). Recall that \(f\) is moreover bounded
+    by \(1\) such that
+    \[\begin{aligned}
+        \E{f(X_n)}
+        &\le \E{\Indicator{X_n \le y_0}} + \E[\Big]{\sum_{i=1}^N (f(y_i) +\epsilon)\Indicator{(y_{i-1}, y_i]}(X_n)}
+        + \E{\Indicator{X_n > y_N}}
+        \\
+        &\le F_n(y_0) + \sum_{i=1}^N (f(y_i) + \epsilon) (F_n(y_i) - F_n(y_{i-1})) + (1 - F_n(y_N))
+    \end{aligned}
+    \]
+    Since \(\lim_{n\to \infty} F_n(y_i) = F(y_i)\) for all \(i\) we consequently have
+    \[\begin{aligned}
+        \limsup_{n\to \infty} \E{f(X_n)}
+        &\le \underbrace{F(y_0)}_{\le \epsilon} + \sum_{i=1}^N (f(y_i) + \epsilon) (F(y_i) - F(y_{i-1})) + \underbrace{(1 - F(y_N))}_{\le \epsilon}
+        \\
+        &\le 2\epsilon + \E[\Big]{\sum_{i=1}^N \underbrace{(f(y_i) + \epsilon)}_{\le f(X) + 2\epsilon} \Indicator{(y_{i-1}, y_i]}(X)}
+        \\
+        &\le 4\epsilon + \E{f(X)} - \E{f(X) \Indicator{X \le y_0}} - \E{f(X) \Indicator{X > y_N}}
+        \\
+        &\le 6\epsilon + \E{f(X)}.
+    \end{aligned}
+    \]
+    Since \(\epsilon>0\) was arbitrary we thus obtain \(\limsup_{n\to \infty}
+    \E{f(X_n)} \le \E{f(X)}\). Applying the same arguments to \(-f\) we get the
+    lower bound.
 \end{myproof}
 
 
@@ -980,8 +1027,9 @@ implications above.
             \(F_+(x)\) with decreasing sequences.
         \end{solution}
 
-        \item Prove that \(F\) is continuous at \(x\) if and only
-        if \(F_-(x) = F_+(x)\) (\(F\) only has jump discontinuities).
+        \item\label{it: F continuous if and only if all coincide} Prove that \(F\) is continuous at \(x\) if and only
+        if \(F(x) = F_-(x) = F_+(x)\). That is
+        \(F\) only has jump discontinuities.
         \begin{solution}
             Clearly we have \(F_-(x) = F_+(x)\) if \(F\) is continuous.  So we
             only need to prove \(F\) continuous in \(x\) when this equality
@@ -1021,6 +1069,31 @@ implications above.
             discontinuities is at most countable.
         \end{solution}
     \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Discontinuity points of distribution functions \Coffeecup\Coffeecup]
+    Let \(X\) be a random variable and \(F(x) = \Prob{X \le x}\) its
+    distribution function. Show that \(F\) is continuous at \(x\) if and only if
+    \(\Prob{X = x} = 0\).
+    \textbf{Hint:} Use Exercise \ref{ex: monotone functions have countably many discontinuities}.
+    \begin{solution}
+        Since the sets \(\Set{X \le x - \frac1n}\) are increasing
+        in size, we have by continuity of the probability measure
+        \[
+            \Prob{X < x}
+            = \Prob[\Big]{\bigcup_{n\in \nat} \Set{X \le x - \tfrac1n}}
+            = \lim_{n\to\infty} \Prob{X \le x - \tfrac1n}
+            = F_-(x).
+        \]
+        Consequently,
+        \[
+            \Prob{X = x} = \Prob{X \le x} - \Prob{X < x} = F(x) - F_-(x).
+        \]
+        By Exercise \ref{ex: monotone functions have countably many
+        discontinuities} \ref{it: F continuous if and only if all coincide} we
+        have that \(F\) is continuous at \(x\) if and only if \(F(x) = F_-(x)\).
+        Consequently continuity of \(F\) is equivalent to \(\Prob{X = x} = 0\).
+    \end{solution}
 \end{exercise}
 
 \begin{exercise}[Skorokhod's representation theorem \Coffeecup\Coffeecup]
@@ -1789,7 +1862,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
     stochastic simulation}.
 \end{remark}
 
-\section[Borel-Cantelli]{Borel-Cantelli characterization of almost sure convergence}
+\section{Characterization of almost sure convergence}
 \label{sec: borel cantelli}
 
 
@@ -1888,7 +1961,7 @@ its analogue for real-valued sequences.
 \end{lemma}
 \begin{proof}
     Exercise \ref{ex: liminf and limsup properties}. Note that indicators are always in \(\{0,1\}\)
-    and use the definition of the limits superior and inferior.
+    and use the definition of the limes superior and inferior.
 \end{proof}
 
 \begin{mdframed}[innertopmargin=0pt]

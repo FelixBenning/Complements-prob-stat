@@ -1,51 +1,22 @@
 \documentclass[a4paper]{report}
 \pagestyle{headings}
 \input{packages.tex}
-
 \input{macros.tex}
-
-\makeatletter
-\@twosidefalse
-\makeatother
 
 % \solutiontrue % set to true to show solutions, false to hide them
 
+\title{
+    Compl\'ements de probabilit\'es et statistiques
+    \\
+    {\large Course Notes - Work in Progress}
+}
+\author{Felix Benning}
+
 \begin{document}
 
-% First Page - Centered
-\begin{titlepage}
-    \centering
-    \vspace*{1cm}
+\maketitle
 
-    % \includegraphics[width=0.3\textwidth]{Figures/Logo.png}\\[2cm]
-
-    \MakeUppercase{\Large \textbf{Compl\'ements de probabilit\'es et statistiques 2}}\\[1.5ex]
-    \MakeUppercase{\LARGE Course Notes}\\[2cm]
-
-
-    {\Large Felix Benning}\\[5cm]
-
-\textbf{    {\Large Bachelor in Mathematics Program}\\[2cm]
-}
-    {\Large Summer Semester 2026}\\[1cm]
-
-\textbf{    {\Large Department of Mathematics}\\[3cm]
-}
-\end{titlepage}
-
-\newpage
 \tableofcontents
-% \renewcommand*{\listtheoremname}{List of Theorems}
-% \listoftheorems[ignoreall,show={theorem},numwidth=30pt]
-% \renewcommand*{\listtheoremname}{List of Defintions}
-% \listoftheorems[ignoreall,show={definition},numwidth=30pt]
-% \renewcommand*{\listtheoremname}{List of Propositions}
-% \listoftheorems[ignoreall,show={proposition},numwidth=30pt]
-% \renewcommand*{\listtheoremname}{List of Facts}
-% \listoftheorems[ignoreall,show={fact},numwidth=30pt]
-% \renewcommand*{\listtheoremname}{List of Examples}
-% \listoftheorems[ignoreall,show={example},numwidth=30pt]
-% \newpage
 
 
 \input{sections/convergence.tex}
@@ -59,9 +30,7 @@
 
 \appendix
 
-\newpage
-
-\input{sections/appendix.tex}
+% \input{sections/appendix.tex}
 
 \end{document}
 

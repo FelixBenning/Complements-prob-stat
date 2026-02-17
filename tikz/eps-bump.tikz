@@ -34,8 +34,5 @@
     };
     \addlegendentry{$\Indicator{[a,b]}^{\vphantom{(}\epsilon}$}
 
-    % Vertical reference lines
-    \addplot[dotted] coordinates {(0.5,0) (0.5,1)};
-    \addplot[dotted] coordinates {(2.5,0) (2.5,1)};
     \end{axis}
 \end{tikzpicture}

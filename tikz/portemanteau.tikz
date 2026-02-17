@@ -18,5 +18,5 @@
         & \ref{it: b.a.s. cont}
         \\
         & & & & & \ref{it: df}
-        \arrow[ul, Rightarrow]{}{!}
+        \arrow[ulll, Rightarrow]{}{!}
     \end{tikzcd}
