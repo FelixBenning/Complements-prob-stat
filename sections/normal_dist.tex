@@ -9,7 +9,7 @@
 
 Suppose $X\sim\mathcal{N}(0,1)$. We want to show that the moment generating function of $X$ is the function $\phi:\real\to\real$ given by $\phi(t)=e^{t^2/2}$.
 \begin{alignat*}{3}
-&& \Exp*{e^{tX}} ={} & e^{\frac{t^2}{2}} \;. \\[1em]
+&& \E*{e^{tX}} ={} & e^{\frac{t^2}{2}} \;. \\[1em]
 \Leftrightarrow{} && \frac{1}{\sqrt{2\pi}} \int e^{tx} \, e^{-\frac{x^2}{2}} \, \mathrm{d}x ={} & e^{\frac{t^2}{2}} \;. \\[1em]
 \Leftrightarrow{} && \frac{1}{\sqrt{2\pi}} \int e^{tx - \frac{x^2}{2} - \frac{t^2}{2} } \, \mathrm{d}x ={} & 1 \;.\\[1em]
 \Leftrightarrow{} && \frac{1}{\sqrt{2\pi}} \int e^{-\frac{(t-x)^2}{2}} \, \mathrm{d}x ={} & 1 \;.\\[1em]
@@ -21,23 +21,23 @@ We have already seen the last assertion is true.
 
 Suppose $X\sim\mathcal{N}(0,1)$. We want to show that the characteristic function of $X$ is the function $\phi:\real\to\complex$ given by $\phi(t)=e^{-t^2/2}$. Thus, we want to show
 \[
-\Exp*{ e^{-itX} } = e^{ - \frac{t^2}{2} } \;.
+\E*{ e^{-itX} } = e^{ - \frac{t^2}{2} } \;.
 \]
-The l.h.s.\ is by definition $\Exp*{\cos(tX)}+i \, \Exp*{\sin(tX)}$. So we want to show that
+The l.h.s.\ is by definition $\E*{\cos(tX)}+i \, \E*{\sin(tX)}$. So we want to show that
 \[
-\Exp*{\cos(tX)}+i\Exp*{\sin(tX)} = e^{ - \frac{t^2}{2} } \;.
+\E*{\cos(tX)}+i\E*{\sin(tX)} = e^{ - \frac{t^2}{2} } \;.
 \]
 Since $X$ is symmetric, and $\sin$ is an odd function, we have
 \[
-\Exp*{\sin(tX)} = 0 \;.
+\E*{\sin(tX)} = 0 \;.
 \]
 Thus we just need to show
 \[
-\Exp*{\cos(tX)} =  e^{ - \frac{t^2}{2} } \;.
+\E*{\cos(tX)} =  e^{ - \frac{t^2}{2} } \;.
 \]
 Let us denote the l.h.s.\ by $g(t)$ i.e., 
 \[
-g(t) = \Exp*{\cos(tX)} = \int_{-\infty}^{\infty} \cos(tx)\, e^{-\frac{x^2}{2}}\, \mathrm{d}x \;.
+g(t) = \E*{\cos(tX)} = \int_{-\infty}^{\infty} \cos(tx)\, e^{-\frac{x^2}{2}}\, \mathrm{d}x \;.
 \]
 We differentiate $g(t)$ with respect to $t$ and use integration by parts formula to get
 \[
@@ -67,13 +67,13 @@ Suppose $X\sim\mathcal{N}(\mu_x,\sigma_x^2)$,
 $Y\sim\mathcal{N}(\mu_y,\sigma_y^2)$, and
 $X\perp Y$. Hence,
 \[
-\Exp*{e^{itX}}=e^{i\mu_x t - t^2\sigma_x^2/2}\,\quad
-\Exp*{e^{itY}}=e^{i\mu_y t - t^2\sigma_y^2/2}\;.
+\E*{e^{itX}}=e^{i\mu_x t - t^2\sigma_x^2/2}\,\quad
+\E*{e^{itY}}=e^{i\mu_y t - t^2\sigma_y^2/2}\;.
 \]
 Now, consider a linear combination of $X$ and $Y$, say $aX+bY$. Then
 \begin{align*}
-& \Exp*{e^{it(aX+bY)}} \\
-={} & \Exp*{e^{itaX}}\Exp*{e^{itbY}} \\
+& \E*{e^{it(aX+bY)}} \\
+={} & \E*{e^{itaX}}\E*{e^{itbY}} \\
 ={} & e^{i \mu_x t a + i \mu_y t b} 
 e^{ - t^2 a^2 \sigma_x^2/2 - t^2 b^2 \sigma_y^2 / 2} \\
 ={} & e^{i (\mu_x a + \mu_y b) t - t^2/2 (a^2\sigma_x^2+b^2\sigma_y^2)} \;.
@@ -114,8 +114,8 @@ then $\cov*{X,Y}=0$.
 \end{proposition}
 
 \begin{proof}
-$\cov*{X,Y} = \Exp*{XY}-\Exp*{X}\Exp*{Y}$.\\
-$\Exp*{XY} = \Exp*{X}\Exp*{Y}$.\\
+$\cov*{X,Y} = \E*{XY}-\E*{X}\E*{Y}$.\\
+$\E*{XY} = \E*{X}\E*{Y}$.\\
 $\cov*{X,Y} = 0$.
 \end{proof}
 
@@ -316,7 +316,7 @@ Then $(X_1,X_2)\sim N(0,0,1,1,\rho)$.
 \begin{fact}[Conditional Distribution of Correlated Standard Normal Random Variables]
 Suppose $(X_1,X_2)\sim\normal{0,0,1,1,\rho}$. Then we can write $X_1=Z_1$ and $X_2=\rho Z_1+\sqrt{1-\rho^2} Z_2$ where $(Z_1,Z_2)\sim\normal{0,0,1,1,0}$. Therefore,
 \begin{align*}
-\Exp*{X_2\given X_1} ={} & \Exp*{\rho Z_1+\sqrt{1-\rho^2}Z_2\given Z_1} = \rho Z_1 = \rho X_1\;.\\
+\E*{X_2\given X_1} ={} & \E*{\rho Z_1+\sqrt{1-\rho^2}Z_2\given Z_1} = \rho Z_1 = \rho X_1\;.\\
 \var*{X_2\given X_1} ={} & \var*{\rho Z_1+\sqrt{1-\rho^2}Z_2\given Z_1} = 1-\rho^2 \;.\\
 X_2|X_1 \sim{} & \normal{\rho X_1, 1-\rho^2}\;.
 \end{align*}
@@ -326,9 +326,9 @@ X_2|X_1 \sim{} & \normal{\rho X_1, 1-\rho^2}\;.
 Suppose $(X,Y)\sim\normal{\mu_x,\mu_y,\sigma_x^2,\sigma_y^2,\rho}$.
 Then
 \begin{align*}
-\Exp*{X\given Y} ={} & \mu_x + \rho \frac{\sigma_x}{\sigma_y}(Y-\mu_y) \\
+\E*{X\given Y} ={} & \mu_x + \rho \frac{\sigma_x}{\sigma_y}(Y-\mu_y) \\
 \var*{X\given Y} ={} & (1-\rho^2) \sigma_x \\
-\Exp*{Y\given X} ={} & \mu_y + \rho\frac{\sigma_y}{\sigma_x} (X-\mu_x) \\
+\E*{Y\given X} ={} & \mu_y + \rho\frac{\sigma_y}{\sigma_x} (X-\mu_x) \\
 \var*{Y\given X} ={} & (1-\rho^2) \sigma_y^2 \\
 X|Y \sim{} & \normal{\mu_x + \rho \frac{\sigma_x}{\sigma_y}(Y-\mu_y),(1-\rho^2) \sigma_x^2} \\
 Y|X \sim{} & \normal{\mu_y + \rho \frac{\sigma_y}{\sigma_x}(X-\mu_x),(1-\rho^2) \sigma_y^2} \;.

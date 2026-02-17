@@ -30,11 +30,11 @@ is called the one-dimensional Simple Symmetric Random Walk (SSRW).
 \noindent\textbf{Question:} What is the average value (i.e., the expectation) of $S_n$?\\
 \textbf{Answer:} Average value of $S_n$ is $0$ as the following calculation shows:
 \begin{equation}
-\Exp*{S_n}=\Exp*{X_1+\cdots+X_n}=\Exp*{X_1}+\cdots+\Exp*{X_n}=0+\cdots+0=0\;.
+\E*{S_n}=\E*{X_1+\cdots+X_n}=\E*{X_1}+\cdots+\E*{X_n}=0+\cdots+0=0\;.
 \end{equation}
-Here we do not need the assumption that $X_i$s are independent. We use that $\Exp*{X_i}=0$ for each $i$:
+Here we do not need the assumption that $X_i$s are independent. We use that $\E*{X_i}=0$ for each $i$:
 \begin{equation}
-\Exp*{X_i}=1\cdot\frac{1}{2}+(-1)\cdot\frac{1}{2}=0\;.
+\E*{X_i}=1\cdot\frac{1}{2}+(-1)\cdot\frac{1}{2}=0\;.
 \end{equation}
 
 \medskip
@@ -58,13 +58,13 @@ Technically speaking, we are only using that pairwise covariances are $0$, which
 
 Above we used $\var*{X_i}=1$ as the following calculation shows:
 \begin{equation}
-\var*{X_i}=\Exp*{X_i^2}-\Bigl(\Exp*{X_i}\Bigr)^2=\Exp*{1}-0^2=1\;.
+\var*{X_i}=\E*{X_i^2}-\Bigl(\E*{X_i}\Bigr)^2=\E*{1}-0^2=1\;.
 \end{equation}
 
 \begin{tcolorbox}[title={Skip on first reading}]
 Consider two random variables 
-$X$ and $Y$. Assume $\Exp*{X^2}<\infty$
-and $\Exp*{Y^2}<\infty$.
+$X$ and $Y$. Assume $\E*{X^2}<\infty$
+and $\E*{Y^2}<\infty$.
 \tcblower
 If $X$ and $Y$ are independent then 
 $\cov*{X,Y}=0$. But the converse is
@@ -599,15 +599,15 @@ S_n = X_1+\cdots+X_n.
 \noindent\textbf{Question:} What is the average value (i.e., the expectation) of $S_n$?\\
 \textbf{Answer:} Average value of $S_n$ is $0$ as the following calculation shows:
 \begin{equation}
-\Exp*{S_n}=
-\Exp*{X_1+\cdots+X_n}=
-\Exp*{X_1}+\cdots+\Exp*{X_n}=
+\E*{S_n}=
+\E*{X_1+\cdots+X_n}=
+\E*{X_1}+\cdots+\E*{X_n}=
 (p-q)+\cdots+(p-q)=
 n(p-q)\;.
 \end{equation}
-Here we do not need the assumption that $X_i$s are independent. We use that $\Exp*{X_i}=p-q$ for each $i$:
+Here we do not need the assumption that $X_i$s are independent. We use that $\E*{X_i}=p-q$ for each $i$:
 \begin{equation}
-\Exp*{X_i} = 1 \cdot p + (-1) \cdot (1-p) = p-q\;.
+\E*{X_i} = 1 \cdot p + (-1) \cdot (1-p) = p-q\;.
 \end{equation}
 
 \medskip
@@ -619,7 +619,7 @@ Here we do not need the assumption that $X_i$s are independent. We use that $\Ex
 \end{equation}
 Here we use the assumption that $X_i$s are independent, otherwise there would be the covariance terms. Technically speaking, we are only using that pairwise covariances are $0$, which follows from the assumption of independence, but is a much weaker condition. Above we also used $\var*{X_i}=1$ as the following calculation shows:
 \begin{equation}
-\var*{X_i}=\Exp*{X_i^2}-\Bigl(\Exp*{X_i}\Bigr)^2=\Exp*{1}-(p-q)^2=4pq\;.
+\var*{X_i}=\E*{X_i^2}-\Bigl(\E*{X_i}\Bigr)^2=\E*{1}-(p-q)^2=4pq\;.
 \end{equation}
 
 \filbreak
@@ -779,7 +779,7 @@ Thus $X \coloneqq -\min_n S_n$ is a Geometric random variable. For $k=0,1,2,\ldo
 \]
 In particular,
 \[
-\Exp*{X} = \frac{1-q/p}{q/p} = p/q - 1\;,
+\E*{X} = \frac{1-q/p}{q/p} = p/q - 1\;,
 \]
 and 
 \[

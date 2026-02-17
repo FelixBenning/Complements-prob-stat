@@ -35,7 +35,7 @@ The characteristic function of $\mathrm{Poisso}(\lambda)$ distribution is the fu
 \begin{proof}
 Let $X$ denote a $\mathrm{Poisson}(\lambda)$ random variable. Then, for any $t\in\real$ we have
 \begin{align*}
-\phi(t) ={} & \Exp*{e^{itX}}\\
+\phi(t) ={} & \E*{e^{itX}}\\
 ={} & \sum_{k=0}^\infty e^{itk} \, \Prob*{X=k}\\
 ={} & \sum_{k=0}^\infty e^{itk} \, e^{-\lambda} \, \frac{\lambda^k}{k!}\\
 ={} & e^{-\lambda} \sum_{k=0}^\infty \frac{(\lambda e^{it})^k}{k!}\\
@@ -93,7 +93,7 @@ Then
 
 \begin{proof}
 \begin{align*}
- &  \Exp*{e^{itX}}\\
+ &  \E*{e^{itX}}\\
 ={}&\sum_{k=0}^n e^{itk} \Prob*{X=k}\\
 ={}&\sum_{k=0}^n e^{itk} \binom{n}{k} p^k (1-p)^{n-k}\\
 ={}&\sum_{k=0}^n \binom{n}{k} (e^{it}p)^k (1-p)^{n-k}\\

@@ -35,10 +35,10 @@ this section we will define and relate them.
             \Prob[\Big]{\lim_{n \to \infty} X_n = X} = 1.
         \]
 
-        \item \textbf{in \(L^p\)} for \(p \geq 1\), denoted by \(X_n \overset{L^p}\to X\), if \(\Exp{\norm{X_n}^p} < \infty\) for all \(n\), \(\Exp{\norm{X}^p} < \infty\)
+        \item \textbf{in \(L^p\)} for \(p \geq 1\), denoted by \(X_n \overset{L^p}\to X\), if \(\E{\norm{X_n}^p} < \infty\) for all \(n\), \(\E{\norm{X}^p} < \infty\)
         and
         \[
-            \lim_{n \to \infty} \Exp[\Big]{\norm{X_n - X}^p} = 0.
+            \lim_{n \to \infty} \E[\Big]{\norm{X_n - X}^p} = 0.
         \]
 
         \item \textbf{in probability}, denoted by \(X_n \overset{p}\to X\), if for all \(\epsilon > 0\)
@@ -60,7 +60,7 @@ this section we will define and relate them.
         Where \eqref{eq: fun convergence} is given by
         \begin{equation}
             \label{eq: fun convergence}\tag{B}
-            \lim_{n\to\infty}\Exp{f(X_n)} = \Exp{f(X)}.
+            \lim_{n\to\infty}\E{f(X_n)} = \E{f(X)}.
         \end{equation}
         \begin{enumerate}[label=(S.\arabic*), nosep,leftmargin=3em]
             \item\label{it: s.closed} For all \underline{closed} sets \(A\) we have
@@ -128,8 +128,9 @@ between the different types of convergence in the following theorem.
 Notice the fundamental difference between convergence in distribution and the
 other, stronger, types of convergence that have almost surely unique limits. To
 see that convergence in distribution cannot have almost surely unique limits,
-consider the fact that \(X\) and \(-X\) have the same distribution when \(X\) is
-standard normal distributed for example.
+consider the fact that \(X\) and \(-X\) have the same distribution when the
+distribution of \(X\) is symmetric (Exercise \ref{ex: unique stochastic limits}
+\ref{it: non-unique limits convergence in dist}).
 
 \begin{theorem}[Convergence implications]
     \label{thm: convergence implications}
@@ -190,7 +191,7 @@ theory.
     non-decreasing function and \(X\) an \(I\)-valued random variable.
     Then for all \(t \in I\) we have
     \[
-        \Prob{X \ge t} \le \frac{\Exp{h(X)}}{h(t)}.
+        \Prob{X \ge t} \le \frac{\E{h(X)}}{h(t)}.
     \]
 \end{theorem}
 \end{mdframed}
@@ -199,13 +200,13 @@ theory.
     \label{cor: markov inequality Lp}
     We have for all \(t > 0\)
     \[
-        \Prob[\Big]{\norm{X - \Exp{X}} \ge t}
-        \le \frac{\Exp[\Big]{\norm[\big]{X-\Exp{X}}^p}}{t^p}.
+        \Prob[\Big]{\norm{X - \E{X}} \ge t}
+        \le \frac{\E[\Big]{\norm[\big]{X-\E{X}}^p}}{t^p}.
     \]
 \end{corollary}
 
 \begin{proof}
-    Markov inequality applied to \(\tilde X = \norm{X - \Exp{X}}\) 
+    Markov inequality applied to \(\tilde X = \norm{X - \E{X}}\) 
     and \(h(x) = x^p\) with \(I = [0, \infty)\).
 \end{proof}
 
@@ -226,10 +227,10 @@ theory.
     \[\begin{aligned}
         \Prob{X \ge t}
         &\le \Prob[\big]{h(X) \ge h(t)}
-        = \Exp{\Indicator{h(X) \ge h(t)}}
-        \le \Exp[\Big]{\frac{h(X)}{h(t)}\Indicator{h(X) \ge h(t)}}
+        = \E{\Indicator{h(X) \ge h(t)}}
+        \le \E[\Big]{\frac{h(X)}{h(t)}\Indicator{h(X) \ge h(t)}}
         \\
-        &\le \Exp[\Big]{\frac{h(X)}{h(t)}},
+        &\le \E[\Big]{\frac{h(X)}{h(t)}},
     \end{aligned}
     \]
     where we have used \(h > 0\) in the last inequality to remove the indicator.
@@ -248,7 +249,7 @@ continuous mapping}).
     \[
         \metric(X_n,Y_n) \overset{p}\to 0
         \quad\implies\quad
-        \abs[\big]{\Exp{f(X_n)} - \Exp{f(Y_n)}} \to 0.
+        \abs[\big]{\E{f(X_n)} - \E{f(Y_n)}} \to 0.
     \]
 \end{lemma}
 
@@ -258,17 +259,17 @@ continuous mapping}).
     of \(f\) and choose an arbitrary \(\epsilon > 0\).
     Then
     \[\begin{aligned}
-        &\abs{\Exp{f(X_n)} - \Exp{f(Y_n)}}
+        &\abs{\E{f(X_n)} - \E{f(Y_n)}}
         \\
-        &\le \Exp{\abs{f(X_n) - f(Y_n)}}
+        &\le \E{\abs{f(X_n) - f(Y_n)}}
         \\
-        &\le \Exp{\underbrace{\abs{f(X_n) - f(Y_n)}}_{\le L\metric(X_n, Y_n)} \Indicator{\metric(X_n, Y_n) \le \epsilon}}
-        + \Exp{\underbrace{\abs{f(X_n) - f(Y_n)}}_{\le 2M} \Indicator{\metric(X_n, Y_n) > \epsilon}}
+        &\le \E{\underbrace{\abs{f(X_n) - f(Y_n)}}_{\le L\metric(X_n, Y_n)} \Indicator{\metric(X_n, Y_n) \le \epsilon}}
+        + \E{\underbrace{\abs{f(X_n) - f(Y_n)}}_{\le 2M} \Indicator{\metric(X_n, Y_n) > \epsilon}}
         \\
         &\le L \epsilon + 2M \underbrace{\Prob{\metric(X_n, Y_n) > \epsilon}}_{\to 0}.
     \end{aligned}\]
     Using \(\metric(X_n, Y_n) \overset{p}\to 0\) we thus we have \(\limsup_{n\to
-    \infty} \abs{\Exp{f(X_n)} - \Exp{f(Y_n)}} \le L \epsilon\)
+    \infty} \abs{\E{f(X_n)} - \E{f(Y_n)}} \le L \epsilon\)
     for arbitrary \(\epsilon > 0\) and thus its limit must be zero.
 \end{proof}
 
@@ -288,7 +289,7 @@ continuous mapping}).
         from the \(L^1\) Chebyshev inequality (Corollary
         \ref{cor: markov inequality Lp}): We have for \(\epsilon > 0\) \[
             \Prob[\big]{\norm{X_n - X} > \epsilon}
-            \le \frac{\Exp[\big]{\norm{X_n - X}}}{\epsilon}
+            \le \frac{\E[\big]{\norm{X_n - X}}}{\epsilon}
             \to 0.
         \]
 
@@ -416,10 +417,10 @@ implications above.
     we have  \(\Indicator{A}(x) \le \Indicator{A}^\epsilon(x) \le \Indicator{A_\epsilon}(x)\) for all \(x\).
     Consequently we have for any closed set \(A\)
     \[\begin{aligned}
-        \Pr(X_n \in A) = \Exp{\Indicator{A}(X_n)}
-        &\le \Exp{\Indicator{A}^\epsilon(X_n)}
+        \Pr(X_n \in A) = \E{\Indicator{A}(X_n)}
+        &\le \E{\Indicator{A}^\epsilon(X_n)}
         \\
-        \overset{\ref{it: b.lip}}&\to \Exp{\Indicator{A}^\epsilon(X)} \le \Exp{\Indicator{A_\epsilon}(X)}
+        \overset{\ref{it: b.lip}}&\to \E{\Indicator{A}^\epsilon(X)} \le \E{\Indicator{A_\epsilon}(X)}
         = \Prob{X \in A_\epsilon},
     \end{aligned}
     \]
@@ -503,25 +504,25 @@ implications above.
     \in E_i\), then \(f(X_n) \le y_i\). Since the sets \(E_i\) cover
     the range of \(f\) we have
     \[
-        \Exp{f(X_n)}
-        \le \Exp[\Big]{\sum_{i=1}^N y_i \Indicator{E_i}(f(X_n))}
+        \E{f(X_n)}
+        \le \E[\Big]{\sum_{i=1}^N y_i \Indicator{E_i}(f(X_n))}
         = \sum_{i=1}^N y_i \underbrace{\Prob{X_n \in f^{-1}(E_i)}}_{\overset{\ref{it: s.zero boundary}}\to \Prob{X \in f^{-1}(E_i)}}
     \]
     where we use \(\Prob{X \in \partial f^{-1}(E_i)} = 0\). Using \(y_i \le f(X) +
     \epsilon\) for \(f(X) \in E_i\) we get
     \[
         \sum_{i=1}^N y_i \Prob{X \in f^{-1}(E_i)}
-        = \Exp[\Big]{\sum_{i=1}^N y_i \Indicator{E_i}(f(X))}
-        \le \Exp{f(X)} + \epsilon.
+        = \E[\Big]{\sum_{i=1}^N y_i \Indicator{E_i}(f(X))}
+        \le \E{f(X)} + \epsilon.
     \]
     Put together this implies
     \[
-        \limsup_{n\to \infty} \Exp{f(X_n)}
-        \le \Exp{f(X)} + \epsilon.
+        \limsup_{n\to \infty} \E{f(X_n)}
+        \le \E{f(X)} + \epsilon.
     \]
     As this is true for any \(\epsilon >0\) we may drop it. Applying the same
     arguments to \(-f\) we obtain the lower bound and consequently
-    \(\Exp{f(X_n)} \to \Exp{f(X)}\).
+    \(\E{f(X_n)} \to \E{f(X)}\).
 
     ``\ref{it: df} \(\Rightarrow\) \ref{it: s.open}'': See Appendix \ref{sec: appendix portmanteau}.
 \end{myproof}
@@ -586,8 +587,8 @@ implications above.
         \begin{solution}
             We have
             \[
-                \Exp{|X_n - 0|}
-                = \Exp{X_n}
+                \E{|X_n - 0|}
+                = \E{X_n}
                 = n \cdot \Prob[\big]{U \in [0, 1/n)}
                 = n \cdot \frac1n
                 = 1 \not\to 0.
@@ -600,7 +601,7 @@ implications above.
         \begin{solution}
             Define \(Y_n \coloneq X_n^{1/p}\) with \(X_n\) as above. Then
             \[
-                \E[|Y_n - 0|^q] = \E[X_n^{q/p}] = n^{q/p} \cdot \Prob[\big]{U \in [0, 1/n)} = n^{q/p - 1}.
+                \E{|Y_n - 0|^q} = \E{X_n^{q/p}} = n^{q/p} \cdot \Prob[\big]{U \in [0, 1/n)} = n^{q/p - 1}.
             \]
             This converges to \(0\) for all \(q < p\) but not for \(q \ge p\).
         \end{solution}
@@ -637,7 +638,7 @@ implications above.
         \begin{solution}
             We have for any \(p \ge 1\)
             \[
-                \Exp{|X_n|^p} = \int_0^1 \Indicator{
+                \E{|X_n|^p} = \int_0^1 \Indicator{
                     \left[\frac{k}{2^{m}}, \frac{k+1}{2^{m}} \right)
                 }(u) \, du
                 = \frac{1}{2^m} = 2^{-\lfloor \log_2(n) \rfloor} \to 0.
@@ -699,9 +700,9 @@ implications above.
     \begin{solution}
         We have for every \(\epsilon > 0\)
         \[\begin{aligned}
-            \Exp[\big]{\norm{X_n - X}^p}
-            &= \Exp[\big]{\norm{X_n - X}^p \Indicator{\norm{X_n - X} < \epsilon}}
-            + \Exp[\big]{\norm{X_n - X}^p \Indicator{\norm{X_n - X} \ge \epsilon}}
+            \E[\big]{\norm{X_n - X}^p}
+            &= \E[\big]{\norm{X_n - X}^p \Indicator{\norm{X_n - X} < \epsilon}}
+            + \E[\big]{\norm{X_n - X}^p \Indicator{\norm{X_n - X} \ge \epsilon}}
             \\
             &\le \epsilon^p + (2c)^p \Prob[\big]{\norm{X_n - X} \ge \epsilon}.
         \end{aligned}
@@ -709,7 +710,7 @@ implications above.
         Due to \(X_n \overset{p}\to X\) the second term converges to \(0\)
         and we thus have
         \[
-            \limsup_{n\to \infty} \Exp[\big]{\norm{X_n - X}^p} \le \epsilon^p.
+            \limsup_{n\to \infty} \E[\big]{\norm{X_n - X}^p} \le \epsilon^p.
         \]
         Since this is true for any \(\epsilon > 0\) we have the claim.
     \end{solution}
@@ -783,7 +784,7 @@ implications above.
     \end{enumerate}
     Finally, 
     \begin{enumerate}[label=(\alph*), resume, noitemsep]
-        \item show that the statement is not true for convergence in
+        \item\label{it: non-unique limits convergence in dist} show that the statement is not true for convergence in
         distribution.
 
         \textbf{Hint:} Clearly \(X_n\) must converge in distribution but not
@@ -1064,12 +1065,12 @@ implications above.
     \end{solution}
 \end{exercise}
 
-\begin{exercise}[Lipschitz continuous bump functions]
+\begin{exercise}[Lipschitz continuous bump functions \Coffeecup\Coffeecup]
     \label{ex: lipschitz bump functions}
     Let \((\domain, \metric)\) be a metric space and \(A \subseteq \domain\). 
     Show that
     \begin{enumerate}[label=(\alph*)]
-        \item \(x\mapsto \metric(x,A)\equiv \inf_{z \in A} \metric(x,z)\) is \(1\)-Lipschitz continuous.
+        \item \(x\mapsto \metric(x,A)\coloneq \inf_{z \in A} \metric(x,z)\) is \(1\)-Lipschitz continuous.
         \begin{solution}
         By the triangle inequality we have for \(x,y\in \domain\)
         \[
@@ -1197,11 +1198,11 @@ implications above.
 \begin{definition}
     We define the \(\cL^p\) space to be
     \[
-        \cL^p \coloneq \cL^p(\domain) \coloneq \Set{X\colon \Omega \to \domain : \Exp{\norm{X}^p} < \infty}
+        \cL^p \coloneq \cL^p(\domain) \coloneq \Set{X\colon \Omega \to \domain : \E{\norm{X}^p} < \infty}
     \]
     and define the seminorm for \(X\in \cL^p\) as
     \[
-        \norm{X}_{L^p} \coloneq \Exp[\big]{\norm{X}^p}^{\frac1p}.
+        \norm{X}_{L^p} \coloneq \E[\big]{\norm{X}^p}^{\frac1p}.
     \]
 \end{definition}
 
@@ -1252,7 +1253,7 @@ following theorem.
     \]
     Then clearly \(U\neq X\) but for any \(p\ge 1\)
     \[
-        \Exp{\abs{X-U}^p}
+        \E{\abs{X-U}^p}
         = \int_0^1 \abs{x^p \Indicator{[0,1)}(x) - x^p} dx
         = \int_0^1 \Indicator{\Set{1}} dx = 0,
     \]
@@ -1285,7 +1286,8 @@ following theorem.
     The definition of the norm is well-defined as for \(X,Y\in [X]\)
     we have by the triangle inequality
     \[
-        \norm{X}_{L^p} \le \norm{Y}_{L^p} + \norm{X - Y}_{L^p} \overset{X,Y\in [X]}= \norm{Y}_{L^p}.
+        \norm{X}_{L^p} \le \norm{Y}_{L^p} + \norm{X - Y}_{L^p} \overset{X,Y\in [X]}= \norm{Y}_{L^p}
+        \overset{\text{similarly}}\le \norm{X}_{L^p}.
     \]
 \end{remark}
 
@@ -1293,7 +1295,7 @@ It turns out that proving the seminorm properties (Theorem \ref{thm: seminorm
 properties}), is easier in a more general setting. Specifically, since
 deterministic values may be moved outside of the expectation, we have
 \[
-    \norm{X}_{L^p} = \inf\Set[\Big]{\lambda > 0 : \Exp[\Big]{\bigl(\tfrac{\norm{X}}{\lambda}\bigr)^p} \le 1}.
+    \norm{X}_{L^p} = \inf\Set[\Big]{\lambda > 0 : \E[\Big]{\bigl(\tfrac{\norm{X}}{\lambda}\bigr)^p} \le 1}.
 \]
 With \(\psi(x) = x^p\) the \(L^p\) norm is thus a special case of
 an ``Orlicz norm''.
@@ -1303,7 +1305,7 @@ an ``Orlicz norm''.
     with \(\psi(0) = 0\) and \(\lim_{x\to \infty} \psi(x) = \infty\). Then we define
     for \(X\colon \Omega \to \domain\) the \textbf{Orlicz norm}
     \[
-        \norm{X}_{\psi} \coloneq \inf\Set[\Big]{\lambda > 0 : \Exp[\Big]{\psi\bigl(\tfrac{\norm{X}}{\lambda}\bigr)} \le 1}.
+        \norm{X}_{\psi} \coloneq \inf\Set[\Big]{\lambda > 0 : \E[\Big]{\psi\bigl(\tfrac{\norm{X}}{\lambda}\bigr)} \le 1}.
     \]
     The \textbf{Orlicz spaces} are given by \(\cL^\psi \coloneq \Set{X\colon \Omega \to \domain : \norm{X}_{\psi} < \infty}\).
 \end{definition}
@@ -1317,9 +1319,9 @@ an ``Orlicz norm''.
     property follows from
     \[\begin{aligned}
         \norm{\alpha X}_{\psi}
-        &= \inf\Set[\Big]{\lambda > 0 : \Exp[\Big]{\psi\bigl(\tfrac{\abs{\alpha}\norm{X}}{\lambda}\bigr)} \le 1}
+        &= \inf\Set[\Big]{\lambda > 0 : \E[\Big]{\psi\bigl(\tfrac{\abs{\alpha}\norm{X}}{\lambda}\bigr)} \le 1}
         \\
-        \overset{\mu=\frac{\lambda}{\abs{\alpha}}}&= \abs{\alpha} \inf\Set[\Big]{\mu > 0 : \Exp[\Big]{\psi\bigl(\tfrac{\norm{X}}{\mu}\bigr)} \le 1}
+        \overset{\mu=\frac{\lambda}{\abs{\alpha}}}&= \abs{\alpha} \inf\Set[\Big]{\mu > 0 : \E[\Big]{\psi\bigl(\tfrac{\norm{X}}{\mu}\bigr)} \le 1}
         &= |\alpha| \norm{X}_{\psi}.
     \end{aligned}
     \]
@@ -1328,9 +1330,9 @@ an ``Orlicz norm''.
     for any \(\epsilon >0\) we have by definition of the Orlicz norm
     \begin{equation}
         \label{eq: orlicz epsilon}     
-        \Exp{\psi\bigl(\tfrac{\norm{X}}{a + \epsilon}\bigr)} \le 1,
+        \E{\psi\bigl(\tfrac{\norm{X}}{a + \epsilon}\bigr)} \le 1,
         \quad\text{and}\quad
-        \Exp{\psi\bigl(\tfrac{\norm{Y}}{b + \epsilon}\bigr)} \le 1.
+        \E{\psi\bigl(\tfrac{\norm{Y}}{b + \epsilon}\bigr)} \le 1.
     \end{equation}
     Using \(\lambda = \frac{a+\epsilon}{a+b+2\epsilon}\in[0,1]\) and thereby \(1-\lambda = \frac{b+\epsilon}{a+b+2\epsilon}\) we get
     \[
@@ -1338,10 +1340,10 @@ an ``Orlicz norm''.
     \]
     Finally, using that \(\psi\) is non-decreasing and convex:
     \[\begin{aligned}
-        \Exp[\Big]{\psi\Bigl(\frac{\norm{X+Y}}{a + b + 2\epsilon}\Bigr)}
-        \overset{\text{non-dec.}}&\le \Exp[\Big]{\psi\Bigl(\frac{\norm{X}+\norm{Y}}{a + b + 2\epsilon}\Bigr)}
+        \E[\Big]{\psi\Bigl(\frac{\norm{X+Y}}{a + b + 2\epsilon}\Bigr)}
+        \overset{\text{non-dec.}}&\le \E[\Big]{\psi\Bigl(\frac{\norm{X}+\norm{Y}}{a + b + 2\epsilon}\Bigr)}
         \\
-        \overset{\text{conv.}}&\le \lambda \Exp[\Big]{\psi\Bigl(\frac{X}{a + \epsilon}\Bigr)} + (1-\lambda) \Exp[\Big]{\psi\Bigl(\frac{Y}{b + \epsilon}\Bigr)}
+        \overset{\text{conv.}}&\le \lambda \E[\Big]{\psi\Bigl(\frac{X}{a + \epsilon}\Bigr)} + (1-\lambda) \E[\Big]{\psi\Bigl(\frac{Y}{b + \epsilon}\Bigr)}
         \\
         \overset{\ref{eq: orlicz epsilon}}&\le \lambda + (1-\lambda) = 1.
     \end{aligned}
@@ -1387,7 +1389,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 
 \subsection*{Exercises}
 
-\begin{exercise}[Proof of Hölder's inequality]
+\begin{exercise}[Proof of Hölder's inequality \Coffeecup]
     \label{ex: hölder's inequality}
     Let \(\frac1p + \frac1q = 1\) with \(p,q > 1\).
     \begin{enumerate}[label=(\alph*)]
@@ -1424,29 +1426,29 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
         For \(p,q >1\) with \(\frac1p + \frac1q = 1\) we have
         for \(X \in \cL^p(\real)\) and \(Y\in \cL^q(\real)\) 
         \[
-            \Exp{\abs{XY}} \le \Exp{\abs{X}^p}^{\frac1p}\Exp{\abs{Y}^q}^{\frac1q} = \norm{X}_{L^p} \norm{Y}_{L^q}.
+            \E{\abs{XY}} \le \E{\abs{X}^p}^{\frac1p}\E{\abs{Y}^q}^{\frac1q} = \norm{X}_{L^p} \norm{Y}_{L^q}.
         \]
 
         \textbf{Hint:} Apply Young's inequality to \(a =
-        \frac{\norm{X}}{\norm{X}_{L^p}}\) and \(b = \frac{\norm{Y}}{\norm{Y}_{L^q}}\).
+        \frac{\abs{X}}{\norm{X}_{L^p}}\) and \(b = \frac{\abs{Y}}{\norm{Y}_{L^q}}\).
         \begin{solution}
             Applying Young's inequality we have
             \[
-                \frac{\norm{X}}{\norm{X}_{L^p}} \cdot \frac{\norm{Y}}{\norm{Y}_{L^q}}
-                \le \frac1p \Bigl(\frac{\norm{X}}{\norm{X}_{L^p}}\Bigr)^p
-                + \frac1q \Bigl(\frac{\norm{Y}}{\norm{Y}_{L^q}}\Bigr)^q.
+                \frac{\abs{X}}{\norm{X}_{L^p}} \cdot \frac{\abs{Y}}{\norm{Y}_{L^q}}
+                \le \frac1p \Bigl(\frac{\abs{X}}{\norm{X}_{L^p}}\Bigr)^p
+                + \frac1q \Bigl(\frac{\abs{Y}}{\norm{Y}_{L^q}}\Bigr)^q.
             \]
             Taking expectation on both sides we get
             \[
-                \frac{\Exp[\big]{\norm{XY}}}{\norm{X}_{L^p} \norm{Y}_{L^q}}
+                \frac{\E[\big]{\abs{XY}}}{\norm{X}_{L^p} \norm{Y}_{L^q}}
                 \le 
-                    \frac1p \Exp[\Big]{\Bigl(\frac{\norm{X}}{\norm{X}_{L^p}}\Bigr)^p}
-                    + \frac1q \Exp[\Big]{\Bigl(\frac{\norm{Y}}{\norm{Y}_{L^q}}\Bigr)^q}
+                    \frac1p \E[\Big]{\Bigl(\frac{\abs{X}}{\norm{X}_{L^p}}\Bigr)^p}
+                    + \frac1q \E[\Big]{\Bigl(\frac{\abs{Y}}{\norm{Y}_{L^q}}\Bigr)^q}
                 = 
                     \frac1p + \frac1q
                 = 1,
             \]
-            where we use that \(\norm{X}_{L^p}^p = \Exp{\norm{X}^p}\) is
+            where we use that \(\norm{X}_{L^p}^p = \E{\abs{X}^p}\) is
             deterministic to move it outside of the expectation. Multiplying
             both sides by \(\norm{X}_{L^p} \norm{Y}_{L^q}\)
             implies the claim.
@@ -1454,11 +1456,12 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
     \end{enumerate}
 \end{exercise}
 
-\begin{exercise}[\(L^2\)-Hilbertspace]
+\begin{exercise}[\(L^2\)-Hilbertspace \Coffeecup]
+    \label{ex: L2 hilbert space}
     Let \(X,Y\) be \(\cL^2\) random variables in a Hilbert space \((\hilbert, \scp{\cdot, \cdot})\).
     Show that 
     \[
-        \langle [X], [Y] \rangle_{L^2} \coloneq \langle X, Y\rangle_{L^2} \coloneq \Exp{\scp{X,Y}}
+        \langle [X], [Y] \rangle_{L^2} \coloneq \langle X, Y\rangle_{L^2} \coloneq \E{\scp{X,Y}}
     \]
     defines an inner product on \(L^2\) which induces the norm \(\norm{\cdot}_{L^2}\).
     \begin{solution}
@@ -1487,39 +1490,103 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
     \end{solution}
 \end{exercise}
 
-\begin{exercise}[Expectation -- Projection in \(L^2\)]
+\begin{exercise}[Expectation -- Projection in \(L^2\) \Coffeecup\Coffeecup]
     \label{ex: projection in L2}
+    Recall that by Exercise \ref{ex: L2 hilbert space}, \(L^2\) is a Hilbertspace.
     Identify deterministic random variables with real numbers  such that \(\real
     \subseteq \cL^2(\real)\). Then identify \(\real\) with \(\Set{[x]:
     x\in\real} \subseteq L^2\) such that \(\real \subseteq L^2(\real)\).
     \begin{enumerate}[label=(\alph*), noitemsep]
         \item Show that \(\real\) and \(\real^\perp \coloneq \Set{[X] \in L^2 :
-        \Exp{X}=0}\) are orthogonal subspaces of \(L^2\) with \(L^2 = \real
+        \E{X}=0}\) are orthogonal subspaces of \(L^2\) with \(L^2 = \real
         \oplus \real^\perp\).
+        \begin{solution}
+            Let \(r\in \real\) and \([X]\in \real^\perp\), then
+            \[
+                \scp{[r], [X]}_{L^2} = \E{rX} = r\E{X} = 0.
+            \]
+            Consequently \(\real \perp \real^\perp\).  Moreover for any \([X]
+            \in L^2\), we have
+            \[
+                X = \underbrace{\E{X}}_{\in \real} + \underbrace{(X-\E{X})}_{\in \real^\perp}.
+            \]
+            Thus \(L^2 = \real \oplus \real^\perp\).
+        \end{solution}
+
         \item Show that the orthogonal projection onto \(\real\) is given by
         \[
-            \E \colon \begin{cases}
+            \ESymb \colon \begin{cases}
                 L^2 \to \real,
                 \\
-                [X] \mapsto \Exp{X}.
+                [X] \mapsto \E{X}.
             \end{cases}
         \]
+        \begin{solution}
+            Since \(\E{\E{X}} = \E{X}\) we have \(\ESymb^2 = \ESymb\)
+            and therefore the expectation is a projection as it is also a
+            linear operator. It is an orthogonal projection since
+            \[
+                \scp{\E{X}, [Y]}_{L^2} = \E{\E{X}Y} = \E{X}\E{Y} = \scp{[X], \E{Y}}_{L^2}.
+                \qedhere
+            \]
+        \end{solution}
 
-        \item Let \(\pi : L^2 \to \real^\perp\) be the orthogonal projection
-        onto \(\real^\perp\). Show that
+        \item Let \(\pi \colon L^2 \to \real^\perp\) be the orthogonal projection
+        onto \(\real^\perp\), that is \(\pi = 1 - \ESymb\). Show that
         \[
             \cov{X}{Y}
-            = \scp{\pi(X), Y}_{L^2}
-            = \scp{X, \pi(Y)}_{L^2}
-            = \scp{\pi(X), \pi(Y)}_{L^2}
+            = \scp{\pi[X], Y}_{L^2}
+            = \scp{X, \pi[Y]}_{L^2}
+            = \scp{\pi[X], \pi[Y]}_{L^2}
         \]
         In particular \(\covSymb\) coincides with the inner product on \(\real^\perp\)!
+        \begin{solution}
+            By definition of the covariance
+            \[
+                \cov{X}{Y}
+                = \E{(X-\E{X})(Y-\E{Y})}
+                = \E{\pi[X]\pi[Y]} = \scp{\pi[X], \pi[Y]}_{L^2}.
+            \]
+            The other equalities essentially follow from the fact that this is an
+            orthogonal projection:
+            \[
+                \scp{\pi[X], Y}_{L^2}
+                = \scp{\pi[X], \E{Y} + \pi[Y]}_{L^2}
+                = \underbrace{\scp{\pi[X], \E{Y}}_{L^2}}_{=0} + \scp{\pi[X], \pi[Y]}_{L^2}
+            \]
+            This can also be seen by direct calculation:
+            \[
+                \scp{\pi[X], \E{Y}}_{L^2} = \E{(X-\E{X})\E{Y}} = \E{X -\E{X}}\E{Y} = 0.
+                \qedhere
+            \]
+        \end{solution}
 
         \item Show that the expectation is the closest real number to \(X\in
         \cL^2\) in the \(L^2\) distance, that is
         \[
-            \Exp{X} = \argmin_{c\in \real} \Exp{(X - c)^2} = \argmin_{c\in \real} \norm{X - c}_{L^2}.
+            \E{X} = \argmin_{c\in \real} \E{(X - c)^2} = \argmin_{c\in \real} \norm{X - c}_{L^2}.
         \]
+        \begin{solution}
+            This is a property of the orthogonal projection. Specifically,
+            \[
+                \norm{X - c}_{L^2}^2
+                = \norm{\pi[X] + \E{X} - c}_{L^2}^2
+                = \norm{\pi[X]}_{L^2}^2 + \norm{c-\E{X}}_{L^2}^2,
+            \]
+            as the mixed terms disappear, indeed:
+            \[
+                \scp{\pi[X], c-\E{X}}_{L^2} = \E{X - \E{X}}(c-\E{X}) = 0.
+            \]
+            Since \(\norm{\pi[X]}_{L^2}^2\) does not depend on \(c\) and the
+            square is a monotone function, we consequently have
+            \[
+                \argmin_{c\in \real} \norm{X - c}_{L^2}
+                = \argmin_{c\in \real} \norm{c-\E{X}}_{L^2}
+                = \argmin_{c\in \real} \abs{c-\E{X}}
+                = \E{X}.
+                \qedhere
+            \]
+        \end{solution}
     \end{enumerate}
     \begin{remark}[Generalization to Hilbert spaces]
         The same arguments work if we replace \(\real\) by any Hilbert space
@@ -1527,7 +1594,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
     \end{remark}
 \end{exercise}
 
-\begin{exercise}[Median -- Projection in \(L^1\)]
+\begin{exercise}[Median -- Projection in \(L^1\) \Coffeecup\Coffeecup]
 	We define the median of \(X\) to be the set
     \[
         \median[X] \coloneq \Set[\Big]{m \in \real : \Prob{X \ge m} \wedge \Prob{X\le m} \ge \tfrac12}
@@ -1613,7 +1680,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 
 		\item Assuming \(X\in \cL^1\) prove that the median minimizes the \(L^1\) error, i.e.
         \[
-            \median[X] =\arg\min_{m} \E[|X-m|].
+            \median[X] =\arg\min_{m} \E{\abs{X-m}}.
         \]
 		% If you wish to prove the general
 		% case, note that \(f(m)=2F_X(m)-1\) is right-continuous and monotonously
@@ -1621,43 +1688,43 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 		% of discontinuities.
 
  		\textbf{Hint:}
-            Use \(\E[X]=\int_0^\infty \Prob{X\ge t}dt = \int_0^\infty \Prob{X>t}dt\)
+            Use \(\E{X}=\int_0^\infty \Prob{X\ge t}dt = \int_0^\infty \Prob{X>t}dt\)
             for \(X\ge 0\) to prove
             \[
-                \Exp{\abs{X-m_2}} - \Exp{\abs{X-m_1}}
+                \E{\abs{X-m_2}} - \E{\abs{X-m_1}}
                 = \int_{m_1}^{m_2} \underbrace{\Prob{X\le x} - \Prob{X>x}}_{=2F(x)-1}dx
             \]
 		\begin{solution}
 			We have
 			\begin{align*}
-				\E[(X-m)_+]
-				&= \int_0^\infty \underbrace{\Pr((X-m)_+ > t)}_{
+				\E{\abs{X-m}_+}
+				&= \int_0^\infty \underbrace{\Prob{\abs{X-m}_+ > t}}_{
 					\begin{aligned}
-						&=\Pr(X-m>t)\\
-						&=\Pr(X> t-m)
+						&=\Prob{X-m>t}\\
+						&=\Prob{X> t-m}
 					\end{aligned}
 				} dt\\
-				&= \int_m^\infty \Pr(X>s)ds
+				&= \int_m^\infty \Prob{X>s}ds
 			\end{align*}
 			And similarly
 			\begin{align*}
-				\E[(X-m)_-]
-				&= \int_0^\infty \underbrace{\Pr((X-m)_- \ge t)}_{
+				\E{(X-m)_-}
+				&= \int_0^\infty \underbrace{\Prob{(X-m)_- \ge t}}_{
 					\begin{aligned}
-						&=\Pr(m-X\ge t) \quad \mathrlap{(\forall t>0)}\\
-						&=\Pr(m-t\ge x)
+						&=\Prob{m-X\ge t} \quad \mathrlap{(\forall t>0)}\\
+						&=\Prob{m-t\ge X}
 					\end{aligned}
 				} dt\\
-				&= \int_{-\infty}^m \Pr(s\ge X)ds
+				&= \int_{-\infty}^m \Prob{X\le s}ds
 			\end{align*}
 			Put together we have
             \[
-				\E[|X-m|]
-				= \int_{-\infty}^m \Pr(X\le s)ds + \int_m^\infty \Pr(X>s)ds.
+				\E{\abs{X-m}}
+				= \int_{-\infty}^m \Prob{X\le s}ds + \int_m^\infty \Prob{X>s}ds.
             \]
             Consequently, we have for \(m_1 < m_2\)
             \[\begin{aligned}
-                \Exp{\abs{X-m_2}} - \Exp{\abs{X-m_1}}
+                \E{\abs{X-m_2}} - \E{\abs{X-m_1}}
                 &= \int_{m_1}^{m_2} \Prob{X\le s}ds - \int_{m_1}^{m_2} \Prob{X>s}ds
                 \\
                 &= \int_{m_1}^{m_2} \underbrace{\Prob{X\le s} - (1-\Prob{X\le s})}_{=2F(x) -1}ds
@@ -1665,13 +1732,13 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
             \]
             Using \ref{it: characterization of distribution function} we deduce
             \begin{alignat*}{3}
-                \Exp{\abs{X-m}} - \Exp{\abs{x-\overline{M}}} &> 0
+                \E{\abs{X-m}} - \E{\abs{x-\overline{M}}} &> 0
                 & m &> \overline{M} 
                 \\
-                \Exp{\abs{X-m_2}} - \Exp{\abs{x-m_1}} &= 0
+                \E{\abs{X-m_2}} - \E{\abs{x-m_1}} &= 0
                 \qquad & m_1, m_2 &\in (\underline{M}, \overline{M})
                 \\
-                \Exp{\abs{x-\underline{M}}} - \Exp{\abs{X-m}} &< 0
+                \E{\abs{x-\underline{M}}} - \E{\abs{X-m}} &< 0
                 & m &< \underline{M}
             \end{alignat*}
             Reordering implies the claim. \qedhere
@@ -2322,7 +2389,7 @@ and \ref{thm: joint convergence}.
     Specifically, for \(f(X_n) \overset{d}\to f(X_n)\) we need
     \begin{equation}
         \label{eq: cont. mapping d}    
-        \Exp{g(f(X_n))} \to \Exp{g(f(X))}
+        \E{g(f(X_n))} \to \E{g(f(X))}
     \end{equation}
     for all bounded and continuous functions \(g\) \ref{it: b.cont}. To prove
     \eqref{eq: cont. mapping d} we use \ref{it: b.a.s. cont} on \(X_n
@@ -2335,9 +2402,9 @@ and \ref{thm: joint convergence}.
     Let \(K\) be the Lipschitz constant of \(f\), then
     \[\begin{aligned}
         \norm{f(X_n) - f(X)}_{L^p}^p
-        &= \Exp{\norm{f(X_n) - f(X)}^p}
+        &= \E{\norm{f(X_n) - f(X)}^p}
         \\
-        \overset{\text{Lip.}}&\le \Exp{(K \norm{X_n - X})^p}
+        \overset{\text{Lip.}}&\le \E{(K \norm{X_n - X})^p}
         = K^p \norm{X_n - X}_{L^p}^p \to 0.
     \end{aligned}
     \]
@@ -2385,7 +2452,7 @@ and \ref{thm: joint convergence}.
     \end{aligned}\]
     where the last equality uses \(\norm{(x, 0)} = \norm{x}\) in \(\real^{\dims\times \dims'}\) to get
     \[
-        \|(X,0)\|_{L^p}^p = \Exp{\|(X,0)\|^p} \overset{\text{in }\real^{\dims\times \dims'}}= \Exp{\|X\|^p} = \|X\|_{L^p}^p.
+        \|(X,0)\|_{L^p}^p = \E{\|(X,0)\|^p} \overset{\text{in }\real^{\dims\times \dims'}}= \E{\|X\|^p} = \|X\|_{L^p}^p.
     \]
     For \ref{it: joint conv in prob} we use the stochastic triangle inequality (Exercise \ref{ex: stochastic triangle})
     and again \(\norm{(x, 0)} = \norm{x}\) in \(\real^{\dims\times \dims'}\)
@@ -2407,7 +2474,7 @@ and \ref{thm: joint convergence}.
     and continuous function. Then \(g(x) \coloneq f(x,c)\) is a bounded
     and continuous function. Since \(X_n \overset{d}\to X\) we therefore have
     \[
-        \Exp{f(X_n, c)} = \Exp{g(X_n)} \to \Exp{g(X)} = \Exp{f(X,c)}.
+        \E{f(X_n, c)} = \E{g(X_n)} \to \E{g(X)} = \E{f(X,c)}.
     \]
     This implies \((X_n, c) \overset{d}\to (X,c)\). With 
     \(\|(X_n, Y_n) - (X_n, c)\| = \|Y_n - c\| \overset{p}\to 0\)
@@ -2428,8 +2495,8 @@ and \ref{thm: joint convergence}.
     We prove \ref{it: b.lip} from the Portemanteau theorem.
     Let \(f\colon \domain \to \real\) be bounded and Lipschitz continuous, then
     \[
-        \abs[\big]{\Exp{f(Y_n)} - \Exp{f(X)}}
-        \overset{\Delta}\le \abs[\big]{\Exp{f(Y_n)} - \Exp{f(X_n)}} + \abs[\big]{\Exp{f(X_n)} - \Exp{f(X)}}
+        \abs[\big]{\E{f(Y_n)} - \E{f(X)}}
+        \overset{\Delta}\le \abs[\big]{\E{f(Y_n)} - \E{f(X_n)}} + \abs[\big]{\E{f(X_n)} - \E{f(X)}}
     \]
     converges to zero as the first term converges to zero by Lemma \ref{lem:
     moving target p to d} and the second term converges to zero by \(X_n
@@ -2460,8 +2527,8 @@ and \ref{thm: joint convergence}.
         We have that
         \[
             \norm{f(X_n)- f(X)}_{L^q}^q
-            = \Exp{\norm{f(X_n) - f(X)}^q}
-            \le \Exp{L^q \norm{X_n - X}^{\alpha q}}
+            = \E{\norm{f(X_n) - f(X)}^q}
+            \le \E{L^q \norm{X_n - X}^{\alpha q}}
             = L^q \norm{f(X_n) - f(X)}_{L^p}^p \to 0.
         \]
     \end{solution}
