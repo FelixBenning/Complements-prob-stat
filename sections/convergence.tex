@@ -2345,18 +2345,58 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
     \end{enumerate}
 \end{exercise}
 
-\begin{exercise}[Further characterize almost sure convergence]
-    Prove
-    \[
-    \begin{aligned}
-        \Prob{X_n \to X} =1
-        &\iff \forall \epsilon >0 :  \Prob[\Big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon} = 0.
-        \\
-        &\iff \forall \epsilon >0 :  \Prob[\Big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \epsilon}} = 0.
-        \\
-        &\iff \forall \epsilon >0 : \lim_{N\to \infty} \Prob[\Big]{\sup_{n \ge N} |X_n - X| \ge \epsilon} = 0.
-    \end{aligned}
-    \]
+\begin{exercise}[Further characterize almost sure convergence \Coffeecup]
+    Prove the following are equivalent
+    \begin{enumerate}[label=(\roman*), noitemsep]
+        \item\label{it: as convergence} \(X_n \overset{\as}\to X\), that is \(\Prob{X_n \to X} =1\)
+        \item\label{it: limsup set convergence} \(\Prob[\big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \epsilon}} = 0\) for all \(\epsilon > 0\)
+        \item\label{it: limsup convergence} \(\Prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon} = 0\) for all \(\epsilon >0\)
+        \item\label{it: sup convergence} \(\lim_{N\to \infty} \Prob[\big]{\sup_{n \ge N} |X_n - X| \ge \epsilon} = 0\) for all \(\epsilon > 0\).
+    \end{enumerate}
+    \begin{solution}
+        First we prove \ref{it: as convergence} \(\Rightarrow\) \ref{it: limsup set convergence}.
+        By definition of convergence we have
+        \[\begin{aligned}
+            0 = \Prob{X_n \not\to X}
+            &= \Prob[\Big]{\bigcup_{\epsilon >0} \bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| \ge \epsilon}}
+            \\
+            \overset{\text{fix } \epsilon}&\ge \Prob[\Big]{\bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| \ge \epsilon}}
+            \\
+            \overset{\text{def.}}&= \Prob[\big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \epsilon}}.
+        \end{aligned}
+        \]
+        For the converse direction \ref{it: limsup set convergence} \(\Rightarrow\) \ref{it: as convergence}, we use
+        \[\begin{aligned}
+            \Prob{X_n \not\to X}
+            &= \Prob[\Big]{\bigcup_{m\in \nat} \bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| < \tfrac1m}}
+            \\
+            &= \lim_{m\to \infty} \Prob[\Big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \tfrac1m} = 0} = 0.
+        \end{aligned}
+        \]
+        The last equation follows from the assumption as \(\epsilon=\frac1m\) are just special cases.
+        Next we show \ref{it: limsup set convergence} \(\Leftrightarrow\) \ref{it: limsup convergence}.
+        Observe that by definition of the limsup of sets
+        \[\begin{aligned}
+            \Prob[\big]{\limsup_{n \to \infty} \set{\abs{X_n - X} \ge \epsilon}}
+            &= \Prob[\big]{\forall N \in \nat,\; \exists n\ge N: \abs{X_n - X} \ge \epsilon}.
+            \\
+            &= \Prob[\Big]{\forall N \in \nat: \sup_{n\ge N} \abs{X_n - X} \ge \epsilon}.
+            \\
+            &= \Prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon}.
+        \end{aligned}
+        \]
+        Consequently the two statements are equivalent. Next we show
+        \ref{it: limsup convergence} \(\Leftrightarrow\) \ref{it: sup
+        convergence}.  For this observe that the sets \(\set{\sup_{n \ge N} |X_n
+        - X| \ge \epsilon}\) are a decreasing sequence in \(N\) and therefore
+        \begin{align*}
+            \Prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon}
+            &= \Prob[\Big]{\bigcap_{N\in \nat} \set{\sup_{n \ge N} |X_n - X| \ge \epsilon}}
+            \\
+            &= \lim_{N\to \infty} \Prob[\big]{\sup_{n \ge N} |X_n - X| \ge \epsilon}.
+            \qedhere
+        \end{align*}
+    \end{solution}
 \end{exercise}
 
 \begin{exercise}[Infinite Monkey Theorem \Coffeecup\Coffeecup]
@@ -2366,14 +2406,74 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
     works of William Shakespeare -- with probability one.  It is also known as
     the ``law of truly large numbers''.
     Prove it!
-    \begin{enumerate}[label={\emph{Level \arabic*:}},leftmargin=4em,noitemsep]
+    \begin{enumerate}[label={\emph{Level \arabic*:}},ref={Level \arabic*},leftmargin=4em,noitemsep]
         \item Assume the hit keys are independent and uniformly distributed.
-        \item Assume the hit keys are iid with a probability distribution that
+        \item\label{it: level iid} Assume the hit keys are iid with a probability distribution that
         assigns each of the (finite) keys a positive probability.
-        \item Assume the hit keys are a stationary Markov chain whose transition
+        \item\label{it: level markov chain} Assume the hit keys are a stationary Markov chain whose transition
         probabilities from key \(x\) to key \(y\) are positive for all pairs
         \(x,y\) from the (finite) alphabet.
     \end{enumerate}
+    \textbf{Hint:} \ref{it: level markov chain} is significantly harder than
+    the previous levels. For it you already need to know Markov chains
+    and modify the proof of the second Borel-Cantelli lemma for your purposes.
+    Perhaps come back to this at some later point.
+    \begin{solution}
+        Let \(\alphabet\) be a finite alphabet of keys and let \(X_n\in
+        \alphabet\) be the letter typed at time \(n\). Let \(y\in \alphabet^m\)
+        be the desired text of length \(m\). We essentially assume \(m=1\)
+        without loss of generality with the definition of
+        \[
+            Y_n = (X_{nm}, X_{nm+1}, \ldots, X_{m(n+1)-1}) \in \alphabet^m,
+        \]
+        which is still a sequence of iid random variables in \ref{it: level iid}
+        (or still a Markov chain in \ref{it: level markov chain}).  Let us consider \ref{it: level iid}
+        first. Since
+        \[\begin{aligned}
+            \delta \coloneq \Prob{Y_n = y}
+            &= \Prob{X_{nm} = y_1, X_{nm+1} = y_2, \ldots, X_{m(n+1)-1} = y_m}
+            \\
+            &= \prod_{i=1}^m \Prob{X_{nm+i-1} = y_i} > 0,
+        \end{aligned}
+        \]
+        Due to \(\sum_{n=1}^\infty \Prob{Y_n = y} = \sum_{n=1}^\infty \delta = \infty\)
+        we may apply the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2} to get
+        \[
+            \Prob[\big]{Y_n = y \text{ for infinitely many } n}
+            = \Prob[\big]{\limsup_{n\to\infty} \set{Y_n = y}}
+            \overset{\text{\eqref{eq: borel cantelli 2}}}= 1.
+        \]
+        Observe that we have proven more than the desired claim: The monkey will
+        not only type the desired text \(y\) at least once but infinitely many
+        times with probability one!
+
+        For the proof of \ref{it: level markov chain} we need to avoid independence.
+        Since any transition probability is positive, we have
+        \[
+            \delta \coloneq \Prob{Y_n = y \mid Y_{n-1} \neq y}
+            = \sum_{\substack{x \in \alphabet^m \\ x \neq y}}\Prob{Y_n = y \mid Y_{n-1} = x}
+            > 0.
+        \]
+        We will now modify the proof of the second Borel-Cantelli lemma 
+        in the place where independece was used. Specifically, we have
+        \begin{equation}
+            \label{eq: modified borel cantelli 2}
+            \Prob[\big]{(\limsup_{n\to\infty} \set{Y_n = y})^\complement}
+            = \lim_{N\to \infty} \lim_{k\to \infty} \Prob[\Big]{\bigcap_{n=N}^k \set{Y_n \neq y}}.
+        \end{equation}
+        with
+        \[\begin{aligned}
+            \Prob[\Big]{\bigcap_{n=N}^k \set{Y_n \neq y}}
+            &= \prod_{n=N}^k \Prob{Y_n \neq y \mid Y_{n-1} \neq y,\ldots, Y_{N} \neq y}
+            \\
+            \overset{\text{Markov}}&= \Prob{Y_n\neq y}\prod_{n=N+1}^k \Prob{Y_n \neq y \mid Y_{n-1} \neq y}
+            \\
+            &\le (1-\delta)^{k-N-1}.
+        \end{aligned}
+        \]
+        Thereby \eqref{eq: modified borel cantelli 2} is zero. Consequently,
+        the probability that \(Y_n = y\) happens infinitely often is one.
+    \end{solution}
 \end{exercise}
 
 % \begin{exercise}[Drunk Men and Drunk Birds]
