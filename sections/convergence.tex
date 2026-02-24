@@ -296,16 +296,16 @@ continuous mapping}).
         \item[\ref{it: as to p}] To prove that almost sure convergence implies convergence in 
         probability observe that the set of point-wise convergence is given by
         \begin{align*}
-            \Set{X_n \to X}
-            &= \Set[\Big]{\omega \in \Omega : \lim_{n \to \infty} X_n(\omega) = X(\omega)}
+            \set{X_n \to X}
+            &= \set[\Big]{\omega \in \Omega : \lim_{n \to \infty} X_n(\omega) = X(\omega)}
             \\
-            \overset{\text{def.}}&= \Set[\Big]{
+            \overset{\text{def.}}&= \set[\Big]{
                 \omega \in \Omega
                 : \forall \epsilon > 0, \exists N\in \nat, \forall n \ge N
                 : \metric(X_n(\omega), X(\omega)) < \epsilon}.
             \\
             &= \bigcap_{\epsilon > 0} \bigcup_{N \in \nat} \bigcap_{n \ge N}
-            \Set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) < \epsilon}.
+            \set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) < \epsilon}.
         \end{align*}
         By de Morgan's laws for set complements and almost sure
         convergence we therefore have
@@ -313,13 +313,13 @@ continuous mapping}).
             0 &= \Prob[\big]{X_n \not\to X}
             \\
             &= \Prob[\bigg]{\bigcup_{\epsilon > 0} \bigcap_{N \in \nat} \bigcup_{n \ge N}
-            \Set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
+            \set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
             \\
             \overset{\text{fix } \epsilon}&\ge \Prob[\bigg]{\bigcap_{N \in \nat} \bigcup_{n \ge N}
-            \Set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
+            \set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
             \\
             &= \lim_{N \to \infty} \Prob[\Big]{\bigcup_{n \ge N}
-            \Set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
+            \set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
             \\
             \overset{\text{fix } n=N}&\ge \lim_{N\to \infty} \Prob[\big]{\metric(X_N, X) \ge \epsilon},
         \end{align*}
@@ -411,7 +411,7 @@ implications above.
     Lipschitz continuity is straightforward to verify (Exercise \ref{ex: lipschitz bump functions}).
     Using an \(\epsilon\)-increase in size of the set \(A\)
     \[
-        A_\epsilon \coloneq \Set{x \in \domain : \metric(x,A) \le \epsilon}
+        A_\epsilon \coloneq \set{x \in \domain : \metric(x,A) \le \epsilon}
         = A + \ball{0}{\epsilon},
     \]
     we have  \(\Indicator{A}(x) \le \Indicator{A}^\epsilon(x) \le \Indicator{A_\epsilon}(x)\) for all \(x\).
@@ -456,8 +456,8 @@ implications above.
     the third condition we observe that the set of points that do not
     satisfy this condition is at most countable
     \[
-        \Set[\big]{y \in \real : \Prob{f(X) = y} > 0}
-        = \bigcup_{k=1}^\infty \underbrace{\Set[\Big]{y \in \real : \Prob{f(X) = y} \ge \tfrac1k}}_{\text{at most \(k\)-many}}.
+        \set[\big]{y \in \real : \Prob{f(X) = y} > 0}
+        = \bigcup_{k=1}^\infty \underbrace{\set[\Big]{y \in \real : \Prob{f(X) = y} \ge \tfrac1k}}_{\text{at most \(k\)-many}}.
     \]
     Since there is thus an uncountable number of choices left we may assume that
     the \(y_i\) satisfy all three conditions.
@@ -712,10 +712,10 @@ implications above.
 
         \item \(X_n\) does not converge almost surely to \(0\).
         \begin{solution}
-            Choose any \(\omega \in \Set{U\in [0,1)}\). We will show that there exists an
+            Choose any \(\omega \in \set{U\in [0,1)}\). We will show that there exists an
             \(\epsilon > 0\), specifically any \(\epsilon < 1\) such that
             \(|X_n(\omega) - 0| \ge \epsilon\) for infinitely many \(n\).
-            Since we show this for any \(\omega\in \Set{U\in [0,1)}\), this would imply
+            Since we show this for any \(\omega\in \set{U\in [0,1)}\), this would imply
             \[
                 \Prob{X_n \not\to 0} \ge \Prob{U \in [0,1)} = 1.
             \]
@@ -775,18 +775,18 @@ implications above.
     \begin{solution}
         The claim follows directly from
         \[
-            \Set{\norm{X - Z} \ge \epsilon}
-            \subseteq \Set{\norm{X - Y} \ge \tfrac\epsilon2} \cup \Set{\norm{Y - Z} \ge \tfrac\epsilon2},
+            \set{\norm{X - Z} \ge \epsilon}
+            \subseteq \set{\norm{X - Y} \ge \tfrac\epsilon2} \cup \set{\norm{Y - Z} \ge \tfrac\epsilon2},
         \]
         which is proven using that \(A \subseteq B\) is equivalent
         to \(B^\complement \subseteq A^\complement\) and
         \begin{align*}
-            \Bigl(\Set{\norm{X - Y} \ge \tfrac\epsilon2} \cup \Set{\norm{Y - Z} \ge \tfrac\epsilon2}\Bigr)^\complement
-            &=\Set{\norm{X - Y} < \tfrac\epsilon2} \cap \Set{\norm{Y - Z} < \tfrac\epsilon2}
+            \Bigl(\set{\norm{X - Y} \ge \tfrac\epsilon2} \cup \set{\norm{Y - Z} \ge \tfrac\epsilon2}\Bigr)^\complement
+            &=\set{\norm{X - Y} < \tfrac\epsilon2} \cap \set{\norm{Y - Z} < \tfrac\epsilon2}
             \\
-            &\subseteq \Set{\norm{X - Z} < \epsilon}
+            &\subseteq \set{\norm{X - Z} < \epsilon}
             \\
-            &= \Set{\norm{X - Z} \ge \epsilon}^\complement.
+            &= \set{\norm{X - Z} \ge \epsilon}^\complement.
         \end{align*}
         The standard triangle inequality is used for the inclusion step.
     \end{solution}
@@ -872,7 +872,7 @@ implications above.
                 F(x) < F(y) \quad \text{for all } x < y.
             \]
             So clearly for all \(x< F^{-1}(p)\) we have \(F(x) < p\) and
-            therefore they are not contained in the set \(\Set{x\in \real : F(x)
+            therefore they are not contained in the set \(\set{x\in \real : F(x)
             \ge p}\). This implies \(F^{-1}(p)\) is the smallest element in this set
             and consequently \(F^{\leftarrow}(p) = F^{-1}(p)\).
         \end{solution}
@@ -882,7 +882,7 @@ implications above.
             Let \(p < q\). Then for any \(x \in \real\) such that \(F(x) \ge q\)
             we also have \(F(x) \ge p\). Consequently,
             \[
-                \Set{x \in \real : F(x) \ge q} \subseteq \Set{x \in \real : F(x) \ge p},
+                \set{x \in \real : F(x) \ge q} \subseteq \set{x \in \real : F(x) \ge p},
             \]
             This implies the infimum of the former is greater than the infimum of the latter
             and thus
@@ -894,16 +894,16 @@ implications above.
 
         \item\label{it: F-(F(x)) le x} \(F^{\leftarrow}(F(x)) \le x\) for all \(x \in \real\),
         \begin{solution}
-            Since \(x\in \Set{y\in \real : F(y) \ge F(x)}\), we have
+            Since \(x\in \set{y\in \real : F(y) \ge F(x)}\), we have
             \[
-                x \ge \inf\Set{y\in \real : F(y) \ge F(x)} = F^{\leftarrow}(F(x)).
+                x \ge \inf\set{y\in \real : F(y) \ge F(x)} = F^{\leftarrow}(F(x)).
                 \qedhere
             \]
         \end{solution}
 
         \item\label{it: F(F-(p)) > p} \(F(F^{\leftarrow}(p)) \ge p\) for all \(p \in (0,1)\),
         \begin{solution}
-            Let \(x_n \in \Set{x\in \real : F(x) \ge p}\) be a sequence with \(x_n \downarrow F^{\leftarrow}(p)\). Then
+            Let \(x_n \in \set{x\in \real : F(x) \ge p}\) be a sequence with \(x_n \downarrow F^{\leftarrow}(p)\). Then
             by right-continuity of the distribution function \(F\)
             \[
                 p \le \lim_{n\to \infty} F(x_n)
@@ -1058,7 +1058,7 @@ implications above.
             \(\frac1n\). Thus for any \(n\in \nat\) the number of jumps of greater
             size is finite. This implies that the discontinuity set
             \[
-                D_F = \Set{x: F_-(x) \neq F_+(x)} = \bigcup_{n\in \nat} \Set[\big]{x: F_+(x) - F_-(x) > \tfrac1n}
+                D_F = \set{x: F_-(x) \neq F_+(x)} = \bigcup_{n\in \nat} \set[\big]{x: F_+(x) - F_-(x) > \tfrac1n}
             \]
             is countable.
         \end{solution}
@@ -1079,11 +1079,11 @@ implications above.
     \(\Prob{X = x} = 0\).
     \textbf{Hint:} Use Exercise \ref{ex: monotone functions have countably many discontinuities}.
     \begin{solution}
-        Since the sets \(\Set{X \le x - \frac1n}\) are increasing
+        Since the sets \(\set{X \le x - \frac1n}\) are increasing
         in size, we have by continuity of the probability measure
         \[
             \Prob{X < x}
-            = \Prob[\Big]{\bigcup_{n\in \nat} \Set{X \le x - \tfrac1n}}
+            = \Prob[\Big]{\bigcup_{n\in \nat} \set{X \le x - \tfrac1n}}
             = \lim_{n\to\infty} \Prob{X \le x - \tfrac1n}
             = F_-(x).
         \]
@@ -1132,7 +1132,7 @@ implications above.
         \[
             \Prob{U \in D_F} = \sum_{x\in D_F}\Prob{U = x} = 0.
         \]
-        And for all \(\omega \in \Set{U \notin D_F}\) we have
+        And for all \(\omega \in \set{U \notin D_F}\) we have
         \[
             Y_n(\omega) = F_n(U(\omega)) \to F(U(\omega))=Y(\omega)
         \]
@@ -1162,7 +1162,7 @@ implications above.
         and thereby the claim.
         \end{solution}
 
-        \item \(x\mapsto x_+ = \max\Set{x,0}\) is \(1\)-Lipschitz continuous.
+        \item \(x\mapsto x_+ = \max\set{x,0}\) is \(1\)-Lipschitz continuous.
         \begin{solution}
             Choose \(x,y\in \real\), without loss of generality
             assume \(x \ge y\). If \(y\le x\le 0\), then \(x_+ = y_+ = 0\) and thus
@@ -1296,7 +1296,7 @@ implications above.
 \begin{definition}
     We define the \(\cL^p\) space to be
     \[
-        \cL^p \coloneq \cL^p(\domain) \coloneq \Set{X\colon \Omega \to \domain : \E{\norm{X}^p} < \infty}
+        \cL^p \coloneq \cL^p(\domain) \coloneq \set{X\colon \Omega \to \domain : \E{\norm{X}^p} < \infty}
     \]
     and define the seminorm for \(X\in \cL^p\) as
     \[
@@ -1353,7 +1353,7 @@ following theorem.
     \[
         \E{\abs{X-U}^p}
         = \int_0^1 \abs{x^p \Indicator{[0,1)}(x) - x^p} dx
-        = \int_0^1 \Indicator{\Set{1}} dx = 0,
+        = \int_0^1 \Indicator{\set{1}} dx = 0,
     \]
     and consequently \(\norm{X-U}_{L^p} = 0\).
 \end{example}
@@ -1371,7 +1371,7 @@ following theorem.
 \begin{definition}[\(L^p\) space]
     We define the normed space \((L^p,\norm{\cdot}_{L^p})\) as
     \[
-        L^p \coloneq L^p(\domain) \coloneq \Set{[X]: X \in \cL^p(\domain)},
+        L^p \coloneq L^p(\domain) \coloneq \set{[X]: X \in \cL^p(\domain)},
         \quad\text{with}\quad
         \norm{[X]}_{L^p} \coloneq \norm{X}_{L^p}
     \]
@@ -1393,7 +1393,7 @@ It turns out that proving the seminorm properties (Theorem \ref{thm: seminorm
 properties}), is easier in a more general setting. Specifically, since
 deterministic values may be moved outside of the expectation, we have
 \[
-    \norm{X}_{L^p} = \inf\Set[\Big]{\lambda > 0 : \E[\Big]{\bigl(\tfrac{\norm{X}}{\lambda}\bigr)^p} \le 1}.
+    \norm{X}_{L^p} = \inf\set[\Big]{\lambda > 0 : \E[\Big]{\bigl(\tfrac{\norm{X}}{\lambda}\bigr)^p} \le 1}.
 \]
 With \(\psi(x) = x^p\) the \(L^p\) norm is thus a special case of
 an ``Orlicz norm''.
@@ -1403,9 +1403,9 @@ an ``Orlicz norm''.
     with \(\psi(0) = 0\) and \(\lim_{x\to \infty} \psi(x) = \infty\). Then we define
     for \(X\colon \Omega \to \domain\) the \textbf{Orlicz norm}
     \[
-        \norm{X}_{\psi} \coloneq \inf\Set[\Big]{\lambda > 0 : \E[\Big]{\psi\bigl(\tfrac{\norm{X}}{\lambda}\bigr)} \le 1}.
+        \norm{X}_{\psi} \coloneq \inf\set[\Big]{\lambda > 0 : \E[\Big]{\psi\bigl(\tfrac{\norm{X}}{\lambda}\bigr)} \le 1}.
     \]
-    The \textbf{Orlicz spaces} are given by \(\cL^\psi \coloneq \Set{X\colon \Omega \to \domain : \norm{X}_{\psi} < \infty}\).
+    The \textbf{Orlicz spaces} are given by \(\cL^\psi \coloneq \set{X\colon \Omega \to \domain : \norm{X}_{\psi} < \infty}\).
 \end{definition}
 
 \begin{theorem}
@@ -1417,9 +1417,9 @@ an ``Orlicz norm''.
     property follows from
     \[\begin{aligned}
         \norm{\alpha X}_{\psi}
-        &= \inf\Set[\Big]{\lambda > 0 : \E[\Big]{\psi\bigl(\tfrac{\abs{\alpha}\norm{X}}{\lambda}\bigr)} \le 1}
+        &= \inf\set[\Big]{\lambda > 0 : \E[\Big]{\psi\bigl(\tfrac{\abs{\alpha}\norm{X}}{\lambda}\bigr)} \le 1}
         \\
-        \overset{\mu=\frac{\lambda}{\abs{\alpha}}}&= \abs{\alpha} \inf\Set[\Big]{\mu > 0 : \E[\Big]{\psi\bigl(\tfrac{\norm{X}}{\mu}\bigr)} \le 1}
+        \overset{\mu=\frac{\lambda}{\abs{\alpha}}}&= \abs{\alpha} \inf\set[\Big]{\mu > 0 : \E[\Big]{\psi\bigl(\tfrac{\norm{X}}{\mu}\bigr)} \le 1}
         &= |\alpha| \norm{X}_{\psi}.
     \end{aligned}
     \]
@@ -1592,10 +1592,10 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
     \label{ex: projection in L2}
     Recall that by Exercise \ref{ex: L2 hilbert space}, \(L^2\) is a Hilbertspace.
     Identify deterministic random variables with real numbers  such that \(\real
-    \subseteq \cL^2(\real)\). Then identify \(\real\) with \(\Set{[x]:
+    \subseteq \cL^2(\real)\). Then identify \(\real\) with \(\set{[x]:
     x\in\real} \subseteq L^2\) such that \(\real \subseteq L^2(\real)\).
     \begin{enumerate}[label=(\alph*), noitemsep]
-        \item Show that \(\real\) and \(\real^\perp \coloneq \Set{[X] \in L^2 :
+        \item Show that \(\real\) and \(\real^\perp \coloneq \set{[X] \in L^2 :
         \E{X}=0}\) are orthogonal subspaces of \(L^2\) with \(L^2 = \real
         \oplus \real^\perp\).
         \begin{solution}
@@ -1695,7 +1695,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 \begin{exercise}[Median -- Projection in \(L^1\) \Coffeecup\Coffeecup]
 	We define the median of \(X\) to be the set
     \[
-        \median[X] \coloneq \Set[\Big]{m \in \real : \Prob{X \ge m}\ge \tfrac12, \Prob{X\le m} \ge \tfrac12}.
+        \median[X] \coloneq \set[\Big]{m \in \real : \Prob{X \ge m}\ge \tfrac12, \Prob{X\le m} \ge \tfrac12}.
     \]
 	\begin{enumerate}[label=(\alph*), noitemsep]
         \item Show that if \(a,b\in \median[X]\), then \((a,b) \subseteq \median[X]\).
@@ -1704,16 +1704,16 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
         \item The next goal is to show that the median interval is closed
         and characterize the upper and lower bound. Prove for \(F(x) = \Prob{X\le x}\)
         \begin{alignat*}{2}
-            \max \median[X] &= \inf \Set{x \in \real : F(x) > \tfrac12}
+            \max \median[X] &= \inf \set{x \in \real : F(x) > \tfrac12}
             &&\eqcolon \overline{M},
             \\
-            \min \median[X] &= \inf \Set{x \in \real : F(x) \ge \tfrac12} \overset{\text{def.}}= F^{\leftarrow}(\tfrac12)
+            \min \median[X] &= \inf \set{x \in \real : F(x) \ge \tfrac12} \overset{\text{def.}}= F^{\leftarrow}(\tfrac12)
             &&\eqcolon \underline{M}.
         \end{alignat*}
         This has two components: \(\overline{M}\) and \(\underline{M}\) are the boundaries of \(\median[X]\)
         and they are contained in \(\median[X]\).
 
-        \textbf{Hint:} Use \(\Prob{X < x} = \Prob{\bigcup_{k\in \nat}\Set{X \le x - \tfrac1k}}\) and the continuity of measure.
+        \textbf{Hint:} Use \(\Prob{X < x} = \Prob{\bigcup_{k\in \nat}\set{X \le x - \tfrac1k}}\) and the continuity of measure.
         \begin{solution}
             Since the distribution function \(F\) is right-continuous we have
             \[
@@ -1726,7 +1726,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
                 \Prob{X \ge \overline{M}}
                 &= 1 - \Prob{X < \overline{M}}
                 \\
-                &= 1- \Prob[\Big]{\bigcup_{k\in \nat} \Set{X \le \overline{M} - \tfrac1k}}
+                &= 1- \Prob[\Big]{\bigcup_{k\in \nat} \set{X \le \overline{M} - \tfrac1k}}
                 \\
                 &= 1 - \lim_{k\to \infty} F(\overline{M}-\tfrac1k)
                 \\
@@ -1736,7 +1736,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
             as any \(x< \overline{M}\) has the property \(F(x) \le \tfrac12\).
             Consequently, \(\overline{M} \in \median[X]\).
             As we have not used the strict inequalities due to the limits, the
-            same arguments work for the minimum \(\underline{M} = \inf\Set{x\in
+            same arguments work for the minimum \(\underline{M} = \inf\set{x\in
             \real F(x) \ge \tfrac12}\). We only replace \(F(x) > \tfrac12\) by
             \(F(x) \ge \tfrac12\) for all \(x \ge \underline{M}\) for the first
             part and use \(F(x) < \tfrac12\) for all \(x < \underline{M}\) for
@@ -1952,7 +1952,7 @@ motivates the following definition.
             \limsup_{n\to\infty} A_n 
             &\coloneq \bigcap_{N\in \nat} \bigcup_{n \ge N} A_n,
             \\
-            &= \Set{\omega \in \Omega : \omega \in A_n \text{ for infinitely many } n}.
+            &= \set{\omega \in \Omega : \omega \in A_n \text{ for infinitely many } n}.
         \end{aligned}
         \]
         
@@ -1963,7 +1963,7 @@ motivates the following definition.
             \liminf_{n\to\infty} A_n 
             &\coloneq \bigcup_{N\in \nat} \bigcap_{n \ge N} A_n,
             \\
-            &= \Set{\omega \in \Omega : \omega \in A_n \text{ for all \(n\) after some } N\in \nat}.
+            &= \set{\omega \in \Omega : \omega \in A_n \text{ for all \(n\) after some } N\in \nat}.
         \end{aligned}
         \]
     \end{itemize}
@@ -2078,14 +2078,14 @@ This corollary shows that almost sure convergence simply means that we have
 summable.
 
 \begin{proof}
-    We have by definition of convergence and Exercise \ref{ex: set limits}
+    We have by definition of convergence and continuity of measure (Remark \ref{rem: continuity of probability})
     \begin{equation}
     \label{eq: characterization of does not converge}    
-    \begin{aligned}
+    \begin{aligned}[b]
         \Prob[\Big]{\lim_{n\to\infty} X_n \neq X}
-        &= \Prob[\Big]{ \bigcup_{\epsilon > 0} \bigcap_{N\in \nat}\bigcup_{n \ge N} \{\norm{X_n - X} \ge \epsilon\} }
+        &= \Prob[\Big]{ \bigcup_{m \in \nat} \bigcap_{N\in \nat}\bigcup_{n \ge N} \set{\norm{X_n - X} \ge \tfrac1m} }
         \\
-        &= \sup_{\epsilon >0} \Prob[\Big]{ \limsup_{n\to \infty} \{\norm{X_n - X} \ge \epsilon\} }.
+        &= \lim_{m\to \infty} \Prob[\Big]{ \limsup_{n\to \infty} \{\norm{X_n - X} \ge \epsilon\} }.
     \end{aligned}
     \end{equation}
     Now if for all \(\epsilon > 0\) we have that \(\sum_{n=1}^\infty \Prob[\big]{\norm{X_n - X} \ge \epsilon} < \infty\),
@@ -2094,7 +2094,7 @@ summable.
     and consequently we get almost sure convergence.
 
     Now if the random variables \((X_n - X)_{n\in \nat}\) are independent, then
-    the sets \(\Set{\norm{X_n - X} \ge \epsilon}\) are independent events. If there is an
+    the sets \(\set{\norm{X_n - X} \ge \epsilon}\) are independent events. If there is an
     \(\epsilon > 0\) such that \(\sum_{n=1}^\infty \Prob[\big]{\norm{X_n - X} \ge \epsilon} = \infty\),
     then the application of the second Borel-Cantelli lemma \eqref{eq: borel
     cantelli 2} to this particular \(\epsilon\) shows that the probability
@@ -2199,8 +2199,8 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
                 \limsup_n \Indicator{A_n}(\omega)
                 = \lim_{N\to \infty} \sup_{n\ge N} \Indicator{A_n}(\omega)
             \]
-            is in the set \(\Set{0,1}\) for all \(\omega\) since
-            \(\Indicator{A_n}(\omega) \in \Set{0,1}\) for all \(n\) and
+            is in the set \(\set{0,1}\) for all \(\omega\) since
+            \(\Indicator{A_n}(\omega) \in \set{0,1}\) for all \(n\) and
             the supremum is thereby either \(0\) or \(1\). We therefore only need to show
             that \(\limsup_n \Indicator{A_n}(\omega) = 1\) if and only if
             \begin{equation}
@@ -2274,14 +2274,14 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
             \liminf_n A_n = \limsup_n A_n^\complement
         \]
         by Lemma \ref{lem: liminf and limsup properties} and the independence of
-        \(A_n^\complement\) (Exercise \ref{ex: independent complements}), the
+        \(A_n^\complement\), the
         same arguments apply to \(A_n^\complement\) so we also have the claim for
         \(\liminf_n A_n\).
         \qedhere
     \end{solution}
 \end{exercise}
 
-\begin{exercise}[Almost sure but not \(L^p\) convergence]
+\begin{exercise}[Almost sure but not \(L^p\) convergence \Coffeecup]
     \label{ex: as but not Lp}
     Let \(U\sim \uniform(0,1)\) and define
     \[
@@ -2289,41 +2289,60 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
     \]
     Show that \(X_n \overset{\as}\to 0\) but \(X_n\) does not converge to \(0\)
     in \(L^1\) and hence in no other \(L^p\) space with \(p \ge 1\).
+    \begin{solution}
+        First, we show that \(X_n \overset{\as}\to 0\). For any \(\epsilon > 0\)
+        we have
+        \[\begin{aligned}
+            \sum_{n=0}^\infty \Prob{\abs{X_n - 0} \ge \epsilon}
+            &\le \sum_{n=0}^\infty \Prob{X_n \ge \min\set{\epsilon, 1}}
+            \\
+            &= \sum_{n=0}^\infty\Prob{U < 2^{-n}} = \sum_{n=0}^\infty 2^{-n} < \infty.
+        \end{aligned}
+        \]
+        Consequently, by Corollary \ref{cor: characterization of almost sure convergence} we have \(X_n \overset{\as}\to 0\).
+        To see that \(X_n\) does not converge to \(0\) in \(L^1\) we observe
+        \[
+            \E{\abs{X_n - 0}}
+            = \E{X_n}
+            = 2^n \Prob{U < 2^{-n}} = 1
+            \not\to 0.
+            \qedhere
+        \]
+    \end{solution}
 \end{exercise}
 
-\begin{exercise}[Infinitely often or never successful]
+\begin{exercise}[Infinitely often or never successful \Coffeecup]
     Let \(X_n \sim \bernoulli(n^{-r})\) be independent Bernoulli random variables,
     whose success probability decreases in \(n\) at rate \(r > 0\). Note that we say
     that \(X_n\) is a success if \(X_n = 1\). Show that
     \begin{enumerate}[label=(\alph*)]
         \item for \(r > 1\) there are finitely many successes with probability one.
         That is after some random but finite time \(N\in \nat\) all \(X_n\) are zero.
+        \begin{solution}
+            Since we have
+            \[
+                \sum_{n=1}^\infty \Prob{X_n = 1} = \sum_{n=1}^\infty n^{-r} < \infty,
+            \]
+            we have by the first Borel-Cantelli lemma \eqref{eq: borel cantelli 1} that
+            \[
+                \Prob{X_n=1 \text{ for infinitely many } n} = \Prob{\limsup_{n\to \infty} \set{X_n = 1}} = 0.
+                \qedhere
+            \]
+        \end{solution}
+
         \item for \(r \le 1\) there are infinitely many successes with probability one.
+        \begin{solution}
+            Since we have
+            \[
+                \sum_{n=1}^\infty \Prob{X_n = 1} = \sum_{n=1}^\infty n^{-r} = \infty,
+            \]
+            we have by the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2} that
+            \[
+                \Prob{X_n=1 \text{ for infinitely many } n} = \Prob{\limsup_{n\to \infty} \set{X_n = 1}} = 1.
+                \qedhere
+            \]
+        \end{solution}
     \end{enumerate}
-    \textbf{Hint:} Observe that \(X_n \in \Set{0,1}\) and that \(X_n \to 0\)
-    therefore implies that eventually all \(X_n\) are zero.
-
-\end{exercise}
-
-\begin{exercise}[Set limits]
-    \label{ex: set limits}
-    Let \(I\subseteq \real\) be an index set of the collection of sets
-    \((A_i)_{i\in I}\), and assume that the sets are increasing:
-    \[
-        i\le j \implies A_i \subseteq A_j.
-    \]
-    Let \(i^* = \sup I\) and show for any sequence \((i_n)_{n=1}^\infty\)
-    with \(i_n \to i^*\) that
-    \[
-        \lim_{n\to \infty} A_{i_n} = \bigcup_{i\in I} A_i.
-    \]
-    Prove that
-    \[
-        \sup_{i\in I} \Prob{A_i}
-        = \lim_{i\to i^*} \Prob{A_i}
-        = \Prob[\Big]{\bigcup_{i\in I} A_i}.
-    \]
-    Analogous results hold for decreasing sets with the infimum.
 \end{exercise}
 
 \begin{exercise}[Further characterize almost sure convergence]
@@ -2333,7 +2352,7 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
         \Prob{X_n \to X} =1
         &\iff \forall \epsilon >0 :  \Prob[\Big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon} = 0.
         \\
-        &\iff \forall \epsilon >0 :  \Prob[\Big]{\limsup_{n \to \infty} \Set{|X_n - X| \ge \epsilon}} = 0.
+        &\iff \forall \epsilon >0 :  \Prob[\Big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \epsilon}} = 0.
         \\
         &\iff \forall \epsilon >0 : \lim_{N\to \infty} \Prob[\Big]{\sup_{n \ge N} |X_n - X| \ge \epsilon} = 0.
     \end{aligned}
@@ -2537,7 +2556,7 @@ and \ref{thm: joint convergence}.
     \(\Prob{X \in D_f} = 0\) by assumption. We have \ref{it: cont. mapping as}
     by
     \[
-        \Set{X_n \to X} \subseteq \Set{f(X_n) \to f(X)} \cup \Set{X \in D_f}
+        \set{X_n \to X} \subseteq \set{f(X_n) \to f(X)} \cup \set{X \in D_f}
     \]
     and consequently
     \[
@@ -2569,13 +2588,13 @@ and \ref{thm: joint convergence}.
     \]
     Finally, \ref{it: cont. mapping p} is the most involved. For a fixed \(\epsilon\) we define
     \[
-        A_\delta \coloneq \Set{x \in \domain: \underbrace{x \notin D_f}_{\text{cont. point}}, \underbrace{\exists y \in \domain : \|x-y\|\le \delta, \|f(x) - f(y)\| > \epsilon}_{\delta\text{ not small enough for }\epsilon}}
+        A_\delta \coloneq \set{x \in \domain: \underbrace{x \notin D_f}_{\text{cont. point}}, \underbrace{\exists y \in \domain : \|x-y\|\le \delta, \|f(x) - f(y)\| > \epsilon}_{\delta\text{ not small enough for }\epsilon}}
     \]
     Observe that since \(A_\delta\) only includes continuity points of \(f\) we have \(A_\delta \downarrow \emptyset\) for \(\delta \to 0\).
     By definition of \(A_\delta\) we have the following inclusion of events
     \[
-        \Set[\big]{\norm{f(X_n) - f(X)} > \epsilon}
-        \subseteq \Set[\big]{\norm{X_n - X} > \delta} \cup \Set{X \in A_\delta} \cup \Set{X\in D_f}.
+        \set[\big]{\norm{f(X_n) - f(X)} > \epsilon}
+        \subseteq \set[\big]{\norm{X_n - X} > \delta} \cup \set{X \in A_\delta} \cup \set{X\in D_f}.
     \]
     Taking the limit superior in \(n\) we thus get
     \[\begin{aligned}

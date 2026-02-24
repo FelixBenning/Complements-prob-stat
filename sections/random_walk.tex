@@ -400,7 +400,7 @@ Now if we sum over $r=1,\ldots,n$ we get a telescoping sum:
 
 For $n\geq 1$, define
 \[
-L_n \coloneqq \max\Set*{ k \in\Set*{0,1,2,\ldots,n} \given S_k = 0}\;.
+L_n \coloneqq \max\set*{ k \in\set*{0,1,2,\ldots,n} \given S_k = 0}\;.
 \]
 Thus $L_n$ denotes the last time the random walk visits $0$ by time $n$. The minimum possible value of $L_n$ is $0$. The maximum possible value of $L_n$ is $n$ if $n$ is even, and $n-1$ if $n$ is odd. $L_n$ is always even.
 
@@ -672,24 +672,24 @@ in distribution i.e., for all $x\in\real$
 
 Consider integers $a,b>0$. Let $T_a$ be the first time that the random walk hits $a$ i.e.,
 \[
-T_a \coloneqq \min\Set*{ n \given S_n = a}\;.
+T_a \coloneqq \min\set*{ n \given S_n = a}\;.
 \]
 If the random walk does not hit $a$, 
 we let $T_a=\infty$. If $p>1/2$ i.e., $p-q>0$, then $S_n\to\infty$ almost surely; hence $T_a<\infty$ with probability $1$. Let $T_{-b}$ be the first time that the random walk hits $-b$ i.e.,
 \[
-T_{-b} \coloneqq \min\Set*{ n \given S_n = -b}\;.
+T_{-b} \coloneqq \min\set*{ n \given S_n = -b}\;.
 \]
 If the random walk does not hit $-b$, we let $T_{-b}=\infty$. If $p<1/2$ i.e., $p-q<0$, then $S_n\to-\infty$ almost surely; hence $T_{-b}<\infty$ with probability $1$.
 
 \newpage
 We want to find an expression for $\Prob*{T_a<T_{-b}}$. The event 
-$E\coloneqq\Set*{T_a<T_{-b}}$ means:
+$E\coloneqq\set*{T_a<T_{-b}}$ means:
 \begin{itemize}
 \item either, the random walk hits $a$ but never hits $-b$; or
 \item the random walk hits both $a$ and $-b$, and hits $a$ before $-b$.
 \end{itemize}
 
-Let $F$ be the event $\Set*{T_{-b}<T_a}$. It means
+Let $F$ be the event $\set*{T_{-b}<T_a}$. It means
 \begin{itemize}
 \item either, the random walk hits $-b$ but never hits $a$; or
 \item the random walk hits both $a$ and $-b$, and hits $-b$ before $a$.
@@ -711,7 +711,7 @@ Therefore
 \Prob*{E} + \Prob*{F} = 1\;.
 \]
 
-For $x\in\Set*{-b,-b+1,\ldots,-1,0,1,\ldots,a-1,a}$, let $f(x)$ denote the probability of the event $E$ if the random walk starts from $x$ (instead of $0$). Thus, we want $f(0)$. Conditioning on the first step yields the following recursion for $f$:
+For $x\in\set*{-b,-b+1,\ldots,-1,0,1,\ldots,a-1,a}$, let $f(x)$ denote the probability of the event $E$ if the random walk starts from $x$ (instead of $0$). Thus, we want $f(0)$. Conditioning on the first step yields the following recursion for $f$:
 \[
 f(x) = p \cdot f(x+1) + q \cdot f(x-1)\;.
 \]

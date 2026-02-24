@@ -536,7 +536,7 @@ where \(P_t^i\) is the price of the asset \(i\) at time \(t\) and
         Deduce
         \begin{equation}
             \label{eq: discretization max to zero}            
-            R_n \coloneq \max_{i\in \Set{1,\dots, k}} \max\Set[\big]{\abs{F_n(x_i) - F(x_i)}, \abs{G_n(x_i) - G(x_i)}} \overset{\as}\to 0.
+            R_n \coloneq \max_{i\in \set{1,\dots, k}} \max\set[\big]{\abs{F_n(x_i) - F(x_i)}, \abs{G_n(x_i) - G(x_i)}} \overset{\as}\to 0.
         \end{equation}
 
         \item Recall the properties of the quantile function \(F^\leftarrow\) (Exercise \ref{ex: stochastic simulation})
@@ -648,9 +648,9 @@ defining ``Moment generating functions''.
     Outside the field of probability theory one typically uses \(-t\) 
     instead of \(t\), and 
     \begin{itemize}[noitemsep]
-        \item \(\mathcal{L}\Set{\Pr_X}(t) = \MGF_X(-t)\) is the ``Laplace
+        \item \(\mathcal{L}\set{\Pr_X}(t) = \MGF_X(-t)\) is the ``Laplace
         transform'',
-        \item \(\mathcal{F}\Set{\Pr_X}(t) = \charFct_X(-2\pi t)\) is the ``Fourier
+        \item \(\mathcal{F}\set{\Pr_X}(t) = \charFct_X(-2\pi t)\) is the ``Fourier
         transform''. 
     \end{itemize}
 \end{definition}
@@ -1010,7 +1010,7 @@ formula in the complex case. This is the following Lemma.
     \]
 \end{lemma}
 \begin{proof}
-    Note that \(\exp\) is injective on the domain \(B\coloneq\Set{x+iy\in \complex: \abs{y} < \pi}\)
+    Note that \(\exp\) is injective on the domain \(B\coloneq\set{x+iy\in \complex: \abs{y} < \pi}\)
     with range \(\complex\setminus \real_{\le 0}\). Since \(1+\frac{x_n}n \to
     1\) this term eventually enters \(\complex\setminus \real_{\le
     0}\). Using the (analytic) inverse \(\ln\) of \(\exp\) restricted to \(B\)
@@ -1553,7 +1553,7 @@ I^2 =
     consider the deterministic sequence \(X_n = e^n\), where \(e^n=(0,\dots,0, 1, 0, \dots)\) is the
     \(n\)-th unit vector in the Hilbertspace of square summable sequences 
     \[
-        \ell^2 = \Set[\Big]{(x_n)_{n\in \nat} \mid \sum_{n=1}^\infty x_n^2 < \infty}
+        \ell^2 = \set[\Big]{(x_n)_{n\in \nat} \mid \sum_{n=1}^\infty x_n^2 < \infty}
         \qquad\text{with}\qquad
         \scp{x, y} = \sum_{n=1}^\infty x_n y_n.
     \]
@@ -1566,7 +1566,7 @@ I^2 =
 
 \begin{exercise}[Uncorrelated but not independent normal]
     \label{ex: uncorrelated but not independent normal}
-    Let \(Z \sim \normal{0,1}\) and \(\epsilon \sim \uniform(\Set{-1,1})\) be independent
+    Let \(Z \sim \normal{0,1}\) and \(\epsilon \sim \uniform(\set{-1,1})\) be independent
     random variables and define
     \[
         X = Z, \qquad Y = \epsilon Z.
@@ -1784,7 +1784,7 @@ and its properties in multiple dimensions.
     by
     \[
         \tag{effective domain}
-        \cD_{\CGF_X} \coloneq \Set{t \in \hilbert: \CGF_X(t) < \infty} = \cD_{\MGF_X} \supseteq \Set{0}.
+        \cD_{\CGF_X} \coloneq \set{t \in \hilbert: \CGF_X(t) < \infty} = \cD_{\MGF_X} \supseteq \set{0}.
     \]
     We further define the functions for \(t,a\in \hilbert\)
     \begin{align*}
@@ -2050,7 +2050,7 @@ is non-negative and convex to get that \(\E{X}\) is its minimizer.
     \end{enumerate}
     Moreover for \(\Lambda = \CGF_X\) we have
     \begin{enumerate}[label=\normalfont{(\arabic*)}, noitemsep, resume]
-        \item\label{it: cgf* trivial essential domain} If \(\cD_{\CGF_X} = \Set{0}\), then \(\CGF_X \equiv 0\).
+        \item\label{it: cgf* trivial essential domain} If \(\cD_{\CGF_X} = \set{0}\), then \(\CGF_X \equiv 0\).
         \item\label{it: cgf* open essential domain} If \(U \subseteq \cD_{\CGF_X}\) is an open set with \(0\in U\), then
         \(\CGF_X^*(\E{X})=0\).
         In particular, the expectation \(\E{X}\) is a minimizer of \(\CGF_X^*\).
@@ -2165,7 +2165,7 @@ In the one-dimensional case we get concentration bounds from this:
         \\
         &\le \exp\bigl(-n \inf_{a \ge t+\mu}\CGF_X^*(a)\bigr) + \exp\bigl(-n \inf_{a \le \mu - t}\CGF_{X}^*(a)\bigr)
         \\
-        &\le 2 \exp\Bigl(-n \min\Set[\Big]{\inf_{a-\mu \ge t}\CGF_X^*(a), \inf_{a-\mu \le -t}\CGF_X^*(a)}\Bigr)
+        &\le 2 \exp\Bigl(-n \min\set[\Big]{\inf_{a-\mu \ge t}\CGF_X^*(a), \inf_{a-\mu \le -t}\CGF_X^*(a)}\Bigr)
         \\
         &= 2 \exp\Bigl(-n \inf_{\abs{a-\mu}\ge t} \CGF_X^*(a)\Bigr).
     \end{aligned}
@@ -2236,7 +2236,7 @@ equivalences}) that this is actually equivalent to the tail bound above.
     Let \(X\) be a \underline{centered} random variable, then
     the \emph{variance proxy} of \(X\) is defined as
     \[
-        \varProx{X} \coloneq \min\Set{\lambda \ge 0 : \CGF_X(t) \le \tfrac{\lambda t^2}2 \quad \forall t}
+        \varProx{X} \coloneq \min\set{\lambda \ge 0 : \CGF_X(t) \le \tfrac{\lambda t^2}2 \quad \forall t}
     \]
 \end{definition}
 
@@ -2492,7 +2492,7 @@ equivalent characterizations of subgaussian random variables.
         In other words: The Orlicz norm (Definition \ref{def: orlicz norm})
         corresponding to the convex function \(\psi_2(x) \coloneq \exp(x^2) - 1\) is finite
         \[
-            \norm{X}_{\psi_2} \coloneq \inf\Set{t > 0 :
+            \norm{X}_{\psi_2} \coloneq \inf\set{t > 0 :
             \E{\psi_2(\tfrac{\abs{X}}t)} \le 1}
             \le K_4 < \infty.
         \]
