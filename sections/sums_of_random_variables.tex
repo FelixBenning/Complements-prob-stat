@@ -291,13 +291,59 @@ assumption that the random variables are in \(L^1\).
 \subsection*{Exercises}
 
 \begin{exercise}[Uncorrelated vs independent \Coffeecup\Coffeecup]
-    Prove that two random variables \(X\) and \(Y\) 
-    are 
+   Let \(X\) and \(Y\) be two random variables. Prove that
+   the following statements are equivalent:
+   \begin{enumerate}[label=(\roman*),noitemsep]
+        \item \(X\) and \(Y\) are independent, that is
+        \[
+            \Prob{X \in A, Y \in B} = \Prob{X \in A}\Prob{Y \in B} \qquad \forall A, B
+        \]
+        \item For all measurable functions \(f\) and \(g\) such that \(f(X)\)
+        and \(g(X)\) are integrable we have
+        \[
+            \E{f(X)g(Y)} = \E{f(X)}\E{g(Y)}.
+        \]
+        \item For all bounded, measurable functions \(f\) and \(g\)
+        \[
+            \E{f(X)g(Y)} = \E{f(X)}\E{g(Y)}.
+        \]
+   \end{enumerate}
+   \textbf{Hint: } Use Theorem 102 from Ivan's lecture notes.
+    
+   \noindent Further prove the following statements
     \begin{enumerate}[label=(\alph*),noitemsep]
-        \item uncorrelated if they are independent,
-        \item independent if \(f(X)\) and \(g(Y)\) are uncorrelated for all
-        bounded measurable functions \(f\) and \(g\).
+        \item If \(X\) and \(Y\) are independent, they are uncorrelated, that is
+        \[
+            \cov{X}{Y} = 0.
+        \]
+        \item Let \(\Prob{X=-1} = \Prob{X=0} = \Prob{X=1} = \frac13\) and \(Y =
+        X^2\). Prove that \(X\) and \(Y\) are uncorrelated but not independent.
+
+        \item If \(X\) and \(Y\) are independent, then \(h_1(X)\) and \(h_2(Y)\) are independent
+        for all measurable functions \(h_1\) and \(h_2\).
+
+        \item\label{it: all transformations uncorrelated implies independence}
+        If \(f(X)\) and \(g(Y)\) are uncorrelated for all bounded
+        measurable functions \(f\) and \(g\), then \(X\) and \(Y\) are
+        independent.
     \end{enumerate}
+
+    \begin{remark}[Interpretation]
+        What this essentially means is the following:
+        \begin{enumerate}
+            \item Uncorrelated is weaker than independence.
+            \item \(f(X)\) and \(f(Y)\) are independent if \(X\) and \(Y\)
+            are independent, that is independence is \emph{stable under transformation}.
+
+            \item In contrast, \(X\) and \(Y\) being uncorrelated is \emph{not} stable under transformation.
+            In fact, if it were true that \(f(X)\) and \(g(Y)\) is uncorrelated
+            for all bounded measurable functions \(f\) and \(g\), then \(X\) and
+            \(Y\) would be independent by \ref{it: all transformations
+            uncorrelated implies independence}. Independence therefore gains the
+            interpretation of ``uncorrlated under all transformations''.
+        \end{enumerate}
+
+    \end{remark}
 \end{exercise}
 
 \begin{exercise}[Mean of indicators \Coffeecup]
@@ -2716,60 +2762,8 @@ equivalent characterizations of subgaussian random variables.
 
 \subsection*{Exercises}
 
-\begin{definition}[Cumulants]
-    If they exist, the ``cumulants'' \(\cumulant_n^X\) are the coefficients of the Taylor
-    series of the cumulant generating function
-    \[
-        \CGF_X(t)
-        = \sum_{n=1}^\infty \cumulant_n^X \frac{t^n}{n!}
-        = \sum_{n=1}^\infty \CGF_X^{(n)}(0) \frac{t^n}{n!}.
-    \]
-\end{definition}
-
-Due to property \ref{it: cumulant independent sums} of the cumulant generating
-function, cumulants have the nice property
-\[
-    \cumulant_n^{X+Y} = \cumulant_n^X + \cumulant_n^Y
-\]
-for independent random variables \(X\) and \(Y\).
-This property is what makes them ``nicer'' compared to the moments that make
-up the coefficients of the moment generating function. Bienaymé (Lemma \ref{lem:
-Bienaymé}) represents this property for the second order cumulants, since
-\(\cumulant_2^X = \var{X}\).
-
-\begin{remark}[Cumulants of normal distribution]
-    Recall that the cumulant generating function of the 
-    normal distribution is a quadratic polynomial
-    \[
-        \CGF_X(t) = \mu t + \frac12 \sigma^2 t^2.
-    \]
-    Thus all cumulants of order three and higher are zero! It is the only
-    distribution with this property. One can show that the cumulants of order
-    three and higher vanish for \(\sqrt{n}\, \mean{X}_n\) as \(n\to\infty\)
-    (Exercise \ref{ex: cumulant CLT}) and thereby proof a weak form of the
-    central limit theorem.
-\end{remark}
-\begin{exercise}[Cumulant CLT]
-    \label{ex: cumulant CLT}
-    Let \(X_1, X_2, \ldots\) be independent copies of a random variable
-    \(X\) with mean \(\mu\), variance \(\sigma^2\) and finite moments of all orders.
-    Let \(\mean{X}_n = \frac1n \sum_{i=1}^n X_i\) be the empirical mean.
-    Show that the cumulants \(\cumulant_k^{\sqrt{n}(\mean{X}_n - \mu)}\)
-    of the random variable \(\sqrt{n}(\mean{X}_n - \mu)\) satisfy
-    \[
-        \cumulant_1^{\sqrt{n}(\mean{X}_n - \mu)} = 0,
-        \qquad
-        \cumulant_2^{\sqrt{n}(\mean{X}_n - \mu)} = \sigma^2,
-        \qquad
-        \cumulant_k^{\sqrt{n}(\mean{X}_n - \mu)} \to 0
-        \quad\text{for } k \ge 3.
-    \]
-    Conclude that the cumulant generating function of
-    \(\sqrt{n}(\mean{X}_n - \mu)\) converges to the cumulant generating function
-    of the normal distribution \(\normal{0, \sigma^2}\).
-\end{exercise}
-
-\begin{exercise}[Basic properties]
+\begin{exercise}[Properties of the cumulant generating function]
+    \label{ex: properties cumulant generating function}
     Let \(X\) be a random variable. Then the cumulant generating function
     \(\CGF_X(t) = \log \MGF_X(t)\) has the following properties:
     \begin{enumerate}[label=(\roman*), noitemsep]
@@ -2811,6 +2805,60 @@ Bienaymé}) represents this property for the second order cumulants, since
             \end{aligned}
         \end{alignat*}
     \end{solution}
+\end{exercise}
+
+\begin{definition}[Cumulants]
+    If they exist, the ``cumulants'' \(\cumulant_n^X\) are the coefficients of the Taylor
+    series of the cumulant generating function
+    \[
+        \CGF_X(t)
+        = \sum_{n=1}^\infty \cumulant_n^X \frac{t^n}{n!}
+        = \sum_{n=1}^\infty \CGF_X^{(n)}(0) \frac{t^n}{n!}.
+    \]
+\end{definition}
+
+Due to property \ref{it: cumulant independent sums} in Exercise \ref{ex:
+properties cumulant generating function} of the cumulant generating function,
+cumulants have the nice property that they ``accumulate'' when indpendent
+random variables are added, that is for \(X\) and \(Y\) independent
+\[
+    \cumulant_n^{X+Y} = \cumulant_n^X + \cumulant_n^Y.
+\]
+This property is the origin of their name and what makes them ``nicer'' compared
+to the moments that make up the coefficients of the moment generating function.
+Bienaymé (Lemma \ref{lem: Bienaymé}) represents this property for the second
+order cumulants, since \(\cumulant_2^X = \var{X}\).
+
+\begin{remark}[Cumulants of normal distribution]
+    Recall that the cumulant generating function of the 
+    normal distribution is a quadratic polynomial
+    \[
+        \CGF_X(t) = \mu t + \frac12 \sigma^2 t^2.
+    \]
+    Thus all cumulants of order three and higher are zero! It is the only
+    distribution with this property. One can show that the cumulants of order
+    three and higher vanish for \(\sqrt{n}\, \mean{X}_n\) as \(n\to\infty\)
+    (Exercise \ref{ex: cumulant CLT}) and thereby proof a weak form of the
+    central limit theorem.
+\end{remark}
+\begin{exercise}[Cumulant CLT]
+    \label{ex: cumulant CLT}
+    Let \(X_1, X_2, \ldots\) be independent copies of a random variable
+    \(X\) with mean \(\mu\), variance \(\sigma^2\) and finite moments of all orders.
+    Let \(\mean{X}_n = \frac1n \sum_{i=1}^n X_i\) be the empirical mean.
+    Show that the cumulants \(\cumulant_k^{\sqrt{n}(\mean{X}_n - \mu)}\)
+    of the random variable \(\sqrt{n}(\mean{X}_n - \mu)\) satisfy
+    \[
+        \cumulant_1^{\sqrt{n}(\mean{X}_n - \mu)} = 0,
+        \qquad
+        \cumulant_2^{\sqrt{n}(\mean{X}_n - \mu)} = \sigma^2,
+        \qquad
+        \cumulant_k^{\sqrt{n}(\mean{X}_n - \mu)} \to 0
+        \quad\text{for } k \ge 3.
+    \]
+    Conclude that the cumulant generating function of
+    \(\sqrt{n}(\mean{X}_n - \mu)\) converges to the cumulant generating function
+    of the normal distribution \(\normal{0, \sigma^2}\).
 \end{exercise}
 
 \begin{exercise}[Convex conjugate]

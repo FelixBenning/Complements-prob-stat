@@ -196,10 +196,12 @@ theory.
 \end{theorem}
 \begin{corollary}[Chebyshev inequality]
     \label{cor: markov inequality Lp}
-    We have for all \(t > 0\)
+    Let \(X\) be a random variable in a normed space \((\domain, \norm{\cdot})\)
+    with \(\E{\norm{X}^p} < \infty\) for some \(p \ge 1\). Then
     \[
         \Prob[\Big]{\norm{X - \E{X}} \ge t}
-        \le \frac{\E[\Big]{\norm[\big]{X-\E{X}}^p}}{t^p}.
+        \le \frac{\E[\Big]{\norm[\big]{X-\E{X}}^p}}{t^p}
+        \qquad \text{for all }t > 0.
     \]
 \end{corollary}
 \end{mdframed}
@@ -335,7 +337,7 @@ continuous mapping}).
         Then its border has zero probability under the distribution of \(X\), that is
         \(\Pr(X\in \partial\ball{c}{\epsilon}) = 0\).
         Using \ref{it: s.zero boundary} from the Portemanteau theorem
-        thus implies
+        this implies
         \[
             \Prob[\big]{\metric(X_n,X) < \epsilon}
             = \Prob[\big]{X_n \in \ball{c}{\epsilon}}
@@ -668,7 +670,7 @@ implications above.
         \\
         X_3 &\coloneq \Indicator{[0, \frac14)}(U)
         \quad & X_4 &\coloneq \Indicator{[\frac14, \frac12)}(U)
-        \quad & X_5 &\coloneq \Indicator{[\frac12, \frac24)}(U)
+        \quad & X_5 &\coloneq \Indicator{[\frac12, \frac34)}(U)
         \quad & X_6 &\coloneq \Indicator{[\frac34, 1)}(U)
     \end{alignat*}
     That is
@@ -1201,6 +1203,29 @@ implications above.
     \end{enumerate}
 \end{exercise}
 
+\begin{exercise}[How to check ``Equal in distribution'']
+    \label{ex: equal in distribution}
+    Let \(X\) and \(Y\) be two random variables in a metric space \(\domain\) with
+    \begin{equation}
+        \label{eq: equal in distribution}    
+        \E{f(X)} = \E{f(Y)}
+    \end{equation}
+    for all bounded (measurable) functions \(f\colon \domain \to \real\). Show
+    that this implies that \(X\) and \(Y\) are equal in distribution, that is
+    \[
+        \Prob{X \in A} = \Prob{Y \in A}
+    \]
+    for all (measurable) sets \(A\subseteq \domain\).
+    
+\begin{remark}
+    Observe that this is very similar to Portemanteu's theorem (cf.~Definition
+    \ref{def: types of convergence}) that characterizes convergence in
+    distribution. And it can be shown that it is enough to check \eqref{eq:
+    equal in distribution} for all bounded and Lipschitz functions \(f\colon
+    \domain \to \real\).
+\end{remark}
+\end{exercise}
+
 % \begin{exercise}[Polya's urn model]
 %     In the strong law of large numbers, the random variable at the limit is a
 %     degenerate random variable. A more interesting example is the Polya's urn model.
@@ -1670,9 +1695,8 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 \begin{exercise}[Median -- Projection in \(L^1\) \Coffeecup\Coffeecup]
 	We define the median of \(X\) to be the set
     \[
-        \median[X] \coloneq \Set[\Big]{m \in \real : \Prob{X \ge m} \wedge \Prob{X\le m} \ge \tfrac12}
+        \median[X] \coloneq \Set[\Big]{m \in \real : \Prob{X \ge m}\ge \tfrac12, \Prob{X\le m} \ge \tfrac12}.
     \]
-    where \(x\wedge y = \min\Set{x,y}\). 
 	\begin{enumerate}[label=(\alph*), noitemsep]
         \item Show that if \(a,b\in \median[X]\), then \((a,b) \subseteq \median[X]\).
         That is \(\median[X]\) is an interval!
@@ -1980,30 +2004,6 @@ its analogue for real-valued sequences.
 \end{theorem}
 \end{mdframed}
 
-A direct consequence of the Borel-Cantelli lemmas \eqref{eq: borel cantelli 1} and
-\eqref{eq: borel cantelli 2} is the following \(0\)-\(1\) law.
-
-\begin{corollary}[Borel's \(0\)-\(1\) law]
-    \label{cor: borel cantelli 0-1 law}
-    Let \((A_n)_{n=1}^\infty\) be a sequence of independent events. Then 
-    \[
-        \Prob[\Big]{\limsup_{n\to \infty} A_n} \in \{0,1\}
-        \quad\text{and}\quad
-        \Prob[\Big]{\liminf_{n\to \infty} A_n} \in \{0,1\}.
-    \]
-    Consequently, if the probability is greater zero it must be one!
-\end{corollary}
-\begin{proof}
-    Exercise \ref{ex: borel cantelli 0-1 law}.
-\end{proof}
-
-\begin{remark}[Kolmogorov's \(0\)-\(1\) law]
-    \label{rem: kolmogorov 0-1 law}
-    The Borel-Cantelli \(0\)-\(1\) law is a special case of Kolmogorov's \(0\)-\(1\) law
-    about ``tail events'' \citep[Thm.~2.37, Cor.~2.38]{klenkeProbabilityTheoryComprehensive2014},
-    as the liminf and limsup are such ``tail events''.
-\end{remark}
-
 
 \begin{proof}[Proof of Borel-Cantelli (Theorem \ref{thm: borel-cantelli})]
 Let \((A_n)_{n=1}^\infty\) be a sequence of events with
@@ -2163,36 +2163,122 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
 
 \subsection*{Exercises}
 
-\begin{exercise}[Liminf and Limsup Properties]
+\begin{exercise}[Liminf and Limsup Properties \Coffeecup]
     \label{ex: liminf and limsup properties}
     Prove Lemma \ref{lem: liminf and limsup properties}. 
+
+    \begin{solution}
+        \begin{enumerate}[label=(\roman*)]
+            \item To show that  \(\liminf_n A_n \subseteq \limsup_n A_n\) let
+            \[
+                \omega \in \liminf_n A_n = \bigcup_{N\in \nat} \bigcap_{n\ge N} A_n.
+            \]
+            then there exists an \(N\) such that for all \(n \ge N\) we have
+            \(\omega \in A_n\). In particular, there are infinitely many \(n\)
+            such that \(\omega \in A_n\) and consequently for all \(N\in \nat\) there
+            exists \(n\ge N\) such that \(\omega \in A_n\), which implies
+            \[
+                \omega \in \bigcap_{N\in \nat} \bigcup_{n\ge N} A_n = \limsup_n A_n.
+            \]
+            
+            \item\label{it: de morgans on liminf/limsup} We have using De Morgan's laws that
+            \[
+            \begin{aligned}
+                (\limsup_n A_n)^\complement
+                &= \Bigl(\bigcap_{N\in \nat} \bigcup_{n\ge N} A_n\Bigr)^\complement
+                = \bigcup_{N\in \nat} \Bigl(\bigcup_{n\ge N} A_n\Bigr)^\complement
+                = \bigcup_{N\in\nat} \bigcap_{n\ge N} A_n^\complement
+                \\
+                &= \liminf_n A_n^\complement.
+            \end{aligned}
+            \]
+
+            \item\label{it: function limsup to set limsup} To prove \(\limsup_n \Indicator{A_n} = \Indicator*{\limsup_n A_n}\) 
+            observe that 
+            \[
+                \limsup_n \Indicator{A_n}(\omega)
+                = \lim_{N\to \infty} \sup_{n\ge N} \Indicator{A_n}(\omega)
+            \]
+            is in the set \(\Set{0,1}\) for all \(\omega\) since
+            \(\Indicator{A_n}(\omega) \in \Set{0,1}\) for all \(n\) and
+            the supremum is thereby either \(0\) or \(1\). We therefore only need to show
+            that \(\limsup_n \Indicator{A_n}(\omega) = 1\) if and only if
+            \begin{equation}
+                \label{eq: omega in limsup_n An} 
+                \omega \in \limsup_n A_n = \bigcap_{N\in \nat} \bigcup_{n\ge N} A_n.
+            \end{equation}
+            Assume \eqref{eq: omega in limsup_n An} holds, then for all \(N\in
+            \nat\) there exists an \(n \ge N\) such that \(\omega \in A_n\). In particular,
+            since for any \(N\in \nat\) we can find \(n\ge N\) such that \(\Indicator{A_n}(\omega) = 1\)
+            and therefore \(\sup_{n\ge N} \Indicator{A_n}(\omega) = 1\). Conversely, if
+            \(\limsup_n \Indicator{A_n}(\omega) = 1\), then for all \(N\in \nat\) we have
+            \(\sup_{n\ge N} \Indicator{A_n}(\omega) =1\) and consequently there must exist
+            \(n\ge N\) such that \(\Indicator{A_n}(\omega) = 1\) and therefore
+            \(\omega \in A_n\). This implies \eqref{eq: omega in limsup_n An}.
+
+            \item Observe that we can translate this to the previous results as follows:
+            \[\begin{aligned}[b]
+                \liminf_n \Indicator{A_n}
+                &= \liminf_n (1-\Indicator{A_n^\complement})
+                \\
+                &= 1 - \limsup_n \Indicator{A_n^\complement}
+                \\
+                \overset{\text{\ref{it: function limsup to set limsup}}}&= 1 - \Indicator*{\limsup_n A_n^\complement}
+                \overset{\text{\ref{it: de morgans on liminf/limsup}}}= \Indicator*{\liminf_n A_n}.
+            \end{aligned}
+            \qedhere
+            \]
+        \end{enumerate}        
+    \end{solution}
 \end{exercise}
 
-\begin{exercise}[Borel-Cantelli \(0\)-\(1\) law]
+\begin{exercise}[Borel's \(0\)-\(1\) law \Coffeecup]
     \label{ex: borel cantelli 0-1 law}
-    Prove Corollary \ref{cor: borel cantelli 0-1 law}.
-\end{exercise}
+    Let \((A_n)_{n=1}^\infty\) be a sequence of independent events. Prove that 
+    the probability of their liminf and limsup are either zero or one, that is
+    \[
+        \Prob[\Big]{\limsup_{n\to \infty} A_n} \in \{0,1\}
+        \quad\text{and}\quad
+        \Prob[\Big]{\liminf_{n\to \infty} A_n} \in \{0,1\}.
+    \]
+    Consequently, if the probability is greater zero it must be one!
 
-\begin{exercise}[Independent Complements]
-    \label{ex: independent complements}
-    Let \((A_n)_{n=1}^\infty\) be a sequence of independent events.
-    Show that
-    \begin{enumerate}[label=(\alph*)]
-        \item 
-        the sequence of complementary events \((A_n^\complement)_{n=1}^\infty\)
-        is also a sequence of independent events,
+    \noindent\textbf{Hint:} Use the Borel-Cantelli Lemmas (Theorem \ref{thm: borel-cantelli})
+    and Lemma \ref{lem: liminf and limsup properties}. Without justification you
+    may use the measure theoretic fact that \((A_n^\complement)_{n\in \nat}\)
+    is indpendent if \((A_n)_{n\in \nat}\) is independent.
+    \begin{remark}[Kolmogorov's \(0\)-\(1\) law]
+        \label{rem: kolmogorov 0-1 law}
+        The Borel-Cantelli \(0\)-\(1\) law is a special case of Kolmogorov's \(0\)-\(1\) law
+        about ``tail events'' \citep[Thm.~2.37, Cor.~2.38]{klenkeProbabilityTheoryComprehensive2014},
+        as the liminf and limsup are such ``tail events''.
+    \end{remark}
 
-        \item
-        the sequence \((\Gamma_n)_{n=1}^\infty\) with an arbitrary choice
-        of 
-        \(\Gamma_n \in \{\emptyset, A_n, A_n^\complement, \Omega\}\) for all \(n\in
-        \nat\) is also a sequence of independent events.
-
-        \item for any set \(B_n\) we have \(\Set{\Indicator{A_n} \in B_n} \in
-        \Set{\emptyset, A_n, A_n^\complement, \Omega}\).
-        Deduce that \((\Indicator{A_n})_{n=1}^\infty\) is a sequence of
-        independent random variables.
-    \end{enumerate}
+    \begin{solution}
+        Observe that there are only two possibilities, either
+        \[
+            \sum_{n=1}^\infty \Prob{A_n} < \infty
+                \quad\text{or}\quad
+            \sum_{n=1}^\infty \Prob{A_n} = \infty.
+        \]
+        In the first case we have by the first Borel-Cantelli lemma \eqref{eq: borel cantelli 1} that
+        \[
+            \Prob[\Big]{\limsup_{n\to \infty} A_n} = 0.
+        \]
+        in the second case we have by the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2} that
+        \[
+            \Prob[\Big]{\limsup_{n\to \infty} A_n} = 1.
+        \]
+        Consequently, we have the claim for \(\limsup_n A_n\). Due to
+        \[
+            \liminf_n A_n = \limsup_n A_n^\complement
+        \]
+        by Lemma \ref{lem: liminf and limsup properties} and the independence of
+        \(A_n^\complement\) (Exercise \ref{ex: independent complements}), the
+        same arguments apply to \(A_n^\complement\) so we also have the claim for
+        \(\liminf_n A_n\).
+        \qedhere
+    \end{solution}
 \end{exercise}
 
 \begin{exercise}[Almost sure but not \(L^p\) convergence]
