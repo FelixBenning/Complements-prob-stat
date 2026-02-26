@@ -1337,6 +1337,38 @@ following theorem.
     0\). And Equation \eqref{eq: Lp norm domination} means for \(1\le p\le q\) that \(\norm{X_n - X}_{L^q} \to 0\) implies \(\norm{X_n - X}_{L^p} \to 0\).
 \end{remark}
 
+We will prove the semi-norm properties later as a special case of the triangle
+inequality for Orlicz norms (Theorem \ref{thm: orlicz seminorm}). For now we
+will only prove the norm domination property \eqref{eq: Lp norm domination}.
+For this we require Hölder's inequality
+\begin{theorem}[Hölder's inequality]
+    \label{thm: holder's inequality}
+    For \(r,s >1\) with \(\frac1s + \frac1r = 1\) we have
+    \[
+        \E{\abs{XY}} \le \E{\abs{X}^r}^{\frac1r}\E{\abs{Y}^s}^{\frac1s} = \norm{X}_{L^r} \norm{Y}_{L^s}.
+    \]
+    This also holds true if the quantities are not finite!
+\end{theorem}
+
+You will prove this inequality in Exercise \ref{ex: hölder's inequality}.
+
+\begin{proof}[Proof of \eqref{eq: Lp norm domination}]
+    Assume without loss of generality the strict
+    inequality \(p< q\) and define \(r
+    \coloneq \frac{q}p>1\) and \(s \coloneq \frac{p}{q-p}>1\) such
+    that \(\frac1{r} + \frac1{s} = 1\). Then
+    \[
+    \begin{aligned}
+        \norm{X}_{L^p}^p = \E{\norm{X}^p}
+        &= \E{\abs{\norm{X}^p \cdot 1}}
+        \\
+        \overset{\text{Hölder}}&\le \E{\norm{X}^{pr}}^{\frac1r} \E{1^s}^{\frac1s}
+        = \E{\norm{X}^q}^{\frac{p}q}
+        = \norm{X}_{L^q}^p.
+    \end{aligned}\]
+    Taking the \(p\)-th root gives \eqref{eq: Lp norm domination}.
+\end{proof}
+
 \begin{example}[Not positive definite]
     Observe that the missing property for \(\norm{\cdot}_{L^p}\) to be a norm 
     is that \(\norm{X}_{L^p} = 0\) implies \(X=0\). As an example consider
@@ -1366,6 +1398,8 @@ following theorem.
     Measure theory: \(f\ge 0\) and \(\int f d\mu = 0\) 
     implies \(\mu(f\neq 0) = 0\).
 \end{proof}
+
+Using this inequality we can now prove Theorem \ref{thm: seminorm properties}
 
 
 \begin{definition}[\(L^p\) space]
@@ -1522,12 +1556,14 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 
         \item Prove ``Hölder's inequality'' 
         For \(p,q >1\) with \(\frac1p + \frac1q = 1\) we have
-        for \(X \in \cL^p(\real)\) and \(Y\in \cL^q(\real)\) 
         \[
             \E{\abs{XY}} \le \E{\abs{X}^p}^{\frac1p}\E{\abs{Y}^q}^{\frac1q} = \norm{X}_{L^p} \norm{Y}_{L^q}.
         \]
 
-        \textbf{Hint:} Apply Young's inequality to \(a =
+        \textbf{Hint:} 
+        Assume without loss of generality \(X \in \cL^p(\real)\) and \(Y\in \cL^q(\real)\),
+        otherwise the right hand side is infinite and the claim is trivial.
+        Apply Young's inequality to \(a =
         \frac{\abs{X}}{\norm{X}_{L^p}}\) and \(b = \frac{\abs{Y}}{\norm{Y}_{L^q}}\).
         \begin{solution}
             Applying Young's inequality we have
