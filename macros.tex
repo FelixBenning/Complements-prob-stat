@@ -31,6 +31,22 @@
 \NewDocumentEnvironment{solution}{O{Solution} +b}{\ifsolution \begin{proof}[#1] #2\end{proof}\fi}{}
 
 %%%
+\makeatletter
+\newcommand{\hhat}[1]{% 
+\begingroup%
+  \let\macc@kerna\z@%
+  \let\macc@kernb\z@%
+  \let\macc@nucleus\@empty%
+  \hat{\mathchoice%
+    {\raisebox{.28ex}{\vphantom{\ensuremath{\displaystyle #1}}}}%
+    {\raisebox{.28ex}{\vphantom{\ensuremath{\textstyle #1}}}}%
+    {\raisebox{.16ex}{\vphantom{\ensuremath{\scriptstyle #1}}}}%
+    {\raisebox{.14ex}{\vphantom{\ensuremath{\scriptscriptstyle #1}}}}%
+    \smash{\hat{#1}}}%
+\endgroup%
+}
+\makeatother
+
 
 \newcommand*{\dims}{d}
 \renewcommand{\complement}{c}

@@ -303,7 +303,7 @@ assumption that the random variables are in \(L^1\).
         \[
             \E{f(X)g(Y)} = \E{f(X)}\E{g(Y)}.
         \]
-        \item For all bounded, measurable functions \(f\) and \(g\)
+        \item For all \underline{bounded}, measurable functions \(f\) and \(g\)
         \[
             \E{f(X)g(Y)} = \E{f(X)}\E{g(Y)}.
         \]
@@ -340,7 +340,7 @@ assumption that the random variables are in \(L^1\).
             for all bounded measurable functions \(f\) and \(g\), then \(X\) and
             \(Y\) would be independent by \ref{it: all transformations
             uncorrelated implies independence}. Independence therefore gains the
-            interpretation of ``uncorrlated under all transformations''.
+            interpretation of ``all transformations are uncorrelated''.
         \end{enumerate}
 
     \end{remark}
@@ -417,8 +417,37 @@ assumption that the random variables are in \(L^1\).
     \end{solution}
 \end{exercise}
 
-\begin{exercise}[Asymptotic equipartition property]
-    
+\begin{exercise}[Variance estimation \Coffeecup]
+    Let \((X_n)_{n\in \nat}\) be a sequence of \(\iid\) random variables in \(\real\)
+    with expectation \(\mu\) and variance \(\sigma^2\). Prove that
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item 
+        \(
+            \hat\sigma^2_n \coloneq \frac1n\sum_{i=1}^n (X_i-\mu)^2
+            \overset{\as}\to \sigma^2,
+        \)
+
+        \item Without knowing the expectation, a reasonable variance estimator
+        uses the sample mean \(\mean{X}_n\) instead of \(\mu\), that is
+        \[
+            \hhat\sigma_n^2 \coloneq \frac1n\sum_{i=1}^n (X_i-\mean{X}_n)^2
+        \]
+        Prove that it converges almost surely to \(\sigma^2\).
+        
+        \textbf{Hint:} First prove \(\hhat\sigma_n^2 = \hat\sigma_n^2 - (\mean{X}_n - \mu)^2\).
+
+        \item Prove that \(\hhat\sigma_n^2\) is biased. Specifically, prove
+        \[
+            \E{\hhat\sigma_n^2} = \tfrac{n-1}{n}\sigma^2.
+        \]
+        Prove the consistency of the unbiased estimator \(\tilde\sigma_n^2 \coloneq \tfrac{n}{n-1}\hhat\sigma_n^2\),
+        that is \(\tilde\sigma_n^2 \overset{\as}\to \sigma^2\).
+
+        \item For every \(\sigma_n^2 \in \{\hat\sigma_n^2, \hhat\sigma_n^2,
+        \tilde\sigma_n^2\}\) prove that \(\sqrt{\sigma_n^2}\) is a consistent
+        estimator of the standard deviation \(\sigma\), that is 
+        \(\sqrt{\sigma_n^2} \overset{\as}\to \sigma\).
+    \end{enumerate}
 \end{exercise}
 
 \begin{exercise}[Products of random variables \Coffeecup]
@@ -509,9 +538,9 @@ where \(P_t^i\) is the price of the asset \(i\) at time \(t\) and
 
 \begin{exercise}[Glivenko-Cantelli theorem \Coffeecup\Coffeecup\Coffeecup]
     This exercise is an extension of Exercise \ref{ex: mean of indicators} where
-    we want to prove the Glivenko-Cantelli theorem, which says that the empirical
-    distribution function \(F_n\) converges uniformly to the distribution function.
-    That is not just at finitely many points but at all points simultaneously.
+    we want to prove the Glivenko-Cantelli theorem, which says that the
+    empirical distribution function \(F_n\) converges uniformly to the
+    distribution function and not just at finitely many points.
     \begin{mdframed}[innertopmargin=0pt]
     \begin{theorem}[Glivenko-Cantelli]
         \label{thm: glivenko cantelli}
@@ -579,8 +608,7 @@ bounded by a constant
 \]
 Of course this bound may be very loose but we will find that this is indeed
 the size of typical deviations. Moreover the ``Central Limit Theorem''
-characterizes the frequency of these typical deviations to be the
-normal distribution. That is the asymptotic distribution of \(\sqrt{n}\,
+characterizes the frequency of these typical deviations. Specifically, the asymptotic distribution of \(\sqrt{n}\,
 \mean{X}_n\) is the normal distribution. Of course since the distribution of
 \(\sqrt{n}\, \mean{X}_n\) is centered at \(\E{\sqrt{n}\, \mean{X}_n} = \sqrt{n}
 \E{X}\) it is necessary to consider centered random variables \(X_n -
@@ -616,12 +644,12 @@ and moment generating functions} would converge in \(n\) is that
     \item \(\frac{t}{\sqrt{n}}\) converges to \(0\) so the Taylor approximation
     of \(\MGF_{X_1}\) becomes asymptotically accurate 
     \item the Taylor coefficients of \(\MGF_{X_1}\) will be exactly the moments
-    \(\E{X_1^k}\), consequently
+    \(\E{X_1^k}\) (Lemma \ref{lem: moment generating function representation}), consequently
     \[
         \MGF_{X_1}(t) = \underbrace{\E{X^0}}_{=1} + \underbrace{\E{X^1}}_{=0} t + \underbrace{\E{X^2}}_{\sigma^2} \frac{t^2}{2} + \dots
     \]
-    \item the last step is an application of \((1+\frac{x}n)^n \to e^x\), the
-    compound interest formula to get
+    \item the last step is an application of \((1+\frac{x}n)^n \to e^x\) (the
+    compound interest formula -- Lemma \ref{lem: compound interest}) to get
     \[
         \MGF_{X_1}(\tfrac{t}{\sqrt{n}})^n
         = (1 + \tfrac{\sigma^2 t^2}{2n} + \dots)^n \to \exp(\tfrac{\sigma^2 t^2}2).
@@ -655,7 +683,7 @@ defining ``Moment generating functions''.
     \end{itemize}
 \end{definition}
 
-As mentioned in the introduction the \(\MGF_X\) is called the ``Moment
+As mentioned in the introduction, \(\MGF_X\) is called the ``Moment
 generating function'' because its Taylor coefficients are the moments.
 For simplicity we restrict ourselves to real valued random variables
 in the following (see Exercise \ref{ex: multivariate moment generating function}
@@ -1712,6 +1740,7 @@ The optimized bound is then given by
     \]
 \end{example}
 
+\paragraph*{Towards multivariate bounds}
 Since \(\CGF_X^+\) is defined as a supremum over all \(t\ge 0\), it does not
 translate well into multiple dimension where the ordering is lost.
 We have seen in the example above that the maximizer \(t^\star\) is positive
@@ -2757,8 +2786,6 @@ equivalent characterizations of subgaussian random variables.
     
 \end{theorem}
 
-
-\subsection{Borel-TIS?}
 
 \subsection*{Exercises}
 

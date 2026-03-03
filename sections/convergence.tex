@@ -1203,7 +1203,7 @@ implications above.
     \end{enumerate}
 \end{exercise}
 
-\begin{exercise}[How to check ``Equal in distribution'']
+\begin{exercise}[How to check ``Equal in distribution'' \Coffeecup]
     \label{ex: equal in distribution}
     Let \(X\) and \(Y\) be two random variables in a metric space \(\domain\) with
     \begin{equation}
@@ -1224,6 +1224,9 @@ implications above.
     equal in distribution} for all bounded and Lipschitz functions \(f\colon
     \domain \to \real\).
 \end{remark}
+    \begin{solution}
+        \(\Indicator{A}\) is a bounded and measurable function for any measurable set \(A\subseteq \domain\).
+    \end{solution}
 \end{exercise}
 
 % \begin{exercise}[Polya's urn model]
@@ -1340,7 +1343,8 @@ following theorem.
 We will prove the semi-norm properties later as a special case of the triangle
 inequality for Orlicz norms (Theorem \ref{thm: orlicz seminorm}). For now we
 will only prove the norm domination property \eqref{eq: Lp norm domination}.
-For this we require Hölder's inequality
+For this we require Hölder's inequality.
+
 \begin{theorem}[Hölder's inequality]
     \label{thm: holder's inequality}
     For \(r,s >1\) with \(\frac1s + \frac1r = 1\) we have
@@ -2453,7 +2457,7 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
     \textbf{Hint:} \ref{it: level markov chain} is significantly harder than
     the previous levels. For it you already need to know Markov chains
     and modify the proof of the second Borel-Cantelli lemma for your purposes.
-    Perhaps come back to this at some later point.
+    You may want to come back to this later.
     \begin{solution}
         Let \(\alphabet\) be a finite alphabet of keys and let \(X_n\in
         \alphabet\) be the letter typed at time \(n\). Let \(y\in \alphabet^m\)
@@ -2858,7 +2862,18 @@ and \ref{thm: joint convergence}.
     but not \(f(X_n) \overset{L^p}\to 0\).
 \end{exercise}
 
-\begin{exercise}[Slutsky's theorem]
+\begin{exercise}[Basic application of continuous mapping theorem \Coffeecup]
+    Let \((X_n)_{n\in \nat}\) and \(X\) be real-valued random variables
+    with \(X_n \overset{d}\to X\). Show that
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item \(X_n^2 \overset{d}\to X^2\),
+        \item \(\sgn(X_n) \overset{d}\to \sgn(X)\) if \(\Prob{X=0} = 0\).
+
+        Construct a counterexample for the case \(\Prob{X=0} > 0\).
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Slutsky's theorem \Coffeecup]
     Let \((X_n)_{n\in \nat}\) and \(X\) be random variables in \(\real^\dims\)
     such that \(X_n \overset{d}\to X\). And let \((Y_n)_{n\in \nat}\) be random
     variables in \(\real^{\dims'}\) such that \(Y_n \overset{d}\to c\) for some
@@ -2871,7 +2886,19 @@ and \ref{thm: joint convergence}.
     \end{enumerate}
 \end{exercise}
 
-\begin{exercise}[Incompatible metric]
+\begin{exercise}[Find the mistake \Coffeecup]
+    Let \((X_n)_{n\in \nat}\) and \(X\) be random variables in \(\real^\dims\).
+    Which step in the following chain of implications is \textbf{wrong}?
+    \[
+        X_n \overset{d}\to X
+        \implies X_n - X \overset{d}\to 0
+        \implies X_n - X \overset{p}\to 0
+        \implies X_n \overset{p}\to X.
+    \]
+    Justify all other steps and find a counterexample for the wrong step.
+\end{exercise}
+
+\begin{exercise}[Incompatible metric \Coffeecup]
     \label{ex: incompatible metric}
     Let \((x_n)_{n\in \nat}\) and \((y_n)_{n\in \nat}\) be sequences in
     \(\real\). Assume that \(x_n \to x\) and \(y_n \to y\) in the usual
