@@ -418,6 +418,7 @@ assumption that the random variables are in \(L^1\).
             thereby uncorrelated), identically distributed \(Y_i\), since
             \[
                 \E{Y_i} = \E{\ind{X_i \in A}} = \prob{X_1 \in A}.
+                \qedhere
             \]
         \end{solution}
 
@@ -430,6 +431,17 @@ assumption that the random variables are in \(L^1\).
             (F_n(x_1), \dots, F_n(x_k)) \overset{\as}\to (F(x_1), \dots, F(x_k))
             \qquad (n \to \infty).
         \]
+        \begin{solution}
+            Since \(Y_n\coloneq (Y_n^{(1)}, \dots, Y_n^{(k)}) \coloneq (\ind{X_n
+            \le x_1}, \dots, \ind{X_n \le x_k})\) are independent and
+            identically distributed with expectation \((F(x_1), \dots,
+            F(x_k))\), we have by the strong law of large numbers that
+            \[
+                (F_n(x_1), \dots, F_n(x_k)) = \frac1n \sum_{i=1}^n Y_i
+                \overset{\as}\to (F(x_1), \dots, F(x_k)).
+                \qedhere
+            \]
+        \end{solution}
     \end{enumerate}
 \end{exercise}
 
@@ -490,6 +502,11 @@ assumption that the random variables are in \(L^1\).
             \hat\sigma^2_n \coloneq \frac1n\sum_{i=1}^n (X_i-\mu)^2
             \overset{\as}\to \sigma^2,
         \)
+        \begin{solution}
+            Since \(\E{(X_i-\mu)^2} = \var{X_i} = \sigma^2\), this is
+            simply the strong law of large numbers for the independent and identically
+            distributed random variables \((X_i-\mu)^2\).
+        \end{solution}
 
         \item Without knowing the expectation, a reasonable variance estimator
         uses the sample mean \(\mean{X}_n\) instead of \(\mu\), that is
@@ -499,6 +516,31 @@ assumption that the random variables are in \(L^1\).
         Prove that it converges almost surely to \(\sigma^2\).
         
         \textbf{Hint:} First prove \(\hhat\sigma_n^2 = \hat\sigma_n^2 - (\mean{X}_n - \mu)^2\).
+        \begin{solution}
+            We have that
+            \begin{align}
+                \nonumber
+                \hhat\sigma_n^2
+                &= \frac1n\sum_{i=1}^n (X_i-\mean{X}_n)^2
+                \\
+                \nonumber
+                &= \frac1n\sum_{i=1}^n ((X_i-\mu) - (\mean{X}_n - \mu))^2
+                \\
+                \nonumber
+                &= \frac1n\sum_{i=1}^n (X_i-\mu)^2 - 2(X_i-\mu)(\mean{X}_n - \mu) + (\mean{X}_n - \mu)^2
+                \\
+                \nonumber
+                &= \frac1n\sum_{i=1}^n (X_i-\mu)^2 - 2(\mean{X}_n - \mu)^2 + (\mean{X}_n - \mu)^2
+                \\
+                \label{eq: variance estimator decomposition}
+                &= \hat\sigma_n^2 - (\mean{X}_n - \mu)^2.
+            \end{align}
+            By \(\mean{X}_n \overset{\as}\to \mu\) and continuous mapping
+            we have \((\mean{X}_n - \mu)^2 \overset{\as}\to 0\). Consequently,
+            by \(\hat\sigma_n^2 \overset{\as}\to \sigma^2\), joint convergence
+            (Theorem \ref{thm: joint convergence}) and continuous mapping we have
+            \(\hhat\sigma_n^2 \overset{\as}\to \sigma^2\).
+        \end{solution}
 
         \item Prove that \(\hhat\sigma_n^2\) is biased. Specifically, prove
         \[
@@ -506,11 +548,33 @@ assumption that the random variables are in \(L^1\).
         \]
         Prove the consistency of the unbiased estimator \(\tilde\sigma_n^2 \coloneq \tfrac{n}{n-1}\hhat\sigma_n^2\),
         that is \(\tilde\sigma_n^2 \overset{\as}\to \sigma^2\).
+        \begin{solution}
+            Bienaymé (Lemma \ref{lem: Bienaymé}) implies \(\var{\mean{X}_n} =
+            \frac1n \var{X_1}\) and therefore using \eqref{eq: variance estimator decomposition}
+            and the linearity of expectation we have
+            \begin{align*}
+                \E{\hhat\sigma_n^2}
+                &= \E{\hat\sigma_n^2} - \E{(\mean{X}_n - \mu)^2}
+                \\
+                &= \sigma^2 - \var{\mean{X}_n}
+                = \sigma^2 - \tfrac1n\var{X_1} = \tfrac{n-1}{n}\sigma^2.
+            \end{align*}
+            Consequently, \(\hhat\sigma_n^2\) is a biased estimator of
+            \(\sigma^2\) and \(\tilde\sigma_n^2\) is an unbiased estimator of
+            \(\sigma^2\) by linearity of the expectation.
+            Since \(\frac{n}{n-1} \to 1\) and \(\hhat\sigma_n^2 \overset{\as}\to
+            \sigma^2\) we have by joint convergence and continuous mapping that
+            \(\tilde\sigma_n^2 \overset{\as}\to \sigma^2\).
+        \end{solution}
 
         \item For every \(\sigma_n^2 \in \{\hat\sigma_n^2, \hhat\sigma_n^2,
         \tilde\sigma_n^2\}\) prove that \(\sqrt{\sigma_n^2}\) is a consistent
         estimator of the standard deviation \(\sigma\), that is 
         \(\sqrt{\sigma_n^2} \overset{\as}\to \sigma\).
+        \begin{solution}
+            Since \(\sqrt{x}\) is continuous for \(x \ge 0\) and \(\sigma_n^2,
+            \sigma^2 \ge 0\) the claim follows from continuous mapping.
+        \end{solution}
     \end{enumerate}
 \end{exercise}
 
@@ -564,6 +628,22 @@ where \(P_t^i\) is the price of the asset \(i\) at time \(t\) and
         \frac1n\sum_{t=0}^{n-1} R_t.
     \]
     Which one captures the long term growth of the investment better?
+    \begin{solution}
+        The geometric mean of the returns \(\mean{R}^g_n \coloneq \Bigl(\prod_{t=0}^{n-1} R_t\Bigr)^\frac1n\)
+        repeated for \(n\) periods gives the same return as the actual return over \(n\) periods:
+        \[
+            (\mean{R}^g_n)^n = \prod_{t=0}^{n-1} R_t = \frac{P_n}{P_0}.
+        \]
+        Consequently, \(r^g \coloneq \exp(\E{\ln(R_1)})\) is the long term
+        growth rate that stems from the law of large numbers
+        \[
+            \mean{R}^g_n  = \exp\Bigl(\frac1n \sum_{t=0}^{n-1} \ln(R_t)\Bigr) \overset{\as}\to r^g.
+        \]
+        In contrast, \(\E{R_1}\) may be arbitrarily far from \(r^g\) and
+        \(\E{R_1}^n\) is thereby not a good approximation of the return over \(n\) periods.
+        The arithmetic mean approximates \(\E{R_1}\) and is thereby not a good
+        approximation of the long term growth of the investment.
+    \end{solution}
 \end{exercise}
 
 \begin{exercise}[Diversification and systemic risk \Coffeecup\Coffeecup]
@@ -593,12 +673,61 @@ where \(P_t^i\) is the price of the asset \(i\) at time \(t\) and
     Prove that
     \begin{enumerate}[label=(\alph*),noitemsep]
         \item The expected return of the portfolio is given by \(\E{R^P} = 1 + \alpha\).
+        \begin{solution}
+            By linearity of the expectation and the assumptions on the random variables we have 
+            \[
+                \E{R^P}
+                = \frac1n \sum_{i=1}^n \E{R^i}
+                = \frac1n \sum_{i=1}^n (1 + \alpha + \beta \E{M} + \E{\epsilon^i})
+                = 1 + \alpha.
+                \qedhere
+            \]
+        \end{solution}
+        
         \item The variance of the portfolio approaches \(\beta^2\) from above as the
         diversification grows, that is \(n\to \infty\). 
-
         \textbf{Hint:} Lemma \ref{lem: Bienaymé}.
+        \begin{solution}
+            To use Bienaymé (Lemma \ref{lem: Bienaymé}) we calculate the
+            variance and covariance. The covariance is given by
+            \begin{align*}
+                \cov{R^i}{R^j}
+                &= \E{(R^i - \E{R^i})(R^j - \E{R^j})}
+                \\
+                &= \E{(\beta M + \epsilon^i)(\beta M + \epsilon^j)}
+                \\
+                &= \beta^2 \underbrace{\E{M^2}}_{=1} + \beta \underbrace{\E{M\epsilon^i}}_{=0} +
+                \beta \underbrace{\E{M\epsilon^j}}_{=0} +
+                \E{\epsilon^i\epsilon^j}
+                = \beta^2 + \E{\epsilon^i\epsilon^j}.
+            \end{align*}
+            Consequently, if \(i \neq j\) we have \(\cov{R^i}{R^j} = \beta^2\) and if \(i=j\) we have
+            \[
+                \var{R^i} = \beta^2 + \var{\epsilon^i} \le \beta^2 + \sigma_\epsilon^2
+            \]
+            Using Bienaymé we have consequently have
+            \begin{align*}
+                \abs{\var{R^P} - \beta^2}
+                &= \abs[\Big]{\frac1{n^2}\sum_{i=1}^n \var{R^i} + \frac1{n^2}\sum_{i\neq j} \cov{R^i}{R^j} - \beta^2}
+                \\
+                &\le \tfrac1{n}(\beta^2 + \sigma_\epsilon^2) + \abs{(1-\tfrac1{n})\beta^2 - \beta^2}
+                \\
+                &= \frac{\beta^2 + \sigma_\epsilon^2 + \beta^2}{n}
+                \to 0.
+                \qedhere
+            \end{align*}
+        \end{solution}
+
     \end{enumerate}
 \end{exercise}
+
+\begin{remark}
+    Diversification over companies is additive, while the long term view
+    is multiplicative. This makes it somewhat delicate to combine both views
+    into one. Nevertheless both views reduce the variance and thereby the risk
+    of the investment by the law of large numbers.
+\end{remark}
+
 
 \begin{exercise}[Glivenko-Cantelli theorem \Coffeecup\Coffeecup\Coffeecup]
     This exercise is an extension of Exercise \ref{ex: mean of indicators} where
@@ -631,16 +760,127 @@ where \(P_t^i\) is the price of the asset \(i\) at time \(t\) and
             \label{eq: discretization max to zero}            
             R_n \coloneq \max_{i\in \set{1,\dots, k}} \max\set[\big]{\abs{F_n(x_i) - F(x_i)}, \abs{G_n(x_i) - G(x_i)}} \overset{\as}\to 0.
         \end{equation}
+        \begin{solution}
+            The first claim follows from the law of large numbers as in Exercise \ref{ex: mean of indicators}.
+            The claim \eqref{eq: discretization max to zero} then follows from the norm equivalence
+            in \(\real^{2k}\), that is there exists a constant \(C\) such that
+            \[
+                \norm{x}_\infty \le C \norm{x}_2
+            \]
+            As we have convergence in \(\norm{\cdot}_2\) we thereby also have
+            convergence in \(\norm{\cdot}_\infty\) and consequently \(R_n
+            \overset{\as}\to 0\).
+        \end{solution}
 
-        \item Recall the properties of the quantile function \(F^\leftarrow\) (Exercise \ref{ex: stochastic simulation})
-        and choose \(x_1, \dots, x_{k-1}\) as \(x_i \coloneq F^\leftarrow\bigl(\frac{i}k\bigr)\).
-        Use \eqref{eq: discretization max to zero} to prove that
-        almost surely (for all \(\omega \in N^\complement\) for some set \(N\) with \(\prob{N}=0\))
+        \item\label{eq: glivenko cantelli limsup bound} Recall the properties of the quantile function \(F^\leftarrow\) (Exercise \ref{ex: stochastic simulation})
+        and choose \(x_1, \dots, x_k\) as \(x_i \coloneq F^\leftarrow\bigl(\frac{i}k\bigr)\).
+        Prove
+        \begin{equation}
+            \label{eq: discretization properties}    
+            G(x_i) \le \tfrac{i}k \le F(x_i).
+        \end{equation}
+        Then use this and \eqref{eq: discretization max to zero} to prove that
         \[
-            \limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} \le \frac1k + \limsup_{n\to \infty}R_n \le \frac1k.
+            \limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} \le \tfrac1k + \limsup_{n\to \infty}R_n \le \tfrac1k.
         \]
+        \begin{solution}
+            The upper bound in \eqref{eq: discretization properties} follows from Exercise \ref{ex: stochastic simulation}
+            \ref{it: F(F-(p)) > p} and the lower bound follows from the fact that
+            \(G(x) \le F(x) \le \frac{i}k\) for all \(x < x_i\) due to
+            \[
+                x_i = F^\leftarrow\bigl(\tfrac{i}k\bigr)
+                = \inf\set[\big]{x\in \real: F(x) \ge \tfrac{i}k}.
+            \]
+            and left continuity of \(G(x)\) by
+            \begin{align*}
+                G(x) = \prob{X_1 < x}
+                &= \prob[\Big]{\bigcup_{n\in \nat} \set{X_1 < y- \tfrac1n}}
+                \\
+                &= \lim_{n\to \infty} \prob{X_1 < y} = \lim_{n\to\infty} G(y - \tfrac1n).
+            \end{align*}
+            On to the second claim: For any \(x\in (x_i, x_{i+1})\) we have
+            \begin{align*}
+                F_n(x)
+                \overset{x< x_{i+1}}&\le G_n(x_{i+1})
+                \\
+                \overset{\eqref{eq: discretization max to zero}}&\le G(x_{i+1}) + R_n
+                \\
+                \overset{\eqref{eq: discretization properties}}&\le F(x_i) + \frac1k + R_n
+                \overset{x_i < x}\le F(x) + \frac1k + R_n
+            \end{align*}
+            Similarly, we have for any \(x\in (x_i, x_{i+1})\) that
+            \begin{align*}
+                F_n(x)
+                \overset{x>x_i}&\ge F_n(x_i)
+                \\
+                \overset{\eqref{eq: discretization max to zero}}&\ge F(x_i) - R_n
+                \\
+                \overset{\eqref{eq: discretization properties}}&\ge G(x_{i+1}) - \tfrac1k - R_n
+                \\
+                \overset{x_{i+1} > x}&\ge F(x) - \tfrac1k - R_n.
+            \end{align*}
+            Put together, we have for any \(x\in (x_i, x_{i+1})\) and any \(i \in \set{1,\dots, k-1}\)
+            \begin{equation}
+                \label{eq: glivenko cantelli bound}    
+                \abs{F_n(x) - F(x)} \le \frac1k + R_n
+            \end{equation}
+            Since we clearly also have this for for \(x = x_i\) by definition of
+            \(R_n\). What is therefore left are only the cases \(x< x_1\) and \(x>x_k\). For
+            \(x< x_1\) we have
+            \[
+                F_n(x) \overset{x < x_1}\le G_n(x_1)
+                \overset{\eqref{eq: discretization max to zero}}\le G(x_1) + R_n
+                \overset{\eqref{eq: discretization properties}}\le \tfrac1k + R_n
+                \overset{F(x) \ge 0}\le F(x) + \tfrac1k + R_n,
+            \]
+            and
+            \[
+                F_n(x) \overset{x < x_1}\ge 0 
+                \overset{\eqref{eq: discretization properties}}\ge G(x_1) - \tfrac1k
+                \overset{x< x_1}\ge F(x) - \tfrac1k.
+            \]
+            Together these result in \eqref{eq: glivenko cantelli bound} for \(x < x_1\). For \(x > x_k\) we have
+            \[
+                F_n(x) \overset{x > x_k}\le 1
+                \overset{\eqref{eq: discretization properties}}\le F(x_k) \le F(x)
+            \]
+            and
+            \[
+                F_n(x) \overset{x > x_k}\ge F_n(x_k)
+                \overset{\eqref{eq: discretization max to zero}}\ge F(x_k) - R_n
+                \overset{\eqref{eq: discretization properties}}\ge 1 - R_n
+                \overset{F(x) \le 1}\ge F(x) - R_n.
+            \]
+            Together they result in \eqref{eq: glivenko cantelli bound} for \(x > x_k\). In summary, we have \eqref{eq: glivenko cantelli bound} 
+            for all \(x\in \real\) and therefore almost surely
+            \[
+                \limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} \le \tfrac1k + \limsup_{n\to \infty}R_n \overset{\eqref{eq: discretization max to zero}}= \tfrac1k.
+                \qedhere
+            \]
+        \end{solution}
 
         \item Deduce the ``Glivenko-Cantelli theorem'' with a union bound over \(k\).
+        \begin{solution}
+            We have
+            \begin{align*}
+                &\prob[\Big]{\limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} > 0}
+                \\
+                &= \prob[\Big]{\bigcup_{k\in \nat}\limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} > \tfrac1k}
+                \\
+                &= \lim_{k\to\infty}\prob[\Big]{\limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} > \tfrac1k}
+                \\
+                \overset{\ref{eq: glivenko cantelli limsup bound}}&= \lim_{k\to \infty} 0 =0.
+            \end{align*}
+            and thereby
+            \begin{align*}
+                &\prob[\Big]{\lim_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} = 0}
+                \\
+                &= 1- \prob[\Big]{\limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} > 0}
+                \\
+                &= 1.
+                \qedhere
+            \end{align*}
+        \end{solution}
     \end{enumerate}
 \end{exercise}
 
