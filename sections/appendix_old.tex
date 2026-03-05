@@ -12,9 +12,9 @@ $X_1+X_2\sim\Poisson(\lambda_1+\lambda_2)$.
 \begin{proof}
 We compute the probability mass function of $X_1+X_2$:
 \begin{align*}
-   & \Prob*{X_1+X_2=n}\\    
-={}& \sum_{k=0}^n \Prob*{X_1=k,X_2=n-k}\\
-={}& \sum_{k=0}^n \Prob*{X_1=k}\Prob*{X_2=n-k}\\
+   & \prob*{X_1+X_2=n}\\    
+={}& \sum_{k=0}^n \prob*{X_1=k,X_2=n-k}\\
+={}& \sum_{k=0}^n \prob*{X_1=k}\prob*{X_2=n-k}\\
 ={}& \sum_{k=0}^n e^{-\lambda_1}\frac{\lambda_1^k}{k!}
 e^{-\lambda_2}\frac{\lambda_2^{n-k}}{(n-k)!}\\
 ={}& 
@@ -36,7 +36,7 @@ The characteristic function of $\mathrm{Poisso}(\lambda)$ distribution is the fu
 Let $X$ denote a $\mathrm{Poisson}(\lambda)$ random variable. Then, for any $t\in\real$ we have
 \begin{align*}
 \phi(t) ={} & \E*{e^{itX}}\\
-={} & \sum_{k=0}^\infty e^{itk} \, \Prob*{X=k}\\
+={} & \sum_{k=0}^\infty e^{itk} \, \prob*{X=k}\\
 ={} & \sum_{k=0}^\infty e^{itk} \, e^{-\lambda} \, \frac{\lambda^k}{k!}\\
 ={} & e^{-\lambda} \sum_{k=0}^\infty \frac{(\lambda e^{it})^k}{k!}\\
 ={} & e^{-\lambda} \, e^{\lambda e^{itk}}\\
@@ -71,9 +71,9 @@ If $X\sim\Binomial(n,p)$, $Y\sim\Binomial(m,p)$, and $X\perp Y$, then $X+Y\sim\B
 \begin{proof}
 We compute the probability mass function of $X+Y$:
 \begin{align*}
-& \Prob*{X+Y=k}\\
-={} & \sum_{i=0}^{k} \Prob*{X=i,Y=k-i}\\
-={} & \sum_{i=0}^{k} \Prob*{X=i}\Prob*{Y=k-i}\\
+& \prob*{X+Y=k}\\
+={} & \sum_{i=0}^{k} \prob*{X=i,Y=k-i}\\
+={} & \sum_{i=0}^{k} \prob*{X=i}\prob*{Y=k-i}\\
 ={} & \sum_{i=0}^{k} \binom{n}{i}p^i(1-p)^{n-i}
 \binom{m}{k-i}p^{k-i}(1-p)^{m-k+i}\\
 ={} & p^k(1-p)^{n+m-k}\sum_{i=0}^{k} \binom{n}{i}\binom{m}{k-i}\\
@@ -94,7 +94,7 @@ Then
 \begin{proof}
 \begin{align*}
  &  \E*{e^{itX}}\\
-={}&\sum_{k=0}^n e^{itk} \Prob*{X=k}\\
+={}&\sum_{k=0}^n e^{itk} \prob*{X=k}\\
 ={}&\sum_{k=0}^n e^{itk} \binom{n}{k} p^k (1-p)^{n-k}\\
 ={}&\sum_{k=0}^n \binom{n}{k} (e^{it}p)^k (1-p)^{n-k}\\
 ={}&(1-p+pe^{it})^n\;.
@@ -125,10 +125,10 @@ We compute the conditional probability mass function of $X_1$ given $X_1+X_2$:
 \begingroup
 \addtolength{\jot}{1em}
 \begin{align*}
-    & \Prob*{X_1=k\given X_1+X_2=n}\\
-={} & \frac{\Prob*{X_1=k,X_1+X_2=n}}{\Prob*{X_1+X_2=n}}\\
-={} & \frac{\Prob*{X_1=k,X_2=n-k}}{\Prob*{X_1+X_2=n}}\\
-={} & \frac{\Prob*{X_1=k}\Prob*{X_2=n-k}}{\Prob*{X_1+X_2=n}}\\
+    & \prob*{X_1=k\given X_1+X_2=n}\\
+={} & \frac{\prob*{X_1=k,X_1+X_2=n}}{\prob*{X_1+X_2=n}}\\
+={} & \frac{\prob*{X_1=k,X_2=n-k}}{\prob*{X_1+X_2=n}}\\
+={} & \frac{\prob*{X_1=k}\prob*{X_2=n-k}}{\prob*{X_1+X_2=n}}\\
 ={} & \frac{\displaystyle
 e^{-\lambda_1}\frac{\lambda_1^{k  }}{k!    } 
 e^{-\lambda_2}\frac{\lambda_2^{n-k}}{(n-k)!}

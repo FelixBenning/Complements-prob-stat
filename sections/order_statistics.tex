@@ -6,7 +6,7 @@ Let $X_1,X_2,\ldots,X_n$ be a sequence of i.i.d.\ random variables.
 Suppose their distribution function is continuous.
 Then there cannot be any ties i.e., for any $i\neq j$
 \[
-\Prob*{X_i = X_j } = 0 \;.
+\prob*{X_i = X_j } = 0 \;.
 \]
 Then the $i$'th value among $X_1,\ldots,X_n$ in increasing order is
 denoted by $X_{(i)}$ and is called the $i$'th \textbf{order statistic}. 
@@ -20,7 +20,7 @@ In particular, $X_{(1)}$ is the minimum and $X_{(n)}$ is the maximum among $X_1,
 
 Suppose $X_1$ has distribution function $F$ and density function $f$. Let $G$ denote the distribution function of $X_{(n)}$.
 \[
-G(x)=\Prob*{X_{(n)}\leq x} = \Prob*{\cap_{m=1}^n\{X_m\leq x\}} = \prod_{m=1}^n \Prob*{X_m\leq x} = (F(x))^m\;.
+G(x)=\prob*{X_{(n)}\leq x} = \prob*{\cap_{m=1}^n\{X_m\leq x\}} = \prod_{m=1}^n \prob*{X_m\leq x} = (F(x))^m\;.
 \]
 Let $g$ denote the distribution function of $X_{(n)}$. Then
 \[
@@ -36,7 +36,7 @@ which is the density function of $\mathrm{Beta}(m,1)$.
 
 Suppose $X_1$ has distribution function $F$ and density function $f$. Let $G$ denote the distribution function of $X_{(1)}$.
 \[
-G(x)=\Prob*{X_{(1)}\leq x} = 1-\Prob*{X_{(1)}>x} = 1-\Prob*{\cap_{m=1}^n\{X_m>x\}} = 1-\prod_{m=1}^n \Prob*{X_m>x} = 1-(1-F(x))^m\;.
+G(x)=\prob*{X_{(1)}\leq x} = 1-\prob*{X_{(1)}>x} = 1-\prob*{\cap_{m=1}^n\{X_m>x\}} = 1-\prod_{m=1}^n \prob*{X_m>x} = 1-(1-F(x))^m\;.
 \]
 Let $g$ denote the distribution function of $X_{(n)}$. Then
 \[
@@ -97,9 +97,9 @@ For example, suppose $X_1,X_2$ are i.i.d.\ $\mathrm{Uniform}[0,1]$ random variab
 \end{figure}
 \noindent Suppose we take a small set around $(0.4,0.8)$, let us denote it by $B$, in the figure it is depicted by a red ball. Corresponding to $B$ we get two regions $B_1$ and $B_2$, where $B_1$ is $B$ itself, $B_2$ is reflection of $B$. If $(X_{(1)},X_{(2)})$ belongs to $B$ then $(X_1,X_2)$ must belong to either $B_1$ or $B_2$.
 \[
-\Prob*{(X_{(1)},X_{(2)})\in B} = 
-\Prob*{(X_{1},X_{2})\in B_1} + 
-\Prob*{(X_{1},X_{2})\in B_2} \;. 
+\prob*{(X_{(1)},X_{(2)})\in B} = 
+\prob*{(X_{1},X_{2})\in B_1} + 
+\prob*{(X_{1},X_{2})\in B_2} \;. 
 \]
 Both terms on the right are approximately
 \[

@@ -52,7 +52,7 @@ Technically speaking, we are only using that pairwise covariances are $0$, which
 \begin{itemize}
     \item Example of two random variables which are not independent but their covariance is $0$: $X$ and $X^2$ where $X\sim\mathcal{N}(0,1)$.
     \item Example of three random variables which pairwise independent but not independent jointly: $XY,YZ,ZX$ where
-    $X,Y,Z$ are i.i.d.\ with $\Prob*{X=1}=\Prob*{X=-1}=1/2$. 
+    $X,Y,Z$ are i.i.d.\ with $\prob*{X=1}=\prob*{X=-1}=1/2$. 
 \end{itemize}
 \end{tcolorbox}
 
@@ -112,7 +112,7 @@ almost surely. From CLT we get
 \end{equation}
 in distribution i.e., for all $x\in\real$
 \begin{equation}
-\Prob*{S_n\leq x\sqrt{n}}\to\int_{-\infty}^x
+\prob*{S_n\leq x\sqrt{n}}\to\int_{-\infty}^x
 \frac{1}{\sqrt{2\pi}}e^{-t^2/2}dt.
 \end{equation}
 
@@ -363,7 +363,7 @@ The difference is
 
 Number of paths of length $2n$ starting from $(0,0)$ that do not touch the $X$-axis is equal to the number of paths that start from $(0,0)$ and end at $(2n,0)$. Equivalently,
 \[
-\Prob*{S_1\neq 0, S_2\neq 0,\ldots, S_{2n}\neq 0} = \Prob*{S_{2n}=0}\;.
+\prob*{S_1\neq 0, S_2\neq 0,\ldots, S_{2n}\neq 0} = \prob*{S_{2n}=0}\;.
 \]    
 \end{theorem}
 
@@ -408,7 +408,7 @@ Thus $L_n$ denotes the last time the random walk visits $0$ by time $n$. The min
 \begin{theorem}[The Arc-Sine Law for Last Visits]\label{thm:arcsinelaw}
 $L_n/n$ converges in distribution to the arc-sine law:
 \[
-\Prob*{\frac{L_n}{n}\leq x}\to\frac{2}{\pi}\arcsin(\sqrt{x})\;.
+\prob*{\frac{L_n}{n}\leq x}\to\frac{2}{\pi}\arcsin(\sqrt{x})\;.
 \]
 This distribution function has density
 \[
@@ -455,7 +455,7 @@ f(x)=\frac{1}{\pi}\frac{1}{\sqrt{x(1-x)}}
 \begin{proposition}[Exact Distribution of $L_n$]    
 Let $N=n/2$ if $n$ is even. Let $N=(n-1)/2$ if $n$ is odd. Then
 \[
-\Prob*{L_n=2m} = \frac{1}{2^{2N}}\binom{2m}{m}\binom{2N-2m}{N-m}\;.
+\prob*{L_n=2m} = \frac{1}{2^{2N}}\binom{2m}{m}\binom{2N-2m}{N-m}\;.
 \]    
 \end{proposition}
 
@@ -470,7 +470,7 @@ Number of paths from $(2m,0)$ to $(2n,0)$ that do not touch the $X$-axis is
 \[
 \binom{2n-2m}{n-m}.
 \]
-Hence we get the result. For the case $n$ is odd, we can say $\Prob*{L_n=2m}=\Prob*{L_{n-1}=2m}$ and we can apply the case of even $n$ as now $n-1$ is even.
+Hence we get the result. For the case $n$ is odd, we can say $\prob*{L_n=2m}=\prob*{L_{n-1}=2m}$ and we can apply the case of even $n$ as now $n-1$ is even.
 \end{proof}
 
 \begin{center}
@@ -524,7 +524,7 @@ This result yields a nice, not-so-obvious combinatorial identity, which we recor
 
 \begin{proposition}[Approximate Distribution of $L_n$]    
 \[
-\Prob*{L_n=2m} \approx \frac{1}{\pi}\frac{1}{\sqrt{m(N-m)}}\;.
+\prob*{L_n=2m} \approx \frac{1}{\pi}\frac{1}{\sqrt{m(N-m)}}\;.
 \]    
 \end{proposition}
 
@@ -542,15 +542,15 @@ Consider $0<a<b<1$.
 \begingroup
 %\addtolength{\jot}{1em}
 \begin{align*}
-& \Prob*{\frac{L_n}{n}\in(a,b]} \\
-={} & \Prob*{na<L_n\leq nb} \\
-={} & \Prob*{[na]+1\leq L_n\leq[nb]} \\
+& \prob*{\frac{L_n}{n}\in(a,b]} \\
+={} & \prob*{na<L_n\leq nb} \\
+={} & \prob*{[na]+1\leq L_n\leq[nb]} \\
 ={} & \sum_{\ell = [na]+1}^{[nb]}
-\Prob*{L_n = \ell}\\
+\prob*{L_n = \ell}\\
 ={} & \sum_{\substack{\ell = [na]+1\\ \ell \mbox{ even}}}^{[nb]}
-\Prob*{L_n = \ell}\\
+\prob*{L_n = \ell}\\
 ={} & \sum_{m = [na/2]+1}^{[nb/2]}
-\Prob*{L_n = 2m}\\
+\prob*{L_n = 2m}\\
 \approx{} & \sum_{m = [na/2]+1}^{[nb/2]} 
 \frac{1}{\pi}\frac{1}{\sqrt{m([n/2]-m)}}\\
 \approx{} & \sum_{m=[na/2]+1}^{[nb/2]} 
@@ -647,9 +647,9 @@ Therefore $(1+X_i)/2$ is a Bernoulli $1/2$ random variable. Therefore
 \frac{1+X_n}{2}
 =\frac{n+S_n}{2}
 \end{equation}
-has $\mathrm{Binomial}(n,p)$ distribution. Another way to describe the exact distribution is the following: if $n$ and $r$ have different parity then $\Prob*{S_n=r}=0$, if $n$ and $r$ have the same parity then 
+has $\mathrm{Binomial}(n,p)$ distribution. Another way to describe the exact distribution is the following: if $n$ and $r$ have different parity then $\prob*{S_n=r}=0$, if $n$ and $r$ have the same parity then 
 \[
-\Prob*{S_n=r} = \binom{n}{\frac{n+r}{2}}p^{\frac{n+r}{2}}(1-p)^{n-\frac{n+r}{2}}.
+\prob*{S_n=r} = \binom{n}{\frac{n+r}{2}}p^{\frac{n+r}{2}}(1-p)^{n-\frac{n+r}{2}}.
 \]
 
 \section{Approximate Distribution}
@@ -664,7 +664,7 @@ almost surely. From CLT we get
 \end{equation}
 in distribution i.e., for all $x\in\real$
 \begin{equation}
-\Prob*{S_n\leq n(p-q)+x\sqrt{4npq}}\to\int_{-\infty}^x
+\prob*{S_n\leq n(p-q)+x\sqrt{4npq}}\to\int_{-\infty}^x
 \frac{1}{\sqrt{2\pi}}e^{-t^2/2}dt\;.
 \end{equation}
 
@@ -682,7 +682,7 @@ T_{-b} \coloneqq \min\set*{ n \given S_n = -b}\;.
 If the random walk does not hit $-b$, we let $T_{-b}=\infty$. If $p<1/2$ i.e., $p-q<0$, then $S_n\to-\infty$ almost surely; hence $T_{-b}<\infty$ with probability $1$.
 
 \newpage
-We want to find an expression for $\Prob*{T_a<T_{-b}}$. The event 
+We want to find an expression for $\prob*{T_a<T_{-b}}$. The event 
 $E\coloneqq\set*{T_a<T_{-b}}$ means:
 \begin{itemize}
 \item either, the random walk hits $a$ but never hits $-b$; or
@@ -697,7 +697,7 @@ Let $F$ be the event $\set*{T_{-b}<T_a}$. It means
 
 Note that, $E$ and $F$ are mutually exclusive i.e., $E\cap F=\emptyset$.
 
-Also note that, $\Prob*{E\cup F}=1$ i.e., with probability $1$, either $E$ or $F$ must happen:
+Also note that, $\prob*{E\cup F}=1$ i.e., with probability $1$, either $E$ or $F$ must happen:
 \begin{itemize}
     \item if the random walk hits $a$ but not $-b$, then $E$ happens;
     \item if the random walk hits $-b$ but not $a$, then $F$ happens;
@@ -708,7 +708,7 @@ Also note that, $\Prob*{E\cup F}=1$ i.e., with probability $1$, either $E$ or $F
 
 Therefore 
 \[
-\Prob*{E} + \Prob*{F} = 1\;.
+\prob*{E} + \prob*{F} = 1\;.
 \]
 
 For $x\in\set*{-b,-b+1,\ldots,-1,0,1,\ldots,a-1,a}$, let $f(x)$ denote the probability of the event $E$ if the random walk starts from $x$ (instead of $0$). Thus, we want $f(0)$. Conditioning on the first step yields the following recursion for $f$:
@@ -730,13 +730,13 @@ f(x) = \frac{(q/p)^x-(q/p)^{-b}}{(q/p)^a-(q/p)^{-b}}\;.
 \]
 Plugging in $x=0$ yields
 \begin{equation}\label{eq:assrw.main}
-\Prob*{T_a<T_{-b}} = \frac{1-(q/p)^{-b}}{(q/p)^a-(q/p)^{-b}}\;.
+\prob*{T_a<T_{-b}} = \frac{1-(q/p)^{-b}}{(q/p)^a-(q/p)^{-b}}\;.
 \end{equation}
 \newpage
 
 Let us now fix our attention to the case $p>q$. In this case $(q/p)^{-b}>1$. Thus the numerator and the denominator of the fractional expression at the r.h.s.\ of \eqref{eq:assrw.main} is negative. So we rewrite \eqref{eq:assrw.main} in several alternative ways such that the numerator and the denominator are positive:
 \[
-\Prob*{T_a<T_{-b}} = \frac{(q/p)^{-b}-1}{(q/p)^{-b}-(q/p)^{a}} 
+\prob*{T_a<T_{-b}} = \frac{(q/p)^{-b}-1}{(q/p)^{-b}-(q/p)^{a}} 
 = \frac{(p/q)^{b}-1}{(p/q)^{b}-(p/q)^{-a}}
 = \frac{1-(q/p)^{b}}{1-(q/p)^{a+b}} \;.
 \]
@@ -754,28 +754,28 @@ E_a \downarrow E_\infty\;,
 \]
 and 
 \[
-\Prob*{E_\infty} 
-= \lim_{a\to\infty} \Prob*{E_a} 
+\prob*{E_\infty} 
+= \lim_{a\to\infty} \prob*{E_a} 
 = \lim_{a\to\infty} \frac{(p/q)^{b}-1}{(p/q)^{b}-(p/q)^{-a}} 
 = \frac{(p/q)^{b}-1}{(p/q)^{b}} 
 = 1 - (q/p)^b\;. 
 \]
 But what does the event $E_\infty$ mean? If $E_\infty$ happens, that means $T_{-b}$ is bigger than all $T_a$. And we know all the $T_a$s are finite and definitely $T_1<T_2<T_3<\cdots$. Thus $E_\infty$ is just the event $\{T_{-b}=\infty\}$. Therefore
 \[
-\Prob*{T_{-b}=\infty} = 1 - (q/p)^b
+\prob*{T_{-b}=\infty} = 1 - (q/p)^b
 \]
 or 
 \[
-\Prob*{T_{-b}<\infty} = (q/p)^b\;.
+\prob*{T_{-b}<\infty} = (q/p)^b\;.
 \]
 Another way of describing the event $T_{-b}<\infty$ is that $-\min_n S_n \geq b$.
 Thus
 \[
-\Prob*{-\min_n S_n\geq b} = (q/p)^b\;.
+\prob*{-\min_n S_n\geq b} = (q/p)^b\;.
 \]
 Thus $X \coloneqq -\min_n S_n$ is a Geometric random variable. For $k=0,1,2,\ldots$
 \[
-\Prob*{X = k} = (q/p)^{k} - (q/p)^{k+1} = (1-q/p)(q/p)^k\;.
+\prob*{X = k} = (q/p)^{k} - (q/p)^{k+1} = (1-q/p)(q/p)^k\;.
 \]
 In particular,
 \[

@@ -55,14 +55,6 @@
 \DeclarePairedDelimiter{\set}{\{}{\}}
 \DeclarePairedDelimiter{\norm}{\|}{\|}
 \DeclarePairedDelimiter{\scp}{\langle}{\rangle}
-\DeclarePairedDelimiterXPP{\E}[1]{\ESymb}{[}{]}{}{#1}
-\DeclarePairedDelimiterXPP{\var}[1]{\varSymb}{[}{]}{}{#1}
-\DeclarePairedDelimiterXPP{\cov}[2]{\covSymb}{[}{]}{}{#1, #2}
-\DeclarePairedDelimiterXPP{\Cov}[1]{\CovSymb}{[}{]}{}{#1}
-\newcommand*{\covSymb}{\mathsf{cov}}
-\newcommand*{\varSymb}{\mathsf{var}}
-\newcommand*{\CovSymb}{\mathsf{Cov}}
-\DeclarePairedDelimiterXPP{\Prob}[1]{\Pr}{\{}{\}}{}{#1}
 \NewDocumentCommand{\Indicator}{s m}{%
   \IfBooleanTF{#1}
     {\mathbf{1}_{\left\{#2\right\}}} % starred: wrap in braces
@@ -94,9 +86,18 @@
 \newcommand*{\metric}{d}
 
 % Probability
-\newcommand{\ESymb}{\mathsf{E}}
-\newcommand*{\median}{\mathsf{M}}
-\renewcommand{\Pr}{\mathsf{P}}
+\newcommand{\eSym}{\mathsf{E}}
+\DeclarePairedDelimiterXPP{\E}[1]{\eSym}{[}{]}{}{#1}
+\newcommand*{\varSym}{\mathsf{var}}
+\DeclarePairedDelimiterXPP{\var}[1]{\varSym}{[}{]}{}{#1}
+\newcommand*{\covSym}{\mathsf{cov}}
+\DeclarePairedDelimiterXPP{\cov}[2]{\covSym}{[}{]}{}{#1, #2}
+\newcommand*{\CovSym}{\mathsf{Cov}}
+\DeclarePairedDelimiterXPP{\Cov}[1]{\CovSym}{[}{]}{}{#1}
+\DeclarePairedDelimiterXPP{\prob}[1]{\pSym}{\{}{\}}{}{#1}
+\newcommand*{\mSym}{\mathsf{M}}
+\DeclarePairedDelimiterXPP{\median}[1]{\mSym}{[}{]}{}{#1}
+\newcommand*{\pSym}{\mathsf{P}}
 \newcommand*{\density}{\varphi}
 \DeclareMathOperator{\iid}{iid}
 \newcommand*{\given}{\mid}

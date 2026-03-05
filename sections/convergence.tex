@@ -32,7 +32,7 @@ this section we will define and relate them.
     \begin{itemize}
         \item \textbf{almost surely}, or \textbf{with probability one}, denoted by \(X_n \overset{\as}\to X\), if
         \[
-            \Prob[\Big]{\lim_{n \to \infty} X_n = X} = 1.
+            \prob[\Big]{\lim_{n \to \infty} X_n = X} = 1.
         \]
 
         \item \textbf{in \(L^p\)} for \(p \geq 1\), denoted by \(X_n \overset{L^p}\to X\), if \(\E{\norm{X_n}^p} < \infty\) for all \(n\), \(\E{\norm{X}^p} < \infty\)
@@ -43,7 +43,7 @@ this section we will define and relate them.
 
         \item \textbf{in probability}, denoted by \(X_n \overset{p}\to X\), if for all \(\epsilon > 0\)
         \[
-            \lim_{n \to \infty} \Prob[\big]{\norm{X_n- X} \ge \epsilon} = 0.
+            \lim_{n \to \infty} \prob[\big]{\norm{X_n- X} \ge \epsilon} = 0.
         \]
 
         \item \textbf{in distribution}, denoted by \(X_n \overset{d}\to X\), if
@@ -53,7 +53,7 @@ this section we will define and relate them.
             \item\label{it: b.cont} For all \(f\colon \domain \to \real\) bounded, continuous we have \eqref{eq: fun
             convergence},
             \item\label{it: b.a.s. cont} For all \(f\colon \domain \to \real\) bounded, measurable, almost surely
-            continuous in \(X\), that is \(\Prob[\big]{f\text{
+            continuous in \(X\), that is \(\prob[\big]{f\text{
             continuous in }X} = 1\), we have \eqref{eq:
             fun convergence}.
         \end{enumerate}
@@ -64,25 +64,25 @@ this section we will define and relate them.
         \end{equation}
         \begin{enumerate}[label=(S.\arabic*), nosep,leftmargin=3em]
             \item\label{it: s.closed} For all \underline{closed} sets \(A\) we have
-            \[\limsup_{n\in \nat} \Prob{X_n \in A} \le \Prob{X \in A}.\]
+            \[\limsup_{n\in \nat} \prob{X_n \in A} \le \prob{X \in A}.\]
             \item\label{it: s.open} For all \underline{open} sets \(O\) we have 
-            \[\liminf_{n\in \nat }\Prob{X_n \in O} \ge \Prob{X \in O}.\]
-            \item\label{it: s.zero boundary} For all \underline{measurable} sets \(B\) with \underline{\(\Prob{X \in \partial B} = 0\)} we have
+            \[\liminf_{n\in \nat }\prob{X_n \in O} \ge \prob{X \in O}.\]
+            \item\label{it: s.zero boundary} For all \underline{measurable} sets \(B\) with \underline{\(\prob{X \in \partial B} = 0\)} we have
             \[
-                \lim_{n \to \infty} \Prob{X_n \in B} = \Prob{X \in B}.
+                \lim_{n \to \infty} \prob{X_n \in B} = \prob{X \in B}.
             \]
         \end{enumerate}
         If \(\domain = \real\) the following condition is also equivalent:
         \begin{enumerate}[label={(DF)},nosep,leftmargin=3em]
             \item\label{it: df} \textbf{Convergence of distribution functions}:
-            for all \(x \in \real\) satisfying \(\Prob{X = x} = 0\),
+            for all \(x \in \real\) satisfying \(\prob{X = x} = 0\),
             \[
-                \lim_{n \to \infty} \Prob{X_n \leq x} = \Prob{X \leq x}.
+                \lim_{n \to \infty} \prob{X_n \leq x} = \prob{X \leq x}.
             \]
         \end{enumerate}
     \end{itemize}
     We say that two random variables \(X\) and \(Y\) are \textbf{almost surely equal},
-    denoted by \(X \overset{\as}= Y\), if \(\Prob{X = Y} = 1\).
+    denoted by \(X \overset{\as}= Y\), if \(\prob{X = Y} = 1\).
     The limit \(X\) of a convergent sequence of random variables \((X_n)_{n\in \nat}\) is \textbf{almost
     surely unique}, if
     \[
@@ -105,15 +105,15 @@ This is useful as it is sufficient to prove convergence for the smallest
 class of Lipschitz functions to conclude convergence for the larger classes.
 The second big concept is that the \textbf{probabilities of sets converge},
 with the caveat that probability mass may converge outside the set at the boundary
-of the set. As an example consider the deterministic sequence \(\Prob{X_n =
-\frac1n} =1\). Then we have \(\Prob{X_n \in (0,1]} =1\) for all \(n\) but for
-the limit \(X\) we have \(\Prob{X = 0} = 1\).
+of the set. As an example consider the deterministic sequence \(\prob{X_n =
+\frac1n} =1\). Then we have \(\prob{X_n \in (0,1]} =1\) for all \(n\) but for
+the limit \(X\) we have \(\prob{X = 0} = 1\).
 Thus open sets may lose probability mass at the boundary, while closed sets
 may gain probability mass at the boundary. If the boundary has zero mass
 in the limit however, then the probabilities converge.
 The convergence of distribution functions is just a special case, since
 \[
-    \Prob{X_n \le x} = \Prob{X_n \in (-\infty, x]}.
+    \prob{X_n \le x} = \prob{X_n \in (-\infty, x]}.
 \]
 So we simply consider the sets \((-\infty, x]\) for all \(x\in \real\)
 for which the boundary \(\{x\}\) has zero probability mass in the limit.
@@ -191,7 +191,7 @@ theory.
     non-decreasing function and \(X\) an \(I\)-valued random variable.
     Then for all \(t \in I\) we have
     \[
-        \Prob{X \ge t} \le \frac{\E{h(X)}}{h(t)}.
+        \prob{X \ge t} \le \frac{\E{h(X)}}{h(t)}.
     \]
 \end{theorem}
 \begin{corollary}[Chebyshev inequality]
@@ -199,7 +199,7 @@ theory.
     Let \(X\) be a random variable in a normed space \((\domain, \norm{\cdot})\)
     with \(\E{\norm{X}^p} < \infty\) for some \(p \ge 1\). Then
     \[
-        \Prob[\Big]{\norm{X - \E{X}} \ge t}
+        \prob[\Big]{\norm{X - \E{X}} \ge t}
         \le \frac{\E[\Big]{\norm[\big]{X-\E{X}}^p}}{t^p}
         \qquad \text{for all }t > 0.
     \]
@@ -225,8 +225,8 @@ theory.
     we have that \(X \ge t\) implies \(h(X) \ge h(t)\)
     and thus
     \[\begin{aligned}
-        \Prob{X \ge t}
-        &\le \Prob[\big]{h(X) \ge h(t)}
+        \prob{X \ge t}
+        &\le \prob[\big]{h(X) \ge h(t)}
         = \E{\Indicator{h(X) \ge h(t)}}
         \le \E[\Big]{\frac{h(X)}{h(t)}\Indicator{h(X) \ge h(t)}}
         \\
@@ -266,7 +266,7 @@ continuous mapping}).
         &\le \E{\underbrace{\abs{f(X_n) - f(Y_n)}}_{\le L\metric(X_n, Y_n)} \Indicator{\metric(X_n, Y_n) \le \epsilon}}
         + \E{\underbrace{\abs{f(X_n) - f(Y_n)}}_{\le 2M} \Indicator{\metric(X_n, Y_n) > \epsilon}}
         \\
-        &\le L \epsilon + 2M \underbrace{\Prob{\metric(X_n, Y_n) > \epsilon}}_{\to 0}.
+        &\le L \epsilon + 2M \underbrace{\prob{\metric(X_n, Y_n) > \epsilon}}_{\to 0}.
     \end{aligned}\]
     Using \(\metric(X_n, Y_n) \overset{p}\to 0\) we thus we have \(\limsup_{n\to
     \infty} \abs{\E{f(X_n)} - \E{f(Y_n)}} \le L \epsilon\)
@@ -288,7 +288,7 @@ continuous mapping}).
         \item[\ref{it: L1 to p}] Convergence in probability may be easily deduced
         from the \(L^1\) Chebyshev inequality (Corollary
         \ref{cor: markov inequality Lp}): We have for \(\epsilon > 0\) \[
-            \Prob[\big]{\norm{X_n - X} > \epsilon}
+            \prob[\big]{\norm{X_n - X} > \epsilon}
             \le \frac{\E[\big]{\norm{X_n - X}}}{\epsilon}
             \to 0.
         \]
@@ -310,23 +310,23 @@ continuous mapping}).
         By de Morgan's laws for set complements and almost sure
         convergence we therefore have
         \begin{align*}
-            0 &= \Prob[\big]{X_n \not\to X}
+            0 &= \prob[\big]{X_n \not\to X}
             \\
-            &= \Prob[\bigg]{\bigcup_{\epsilon > 0} \bigcap_{N \in \nat} \bigcup_{n \ge N}
+            &= \prob[\bigg]{\bigcup_{\epsilon > 0} \bigcap_{N \in \nat} \bigcup_{n \ge N}
             \set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
             \\
-            \overset{\text{fix } \epsilon}&\ge \Prob[\bigg]{\bigcap_{N \in \nat} \bigcup_{n \ge N}
+            \overset{\text{fix } \epsilon}&\ge \prob[\bigg]{\bigcap_{N \in \nat} \bigcup_{n \ge N}
             \set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
             \\
-            &= \lim_{N \to \infty} \Prob[\Big]{\bigcup_{n \ge N}
+            &= \lim_{N \to \infty} \prob[\Big]{\bigcup_{n \ge N}
             \set[\Big]{\omega \in \Omega : \metric(X_n(\omega), X(\omega)) \ge \epsilon}}
             \\
-            \overset{\text{fix } n=N}&\ge \lim_{N\to \infty} \Prob[\big]{\metric(X_N, X) \ge \epsilon},
+            \overset{\text{fix } n=N}&\ge \lim_{N\to \infty} \prob[\big]{\metric(X_N, X) \ge \epsilon},
         \end{align*}
         where the penultimate equality follows from the continuity of the
         probability measure
         \[
-            \lim_{N\to \infty} \Prob{A_N} = \Prob[\big]{\bigcap_{N\in \nat} A_N}
+            \lim_{N\to \infty} \prob{A_N} = \prob[\big]{\bigcap_{N\in \nat} A_N}
         \] for a decreasing sequence of
         events \(A_1 \supseteq A_2 \supseteq \ldots\)
         \continuityOfMeasure.
@@ -335,15 +335,15 @@ continuous mapping}).
         \(\epsilon>0\) and let \(\ball{c}{\epsilon}\) denote the
         \(\epsilon\)-ball centered at \(c\).
         Then its border has zero probability under the distribution of \(X\), that is
-        \(\Pr(X\in \partial\ball{c}{\epsilon}) = 0\).
+        \(\prob{X\in \partial\ball{c}{\epsilon}} = 0\).
         Using \ref{it: s.zero boundary} from the Portemanteau theorem
         this implies
         \[
-            \Prob[\big]{\metric(X_n,X) < \epsilon}
-            = \Prob[\big]{X_n \in \ball{c}{\epsilon}}
-            \to \Prob[\big]{X \in \ball{c}{\epsilon}} = 1.
+            \prob[\big]{\metric(X_n,X) < \epsilon}
+            = \prob[\big]{X_n \in \ball{c}{\epsilon}}
+            \to \prob[\big]{X \in \ball{c}{\epsilon}} = 1.
         \]
-        Consequently \(\Prob[\big]{\metric(X_n, X) \ge \epsilon} \to 0\).
+        Consequently \(\prob[\big]{\metric(X_n, X) \ge \epsilon} \to 0\).
 
         
 
@@ -369,16 +369,16 @@ implications above.
     directly from set complements. These two conditions then imply \ref{it: s.zero boundary}
     by considering the interior and closure of the set \(B\) for an upper and lower
     bound.
-    % Specifically, we have that \(\Prob{X \in \closure{B}} = \Prob{X \in B} = \Prob{X\in \interior{B}}\)
-    % as \(\Prob{X \in \partial B} = 0\). This implies
+    % Specifically, we have that \(\prob{X \in \closure{B}} = \prob{X \in B} = \prob{X\in \interior{B}}\)
+    % as \(\prob{X \in \partial B} = 0\). This implies
     % \[\begin{aligned}
-    %     \Prob{X \in B} = \Prob{X \in \interior{B}}
-    %     &\le \liminf_{n\to \infty} \Prob{X_n \in \interior{B}}
+    %     \prob{X \in B} = \prob{X \in \interior{B}}
+    %     &\le \liminf_{n\to \infty} \prob{X_n \in \interior{B}}
     %     \\
-    %     &\le \lim_{n\to\infty} \Prob{X_n \in B}
+    %     &\le \lim_{n\to\infty} \prob{X_n \in B}
     %     \\
-    %     &\le \limsup_{n\to \infty} \Prob{X_n \in \closure{B}}
-    %     \le \Prob{X \in \closure{B}} = \Prob{X \in B}.
+    %     &\le \limsup_{n\to \infty} \prob{X_n \in \closure{B}}
+    %     \le \prob{X \in \closure{B}} = \prob{X \in B}.
     % \end{aligned}
     % \]
 
@@ -417,27 +417,27 @@ implications above.
     we have  \(\Indicator{A}(x) \le \Indicator{A}^\epsilon(x) \le \Indicator{A_\epsilon}(x)\) for all \(x\).
     Consequently we have for any closed set \(A\)
     \[\begin{aligned}
-        \Pr(X_n \in A) = \E{\Indicator{A}(X_n)}
+        \prob{X_n \in A} = \E{\Indicator{A}(X_n)}
         &\le \E{\Indicator{A}^\epsilon(X_n)}
         \\
         \overset{\ref{it: b.lip}}&\to \E{\Indicator{A}^\epsilon(X)} \le \E{\Indicator{A_\epsilon}(X)}
-        = \Prob{X \in A_\epsilon},
+        = \prob{X \in A_\epsilon},
     \end{aligned}
     \]
     Thus for every \(\epsilon >0\) we have
     \(
-        \limsup_{n\to \infty} \Prob{X_n \in A} \le \Prob{X \in A_\epsilon}.
+        \limsup_{n\to \infty} \prob{X_n \in A} \le \prob{X \in A_\epsilon}.
     \)
     Since this is true for any \(\epsilon >0\) define
     \(B_m \coloneq A_{\frac1m}\), then we have
     \[
-        \limsup_{n\to \infty} \Prob{X_n \in A}
-        \le \lim_{m\to\infty}\Prob{X \in B_m}
-        = \Prob[\Big]{X \in \bigcap_{m\in \nat} B_m}
-        = \Prob{X \in A},
+        \limsup_{n\to \infty} \prob{X_n \in A}
+        \le \lim_{m\to\infty}\prob{X \in B_m}
+        = \prob[\Big]{X \in \bigcap_{m\in \nat} B_m}
+        = \prob{X \in A},
     \]
     where we recall that \(\lim_{N\to \infty}
-    \Prob{A_N} = \Prob[\big]{\bigcap_{N\in \nat} A_N}\) for a decreasing
+    \prob{A_N} = \prob[\big]{\bigcap_{N\in \nat} A_N}\) for a decreasing
     sequence of events \(A_1 \supseteq A_2 \supseteq \ldots\)
     \continuityOfMeasure,
     and \(B_m \supseteq B_{m+1} \supseteq \dots\) with \(\bigcap_{m\in \nat} B_m = A\).
@@ -450,21 +450,21 @@ implications above.
     \begin{enumerate}[noitemsep]
         \item the bounded range of \(f\) is contained in the interval \([y_0, y_N)\),
         \item the \(y_i\) are an \(\epsilon\)-grid, i.e.\ \(y_{i+1} - y_i < \epsilon\) for all \(i\),
-        \item \(\Prob{f(X) = y_i} = 0\) for all \(i\).
+        \item \(\prob{f(X) = y_i} = 0\) for all \(i\).
     \end{enumerate}
     That the first two conditions can be satisfied is trivial by the boundedness of \(f\). For
     the third condition we observe that the set of points that do not
     satisfy this condition is at most countable
     \[
-        \set[\big]{y \in \real : \Prob{f(X) = y} > 0}
-        = \bigcup_{k=1}^\infty \underbrace{\set[\Big]{y \in \real : \Prob{f(X) = y} \ge \tfrac1k}}_{\text{at most \(k\)-many}}.
+        \set[\big]{y \in \real : \prob{f(X) = y} > 0}
+        = \bigcup_{k=1}^\infty \underbrace{\set[\Big]{y \in \real : \prob{f(X) = y} \ge \tfrac1k}}_{\text{at most \(k\)-many}}.
     \]
     Since there is thus an uncountable number of choices left we may assume that
     the \(y_i\) satisfy all three conditions.
 
     The third condition implies for \(E_i = [y_{i-1}, y_i)\) that
-    \(\Pr(f(X) \in \partial E_i) = 0\). We will now prove that this
-    implies \(\Pr(X \in \partial f^{-1}(E_i)) = 0\), which will
+    \(\prob{f(X) \in \partial E_i} = 0\). We will now prove that this
+    implies \(\prob{X \in \partial f^{-1}(E_i)} = 0\), which will
     allow us to apply \ref{it: s.zero boundary} to the sets \(f^{-1}(E_i)\).
     Let \(D_f\) be the set of discontinuities of \(f\). Then for any set \(A\)
     we claim to have
@@ -497,8 +497,8 @@ implications above.
     \end{center}
     With \eqref{eq: boundary inclusion} we conclude
     \[
-        \Prob{ X \in \partial f^{-1}(E_i)}
-        \le \underbrace{\Prob[\big]{X \in f^{-1}(\partial E_i)}}_{=\Pr(f(X) \in \partial E_i)} + \underbrace{\Prob{X \in D_f}}_{=0} = 0.
+        \prob{ X \in \partial f^{-1}(E_i)}
+        \le \underbrace{\prob[\big]{X \in f^{-1}(\partial E_i)}}_{=\prob{f(X) \in \partial E_i}} + \underbrace{\prob{X \in D_f}}_{=0} = 0.
     \]
     Finally, we may use the discretization we built. Observe that if \(f(X_n)
     \in E_i\), then \(f(X_n) \le y_i\). Since the sets \(E_i\) cover
@@ -506,12 +506,12 @@ implications above.
     \[
         \E{f(X_n)}
         \le \E[\Big]{\sum_{i=1}^N y_i \Indicator{E_i}(f(X_n))}
-        = \sum_{i=1}^N y_i \underbrace{\Prob{X_n \in f^{-1}(E_i)}}_{\overset{\ref{it: s.zero boundary}}\to \Prob{X \in f^{-1}(E_i)}}
+        = \sum_{i=1}^N y_i \underbrace{\prob{X_n \in f^{-1}(E_i)}}_{\overset{\ref{it: s.zero boundary}}\to \prob{X \in f^{-1}(E_i)}}
     \]
-    where we use \(\Prob{X \in \partial f^{-1}(E_i)} = 0\). Using \(y_i \le f(X) +
+    where we use \(\prob{X \in \partial f^{-1}(E_i)} = 0\). Using \(y_i \le f(X) +
     \epsilon\) for \(f(X) \in E_i\) we get
     \[
-        \sum_{i=1}^N y_i \Prob{X \in f^{-1}(E_i)}
+        \sum_{i=1}^N y_i \prob{X \in f^{-1}(E_i)}
         = \E[\Big]{\sum_{i=1}^N y_i \Indicator{E_i}(f(X))}
         \le \E{f(X)} + \epsilon.
     \]
@@ -525,9 +525,9 @@ implications above.
     \(\E{f(X_n)} \to \E{f(X)}\).
 
     ``\ref{it: df} \(\Rightarrow\) \ref{it: b.lip}'':
-    Let \(F(x) = \Prob{X\le x}\) and \(F_n(x) = \Prob{X_n \le x}\) be the
+    Let \(F(x) = \prob{X\le x}\) and \(F_n(x) = \prob{X_n \le x}\) be the
     distribution functions of \(X\) and \(X_n\). We need to deduce from
-    \(F_n(x) \to F(x)\) for all \(x\in \real\) with \(\Prob{X = x} = 0\) that
+    \(F_n(x) \to F(x)\) for all \(x\in \real\) with \(\prob{X = x} = 0\) that
     \[
         \E{f(X_n)} \to \E{f(X)}
     \]
@@ -541,10 +541,10 @@ implications above.
         \quad\text{and}\quad
         y_{i+1} - y_i < \epsilon\quad  \text{ for all } i.
     \]
-    There are only countably many points where \(\Prob{X = y} \neq 0\),
-    since the number of points where \(\Prob{X=y} \ge \tfrac1m\) is finite and a
+    There are only countably many points where \(\prob{X = y} \neq 0\),
+    since the number of points where \(\prob{X=y} \ge \tfrac1m\) is finite and a
     countable union (over \(m\)) of finite sets is countable.  We may therefore
-    choose \(y_i\) such that \(\Prob{X = y_i} = 0\) for all \(i\).
+    choose \(y_i\) such that \(\prob{X = y_i} = 0\) for all \(i\).
     For all \(x\in (y_{i-1}, y_i]\) we then have
     \[
         \abs{f(x) - f(y_i)} \overset{1\text{-Lip}}\le \abs{x-y_i} < \epsilon,
@@ -583,7 +583,7 @@ implications above.
 
 \begin{exercise}[Convergence in distribution but not probability \Coffeecup]
     \label{ex: convergence in distribution but not in probability}
-    Let \(X\) be a random variable with \(\Prob{X=-1} = \frac12\) and \(\Prob{X=1}=\frac12\).
+    Let \(X\) be a random variable with \(\prob{X=-1} = \frac12\) and \(\prob{X=1}=\frac12\).
     \[
         X_n \coloneq (-1)^n X
     \]
@@ -593,20 +593,20 @@ implications above.
         \begin{solution}
             Observe that the distribution of \(X\) is symmetric, that is
             \[
-                \Pr(-X \le x) = \Pr(X \le x) \qquad \forall x\in \real.
+                \prob{-X \le x} = \prob{X \le x} \qquad \forall x\in \real.
             \]
-            Consequently, for any \(x \in \real\) we have \(\Pr(X_n \le x) = \Pr(X \le x)\).
-            In particular this implies \(\Pr(X_n \le x) \to \Pr(X \le x)\) for all \(x\).
+            Consequently, for any \(x \in \real\) we have \(\prob{X_n \le x} = \prob{X \le x}\).
+            In particular this implies \(\prob{X_n \le x} \to \prob{X \le x}\) for all \(x\).
         \end{solution}
 
         \item \(X_n\) does not converge in probability to \(X\).
         \begin{solution}
             We have for \(\epsilon = 1\) and every odd \(n\)
             \[
-                \Prob{\abs{X - X_n} \ge \epsilon}
-                = \Prob{2\abs{X} \ge 1} = 1
+                \prob{\abs{X - X_n} \ge \epsilon}
+                = \prob{2\abs{X} \ge 1} = 1
             \]
-            The sequence \(\Pr(|X_n - X| \ge \epsilon)\) thus does not converge to \(0\).
+            The sequence \(\prob{|X_n - X| \ge \epsilon}\) thus does not converge to \(0\).
         \end{solution}
     \end{enumerate}
 \end{exercise}
@@ -623,9 +623,9 @@ implications above.
         \begin{solution}
             We have for any \(\epsilon > 0\)
             \[
-                \Pr(|X_n - 0| \ge \epsilon)
-                \le \Pr(X_n \neq 0)
-                = \Prob[\big]{U\le \tfrac1n}
+                \prob{|X_n - 0| \ge \epsilon}
+                \le \prob(X_n \neq 0)
+                = \prob[\big]{U\le \tfrac1n}
                 = \tfrac1n
                 \to 0.
                 \qedhere
@@ -638,7 +638,7 @@ implications above.
             \[
                 \E{|X_n - 0|}
                 = \E{X_n}
-                = n \cdot \Prob[\big]{U \in [0, 1/n)}
+                = n \cdot \prob[\big]{U \in [0, 1/n)}
                 = n \cdot \frac1n
                 = 1 \not\to 0.
                 \qedhere
@@ -650,7 +650,7 @@ implications above.
         \begin{solution}
             Define \(Y_n \coloneq X_n^{1/p}\) with \(X_n\) as above. Then
             \[
-                \E{|Y_n - 0|^q} = \E{X_n^{q/p}} = n^{q/p} \cdot \Prob[\big]{U \in [0, 1/n)} = n^{q/p - 1}.
+                \E{|Y_n - 0|^q} = \E{X_n^{q/p}} = n^{q/p} \cdot \prob[\big]{U \in [0, 1/n)} = n^{q/p - 1}.
             \]
             This converges to \(0\) for all \(q < p\) but not for \(q \ge p\).
         \end{solution}
@@ -702,11 +702,11 @@ implications above.
 
             Alternatively:
             \[
-                \Prob[\bigl]{|X_n - 0| \ge \epsilon}
-                = \Prob{X_n = 1}
+                \prob[\bigl]{|X_n - 0| \ge \epsilon}
+                = \prob{X_n = 1}
                 = 2^{-\lfloor \log_2(n) \rfloor} \to 0.
             \]
-            for any \(\epsilon \in (0,1]\) and \(\Prob[\bigl]{|X_n - 0| \ge
+            for any \(\epsilon \in (0,1]\) and \(\prob[\bigl]{|X_n - 0| \ge
             \epsilon}=0\) for \(\epsilon > 1\).
         \end{solution}
 
@@ -717,7 +717,7 @@ implications above.
             \(|X_n(\omega) - 0| \ge \epsilon\) for infinitely many \(n\).
             Since we show this for any \(\omega\in \set{U\in [0,1)}\), this would imply
             \[
-                \Prob{X_n \not\to 0} \ge \Prob{U \in [0,1)} = 1.
+                \prob{X_n \not\to 0} \ge \prob{U \in [0,1)} = 1.
             \]
             For any \(N\in \nat\) the task is consequently to find \(n\ge N\)
             such that \(X_n(\omega) = 1\). Let \(m \coloneq \lfloor \log_2(N) \rfloor + 1\).
@@ -753,7 +753,7 @@ implications above.
             &= \E[\big]{\norm{X_n - X}^p \Indicator{\norm{X_n - X} < \epsilon}}
             + \E[\big]{\norm{X_n - X}^p \Indicator{\norm{X_n - X} \ge \epsilon}}
             \\
-            &\le \epsilon^p + (2c)^p \Prob[\big]{\norm{X_n - X} \ge \epsilon}.
+            &\le \epsilon^p + (2c)^p \prob[\big]{\norm{X_n - X} \ge \epsilon}.
         \end{aligned}
         \]
         Due to \(X_n \overset{p}\to X\) the second term converges to \(0\)
@@ -769,7 +769,7 @@ implications above.
     \label{ex: stochastic triangle}
     Let \(X,Y,Z\) be random variables. Show for all \(\epsilon > 0\)
     \[
-        \Prob*{\norm{X - Z} \ge \epsilon} \le \Prob*{\norm{X - Y} \ge \tfrac\epsilon2} + \Prob*{\norm{Y - Z} \ge \tfrac\epsilon2}.
+        \prob*{\norm{X - Z} \ge \epsilon} \le \prob*{\norm{X - Y} \ge \tfrac\epsilon2} + \prob*{\norm{Y - Z} \ge \tfrac\epsilon2}.
     \] 
     \textbf{Hint:} Use set inclusions.
     \begin{solution}
@@ -798,7 +798,7 @@ implications above.
     Show that
     \begin{enumerate}[label=(\alph*),noitemsep]
         \item if \(X_n \overset{p}\to X\) and \(X_n \overset{p}\to Y\), then
-        \(\Prob{X = Y}=1\).
+        \(\prob{X = Y}=1\).
 
         \textbf{Hint:} How is uniqueness of limits proven in analysis?
         \begin{solution}
@@ -806,24 +806,24 @@ implications above.
             stochastic triangle inequality (Exercise \ref{ex: stochastic
             triangle})
             \[\begin{aligned}
-                \Prob{\norm{X - Y} \ge \epsilon}
-                \le \underbrace{\Prob{\norm{X - X_n} \ge \tfrac\epsilon2}}_{\to 0} + \underbrace{\Prob{\norm{X_n - Y} \ge \tfrac\epsilon2}}_{\to 0},
+                \prob{\norm{X - Y} \ge \epsilon}
+                \le \underbrace{\prob{\norm{X - X_n} \ge \tfrac\epsilon2}}_{\to 0} + \underbrace{\prob{\norm{X_n - Y} \ge \tfrac\epsilon2}}_{\to 0},
             \end{aligned}
             \]
             Since this inequality holds for any \(n\in \nat\) and \(X_n\)
             converges to both \(X\) and \(Y\) in probability, this term must
-            therefore be equal to zero. That is \(\Prob{\norm{X - Y} \ge
+            therefore be equal to zero. That is \(\prob{\norm{X - Y} \ge
             \epsilon} = 0\) for any \(\epsilon > 0\). Since this is true for any
             \(\epsilon > 0\) we have by continuity of the probability measure
             \[
-                \Prob{X \neq Y} = \Prob[\Big]{\bigcup_{n\in \nat}\norm{X - Y} > \frac1n} = \lim_{n\to\infty} \Prob{\norm{X - Y} \ge \tfrac1n} = 0.
+                \prob{X \neq Y} = \prob[\Big]{\bigcup_{n\in \nat}\norm{X - Y} > \frac1n} = \lim_{n\to\infty} \prob{\norm{X - Y} \ge \tfrac1n} = 0.
             \]
         \end{solution}
     \end{enumerate}
     Deduce
     \begin{enumerate}[label=(\alph*), resume,noitemsep]
-        \item if \(X_n \overset{\as}\to X\) and \(X_n \overset{\as}\to Y\), then \(\Prob{X = Y}=1,\)
-        \item if \(X_n \overset{L^p}\to X\) and \(X_n \overset{L^p}\to Y\), then \(\Prob{X = Y}=1.\)
+        \item if \(X_n \overset{\as}\to X\) and \(X_n \overset{\as}\to Y\), then \(\prob{X = Y}=1,\)
+        \item if \(X_n \overset{L^p}\to X\) and \(X_n \overset{L^p}\to Y\), then \(\prob{X = Y}=1.\)
         \begin{solution}
             If \(X_n \overset{\as}\to X\) and \(X_n \overset{\as}\to Y\), then
             \(X_n \overset{p}\to X\) and \(X_n \overset{p}\to Y\) by Theorem
@@ -845,7 +845,7 @@ implications above.
             Since \(X_n \coloneq X\) converges both to \(X\) and \(-X\) in
             distribution the limit is clearly not unique as
             \[
-                \Prob{X = -X} = \Prob{X=0}= 0.
+                \prob{X = -X} = \prob{X=0}= 0.
                 \qedhere
             \]
         \end{solution}
@@ -855,7 +855,7 @@ implications above.
 \begin{exercise}[Stochastic Simulation and Quantiles \Coffeecup\Coffeecup]
     \label{ex: stochastic simulation}
     The goal is to simulate a random variable \(X\) with distribution 
-    function \(F(x) = \Prob{X \le x}\) using a standard uniform random variable
+    function \(F(x) = \prob{X \le x}\) using a standard uniform random variable
     \(U\sim \uniform(0,1)\). We define the generalized inverse of \(F\) as
     \[
         F^{\leftarrow}(p) \coloneq \inf\{x \in \real : F(x) \ge p\}, \quad p \in (0,1).
@@ -932,15 +932,15 @@ implications above.
         \item\label{it: inverse transform sampling}
         \(X\coloneq F^{\leftarrow}(U) \sim F\) for a standard uniform \(U\sim \uniform(0,1)\), i.e.\ 
         \[
-            F(x) = \Prob{X \le x}
+            F(x) = \prob{X \le x}
             \qquad \forall x \in \real.
         \]
         \begin{solution}
             We simply use \ref{it: F-(p)< x iff p<F(x)} and the definition of \(U\) to get
             \[
-                \Prob{X \le x}
-                = \Prob{F^{\leftarrow}(U) \le x}
-                \overset{\ref{it: F-(p)< x iff p<F(x)}}\le \Prob{U \le F(x)}
+                \prob{X \le x}
+                = \prob{F^{\leftarrow}(U) \le x}
+                \overset{\ref{it: F-(p)< x iff p<F(x)}}\le \prob{U \le F(x)}
                 = \int_0^{F(x)} 1 \, du
                 = F(x).
                 \qedhere
@@ -967,17 +967,17 @@ implications above.
     the following: Show that
     \begin{enumerate}[resume, label=(\alph*), noitemsep]
         \item \(Q(p) \coloneq (-\infty, F^{\leftarrow}(p)]\) is the smallest
-        interval of the form \((-\infty, a]\) such that \(\Prob{X \in (-\infty,
+        interval of the form \((-\infty, a]\) such that \(\prob{X \in (-\infty,
         a]} \ge p\) for \(X\sim F\). We say that \(Q(p)\) is a \(p\)-quantile.
         \begin{solution}
             For any \(a < F^{\leftarrow}(p)\) we have by definition of \(F^{\leftarrow}\) that
             \(F(a) < p\) and thus
             \[
-                \Prob{X \in (-\infty, a]} = F(a) < p.
+                \prob{X \in (-\infty, a]} = F(a) < p.
             \]
             However for \(a=F^{\leftarrow}(p)\) we have \(F(a)\ge p\) by
             \ref{it: F(F-(p)) > p}.  Consequently, \(F^{\leftarrow}(p)\) is the
-            smallest \(a\) such that \(\Prob{X \in (-\infty, a]} \ge p\).
+            smallest \(a\) such that \(\prob{X \in (-\infty, a]} \ge p\).
         \end{solution}
 
     \end{enumerate}
@@ -1074,27 +1074,27 @@ implications above.
 \end{exercise}
 
 \begin{exercise}[Discontinuity points of distribution functions \Coffeecup\Coffeecup]
-    Let \(X\) be a random variable and \(F(x) = \Prob{X \le x}\) its
+    Let \(X\) be a random variable and \(F(x) = \prob{X \le x}\) its
     distribution function. Show that \(F\) is continuous at \(x\) if and only if
-    \(\Prob{X = x} = 0\).
+    \(\prob{X = x} = 0\).
     \textbf{Hint:} Use Exercise \ref{ex: monotone functions have countably many discontinuities}.
     \begin{solution}
         Since the sets \(\set{X \le x - \frac1n}\) are increasing
         in size, we have by continuity of the probability measure
         \[
-            \Prob{X < x}
-            = \Prob[\Big]{\bigcup_{n\in \nat} \set{X \le x - \tfrac1n}}
-            = \lim_{n\to\infty} \Prob{X \le x - \tfrac1n}
+            \prob{X < x}
+            = \prob[\Big]{\bigcup_{n\in \nat} \set{X \le x - \tfrac1n}}
+            = \lim_{n\to\infty} \prob{X \le x - \tfrac1n}
             = F_-(x).
         \]
         Consequently,
         \[
-            \Prob{X = x} = \Prob{X \le x} - \Prob{X < x} = F(x) - F_-(x).
+            \prob{X = x} = \prob{X \le x} - \prob{X < x} = F(x) - F_-(x).
         \]
         By Exercise \ref{ex: monotone functions have countably many
         discontinuities} \ref{it: F continuous if and only if all coincide} we
         have that \(F\) is continuous at \(x\) if and only if \(F(x) = F_-(x)\).
-        Consequently continuity of \(F\) is equivalent to \(\Prob{X = x} = 0\).
+        Consequently continuity of \(F\) is equivalent to \(\prob{X = x} = 0\).
     \end{solution}
 \end{exercise}
 
@@ -1108,7 +1108,7 @@ implications above.
         \item \(Y_n \overset{d}= X_n\) for all \(n\in \nat\) and \(Y \overset{d}= X\),
         \item \(Y_n \overset{\as}\to Y\).
     \end{enumerate}
-    \textbf{Hint:} Use \(F_n(x) = \Prob{X_n \le x}\), Exercise \ref{ex:
+    \textbf{Hint:} Use \(F_n(x) = \prob{X_n \le x}\), Exercise \ref{ex:
     stochastic simulation} and that a monotonous function has at most countably
     many discontinuities (Exercise \ref{ex: monotone functions have countably
     many discontinuities}).
@@ -1130,13 +1130,13 @@ implications above.
         \(F_n(x) \to F(x)\) for all \(x\in \real\) at which \(F\) is continuous.
         Since the set \(D_F\) of discontinuity points of \(F\) is countable, we have
         \[
-            \Prob{U \in D_F} = \sum_{x\in D_F}\Prob{U = x} = 0.
+            \prob{U \in D_F} = \sum_{x\in D_F}\prob{U = x} = 0.
         \]
         And for all \(\omega \in \set{U \notin D_F}\) we have
         \[
             Y_n(\omega) = F_n(U(\omega)) \to F(U(\omega))=Y(\omega)
         \]
-        Consequently, \(\Prob{ Y_n \to Y } = \Prob{U \notin D_F} = 1\) and thus \(Y_n \overset{\as}\to Y\).
+        Consequently, \(\prob{ Y_n \to Y } = \prob{U \notin D_F} = 1\) and thus \(Y_n \overset{\as}\to Y\).
     \end{solution}
 \end{exercise}
 
@@ -1213,7 +1213,7 @@ implications above.
     for all bounded (measurable) functions \(f\colon \domain \to \real\). Show
     that this implies that \(X\) and \(Y\) are equal in distribution, that is
     \[
-        \Prob{X \in A} = \Prob{Y \in A}
+        \prob{X \in A} = \prob{Y \in A}
     \]
     for all (measurable) sets \(A\subseteq \domain\).
     
@@ -1396,7 +1396,7 @@ You will prove this inequality in Exercise \ref{ex: hölder's inequality}.
 
 \begin{fact}
     \label{fact: Lp zero norm}
-    \(\norm{X-Y}_{L^p} = 0\) if and only if \(\Prob{X=Y}=1 \overset{\text{def.}}\iff X\overset{\as}= Y\).
+    \(\norm{X-Y}_{L^p} = 0\) if and only if \(\prob{X=Y}=1 \overset{\text{def.}}\iff X\overset{\as}= Y\).
 \end{fact}
 \begin{proof}[Proofsketch]
     Measure theory: \(f\ge 0\) and \(\int f d\mu = 0\) 
@@ -1653,14 +1653,14 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 
         \item Show that the orthogonal projection onto \(\real\) is given by
         \[
-            \ESymb \colon \begin{cases}
+            \eSym \colon \begin{cases}
                 L^2 \to \real,
                 \\
                 [X] \mapsto \E{X}.
             \end{cases}
         \]
         \begin{solution}
-            Since \(\E{\E{X}} = \E{X}\) we have \(\ESymb^2 = \ESymb\)
+            Since \(\E{\E{X}} = \E{X}\) we have \(\eSym^2 = \eSym\)
             and therefore the expectation is a projection as it is also a
             linear operator. It is an orthogonal projection since
             \[
@@ -1670,14 +1670,14 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
         \end{solution}
 
         \item Let \(\pi \colon L^2 \to \real^\perp\) be the orthogonal projection
-        onto \(\real^\perp\), that is \(\pi = 1 - \ESymb\). Show that
+        onto \(\real^\perp\), that is \(\pi = 1 - \eSym\). Show that
         \[
             \cov{X}{Y}
             = \scp{\pi[X], Y}_{L^2}
             = \scp{X, \pi[Y]}_{L^2}
             = \scp{\pi[X], \pi[Y]}_{L^2}
         \]
-        In particular \(\covSymb\) coincides with the inner product on \(\real^\perp\)!
+        In particular \(\covSym\) coincides with the inner product on \(\real^\perp\)!
         \begin{solution}
             By definition of the covariance
             \[
@@ -1735,38 +1735,38 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 \begin{exercise}[Median -- Projection in \(L^1\) \Coffeecup\Coffeecup]
 	We define the median of \(X\) to be the set
     \[
-        \median[X] \coloneq \set[\Big]{m \in \real : \Prob{X \ge m}\ge \tfrac12, \Prob{X\le m} \ge \tfrac12}.
+        \mSym[X] \coloneq \set[\Big]{m \in \real : \prob{X \ge m}\ge \tfrac12, \prob{X\le m} \ge \tfrac12}.
     \]
 	\begin{enumerate}[label=(\alph*), noitemsep]
-        \item Show that if \(a,b\in \median[X]\), then \((a,b) \subseteq \median[X]\).
-        That is \(\median[X]\) is an interval!
+        \item Show that if \(a,b\in \mSym[X]\), then \((a,b) \subseteq \mSym[X]\).
+        That is \(\mSym[X]\) is an interval!
 
         \item The next goal is to show that the median interval is closed
-        and characterize the upper and lower bound. Prove for \(F(x) = \Prob{X\le x}\)
+        and characterize the upper and lower bound. Prove for \(F(x) = \prob{X\le x}\)
         \begin{alignat*}{2}
-            \max \median[X] &= \inf \set{x \in \real : F(x) > \tfrac12}
+            \max \mSym[X] &= \inf \set{x \in \real : F(x) > \tfrac12}
             &&\eqcolon \overline{M},
             \\
-            \min \median[X] &= \inf \set{x \in \real : F(x) \ge \tfrac12} \overset{\text{def.}}= F^{\leftarrow}(\tfrac12)
+            \min \mSym[X] &= \inf \set{x \in \real : F(x) \ge \tfrac12} \overset{\text{def.}}= F^{\leftarrow}(\tfrac12)
             &&\eqcolon \underline{M}.
         \end{alignat*}
-        This has two components: \(\overline{M}\) and \(\underline{M}\) are the boundaries of \(\median[X]\)
-        and they are contained in \(\median[X]\).
+        This has two components: \(\overline{M}\) and \(\underline{M}\) are the boundaries of \(\mSym[X]\)
+        and they are contained in \(\mSym[X]\).
 
-        \textbf{Hint:} Use \(\Prob{X < x} = \Prob{\bigcup_{k\in \nat}\set{X \le x - \tfrac1k}}\) and the continuity of measure.
+        \textbf{Hint:} Use \(\prob{X < x} = \prob{\bigcup_{k\in \nat}\set{X \le x - \tfrac1k}}\) and the continuity of measure.
         \begin{solution}
             Since the distribution function \(F\) is right-continuous we have
             \[
-                \Prob{X \le \overline{M}} = F(\overline{M}) = \lim_{x \downarrow \overline{M}} F(x) \ge \tfrac12
+                \prob{X \le \overline{M}} = F(\overline{M}) = \lim_{x \downarrow \overline{M}} F(x) \ge \tfrac12
             \]
             as all \(x \ge \overline{M}\) have the property \(F(x) > \tfrac12\) by
             definition of \(\overline{M}\). For the other direction we use the
             continuity of measure:
             \[\begin{aligned}
-                \Prob{X \ge \overline{M}}
-                &= 1 - \Prob{X < \overline{M}}
+                \prob{X \ge \overline{M}}
+                &= 1 - \prob{X < \overline{M}}
                 \\
-                &= 1- \Prob[\Big]{\bigcup_{k\in \nat} \set{X \le \overline{M} - \tfrac1k}}
+                &= 1- \prob[\Big]{\bigcup_{k\in \nat} \set{X \le \overline{M} - \tfrac1k}}
                 \\
                 &= 1 - \lim_{k\to \infty} F(\overline{M}-\tfrac1k)
                 \\
@@ -1774,7 +1774,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
             \end{aligned}
             \]
             as any \(x< \overline{M}\) has the property \(F(x) \le \tfrac12\).
-            Consequently, \(\overline{M} \in \median[X]\).
+            Consequently, \(\overline{M} \in \mSym[X]\).
             As we have not used the strict inequalities due to the limits, the
             same arguments work for the minimum \(\underline{M} = \inf\set{x\in
             \real F(x) \ge \tfrac12}\). We only replace \(F(x) > \tfrac12\) by
@@ -1783,11 +1783,11 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
             the second. Now by definition of \(\overline{M}\) we have for any
             \(m > \overline{M}\) that \(F(m) > \tfrac12\) and therefore
             \[
-                \Prob{X \ge m} = 1 - F(m) < \tfrac12 \qquad \forall m > \overline{M}.
+                \prob{X \ge m} = 1 - F(m) < \tfrac12 \qquad \forall m > \overline{M}.
             \]
-            This implies \(\overline{M} = \max \median[X]\).
+            This implies \(\overline{M} = \max \mSym[X]\).
             Similarly, we have for any \(m < \underline{M}\) that \(F(m) < \tfrac12\)
-            and therefore \(\underline{M} = \min \median[X]\).
+            and therefore \(\underline{M} = \min \mSym[X]\).
         \end{solution}
 
         \item\label{it: characterization of distribution function} Prove that
@@ -1817,7 +1817,7 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 
 		\item Assuming \(X\in \cL^1\) prove that the median minimizes the \(L^1\) error, i.e.
         \[
-            \median[X] =\arg\min_{m} \E{\abs{X-m}}.
+            \mSym[X] =\arg\min_{m} \E{\abs{X-m}}.
         \]
 		% If you wish to prove the general
 		% case, note that \(f(m)=2F_X(m)-1\) is right-continuous and monotonously
@@ -1825,46 +1825,46 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
 		% of discontinuities.
 
  		\textbf{Hint:}
-            Use \(\E{X}=\int_0^\infty \Prob{X\ge t}dt = \int_0^\infty \Prob{X>t}dt\)
+            Use \(\E{X}=\int_0^\infty \prob{X\ge t}dt = \int_0^\infty \prob{X>t}dt\)
             for \(X\ge 0\) to prove
             \[
                 \E{\abs{X-m_2}} - \E{\abs{X-m_1}}
-                = \int_{m_1}^{m_2} \underbrace{\Prob{X\le x} - \Prob{X>x}}_{=2F(x)-1}dx
+                = \int_{m_1}^{m_2} \underbrace{\prob{X\le x} - \prob{X>x}}_{=2F(x)-1}dx
             \]
 		\begin{solution}
 			We have
 			\begin{align*}
 				\E{\abs{X-m}_+}
-				&= \int_0^\infty \underbrace{\Prob{\abs{X-m}_+ > t}}_{
+				&= \int_0^\infty \underbrace{\prob{\abs{X-m}_+ > t}}_{
 					\begin{aligned}
-						&=\Prob{X-m>t}\\
-						&=\Prob{X> t-m}
+						&=\prob{X-m>t}\\
+						&=\prob{X> t-m}
 					\end{aligned}
 				} dt\\
-				&= \int_m^\infty \Prob{X>s}ds
+				&= \int_m^\infty \prob{X>s}ds
 			\end{align*}
 			And similarly
 			\begin{align*}
 				\E{(X-m)_-}
-				&= \int_0^\infty \underbrace{\Prob{(X-m)_- \ge t}}_{
+				&= \int_0^\infty \underbrace{\prob{(X-m)_- \ge t}}_{
 					\begin{aligned}
-						&=\Prob{m-X\ge t} \quad \mathrlap{(\forall t>0)}\\
-						&=\Prob{m-t\ge X}
+						&=\prob{m-X\ge t} \quad \mathrlap{(\forall t>0)}\\
+						&=\prob{m-t\ge X}
 					\end{aligned}
 				} dt\\
-				&= \int_{-\infty}^m \Prob{X\le s}ds
+				&= \int_{-\infty}^m \prob{X\le s}ds
 			\end{align*}
 			Put together we have
             \[
 				\E{\abs{X-m}}
-				= \int_{-\infty}^m \Prob{X\le s}ds + \int_m^\infty \Prob{X>s}ds.
+				= \int_{-\infty}^m \prob{X\le s}ds + \int_m^\infty \prob{X>s}ds.
             \]
             Consequently, we have for \(m_1 < m_2\)
             \[\begin{aligned}
                 \E{\abs{X-m_2}} - \E{\abs{X-m_1}}
-                &= \int_{m_1}^{m_2} \Prob{X\le s}ds - \int_{m_1}^{m_2} \Prob{X>s}ds
+                &= \int_{m_1}^{m_2} \prob{X\le s}ds - \int_{m_1}^{m_2} \prob{X>s}ds
                 \\
-                &= \int_{m_1}^{m_2} \underbrace{\Prob{X\le s} - (1-\Prob{X\le s})}_{=2F(x) -1}ds
+                &= \int_{m_1}^{m_2} \underbrace{\prob{X\le s} - (1-\prob{X\le s})}_{=2F(x) -1}ds
             \end{aligned}
             \]
             Using \ref{it: characterization of distribution function} we deduce
@@ -1930,7 +1930,7 @@ In Theorem \ref{thm: convergence implications} we have
 seen that almost sure convergence implies convergence in probability. In this
 section we will discover that the speed at which the term
 \begin{equation*}
-    \Prob*{\norm{X_n - X} \ge \epsilon}
+    \prob*{\norm{X_n - X} \ge \epsilon}
 \end{equation*}
 converges to zero determines whether we also have almost sure convergence.
 Roughly speaking if this probability decays like \(\frac1n\) or slower, then
@@ -1967,8 +1967,8 @@ events.
     sequences of events \continuityOfMeasure, that is
     \begin{equation}
         \label{eq: continuity of probability}
-        \Prob[\big]{\lim_{n\to \infty} A_n}
-        = \lim_{n\to \infty} \Prob{A_n}.
+        \prob[\big]{\lim_{n\to \infty} A_n}
+        = \lim_{n\to \infty} \prob{A_n}.
     \end{equation}
     We have already used this in the proof that almost sure convergence implies
     convergence in probability in Theorem \ref{thm: convergence implications}.
@@ -2029,12 +2029,12 @@ its analogue for real-valued sequences.
     Let \((A_n)_{n=1}^\infty\) be a sequence of events. Then
     \begin{alignat}{3}
         \tag{BC-1}\label{eq: borel cantelli 1}
-        \sum_{n=1}^\infty \Prob*{A_n}<\infty& \quad & \implies & \quad & \Prob[\Big]{\limsup_{n\to \infty} A_n}=0.
+        \sum_{n=1}^\infty \prob*{A_n}<\infty& \quad & \implies & \quad & \prob[\Big]{\limsup_{n\to \infty} A_n}=0.
     \intertext{
         If the events \(A_n\) are further \textbf{independent} events, then
     }
         \tag{BC-2}\label{eq: borel cantelli 2}
-        \sum_{n=1}^\infty \Prob{A_n}=\infty& &\implies& &\Prob[\Big]{\limsup_{n\to \infty} A_n}=1.
+        \sum_{n=1}^\infty \prob{A_n}=\infty& &\implies& &\prob[\Big]{\limsup_{n\to \infty} A_n}=1.
     \end{alignat}
 \end{theorem}
 \end{mdframed}
@@ -2042,14 +2042,14 @@ its analogue for real-valued sequences.
 
 \begin{proof}[Proof of Borel-Cantelli (Theorem \ref{thm: borel-cantelli})]
 Let \((A_n)_{n=1}^\infty\) be a sequence of events with
-\(\sum_{n=1}^\infty \Prob*{A_n} < \infty\). Observe that
+\(\sum_{n=1}^\infty \prob*{A_n} < \infty\). Observe that
 a smaller and smaller union of events is a decreasing sequence and consequently
 \begin{align*}
-    \Prob[\Big]{\limsup_{n\to \infty} A_n}
-    = \Prob[\Big]{ \lim_{N\to\infty} \bigcup_{n \ge N} A_n }
-    &= \lim_{N\to\infty} \Prob[\Big]{\bigcup_{n \ge N} A_n}
+    \prob[\Big]{\limsup_{n\to \infty} A_n}
+    = \prob[\Big]{ \lim_{N\to\infty} \bigcup_{n \ge N} A_n }
+    &= \lim_{N\to\infty} \prob[\Big]{\bigcup_{n \ge N} A_n}
     \\
-    &\le \lim_{N\to\infty} \sum_{n=N}^\infty \Prob{A_n}
+    &\le \lim_{N\to\infty} \sum_{n=N}^\infty \prob{A_n}
     = 0.
 \end{align*}
 This proves the first Borel-Cantelli lemma \eqref{eq: borel cantelli 1}.
@@ -2057,19 +2057,19 @@ For the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2}
 let $(A_n)_{n=1}^\infty$ be a sequence of independent events. By
 Lemma \ref{lem: liminf and limsup properties} we have
 \[\begin{aligned}
-    \Prob[\Big]{\bigl(\limsup_{n\to\infty}A_n\bigr)^\complement}
-    &= \Prob[\Big]{\bigcup_{N\in \nat} \bigcap_{n \ge N} A_n^\complement}
+    \prob[\Big]{\bigl(\limsup_{n\to\infty}A_n\bigr)^\complement}
+    &= \prob[\Big]{\bigcup_{N\in \nat} \bigcap_{n \ge N} A_n^\complement}
     \\
-    \overset{\eqref{eq: continuity of probability}}&= \lim_{N\to\infty} \Prob[\Big]{\bigcap_{n \ge N} A_n^\complement}
+    \overset{\eqref{eq: continuity of probability}}&= \lim_{N\to\infty} \prob[\Big]{\bigcap_{n \ge N} A_n^\complement}
     \\
-    \overset{\eqref{eq: continuity of probability}}&= \lim_{N\to\infty} \lim_{k\to \infty} \Prob[\Big]{\bigcap_{n=N}^{k} A_n^\complement}
+    \overset{\eqref{eq: continuity of probability}}&= \lim_{N\to\infty} \lim_{k\to \infty} \prob[\Big]{\bigcap_{n=N}^{k} A_n^\complement}
     \\
-    \overset{\text{indep.}}&= \lim_{N\to\infty} \lim_{k\to \infty} \prod_{n=N}^{k} (1-\Prob{A_n})
+    \overset{\text{indep.}}&= \lim_{N\to\infty} \lim_{k\to \infty} \prod_{n=N}^{k} (1-\prob{A_n})
     \\
-    \overset{1+x\le e^x}&\le \lim_{N\to\infty} \underbrace{\lim_{k\to \infty} \exp\Bigl(-\sum_{n=N}^{k} \Prob{A_n}\Bigr)}_{=0} = 0.
+    \overset{1+x\le e^x}&\le \lim_{N\to\infty} \underbrace{\lim_{k\to \infty} \exp\Bigl(-\sum_{n=N}^{k} \prob{A_n}\Bigr)}_{=0} = 0.
 \end{aligned}
 \]
-Where we used that \(\sum_{n=1}^\infty \Prob{A_n} = \infty\) and \(\exp(-x)\to 0\) for \(x\to \infty\).
+Where we used that \(\sum_{n=1}^\infty \prob{A_n} = \infty\) and \(\exp(-x)\to 0\) for \(x\to \infty\).
 \end{proof}
 
 \begin{remark}[Pairwise independence]
@@ -2089,9 +2089,9 @@ sure convergence.
     Then
     \[
         \forall \epsilon > 0: \quad
-        \sum_{n=1}^\infty \Prob[\big]{\norm{X_n - X} \ge \epsilon} < \infty
+        \sum_{n=1}^\infty \prob[\big]{\norm{X_n - X} \ge \epsilon} < \infty
          \quad \implies \quad \underbrace{
-            \Prob[\Big]{\lim_{n\to\infty} X_n = X} =1
+            \prob[\Big]{\lim_{n\to\infty} X_n = X} =1
         }_{
             \iff X_n\overset{\as}\to X
         }.
@@ -2099,8 +2099,8 @@ sure convergence.
     If the random variables \((X_n-X)_{n\in \nat}\) are (pairwise)\footnote{see Remark \ref{rem: pairwise independence}} independent, then
     \[
         \exists \epsilon > 0: \quad
-        \sum_{n=1}^\infty \Prob[\big]{\norm{X_n - X} \ge \epsilon} = \infty
-        \quad \implies \quad \Prob[\Big]{\lim_{n\to\infty} X_n = X} =0.
+        \sum_{n=1}^\infty \prob[\big]{\norm{X_n - X} \ge \epsilon} = \infty
+        \quad \implies \quad \prob[\Big]{\lim_{n\to\infty} X_n = X} =0.
     \]
     In the independent case this implies a \(0\)-\(1\) law: If the probability of
     convergence is greater zero it must be one!
@@ -2109,7 +2109,7 @@ sure convergence.
 
 This corollary shows that almost sure convergence simply means that we have
 ``fast enough'' convergence in probability such that sequence of
-\(\Prob[\big]{\norm{X_n - X} \ge \epsilon}\) does not only converge to zero but is also
+\(\prob[\big]{\norm{X_n - X} \ge \epsilon}\) does not only converge to zero but is also
 summable.
 
 \begin{proof}
@@ -2117,20 +2117,20 @@ summable.
     \begin{equation}
     \label{eq: characterization of does not converge}    
     \begin{aligned}[b]
-        \Prob[\Big]{\lim_{n\to\infty} X_n \neq X}
-        &= \Prob[\Big]{ \bigcup_{m \in \nat} \bigcap_{N\in \nat}\bigcup_{n \ge N} \set{\norm{X_n - X} \ge \tfrac1m} }
+        \prob[\Big]{\lim_{n\to\infty} X_n \neq X}
+        &= \prob[\Big]{ \bigcup_{m \in \nat} \bigcap_{N\in \nat}\bigcup_{n \ge N} \set{\norm{X_n - X} \ge \tfrac1m} }
         \\
-        &= \lim_{m\to \infty} \Prob[\Big]{ \limsup_{n\to \infty} \{\norm{X_n - X} \ge \epsilon\} }.
+        &= \lim_{m\to \infty} \prob[\Big]{ \limsup_{n\to \infty} \{\norm{X_n - X} \ge \epsilon\} }.
     \end{aligned}
     \end{equation}
-    Now if for all \(\epsilon > 0\) we have that \(\sum_{n=1}^\infty \Prob[\big]{\norm{X_n - X} \ge \epsilon} < \infty\),
+    Now if for all \(\epsilon > 0\) we have that \(\sum_{n=1}^\infty \prob[\big]{\norm{X_n - X} \ge \epsilon} < \infty\),
     then by the first Borel-Cantelli lemma \eqref{eq: borel cantelli 1}
     we have that the probability in \eqref{eq: characterization of does not converge} is zero
     and consequently we get almost sure convergence.
 
     Now if the random variables \((X_n - X)_{n\in \nat}\) are independent, then
     the sets \(\set{\norm{X_n - X} \ge \epsilon}\) are independent events. If there is an
-    \(\epsilon > 0\) such that \(\sum_{n=1}^\infty \Prob[\big]{\norm{X_n - X} \ge \epsilon} = \infty\),
+    \(\epsilon > 0\) such that \(\sum_{n=1}^\infty \prob[\big]{\norm{X_n - X} \ge \epsilon} = \infty\),
     then the application of the second Borel-Cantelli lemma \eqref{eq: borel
     cantelli 2} to this particular \(\epsilon\) shows that the probability
     in \eqref{eq: characterization of does not converge} must be one.
@@ -2149,15 +2149,15 @@ a subsequence that converges almost surely.
 \end{lemma}
 
 The idea of the proof is that we can increase the speed of convergence
-of \(\Prob[\big]{\norm{X_n - X} \ge \epsilon}\) by choosing a subsequence.
+of \(\prob[\big]{\norm{X_n - X} \ge \epsilon}\) by choosing a subsequence.
 For example in the case
 \[
-    \Prob[\big]{\norm{X_n - X} \ge \epsilon} \le \frac{C_\epsilon}{n},
+    \prob[\big]{\norm{X_n - X} \ge \epsilon} \le \frac{C_\epsilon}{n},
 \]
 we can choose \(n_k = k^2\) such that for every \(\epsilon > 0\)
 \begin{equation}
     \label{eq: subsequence summable}    
-    \sum_{k=1}^\infty \Prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}
+    \sum_{k=1}^\infty \prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}
     \le \sum_{k=1}^\infty \frac{C_\epsilon}{k^2} < \infty.
 \end{equation}
 Corollary \ref{cor: characterization of almost sure convergence} then
@@ -2173,23 +2173,23 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
     in particular \(\epsilon =\frac1k\), that
     there exists \(N_k\) such that for all \(n \ge N_k\)
     \[
-        \Prob{\norm{X_n - X} \ge \tfrac1k} \le \tfrac1{2^k}.
+        \prob{\norm{X_n - X} \ge \tfrac1k} \le \tfrac1{2^k}.
     \]
     By choosing the subsequence \(n_k = N_k\) we thus get
     for every \(\epsilon > 0\)
     \[
-        \sum_{k=1}^\infty \Prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}
+        \sum_{k=1}^\infty \prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}
         = \underbrace{\sum_{k=1}^{\lceil \frac1\epsilon \rceil-1}
-        \Prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}}_{< \infty}
+        \prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}}_{< \infty}
         +\sum_{k=\lceil \frac1\epsilon \rceil}^\infty
-        \Prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}
+        \prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}
     \]
     For the remaining summands we have \(\epsilon > \frac1k\) and therefore
     \[
        \sum_{k=\lceil \frac1\epsilon \rceil}^\infty
-        \Prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}
+        \prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}
         \le \sum_{k=\lceil \frac1\epsilon \rceil}^\infty
-        \Prob[\big]{\norm{X_{n_k} - X} \ge \tfrac1k}
+        \prob[\big]{\norm{X_{n_k} - X} \ge \tfrac1k}
         \le \sum_{k=1}^\infty \frac1{2^k} = 1 < \infty.
     \]
     Consequently, by Corollary \ref{cor: characterization of almost sure convergence}
@@ -2272,9 +2272,9 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
     Let \((A_n)_{n=1}^\infty\) be a sequence of independent events. Prove that 
     the probability of their liminf and limsup are either zero or one, that is
     \[
-        \Prob[\Big]{\limsup_{n\to \infty} A_n} \in \{0,1\}
+        \prob[\Big]{\limsup_{n\to \infty} A_n} \in \{0,1\}
         \quad\text{and}\quad
-        \Prob[\Big]{\liminf_{n\to \infty} A_n} \in \{0,1\}.
+        \prob[\Big]{\liminf_{n\to \infty} A_n} \in \{0,1\}.
     \]
     Consequently, if the probability is greater zero it must be one!
 
@@ -2292,17 +2292,17 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
     \begin{solution}
         Observe that there are only two possibilities, either
         \[
-            \sum_{n=1}^\infty \Prob{A_n} < \infty
+            \sum_{n=1}^\infty \prob{A_n} < \infty
                 \quad\text{or}\quad
-            \sum_{n=1}^\infty \Prob{A_n} = \infty.
+            \sum_{n=1}^\infty \prob{A_n} = \infty.
         \]
         In the first case we have by the first Borel-Cantelli lemma \eqref{eq: borel cantelli 1} that
         \[
-            \Prob[\Big]{\limsup_{n\to \infty} A_n} = 0.
+            \prob[\Big]{\limsup_{n\to \infty} A_n} = 0.
         \]
         in the second case we have by the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2} that
         \[
-            \Prob[\Big]{\limsup_{n\to \infty} A_n} = 1.
+            \prob[\Big]{\limsup_{n\to \infty} A_n} = 1.
         \]
         Consequently, we have the claim for \(\limsup_n A_n\). Due to
         \[
@@ -2328,10 +2328,10 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
         First, we show that \(X_n \overset{\as}\to 0\). For any \(\epsilon > 0\)
         we have
         \[\begin{aligned}
-            \sum_{n=0}^\infty \Prob{\abs{X_n - 0} \ge \epsilon}
-            &\le \sum_{n=0}^\infty \Prob{X_n \ge \min\set{\epsilon, 1}}
+            \sum_{n=0}^\infty \prob{\abs{X_n - 0} \ge \epsilon}
+            &\le \sum_{n=0}^\infty \prob{X_n \ge \min\set{\epsilon, 1}}
             \\
-            &= \sum_{n=0}^\infty\Prob{U < 2^{-n}} = \sum_{n=0}^\infty 2^{-n} < \infty.
+            &= \sum_{n=0}^\infty\prob{U < 2^{-n}} = \sum_{n=0}^\infty 2^{-n} < \infty.
         \end{aligned}
         \]
         Consequently, by Corollary \ref{cor: characterization of almost sure convergence} we have \(X_n \overset{\as}\to 0\).
@@ -2339,7 +2339,7 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
         \[
             \E{\abs{X_n - 0}}
             = \E{X_n}
-            = 2^n \Prob{U < 2^{-n}} = 1
+            = 2^n \prob{U < 2^{-n}} = 1
             \not\to 0.
             \qedhere
         \]
@@ -2356,11 +2356,11 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
         \begin{solution}
             Since we have
             \[
-                \sum_{n=1}^\infty \Prob{X_n = 1} = \sum_{n=1}^\infty n^{-r} < \infty,
+                \sum_{n=1}^\infty \prob{X_n = 1} = \sum_{n=1}^\infty n^{-r} < \infty,
             \]
             we have by the first Borel-Cantelli lemma \eqref{eq: borel cantelli 1} that
             \[
-                \Prob{X_n=1 \text{ for infinitely many } n} = \Prob{\limsup_{n\to \infty} \set{X_n = 1}} = 0.
+                \prob{X_n=1 \text{ for infinitely many } n} = \prob{\limsup_{n\to \infty} \set{X_n = 1}} = 0.
                 \qedhere
             \]
         \end{solution}
@@ -2369,11 +2369,11 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
         \begin{solution}
             Since we have
             \[
-                \sum_{n=1}^\infty \Prob{X_n = 1} = \sum_{n=1}^\infty n^{-r} = \infty,
+                \sum_{n=1}^\infty \prob{X_n = 1} = \sum_{n=1}^\infty n^{-r} = \infty,
             \]
             we have by the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2} that
             \[
-                \Prob{X_n=1 \text{ for infinitely many } n} = \Prob{\limsup_{n\to \infty} \set{X_n = 1}} = 1.
+                \prob{X_n=1 \text{ for infinitely many } n} = \prob{\limsup_{n\to \infty} \set{X_n = 1}} = 1.
                 \qedhere
             \]
         \end{solution}
@@ -2383,41 +2383,41 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
 \begin{exercise}[Further characterize almost sure convergence \Coffeecup]
     Prove the following are equivalent
     \begin{enumerate}[label=(\roman*), noitemsep]
-        \item\label{it: as convergence} \(X_n \overset{\as}\to X\), that is \(\Prob{X_n \to X} =1\)
-        \item\label{it: limsup set convergence} \(\Prob[\big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \epsilon}} = 0\) for all \(\epsilon > 0\)
-        \item\label{it: limsup convergence} \(\Prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon} = 0\) for all \(\epsilon >0\)
-        \item\label{it: sup convergence} \(\lim_{N\to \infty} \Prob[\big]{\sup_{n \ge N} |X_n - X| \ge \epsilon} = 0\) for all \(\epsilon > 0\).
+        \item\label{it: as convergence} \(X_n \overset{\as}\to X\), that is \(\prob{X_n \to X} =1\)
+        \item\label{it: limsup set convergence} \(\prob[\big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \epsilon}} = 0\) for all \(\epsilon > 0\)
+        \item\label{it: limsup convergence} \(\prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon} = 0\) for all \(\epsilon >0\)
+        \item\label{it: sup convergence} \(\lim_{N\to \infty} \prob[\big]{\sup_{n \ge N} |X_n - X| \ge \epsilon} = 0\) for all \(\epsilon > 0\).
     \end{enumerate}
     \begin{solution}
         First we prove \ref{it: as convergence} \(\Rightarrow\) \ref{it: limsup set convergence}.
         By definition of convergence we have
         \[\begin{aligned}
-            0 = \Prob{X_n \not\to X}
-            &= \Prob[\Big]{\bigcup_{\epsilon >0} \bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| \ge \epsilon}}
+            0 = \prob{X_n \not\to X}
+            &= \prob[\Big]{\bigcup_{\epsilon >0} \bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| \ge \epsilon}}
             \\
-            \overset{\text{fix } \epsilon}&\ge \Prob[\Big]{\bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| \ge \epsilon}}
+            \overset{\text{fix } \epsilon}&\ge \prob[\Big]{\bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| \ge \epsilon}}
             \\
-            \overset{\text{def.}}&= \Prob[\big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \epsilon}}.
+            \overset{\text{def.}}&= \prob[\big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \epsilon}}.
         \end{aligned}
         \]
         For the converse direction \ref{it: limsup set convergence} \(\Rightarrow\) \ref{it: as convergence}, we use
         \[\begin{aligned}
-            \Prob{X_n \not\to X}
-            &= \Prob[\Big]{\bigcup_{m\in \nat} \bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| < \tfrac1m}}
+            \prob{X_n \not\to X}
+            &= \prob[\Big]{\bigcup_{m\in \nat} \bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| < \tfrac1m}}
             \\
-            &= \lim_{m\to \infty} \Prob[\Big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \tfrac1m} = 0} = 0.
+            &= \lim_{m\to \infty} \prob[\Big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \tfrac1m} = 0} = 0.
         \end{aligned}
         \]
         The last equation follows from the assumption as \(\epsilon=\frac1m\) are just special cases.
         Next we show \ref{it: limsup set convergence} \(\Leftrightarrow\) \ref{it: limsup convergence}.
         Observe that by definition of the limsup of sets
         \[\begin{aligned}
-            \Prob[\big]{\limsup_{n \to \infty} \set{\abs{X_n - X} \ge \epsilon}}
-            &= \Prob[\big]{\forall N \in \nat,\; \exists n\ge N: \abs{X_n - X} \ge \epsilon}.
+            \prob[\big]{\limsup_{n \to \infty} \set{\abs{X_n - X} \ge \epsilon}}
+            &= \prob[\big]{\forall N \in \nat,\; \exists n\ge N: \abs{X_n - X} \ge \epsilon}.
             \\
-            &= \Prob[\Big]{\forall N \in \nat: \sup_{n\ge N} \abs{X_n - X} \ge \epsilon}.
+            &= \prob[\Big]{\forall N \in \nat: \sup_{n\ge N} \abs{X_n - X} \ge \epsilon}.
             \\
-            &= \Prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon}.
+            &= \prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon}.
         \end{aligned}
         \]
         Consequently the two statements are equivalent. Next we show
@@ -2425,10 +2425,10 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
         convergence}.  For this observe that the sets \(\set{\sup_{n \ge N} |X_n
         - X| \ge \epsilon}\) are a decreasing sequence in \(N\) and therefore
         \begin{align*}
-            \Prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon}
-            &= \Prob[\Big]{\bigcap_{N\in \nat} \set{\sup_{n \ge N} |X_n - X| \ge \epsilon}}
+            \prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon}
+            &= \prob[\Big]{\bigcap_{N\in \nat} \set{\sup_{n \ge N} |X_n - X| \ge \epsilon}}
             \\
-            &= \lim_{N\to \infty} \Prob[\big]{\sup_{n \ge N} |X_n - X| \ge \epsilon}.
+            &= \lim_{N\to \infty} \prob[\big]{\sup_{n \ge N} |X_n - X| \ge \epsilon}.
             \qedhere
         \end{align*}
     \end{solution}
@@ -2465,17 +2465,17 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
         (or still a Markov chain in \ref{it: level markov chain}).  Let us consider \ref{it: level iid}
         first. Since
         \[\begin{aligned}
-            \delta \coloneq \Prob{Y_n = y}
-            &= \Prob{X_{nm} = y_1, X_{nm+1} = y_2, \ldots, X_{m(n+1)-1} = y_m}
+            \delta \coloneq \prob{Y_n = y}
+            &= \prob{X_{nm} = y_1, X_{nm+1} = y_2, \ldots, X_{m(n+1)-1} = y_m}
             \\
-            &= \prod_{i=1}^m \Prob{X_{nm+i-1} = y_i} > 0,
+            &= \prod_{i=1}^m \prob{X_{nm+i-1} = y_i} > 0,
         \end{aligned}
         \]
-        Due to \(\sum_{n=1}^\infty \Prob{Y_n = y} = \sum_{n=1}^\infty \delta = \infty\)
+        Due to \(\sum_{n=1}^\infty \prob{Y_n = y} = \sum_{n=1}^\infty \delta = \infty\)
         we may apply the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2} to get
         \[
-            \Prob[\big]{Y_n = y \text{ for infinitely many } n}
-            = \Prob[\big]{\limsup_{n\to\infty} \set{Y_n = y}}
+            \prob[\big]{Y_n = y \text{ for infinitely many } n}
+            = \prob[\big]{\limsup_{n\to\infty} \set{Y_n = y}}
             \overset{\text{\eqref{eq: borel cantelli 2}}}= 1.
         \]
         Observe that we have proven more than the desired claim: The monkey will
@@ -2485,23 +2485,23 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
         For the proof of \ref{it: level markov chain} we need to avoid independence.
         Since any transition probability is positive, we have
         \[
-            \delta \coloneq \Prob{Y_n = y \mid Y_{n-1} \neq y}
-            = \sum_{\substack{x \in \alphabet^m \\ x \neq y}}\Prob{Y_n = y \mid Y_{n-1} = x}
+            \delta \coloneq \prob{Y_n = y \mid Y_{n-1} \neq y}
+            = \sum_{\substack{x \in \alphabet^m \\ x \neq y}}\prob{Y_n = y \mid Y_{n-1} = x}
             > 0.
         \]
         We will now modify the proof of the second Borel-Cantelli lemma 
         in the place where independece was used. Specifically, we have
         \begin{equation}
             \label{eq: modified borel cantelli 2}
-            \Prob[\big]{(\limsup_{n\to\infty} \set{Y_n = y})^\complement}
-            = \lim_{N\to \infty} \lim_{k\to \infty} \Prob[\Big]{\bigcap_{n=N}^k \set{Y_n \neq y}}.
+            \prob[\big]{(\limsup_{n\to\infty} \set{Y_n = y})^\complement}
+            = \lim_{N\to \infty} \lim_{k\to \infty} \prob[\Big]{\bigcap_{n=N}^k \set{Y_n \neq y}}.
         \end{equation}
         with
         \[\begin{aligned}
-            \Prob[\Big]{\bigcap_{n=N}^k \set{Y_n \neq y}}
-            &= \prod_{n=N}^k \Prob{Y_n \neq y \mid Y_{n-1} \neq y,\ldots, Y_{N} \neq y}
+            \prob[\Big]{\bigcap_{n=N}^k \set{Y_n \neq y}}
+            &= \prod_{n=N}^k \prob{Y_n \neq y \mid Y_{n-1} \neq y,\ldots, Y_{N} \neq y}
             \\
-            \overset{\text{Markov}}&= \Prob{Y_n\neq y}\prod_{n=N+1}^k \Prob{Y_n \neq y \mid Y_{n-1} \neq y}
+            \overset{\text{Markov}}&= \prob{Y_n\neq y}\prod_{n=N+1}^k \prob{Y_n \neq y \mid Y_{n-1} \neq y}
             \\
             &\le (1-\delta)^{k-N-1}.
         \end{aligned}
@@ -2549,20 +2549,20 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
 % \]
 % and $(X_1,X_2,X_3,\ldots,Y_1,Y_2,Y_3,\ldots,Z_1,Z_2,Z_3,\ldots)$ are independent.
 % \[
-% \Prob*{S_n=(0,0,0)} 
-% = \Prob*{S_n^x=0}\Prob*{S_n^y=0}\Prob*{S_n^z=0}
+% \prob*{S_n=(0,0,0)} 
+% = \prob*{S_n^x=0}\prob*{S_n^y=0}\prob*{S_n^z=0}
 % \]
 % For $n$ odd, 
 % \[
-% \Prob*{S_n^x=0}=
-% \Prob*{S_n^y=0}=
-% \Prob*{S_n^z=0}=0\;.
+% \prob*{S_n^x=0}=
+% \prob*{S_n^y=0}=
+% \prob*{S_n^z=0}=0\;.
 % \]
 % For $n$ even, say $n=2N$
 % \[
-% \Prob*{S_n^x=0}=
-% \Prob*{S_n^y=0}=
-% \Prob*{S_n^z=0}=\left(2^{-2N}\binom{2N}{N}\right)^3\;.
+% \prob*{S_n^x=0}=
+% \prob*{S_n^y=0}=
+% \prob*{S_n^z=0}=\left(2^{-2N}\binom{2N}{N}\right)^3\;.
 % \]
 % By Stirling's approximation
 % \[
@@ -2571,7 +2571,7 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
 % \]
 % Thus, for $n$ even
 % \[
-% \Prob*{S_n=0} \approx C n^{-3/2}\;.
+% \prob*{S_n=0} \approx C n^{-3/2}\;.
 % \]
 % Thus, the probability that $S_n=0$ happens infinitely often is $0$. Thus, a
 % drunk bird may get lost forever. But for two dimensional or one dimensional
@@ -2600,7 +2600,7 @@ Our next result shows that this is mostly the case.
     Let \((\domain, \norm{\cdot})\) and \((\range, \norm{\cdot})\) be normed
     vectorspaces.  Let \((X_n)_{n\in \nat}\) and \(X\) be random variables in
     \(\domain\). Let \(f\colon \domain \to \range\) be almost
-    surely continuous in \(X\), that is \(\Prob{f \text{ is continuous at } X} =
+    surely continuous in \(X\), that is \(\prob{f \text{ is continuous at } X} =
     1\). Then
     \begin{enumerate}[label=(\roman*)]
         \item\label{it: cont. mapping as} \(X_n \overset{\as}\to X\) implies \(f(X_n) \overset{\as}\to f(X)\).
@@ -2688,15 +2688,15 @@ and \ref{thm: joint convergence}.
 \begin{proof}[Proof of Theorem \ref{thm: continuous mapping}]
     Let \(D_f\) be the set of discontinuity points of \(f\).
     Then
-    \(\Prob{X \in D_f} = 0\) by assumption. We have \ref{it: cont. mapping as}
+    \(\prob{X \in D_f} = 0\) by assumption. We have \ref{it: cont. mapping as}
     by
     \[
         \set{X_n \to X} \subseteq \set{f(X_n) \to f(X)} \cup \set{X \in D_f}
     \]
     and consequently
     \[
-        \Prob[\Big]{f(X_n) \to f(X)}
-        \ge \Prob[\big]{X_n \to X} - \Prob{X \in D_f} = 1.
+        \prob[\Big]{f(X_n) \to f(X)}
+        \ge \prob[\big]{X_n \to X} - \prob{X \in D_f} = 1.
     \]
     For \ref{it: cont. mapping d} we use Portemanteau's theorem.
     Specifically, for \(f(X_n) \overset{d}\to f(X_n)\) we need
@@ -2733,17 +2733,17 @@ and \ref{thm: joint convergence}.
     \]
     Taking the limit superior in \(n\) we thus get
     \[\begin{aligned}
-        &\limsup_{n\to \infty} \Prob[\big]{\norm{f(X_n) - f(X)} > \epsilon}
+        &\limsup_{n\to \infty} \prob[\big]{\norm{f(X_n) - f(X)} > \epsilon}
         \\
-        &\le \underbrace{\lim_{n\to \infty} \Prob[\big]{\norm{X_n - X} > \delta}}_{=0}
-        + \Prob{X \in A_\delta} + \underbrace{\Prob{X \in D_f}}_{=0}.
+        &\le \underbrace{\lim_{n\to \infty} \prob[\big]{\norm{X_n - X} > \delta}}_{=0}
+        + \prob{X \in A_\delta} + \underbrace{\prob{X \in D_f}}_{=0}.
     \end{aligned}
     \]
     Since this is true for all \(\delta > 0\) we have
     \[
-        \limsup_{n\to \infty} \Prob[\big]{\norm{f(X_n) - f(X)} > \epsilon}
-        \le \lim_{\delta \to 0} \Prob{X \in A_\delta}
-        = \Prob[\Big]{ X \in \bigcap_{\delta >0} A_\delta }
+        \limsup_{n\to \infty} \prob[\big]{\norm{f(X_n) - f(X)} > \epsilon}
+        \le \lim_{\delta \to 0} \prob{X \in A_\delta}
+        = \prob[\Big]{ X \in \bigcap_{\delta >0} A_\delta }
         = 0,
     \]
     where we used that \(A_\delta \downarrow \emptyset\). This proves the claim.
@@ -2753,8 +2753,8 @@ and \ref{thm: joint convergence}.
 \begin{proof}[Proof of Theorem \ref{thm: joint convergence}]
     For \ref{it: joint conv as} we simply observe
     \[
-        \Prob[\Big]{\lim_{n\to \infty} (X_n, Y_n) \neq (X,Y)}
-        \le \Prob[\Big]{\lim_{n\to \infty} X_n \neq X} + \Prob[\Big]{\lim_{n\to \infty} Y_n \neq Y} = 0.
+        \prob[\Big]{\lim_{n\to \infty} (X_n, Y_n) \neq (X,Y)}
+        \le \prob[\Big]{\lim_{n\to \infty} X_n \neq X} + \prob[\Big]{\lim_{n\to \infty} Y_n \neq Y} = 0.
     \]
     For \ref{it: joint conv Lp} we use Minkowski's inequality
     \[\begin{aligned}
@@ -2771,13 +2771,13 @@ and \ref{thm: joint convergence}.
     and again \(\norm{(x, 0)} = \norm{x}\) in \(\real^{\dims\times \dims'}\)
     to obtain
     \[\begin{aligned}
-        &\Prob[\Big]{\norm{(X_n, Y_n) - (X,Y)} > \epsilon}
+        &\prob[\Big]{\norm{(X_n, Y_n) - (X,Y)} > \epsilon}
         \\
-        &\le \Prob[\Big]{\norm{(X_n, Y_n) - (X,Y_n)} > \tfrac\epsilon2}
-        + \Prob[\Big]{\norm{(X,Y_n) - (X,Y)} > \tfrac\epsilon2}
+        &\le \prob[\Big]{\norm{(X_n, Y_n) - (X,Y_n)} > \tfrac\epsilon2}
+        + \prob[\Big]{\norm{(X,Y_n) - (X,Y)} > \tfrac\epsilon2}
         \\
-        &= \Prob[\Big]{\norm{X_n - X} > \tfrac\epsilon2}
-        + \Prob[\Big]{\norm{Y_n - Y} > \tfrac\epsilon2} \to 0.
+        &= \prob[\Big]{\norm{X_n - X} > \tfrac\epsilon2}
+        + \prob[\Big]{\norm{Y_n - Y} > \tfrac\epsilon2} \to 0.
     \end{aligned}\]
     For \ref{it: joint conv law slutsky} we use that \(Y_n \overset{d}\to c\)
     for some constant \(c\in \real^{\dims'}\) implies \(Y_n \overset{p}\to c\)
@@ -2799,7 +2799,6 @@ and \ref{thm: joint convergence}.
     (Corollary \ref{cor: cramer wold}).
 \end{proof}
 
-\fxnote{move to first section?}
 \begin{lemma}[Pull along]
     \label{lem: pull along}
     \(X_n \overset{d}\to X\) and \(\norm{Y_n - X_n} \overset{p}\to 0\) implies \(Y_n \overset{d}\to X\).
@@ -2821,7 +2820,7 @@ and \ref{thm: joint convergence}.
 
 \begin{exercise}[Counterexample joint convergence \Coffeecup]
     \label{ex: counterexample joint convergence}
-    Let \(X\) be a random variable with \(\Prob{X=-1} = \Prob{X=1} = \frac12\)
+    Let \(X\) be a random variable with \(\prob{X=-1} = \prob{X=1} = \frac12\)
     and define \(X_n \coloneq X\) and \(Y_n \coloneq -X\). Show that \(X_n
     \overset{d}\to X\) and
     \(Y_n \overset{d}\to X\) but 
@@ -2832,11 +2831,11 @@ and \ref{thm: joint convergence}.
     \begin{solution}
         Clearly, \(X_n + Y_n = 0\) for all \(n\). In particular we have
         \[
-            \Prob{X_n + Y_n \in A} = \Indicator{A}(0)
+            \prob{X_n + Y_n \in A} = \Indicator{A}(0)
             \neq \frac12\Indicator{A}(2) + \frac12 \Indicator{A}(-2)
-            = \Prob{2X \in A}.
+            = \prob{2X \in A}.
         \]
-        for \(A= \{0\}\) for example. Since \(\Prob{2X = 0} = 0\) this is
+        for \(A= \{0\}\) for example. Since \(\prob{2X = 0} = 0\) this is
         however a requirement for \(X_n + Y_n \overset{d}\to 2X\) by \ref{it:
         s.zero boundary}. Thus \(X_n + Y_n \overset{d}{\not\to} 2X\).  This also
         implies that \((X_n, Y_n)\) does not converge to \((X,X)\) in
@@ -2871,6 +2870,17 @@ and \ref{thm: joint convergence}.
     \]
     Show for \(p\in [\frac{q}\gamma, q)\) we have that \(X_n \overset{L^p}\to 0\)
     but not \(f(X_n) \overset{L^p}\to 0\).
+    \begin{solution}
+        We have
+        \[
+            \norm{X_n-0}_{L^p}^p = \norm{X_n}_{L^p}^p = n^{\frac{p}{q}} \prob{U < \tfrac1n} = n^{\frac{p}{q}-1} \to 0
+        \]
+        for \(p < q\). However, we have
+        \[
+            \norm{f(X_n)- f(0)}_{L^p}^p = \norm{f(X_n)}_{L^p}^p = n^{\frac{\gamma p}{q}} \prob{U < \tfrac1n} = n^{\frac{\gamma p}{q}-1} \to \infty
+        \]
+        for \(p > \frac{q}\gamma\).    
+    \end{solution}
 \end{exercise}
 
 \begin{exercise}[Basic application of continuous mapping theorem \Coffeecup]
@@ -2878,9 +2888,9 @@ and \ref{thm: joint convergence}.
     with \(X_n \overset{d}\to X\). Show that
     \begin{enumerate}[label=(\alph*), noitemsep]
         \item \(X_n^2 \overset{d}\to X^2\),
-        \item \(\sgn(X_n) \overset{d}\to \sgn(X)\) if \(\Prob{X=0} = 0\).
+        \item \(\sgn(X_n) \overset{d}\to \sgn(X)\) if \(\prob{X=0} = 0\).
 
-        Construct a counterexample for the case \(\Prob{X=0} > 0\).
+        Construct a counterexample for the case \(\prob{X=0} > 0\).
     \end{enumerate}
 \end{exercise}
 
@@ -2902,9 +2912,9 @@ and \ref{thm: joint convergence}.
     Which step in the following chain of implications is \textbf{wrong}?
     \[
         X_n \overset{d}\to X
-        \implies X_n - X \overset{d}\to 0
-        \implies X_n - X \overset{p}\to 0
-        \implies X_n \overset{p}\to X.
+        \overset{?}\implies X_n - X \overset{d}\to 0
+        \overset{?}\implies X_n - X \overset{p}\to 0
+        \overset{?}\implies X_n \overset{p}\to X.
     \]
     Justify all other steps and find a counterexample for the wrong step.
 \end{exercise}

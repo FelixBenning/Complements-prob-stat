@@ -30,8 +30,8 @@ which is a fundamental result in measure theory.
 \end{proof}
 \begin{fact}
     \label{fact: discontinuity are atoms}
-    \(\Pr(X =x) > 0\) if an only if \(x\) is a discontinuity point of the
-    distribution function \(F(x) = \Pr(X \le x)\).
+    \(\prob{X =x} > 0\) if an only if \(x\) is a discontinuity point of the
+    distribution function \(F(x) = \prob{X \le x}\).
 \end{fact}
 \begin{proof}[Proofsketch]
     Use the continuity of measure to determine the value of the left-limits 
@@ -53,40 +53,40 @@ countable, disjoint union of open intervals
 \(a_i, b_i \in \real\) (Fact \ref{fact: open set as union of intervals}). Thus
 by Fatou's lemma (Fact \ref{fact: fatou}) we have
 \[\begin{aligned}
-    \liminf_{n\to \infty} \Prob{X_n \in O}
-    &= \liminf_{n\to \infty} \sum_{i=1}^\infty \Prob[\big]{X_n \in (a_i, b_i)}
+    \liminf_{n\to \infty} \prob{X_n \in O}
+    &= \liminf_{n\to \infty} \sum_{i=1}^\infty \prob[\big]{X_n \in (a_i, b_i)}
     \\
-    \overset{\text{Fatou}}&\ge \sum_{i=1}^\infty \liminf_{n\to \infty} \Prob[\big]{X_n \in (a_i, b_i)}
+    \overset{\text{Fatou}}&\ge \sum_{i=1}^\infty \liminf_{n\to \infty} \prob[\big]{X_n \in (a_i, b_i)}
     \\
-    \overset{(*)}&\ge \sum_{i=1}^\infty \Prob{X \in (a_i, b_i)}
-    &= \Prob{X \in O},
+    \overset{(*)}&\ge \sum_{i=1}^\infty \prob{X \in (a_i, b_i)}
+    &= \prob{X \in O},
 \end{aligned}\]
 Here \((*)\) is the claim for open intervals. 
 To prove it for an open interval \((a,b)\) pick two sequences \((a_k)_{k\in \nat}\) and \((b_k)_{k\in \nat}\)
-of \underline{continuity} points of the distribution function \(F(x) \coloneq \Prob{X \le x}\)
+of \underline{continuity} points of the distribution function \(F(x) \coloneq \prob{X \le x}\)
 with \(a_k \downarrow a\) and \(b_k \uparrow b\). This is possible since 
 \(F\) is non-decreasing and Fact \ref{fact: non-decreasing -> discontinuities countable}.
 By \ref{it: df} and Fact \ref{fact:
-discontinuity are atoms} we thus have for \(F_n(x) \coloneq \Prob{X_n \le x}\)
+discontinuity are atoms} we thus have for \(F_n(x) \coloneq \prob{X_n \le x}\)
 that \(F_n(a_k) \to F(a_k)\)
 as the \(a_k\) are continuity points and similarly for \(b_k\).
 Consequently,
 as \((a,b) \supseteq (a_k, b_k]\) we have
 \[\begin{aligned}
-    \liminf_{n\to \infty} \Prob{X_n \in (a,b)}
-    &\ge \liminf_{n\to\infty} \Prob{X_n \in (a_k, b_k]}
+    \liminf_{n\to \infty} \prob{X_n \in (a,b)}
+    &\ge \liminf_{n\to\infty} \prob{X_n \in (a_k, b_k]}
     \\
     &= \liminf_{n\to\infty} F_n(b_k) - F_n(a_k)
     \\
     \overset{\ref{it: df}}&= F(b_k) - F(a_k)
-    = \Prob{X \in (a_k, b_k]}.
+    = \prob{X \in (a_k, b_k]}.
 \end{aligned}\]
 Since it is true for any \(k\) we have
 \[\begin{aligned}
-    \liminf_{n\to \infty} \Prob{X_n \in (a,b)}
-    &\ge \lim_{k\to\infty} \Prob{X \in (a_k, b_k]}
+    \liminf_{n\to \infty} \prob{X_n \in (a,b)}
+    &\ge \lim_{k\to\infty} \prob{X \in (a_k, b_k]}
     \\
-    &= \Prob[\Big]{X \in \bigcup_{k\in \nat} (a_k, b_k]}
-    = \Prob{X \in (a,b)}.
+    &= \prob[\Big]{X \in \bigcup_{k\in \nat} (a_k, b_k]}
+    = \prob{X \in (a,b)}.
 \end{aligned}
 \]

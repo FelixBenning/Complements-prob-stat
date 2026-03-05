@@ -27,7 +27,7 @@ the definition of the covariance and variance in a natural way.
     \label{rem: expectation in multiple dimensions}
     In the discrete case, the expectation is
     \[
-        \E{X} = \sum_{x} x \Prob{X = x}
+        \E{X} = \sum_{x} x \prob{X = x}
     \]
     Observe the key for this to work is that the \(x\) are summable and scalable
     by a scalar probability. This only requires a vector space structure.  
@@ -64,9 +64,9 @@ the definition of the covariance and variance in a natural way.
 \end{definition}
 
 \begin{remark}
-Note that \(\covSymb\) is an inner product and we will later define
-a covariance operator \(\CovSymb\) that is an outer product such that \(\covSymb\)
-becomes the trace of \(\CovSymb\).
+Note that \(\covSym\) is an inner product and we will later define
+a covariance operator \(\CovSym\) that is an outer product such that \(\covSym\)
+becomes the trace of \(\CovSym\).
 \end{remark}
 The variance of sums or random variables is straightforward to calculate:
 
@@ -119,7 +119,7 @@ Bienaymé is the following weak law of large numbers.
     we get
     \begin{equation*}
         \begin{aligned}
-        \Prob[\big]{\norm{\mean{X}_n - \mu} > \epsilon}
+        \prob[\big]{\norm{\mean{X}_n - \mu} > \epsilon}
         &\le \tfrac1{\epsilon^2}\|\mean{X}_n - \mu\|_{L^2}^2
         \\
         &= \frac1{\epsilon^2} \var[\big]{\mean{X}_n}
@@ -137,7 +137,7 @@ If the variances are bounded, that is
 then
 \begin{equation}
     \label{eq: rate of convergence for bounded variance}    
-    \Prob[\big]{\norm{\mean{X}_n - \mu} > \epsilon}
+    \prob[\big]{\norm{\mean{X}_n - \mu} > \epsilon}
     \le \frac1{\epsilon^2}\frac{\sigma^2}{n} \in \bigO(\tfrac1n).
 \end{equation}
 If the variances \(\var{X_i}\) are increasing in \(i\), then one
@@ -181,13 +181,13 @@ two common approaches:
 
 \begin{proof}[Proof (by Michael J Neely \citep{neelyInfinitelyOftenProbability2021})]
     Since the variance is bounded, we have seen in \eqref{eq: rate of convergence for bounded variance}
-    that  \(\Prob[\big]{\norm{\mean{X}_n - \mu} > \epsilon} \le
+    that  \(\prob[\big]{\norm{\mean{X}_n - \mu} > \epsilon} \le
     \frac{\sigma^2}{n\epsilon^2}\). This implies \(\mean{X}_{n^2}
     \overset{\as}\to \mu\) by Corollary \ref{cor: characterization of almost sure
     convergence}
     since 
     \[
-        \sum_{n=1}^\infty \Prob[\big]{\norm{\mean{X}_{n^2}-\mu} \ge \epsilon}
+        \sum_{n=1}^\infty \prob[\big]{\norm{\mean{X}_{n^2}-\mu} \ge \epsilon}
         \le \frac{\sigma^2}{\epsilon^2}\sum_{n=1}^\infty \frac1{n^2} < \infty.
     \]
     That is we choose the  subsequence indexed by \(n^2\). What is left to prove
@@ -238,7 +238,7 @@ two common approaches:
     \]
     Consequently, by the Chebyshev inequality we have for every \(\epsilon > 0\)
     \[
-        \sum_{n=1}^\infty \Prob[\big]{|\Delta_n| \ge \epsilon}
+        \sum_{n=1}^\infty \prob[\big]{|\Delta_n| \ge \epsilon}
         \le \sum_{n=1}^\infty \frac{\var{\Delta_n}}{\epsilon^2}
         \le \frac{3\sigma^2}{\epsilon^2}\sum_{n=1}^\infty \frac1{k_n^3}.
     \]
@@ -296,7 +296,7 @@ assumption that the random variables are in \(L^1\).
    \begin{enumerate}[label=(\roman*),noitemsep]
         \item \(X\) and \(Y\) are independent, that is
         \[
-            \Prob{X \in A, Y \in B} = \Prob{X \in A}\Prob{Y \in B} \qquad \forall A, B
+            \prob{X \in A, Y \in B} = \prob{X \in A}\prob{Y \in B} \qquad \forall A, B
         \]
         \item For all measurable functions \(f\) and \(g\) such that \(f(X)\)
         and \(g(X)\) are integrable we have
@@ -316,7 +316,7 @@ assumption that the random variables are in \(L^1\).
         \[
             \cov{X}{Y} = 0.
         \]
-        \item Let \(\Prob{X=-1} = \Prob{X=0} = \Prob{X=1} = \frac13\) and \(Y =
+        \item Let \(\prob{X=-1} = \prob{X=0} = \prob{X=1} = \frac13\) and \(Y =
         X^2\). Prove that \(X\) and \(Y\) are uncorrelated but not independent.
 
         \item If \(X\) and \(Y\) are independent, then \(h_1(X)\) and \(h_2(Y)\) are independent
@@ -354,7 +354,7 @@ assumption that the random variables are in \(L^1\).
         \item Let \(A\) be a measurable set and \(Y_i \coloneq \Indicator{X_i \in A}\).
         Prove that
         \[
-            \frac1n \sum_{i=1}^n Y_i \overset{\as}\to \Prob{X_1 \in A}
+            \frac1n \sum_{i=1}^n Y_i \overset{\as}\to \prob{X_1 \in A}
             \qquad (n \to \infty).
         \]
         \item Define the empirical distribution function
@@ -409,7 +409,7 @@ assumption that the random variables are in \(L^1\).
         With \(C = \E{X_1^4} + \frac12 (\E{X_1^2})^2 < \infty\). Consequently, we have
         by Chebyshev's inequality for \(p=4\) (Corollary \ref{cor: markov inequality Lp})
         \[
-            \Prob{\norm{\mean{X}_n} > \epsilon} \le \frac{\norm{\mean{X}_n}_{L^4}^4}{\epsilon^4} \le \frac{C}{\epsilon^4 n^2}.
+            \prob{\norm{\mean{X}_n} > \epsilon} \le \frac{\norm{\mean{X}_n}_{L^4}^4}{\epsilon^4} \le \frac{C}{\epsilon^4 n^2}.
         \]
         Since this is summable in \(n\) we have by Corollary \ref{cor:
         characterization of almost sure convergence} that \(\mean{X}_n
@@ -554,7 +554,7 @@ where \(P_t^i\) is the price of the asset \(i\) at time \(t\) and
     \end{mdframed}
     You will prove this theorem in three steps:
     \begin{enumerate}[label=(\alph*),noitemsep]
-        \item Define the functions \(G(x) \coloneq \Prob{X_1 < x}\) and \(G_n(x) \coloneq \frac1n \sum_{i=1}^n \Indicator{X_i < x}\)
+        \item Define the functions \(G(x) \coloneq \prob{X_1 < x}\) and \(G_n(x) \coloneq \frac1n \sum_{i=1}^n \Indicator{X_i < x}\)
         and prove for any \(x_1, \dots, x_k \in \real\)
         \[\begin{aligned}
             &(F_n(x_1), \dots, F_n(x_k), G_n(x_1), \dots, G_n(x_k))
@@ -571,7 +571,7 @@ where \(P_t^i\) is the price of the asset \(i\) at time \(t\) and
         \item Recall the properties of the quantile function \(F^\leftarrow\) (Exercise \ref{ex: stochastic simulation})
         and choose \(x_1, \dots, x_{k-1}\) as \(x_i \coloneq F^\leftarrow\bigl(\frac{i}k\bigr)\).
         Use \eqref{eq: discretization max to zero} to prove that
-        almost surely (for all \(\omega \in N^\complement\) for some set \(N\) with \(\Prob{N}=0\))
+        almost surely (for all \(\omega \in N^\complement\) for some set \(N\) with \(\prob{N}=0\))
         \[
             \limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} \le \frac1k + \limsup_{n\to \infty}R_n \le \frac1k.
         \]
@@ -603,7 +603,7 @@ constant variance
 and consequently by Chebyshev's inequality the deviation probability of order \(\frac{1}{\sqrt{n}}\) is
 bounded by a constant
 \[
-    \Prob[\Big]{\norm{\mean{X}_n - \E{X}} > \frac{\epsilon}{\sqrt{n}}}
+    \prob[\Big]{\norm{\mean{X}_n - \E{X}} > \frac{\epsilon}{\sqrt{n}}}
     \le \frac{\var{X_1}}{\epsilon^2}.
 \]
 Of course this bound may be very loose but we will find that this is indeed
@@ -1116,7 +1116,7 @@ distribution is stable under addition.
     only \(2\)-stable distribution. For \(\alpha\in (0,2)\) the tails
     decay according to a power law, roughly
     \[
-        \Prob{\abs{X} >t} \sim t^{-\alpha} \qquad t\to \infty.
+        \prob{\abs{X} >t} \sim t^{-\alpha} \qquad t\to \infty.
     \]
     Any distribution that is the limit of rescaled iid sums must be
     \(\alpha\)-stable. This can be seen by grouping the summands into \(n\)
@@ -1652,7 +1652,7 @@ also exist, but they come at the price of much greater difficulty.
 
 With a quantitative bound we mean that we want an explicit upper bound
 \[
-    \Prob[\big]{\norm{X_n - X} \ge \epsilon} \le \delta
+    \prob[\big]{\norm{X_n - X} \ge \epsilon} \le \delta
 \]
 for a fixed \(n\) instead of just the statement that this probability goes to zero as
 \(n\to\infty\). Such statements are also know as ``probably, approximately
@@ -1667,12 +1667,12 @@ correct'' (PAC) statements, that is
 Recall that the only tool we have used so far to bound probabilities is the
 Markov inequality (Theorem \ref{thm: markov inequality})
 \[
-    \Prob{X \ge x} \le \tfrac{\E{h(X)}}{h(x)}.
+    \prob{X \ge x} \le \tfrac{\E{h(X)}}{h(x)}.
 \]
 The choice \(h(x) = e^{tx}\), with \(t\ge 0\) such that \(h\) is
 non-decreasing, results in the ``\textbf{Chernoff bound}''
 \[
-    \Prob{X \ge x}
+    \prob{X \ge x}
     \le \frac{\E{e^{t  X}}}{e^{t x}}
     = \frac{\MGF_X(t)}{e^{t x}}
     = \exp\bigl(-\bigl(t x - \underbrace{\log \MGF_X(t)}_{=\CGF_X(t)}\bigr)\bigr).
@@ -1685,7 +1685,7 @@ generating function}'' (CGF) or ``log-laplace transform'' that will be our main 
 of study in this section.
 
 The key feature of the Chernoff bound is that it provides us with a parameter \(t\)
-that is not inherent to the problem of bounding \(\Prob{X \ge a}\). This allows for
+that is not inherent to the problem of bounding \(\prob{X \ge a}\). This allows for
 an optimization over \(t\), resulting in the \textbf{Legendre transform}
 \[
     \CGF^+_X(x) \coloneq \sup_{t\ge 0} \bigl( t x - \CGF_X(t) \bigr).
@@ -1693,7 +1693,7 @@ an optimization over \(t\), resulting in the \textbf{Legendre transform}
 The optimized bound is then given by
 \begin{equation}
     \label{eq: chernoff bound}    
-    \Prob{X \ge x} \le \exp\bigl(-\CGF^+_X(x)\bigr).
+    \prob{X \ge x} \le \exp\bigl(-\CGF^+_X(x)\bigr).
 \end{equation}
 
 \begin{example}[The normal distribution]
@@ -1728,13 +1728,13 @@ The optimized bound is then given by
     the tail of the normal distribution decays like a squared exponential in the
     distance \((x-\mu)\) to the mean, that is
     \[
-        \Prob{X \ge x}
+        \prob{X \ge x}
         \le \exp\bigl(- \tfrac{(x - \mu)^2}{2\sigma^2}\bigr)
         \qquad\text{for } x \ge \mu.
     \]
     Or equivalently, with \(\epsilon = x - \mu > 0\) we get a quickly decaying bound in \(\epsilon\)
     \[
-        \Prob{X - \mu \ge \epsilon}
+        \prob{X - \mu \ge \epsilon}
         \le \exp(-\tfrac{\epsilon^2}{2\sigma^2})
         \qquad\text{for } \epsilon \ge 0.
     \]
@@ -1754,7 +1754,7 @@ of \(\CGF_X\) given by
 \]
 \begin{warning}
     \label{warn: difference between CGF star and plus}
-    For \(x\le \mu\) the bound \(\Prob{X \ge x} \le \exp(-\CGF_X^*(x))\) is
+    For \(x\le \mu\) the bound \(\prob{X \ge x} \le \exp(-\CGF_X^*(x))\) is
     false! Here \(\CGF_X^*(x) > \CGF_X^+(x) = 0\).  However since
    \(\CGF_X^+(x)=0\) is a useless bound anyway, we simply need to avoid this
     case.
@@ -1775,20 +1775,20 @@ of \(\CGF_X\) given by
 % where we use \(\CGF_{-X}(t) = \log\E{e^{t(-X)}}= \CGF_X(-t)\).
 % So in essence
 % \begin{alignat}{3}
-%     \Prob{X \ge a} &\le \exp\bigl(-\CGF_X^*(a)\bigr) &\text{for }a &\ge \mu,
+%     \prob{X \ge a} &\le \exp\bigl(-\CGF_X^*(a)\bigr) &\text{for }a &\ge \mu,
 %     \\ 
-%     \Prob{X \le a} = \Prob{-X \ge -a} &\le \exp\bigl(-\CGF_{X}^*(a)\bigr)\qquad &\text{for } a &\le \mu.
+%     \prob{X \le a} = \prob{-X \ge -a} &\le \exp\bigl(-\CGF_{X}^*(a)\bigr)\qquad &\text{for } a &\le \mu.
 % \end{alignat}
 % Why is this useful? For \(a \le \mu \le b\) consider
 % \[
-%     \Prob{X \in (a,b)^\complement}
-%     = \Prob{X \le a} + \Prob{X \ge b}
+%     \prob{X \in (a,b)^\complement}
+%     = \prob{X \le a} + \prob{X \ge b}
 % \]
 
 % For concentration bounds we will simply use
 % \[\begin{aligned}
-%     \Prob{\abs{X} \ge a}
-%     &= \Prob{X \ge a} + \Prob{-X \ge a}
+%     \prob{\abs{X} \ge a}
+%     &= \prob{X \ge a} + \prob{-X \ge a}
 %     \\
 %     &\le \exp\bigl(-\CGF^+_X(a)\bigr) + \exp\bigl(-\CGF^+_{-X}(a)\bigr)
 % \end{aligned}\]
@@ -1913,7 +1913,7 @@ This explains its name and this property is crucial for the following bound.
     \label{prop: general LDP upper}
     Let \(A\subseteq \hilbert\) be a \underline{compact convex} set, then 
     \[
-        \Prob{X \in A} \le \exp\bigl(-\inf_{a\in A} \CGF_X^*(a)\bigr).
+        \prob{X \in A} \le \exp\bigl(-\inf_{a\in A} \CGF_X^*(a)\bigr).
     \]
 \end{proposition}
 \end{mdframed}
@@ -1926,7 +1926,7 @@ This explains its name and this property is crucial for the following bound.
     for all \(x\in A\) and any \(t\in \hilbert\). Since \(e^\lambda \ge 1\)
     for all \(\lambda \ge 0\) we have
     \[\begin{aligned}
-        \Prob{X \in A} = \E{\Indicator{X \in A}}
+        \prob{X \in A} = \E{\Indicator{X \in A}}
         &\le \E[\Big]{\exp\bigl(\scp{t, X} - \inf_{a\in A} \scp{t, a}\bigr)}
         \\
         &= \MGF_X(t)\exp\bigl(- \inf_{a\in A} \scp{t, a}\bigr) 
@@ -1939,7 +1939,7 @@ This explains its name and this property is crucial for the following bound.
     minimax theorem (Fact \ref{fact: sion's minimax theorem}) and Lemma
     \ref{lem: check sion's conditions}
     \[\begin{aligned}[b]
-        \Prob{X \in A}
+        \prob{X \in A}
         &\le \exp\Bigl(- \sup_{t \in \hilbert} \inf_{a\in A} \Phi_X(t, a)\Bigr)
         \\
         \overset{\text{Sion}}&=
@@ -1986,7 +1986,7 @@ In finite dimensions we can extend Proposition \ref{prop: general LDP upper} to
     \label{thm: chernoff bound in R^d}
     Let \(A\subseteq \real^\dims\) be a \underline{closed}, \underline{convex} set, then 
     \[
-        \Prob{X \in A} \le \exp\bigl(-\inf_{a\in A} \CGF_X^*(a)\bigr).
+        \prob{X \in A} \le \exp\bigl(-\inf_{a\in A} \CGF_X^*(a)\bigr).
     \]
 \end{theorem}
 \end{mdframed}
@@ -1996,8 +1996,8 @@ In finite dimensions we can extend Proposition \ref{prop: general LDP upper} to
     dimension!). Then by continuity of probability measures
     (Remark \ref{rem: continuity of probability})
     \[\begin{aligned}[b]
-        \Prob{X \in A}
-        &\le \lim_{n\to \infty} \Prob{X \in A \cap K_n} + \underbrace{\Prob{X \notin K_n}}_{\to 0}
+        \prob{X \in A}
+        &\le \lim_{n\to \infty} \prob{X \in A \cap K_n} + \underbrace{\prob{X \notin K_n}}_{\to 0}
         \\
         &\le \lim_{n\to \infty} \exp\bigl(- \inf_{a\in A \cap K_n} \CGF_X^*(a)\bigr)
         \le \exp\bigl(- \inf_{a\in A} \CGF_X^*(a)\bigr).
@@ -2011,12 +2011,12 @@ Let us compare the generalized Chernoff bound with the Chernoff bound
 we obtained in the one-dimensional case. The one dimensional bound \eqref{eq: chernoff bound}
 was
 \[
-    \Prob{X \ge x} \le \exp\bigl(-\CGF_X^+(x)\bigr)
+    \prob{X \ge x} \le \exp\bigl(-\CGF_X^+(x)\bigr)
     \Bigl(= \exp\bigl(-\CGF_X^*(x)\bigr) \qquad \text{for } x \ge \E{X}\Bigr).
 \]
 Using the closed, convex set \(A=[x, \infty)\) in the generalized Chernoff bound we get
 \[
-    \Prob{X \ge x} \le \exp\bigl(-\inf_{a\ge x} \CGF_X^*(a)\bigr).
+    \prob{X \ge x} \le \exp\bigl(-\inf_{a\ge x} \CGF_X^*(a)\bigr).
 \]
 Since \(\CGF_X^*(x) \ge \inf_{a\ge x} \CGF_X^*(a)\) it may appear
 that we obtained a worse bound. However the key to understand here is that the
@@ -2169,7 +2169,7 @@ The Lemma above immediately implies exponential convergence to the mean
 \begin{corollary}
     Let \(A\subseteq \real^\dims\) be a closed convex set, then
     \[
-        \Prob[\big]{\mean{X}_n \in A} \le \exp\bigl(-n \inf_{a\in A} \CGF_X^*(a)\bigr).
+        \prob[\big]{\mean{X}_n \in A} \le \exp\bigl(-n \inf_{a\in A} \CGF_X^*(a)\bigr).
     \]
 \end{corollary}
 \end{mdframed}
@@ -2180,7 +2180,7 @@ In the one-dimensional case we get concentration bounds from this:
     with expectation \(\mu=\E{X}\) in \(\real\) and \(\mean{X}_n\) their mean,
     then for any \(t > 0\)
     \[
-        \Prob[\Big]{\abs[\big]{\mean{X}_n - \mu} \ge t} \le 2 \exp\Bigl(-n \inf_{\abs{a-\mu}\ge t} \CGF_X^*(a)\Bigr).
+        \prob[\Big]{\abs[\big]{\mean{X}_n - \mu} \ge t} \le 2 \exp\Bigl(-n \inf_{\abs{a-\mu}\ge t} \CGF_X^*(a)\Bigr).
     \]
 \end{theorem}
 \end{mdframed}
@@ -2189,8 +2189,8 @@ In the one-dimensional case we get concentration bounds from this:
     Since the sets \((-\infty, \mu - t]\) and \([\mu + t, \infty)\) are closed
     and convex we have
     \[\begin{aligned}[b]
-        \Prob[\big]{\abs{\mean{X}_n - \mu} \ge t}
-        &= \Prob{\mean{X}_n \ge t + \mu} + \Prob{\mean{X}_n \le \mu - t}
+        \prob[\big]{\abs{\mean{X}_n - \mu} \ge t}
+        &= \prob{\mean{X}_n \ge t + \mu} + \prob{\mean{X}_n \le \mu - t}
         \\
         &\le \exp\bigl(-n \inf_{a \ge t+\mu}\CGF_X^*(a)\bigr) + \exp\bigl(-n \inf_{a \le \mu - t}\CGF_{X}^*(a)\bigr)
         \\
@@ -2206,7 +2206,7 @@ Observe that the factor \(2\) appears since the set \((-\infty, \mu - t]
 \cup [\mu + t, \infty)\) is not convex and we had to split it into two convex
 parts. This has however no bearing on the exponential rate of convergence:
 \[
-    \frac1n \log \Prob[\big]{\abs{\mean{X}_n - \mu} \ge t}
+    \frac1n \log \prob[\big]{\abs{\mean{X}_n - \mu} \ge t}
     \le \underbrace{\frac{\log{2}}n}_{\to 0} - \inf_{\abs{a-\mu}\ge t} \CGF_X^*(a)
 \]
 With this less `sharp' view, we can remove the convexity assumption on the set.
@@ -2218,15 +2218,15 @@ In particular this exponential rate is tight.
     in \(\real^\dims\) and \(\mean{X}_n\) their mean. Let \(A\) be a closed (but
     not necessarily convex) set, then
     \[
-        \limsup_{n\to\infty} \frac1n \log \Prob[\big]{\mean{X}_n \in A} \le -\inf_{a\in A} \CGF_X^*(a).
+        \limsup_{n\to\infty} \frac1n \log \prob[\big]{\mean{X}_n \in A} \le -\inf_{a\in A} \CGF_X^*(a).
     \]
     Moreover for any open set \(U\)
     \[
-        \liminf_{n\to\infty} \frac1n \log \Prob[\big]{\mean{X}_n \in U} \ge -\inf_{a\in U} \CGF_X^*(a).
+        \liminf_{n\to\infty} \frac1n \log \prob[\big]{\mean{X}_n \in U} \ge -\inf_{a\in U} \CGF_X^*(a).
     \]
     In particular, for any set \(B\) that does not have isolated points, i.e.~\(\closure{\interior{B}} = \closure{B}\),
     \[
-        \lim_{n\to\infty} \frac1n \log \Prob[\big]{\mean{X}_n \in B} = -\inf_{a\in B} \CGF_X^*(a).
+        \lim_{n\to\infty} \frac1n \log \prob[\big]{\mean{X}_n \in B} = -\inf_{a\in B} \CGF_X^*(a).
     \]
 \end{fact}
 \end{mdframed}
@@ -2247,7 +2247,7 @@ avoided! \fxwarning{exercise!}
 Subgaussian random variables have tails that decay at least as fast as the
 Gaussian distribution. That is
 \[
-    \Prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{2\sigma^2}\bigr).
+    \prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{2\sigma^2}\bigr).
 \]
 Recall that we obtained this bound on the tails of the normal distribution using
 a Chernoff bound and the CGF of the normal distribution in \eqref{ex: chernoff
@@ -2320,7 +2320,7 @@ The variance proxy can then be used for the following tail bound:
     Let \(X_1, \ldots, X_n\) be independent random variables in \(\real\) with
     variance proxies \(\varProx{X_i}\), then for all \(\epsilon > 0\)
     \[
-        \Prob[\Big]{\mean{X}_n - \E{\mean{X}_n} \ge \epsilon}
+        \prob[\Big]{\mean{X}_n - \E{\mean{X}_n} \ge \epsilon}
         \le \exp\Bigl(-\frac{n \epsilon^2}{2\frac1n\sum_{i=1}^n \varProx{X_i}}\Bigr).
     \]
 \end{theorem}
@@ -2330,7 +2330,7 @@ The variance proxy can then be used for the following tail bound:
     proxy \(\varProx{X}\) that
     \begin{equation}
         \label{eq: var prox tail bound}    
-        \Prob{X \ge \epsilon} \le \exp\bigl(-\tfrac{\epsilon^2}{2\varProx{X}}\bigr),
+        \prob{X \ge \epsilon} \le \exp\bigl(-\tfrac{\epsilon^2}{2\varProx{X}}\bigr),
     \end{equation}
     because an application to \(X = \mean{X}_n - \E{\mean{X}_n}\) with
     \eqref{eq: variance proxy of the mean} would then give the desired result.
@@ -2349,7 +2349,7 @@ The variance proxy can then be used for the following tail bound:
     normal distribution in Example \ref{ex: chernoff bound for normal
     distribution}. Then clearly by Chernoff's bound (Thm.~\ref{thm: chernoff bound in R^d})
     \[
-        \Prob{X\ge \epsilon} = \Prob{X \in [\epsilon , \infty)}
+        \prob{X\ge \epsilon} = \prob{X \in [\epsilon , \infty)}
         \overset{\text{Thm.~\ref{thm: chernoff bound in R^d}}}\le \exp\bigl(-\inf_{a \ge \epsilon}\CGF_X^*(a)\bigr)
         \overset{\text{\eqref{eq: bound on cgf star by variance proxy}}}\le \exp\bigl(-\tfrac{\epsilon^2}{2\varProx{X}}\bigr).
         \qedhere
@@ -2391,9 +2391,9 @@ variables the variance proxy may be bounded.
     Observe that the last line is exactly the MGF of a random variable \(Y\)
     with
     \[
-        \Pr(Y=b) = p,
+        \prob{Y=b} = p,
         \qquad
-        \Pr(Y=a) = 1-p,
+        \prob{Y=a} = 1-p,
         \qquad p \coloneq \tfrac{-a}{b-a}.
     \]
     Note that \(a\le 0=\E{X} \le b\) and thus \(p\in [0,1]\).
@@ -2456,7 +2456,7 @@ variables the variance proxy may be bounded.
     Let \(X_1, \ldots, X_n\) be independent random variables contained in
     \([a,b]\), then we have
     \[
-        \Prob[\Big]{\abs[\big]{\mean{X}_n - \E{\mean{X}_n}} \ge \epsilon}
+        \prob[\Big]{\abs[\big]{\mean{X}_n - \E{\mean{X}_n}} \ge \epsilon}
         \le 2 \exp\Bigl(-\frac{2n\epsilon^2}{(b-a)^2}\Bigr)
     \]
 \end{corollary}
@@ -2464,7 +2464,7 @@ variables the variance proxy may be bounded.
 \begin{proof}
     Observe that \(\varProx{X_i} \le \frac{(b-a)^2}4\) for all \(i\) by Hoeffding's lemma and thus
     \[
-        \Prob[\Big]{\mean{X}_n - \E{\mean{X}_n} \ge \epsilon}
+        \prob[\Big]{\mean{X}_n - \E{\mean{X}_n} \ge \epsilon}
         \le \exp\Bigl(-\frac{n \epsilon^2}{2\frac1n\sum_{i=1}^n \varProx{X_i}}\Bigr)
         \le \exp\Bigl(-\frac{2n\epsilon^2}{(b-a)^2}\Bigr).
     \]
@@ -2476,7 +2476,7 @@ variables the variance proxy may be bounded.
 Recall that we have promised that this variance proxy is actually equivalent
 the tail bound
 \[
-    \Prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{2\sigma^2}\bigr)
+    \prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{2\sigma^2}\bigr)
 \]
 for some \(\sigma^2\).  Observe that taking \(n=1\) in the general Hoeffding
 inequality (Theorem \ref{thm: general hoeffding inequality}), we already get
@@ -2493,7 +2493,7 @@ equivalent characterizations of subgaussian random variables.
         \item\label{it: subgaussian tail decay}
         \textbf{Tail decay:} There exists \(K_1 > 0\) such that the tails of \(X\) satisfy
         \[
-            \Prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{K_1^2}\bigr)
+            \prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{K_1^2}\bigr)
             \qquad\text{for all } t > 0.
         \]
         \item\label{it: subgaussian moment decay}
@@ -2621,10 +2621,10 @@ equivalent characterizations of subgaussian random variables.
     Let us start with \(K_1\)
     \[\begin{aligned}
         \E{\abs{X}^p}
-        &= \int_0^\infty \Prob{\abs{X}^p \ge u} du
-        \mathrlap{= \int_0^\infty \Prob{\abs{X} \ge u^{1/p}} du}
+        &= \int_0^\infty \prob{\abs{X}^p \ge u} du
+        \mathrlap{= \int_0^\infty \prob{\abs{X} \ge u^{1/p}} du}
         \\
-        &= \int_0^\infty \Prob{\abs{X} \ge t} p t^{p-1} dt
+        &= \int_0^\infty \prob{\abs{X} \ge t} p t^{p-1} dt
         & (u=t^p)
         \\
         &\le p \int_0^\infty 2\exp(-\tfrac{t^2}{K_1^2}) t^{p-1} dt
@@ -2690,7 +2690,7 @@ equivalent characterizations of subgaussian random variables.
     tail decay}'' Using Markov's inequality (Theorem \ref{thm: markov
     inequality}) on \(h(x) = e^{x^2}\) we have for \(t > 0\)
     \[
-        \Prob{\abs{X} \ge t} \le \tfrac{\E{\exp(X^2)}}{\exp(t^2)}
+        \prob{\abs{X} \ge t} \le \tfrac{\E{\exp(X^2)}}{\exp(t^2)}
         \le 2 \exp(-t^2) \qquad \text{assuming } K_4 = 1.
     \]
     Consequently, \(K_1 \le K_4\).
@@ -2717,7 +2717,7 @@ equivalent characterizations of subgaussian random variables.
     ``\ref{it: subgaussian variance proxy} \(\Rightarrow\) \ref{it: subgaussian tail decay}''
     Since \(\varProx{X} \le 2K_5^2\) we have by the general Hoeffding inequality for \(n=1\), that is \eqref{eq: var prox tail bound}
     \[
-        \Prob{X \ge t} \le \exp\bigl(-\tfrac{t^2}{4K_5^2}\bigr).
+        \prob{X \ge t} \le \exp\bigl(-\tfrac{t^2}{4K_5^2}\bigr).
     \]
     Taking the same bound for \(-X\) we get \(K_1^2 \le 4K_5^2\) and thus \(K_1 \le 2 K_5\).
 \end{proof}
