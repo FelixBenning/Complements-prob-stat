@@ -55,7 +55,7 @@
 \DeclarePairedDelimiter{\set}{\{}{\}}
 \DeclarePairedDelimiter{\norm}{\|}{\|}
 \DeclarePairedDelimiter{\scp}{\langle}{\rangle}
-\NewDocumentCommand{\Indicator}{s m}{%
+\NewDocumentCommand{\ind}{s m}{%
   \IfBooleanTF{#1}
     {\mathbf{1}_{\left\{#2\right\}}} % starred: wrap in braces
     {\mathbf{1}_{#2}}                 % unstarred: simple subscript

@@ -19,7 +19,7 @@
         thick,
         dashed
     ] {x <= 1 ? 0 : (x>2 ? 0: 1)};
-    \addlegendentry{$\Indicator{[a,b]}$}
+    \addlegendentry{$\ind{[a,b]}$}
 
     % Lipschitz approximation
     \addplot[
@@ -32,7 +32,7 @@
         )
         )
     };
-    \addlegendentry{$\Indicator{[a,b]}^{\vphantom{(}\epsilon}$}
+    \addlegendentry{$\ind{[a,b]}^{\vphantom{(}\epsilon}$}
 
     \end{axis}
 \end{tikzpicture}

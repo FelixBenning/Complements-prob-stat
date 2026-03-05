@@ -227,8 +227,8 @@ theory.
     \[\begin{aligned}
         \prob{X \ge t}
         &\le \prob[\big]{h(X) \ge h(t)}
-        = \E{\Indicator{h(X) \ge h(t)}}
-        \le \E[\Big]{\frac{h(X)}{h(t)}\Indicator{h(X) \ge h(t)}}
+        = \E{\ind{h(X) \ge h(t)}}
+        \le \E[\Big]{\frac{h(X)}{h(t)}\ind{h(X) \ge h(t)}}
         \\
         &\le \E[\Big]{\frac{h(X)}{h(t)}},
     \end{aligned}
@@ -263,8 +263,8 @@ continuous mapping}).
         \\
         &\le \E{\abs{f(X_n) - f(Y_n)}}
         \\
-        &\le \E{\underbrace{\abs{f(X_n) - f(Y_n)}}_{\le L\metric(X_n, Y_n)} \Indicator{\metric(X_n, Y_n) \le \epsilon}}
-        + \E{\underbrace{\abs{f(X_n) - f(Y_n)}}_{\le 2M} \Indicator{\metric(X_n, Y_n) > \epsilon}}
+        &\le \E{\underbrace{\abs{f(X_n) - f(Y_n)}}_{\le L\metric(X_n, Y_n)} \ind{\metric(X_n, Y_n) \le \epsilon}}
+        + \E{\underbrace{\abs{f(X_n) - f(Y_n)}}_{\le 2M} \ind{\metric(X_n, Y_n) > \epsilon}}
         \\
         &\le L \epsilon + 2M \underbrace{\prob{\metric(X_n, Y_n) > \epsilon}}_{\to 0}.
     \end{aligned}\]
@@ -401,7 +401,7 @@ implications above.
     functions as approximations of indicators.
     Specifically, using \(x_+ \coloneq \max\{x, 0\}\) we define
     \[
-        \Indicator{A}^\epsilon(x) \coloneq \Bigl(1-\frac{\metric(x, A)}\epsilon\Bigr)_+,
+        \ind{A}^\epsilon(x) \coloneq \Bigl(1-\frac{\metric(x, A)}\epsilon\Bigr)_+,
     \]
     where the distance of \(x\) to the set \(A\) is
     defined as
@@ -414,13 +414,13 @@ implications above.
         A_\epsilon \coloneq \set{x \in \domain : \metric(x,A) \le \epsilon}
         = A + \ball{0}{\epsilon},
     \]
-    we have  \(\Indicator{A}(x) \le \Indicator{A}^\epsilon(x) \le \Indicator{A_\epsilon}(x)\) for all \(x\).
+    we have  \(\ind{A}(x) \le \ind{A}^\epsilon(x) \le \ind{A_\epsilon}(x)\) for all \(x\).
     Consequently we have for any closed set \(A\)
     \[\begin{aligned}
-        \prob{X_n \in A} = \E{\Indicator{A}(X_n)}
-        &\le \E{\Indicator{A}^\epsilon(X_n)}
+        \prob{X_n \in A} = \E{\ind{A}(X_n)}
+        &\le \E{\ind{A}^\epsilon(X_n)}
         \\
-        \overset{\ref{it: b.lip}}&\to \E{\Indicator{A}^\epsilon(X)} \le \E{\Indicator{A_\epsilon}(X)}
+        \overset{\ref{it: b.lip}}&\to \E{\ind{A}^\epsilon(X)} \le \E{\ind{A_\epsilon}(X)}
         = \prob{X \in A_\epsilon},
     \end{aligned}
     \]
@@ -505,14 +505,14 @@ implications above.
     the range of \(f\) we have
     \[
         \E{f(X_n)}
-        \le \E[\Big]{\sum_{i=1}^N y_i \Indicator{E_i}(f(X_n))}
+        \le \E[\Big]{\sum_{i=1}^N y_i \ind{E_i}(f(X_n))}
         = \sum_{i=1}^N y_i \underbrace{\prob{X_n \in f^{-1}(E_i)}}_{\overset{\ref{it: s.zero boundary}}\to \prob{X \in f^{-1}(E_i)}}
     \]
     where we use \(\prob{X \in \partial f^{-1}(E_i)} = 0\). Using \(y_i \le f(X) +
     \epsilon\) for \(f(X) \in E_i\) we get
     \[
         \sum_{i=1}^N y_i \prob{X \in f^{-1}(E_i)}
-        = \E[\Big]{\sum_{i=1}^N y_i \Indicator{E_i}(f(X))}
+        = \E[\Big]{\sum_{i=1}^N y_i \ind{E_i}(f(X))}
         \le \E{f(X)} + \epsilon.
     \]
     Put together this implies
@@ -553,8 +553,8 @@ implications above.
     by \(1\) such that
     \[\begin{aligned}
         \E{f(X_n)}
-        &\le \E{\Indicator{X_n \le y_0}} + \E[\Big]{\sum_{i=1}^N (f(y_i) +\epsilon)\Indicator{(y_{i-1}, y_i]}(X_n)}
-        + \E{\Indicator{X_n > y_N}}
+        &\le \E{\ind{X_n \le y_0}} + \E[\Big]{\sum_{i=1}^N (f(y_i) +\epsilon)\ind{(y_{i-1}, y_i]}(X_n)}
+        + \E{\ind{X_n > y_N}}
         \\
         &\le F_n(y_0) + \sum_{i=1}^N (f(y_i) + \epsilon) (F_n(y_i) - F_n(y_{i-1})) + (1 - F_n(y_N))
     \end{aligned}
@@ -564,9 +564,9 @@ implications above.
         \limsup_{n\to \infty} \E{f(X_n)}
         &\le \underbrace{F(y_0)}_{\le \epsilon} + \sum_{i=1}^N (f(y_i) + \epsilon) (F(y_i) - F(y_{i-1})) + \underbrace{(1 - F(y_N))}_{\le \epsilon}
         \\
-        &\le 2\epsilon + \E[\Big]{\sum_{i=1}^N \underbrace{(f(y_i) + \epsilon)}_{\le f(X) + 2\epsilon} \Indicator{(y_{i-1}, y_i]}(X)}
+        &\le 2\epsilon + \E[\Big]{\sum_{i=1}^N \underbrace{(f(y_i) + \epsilon)}_{\le f(X) + 2\epsilon} \ind{(y_{i-1}, y_i]}(X)}
         \\
-        &\le 4\epsilon + \E{f(X)} - \E{f(X) \Indicator{X \le y_0}} - \E{f(X) \Indicator{X > y_N}}
+        &\le 4\epsilon + \E{f(X)} - \E{f(X) \ind{X \le y_0}} - \E{f(X) \ind{X > y_N}}
         \\
         &\le 6\epsilon + \E{f(X)}.
     \end{aligned}
@@ -615,7 +615,7 @@ implications above.
     \label{ex: convergence in probability but not in Lp}
     Let \(U\sim \uniform(0,1)\) be a standard uniform random variable and define
     \[
-        X_n \coloneq n \Indicator{[0, 1/n)}(U)
+        X_n \coloneq n \ind{[0, 1/n)}(U)
     \]
     Show that
     \begin{enumerate}[label=(\alph*), noitemsep]
@@ -663,19 +663,19 @@ implications above.
     We will scan the interval for \(U\) with increasingly fine measurements. Specifically,
     let
     \begin{alignat*}{7}
-        X_1 &\coloneq \Indicator{[0,1)}(U)
+        X_1 &\coloneq \ind{[0,1)}(U)
         \\
-        X_2 &\coloneq \Indicator{[0,\frac12)}(U)
-        \quad & X_3 &\coloneq \Indicator{[\frac12, 1)}(U)
+        X_2 &\coloneq \ind{[0,\frac12)}(U)
+        \quad & X_3 &\coloneq \ind{[\frac12, 1)}(U)
         \\
-        X_4 &\coloneq \Indicator{[0, \frac14)}(U)
-        \quad & X_5 &\coloneq \Indicator{[\frac14, \frac12)}(U)
-        \quad & X_6 &\coloneq \Indicator{[\frac12, \frac34)}(U)
-        \quad & X_7 &\coloneq \Indicator{[\frac34, 1)}(U)
+        X_4 &\coloneq \ind{[0, \frac14)}(U)
+        \quad & X_5 &\coloneq \ind{[\frac14, \frac12)}(U)
+        \quad & X_6 &\coloneq \ind{[\frac12, \frac34)}(U)
+        \quad & X_7 &\coloneq \ind{[\frac34, 1)}(U)
     \end{alignat*}
     That is
     \[
-        X_n \coloneq \Indicator{\left[
+        X_n \coloneq \ind{\left[
             \frac{k}{2^{m}}, \frac{k+1}{2^{m}}
         \right)}(U),
         \quad \text{with}\quad 
@@ -687,7 +687,7 @@ implications above.
         \begin{solution}
             We have for any \(p \ge 1\)
             \[
-                \E{|X_n|^p} = \int_0^1 \Indicator{
+                \E{|X_n|^p} = \int_0^1 \ind{
                     \left[\frac{k}{2^{m}}, \frac{k+1}{2^{m}} \right)
                 }(u) \, du
                 = \frac{1}{2^m} = 2^{-\lfloor \log_2(n) \rfloor} \to 0.
@@ -727,7 +727,7 @@ implications above.
             \]
             Consequently, for \(n = 2^m + k\) we have \(n \ge N\) and
             \[
-                X_n(\omega) = \Indicator{\left[
+                X_n(\omega) = \ind{\left[
                     \frac{k}{2^{m}}, \frac{k+1}{2^{m}}
                 \right)}(U(\omega)) = 1.
                 \qedhere
@@ -750,8 +750,8 @@ implications above.
         We have for every \(\epsilon > 0\)
         \[\begin{aligned}
             \E[\big]{\norm{X_n - X}^p}
-            &= \E[\big]{\norm{X_n - X}^p \Indicator{\norm{X_n - X} < \epsilon}}
-            + \E[\big]{\norm{X_n - X}^p \Indicator{\norm{X_n - X} \ge \epsilon}}
+            &= \E[\big]{\norm{X_n - X}^p \ind{\norm{X_n - X} < \epsilon}}
+            + \E[\big]{\norm{X_n - X}^p \ind{\norm{X_n - X} \ge \epsilon}}
             \\
             &\le \epsilon^p + (2c)^p \prob[\big]{\norm{X_n - X} \ge \epsilon}.
         \end{aligned}
@@ -1189,14 +1189,14 @@ implications above.
         \end{solution}
 
 
-        \item the bump function \(\Indicator{A}^\epsilon(x) = (1 - \frac{\metric(x,A)}\epsilon)_+\)
+        \item the bump function \(\ind{A}^\epsilon(x) = (1 - \frac{\metric(x,A)}\epsilon)_+\)
         is \(\frac1\epsilon\)-Lipschitz continuous.
         \begin{solution}
             \(f_1(x) = \metric(x,A)\) is \(1\)-Lipschitz continuous,
             \(f_2(x) = 1 - \frac{x}{\epsilon}\) is \(\frac1\epsilon\)-Lipschitz continuous
             as a Linear function, and \(f_3(x) = x_+\) is \(1\)-Lipschitz continuous. Consequently
             \[
-                f_3 \circ f_2 \circ f_1(x) = \Indicator{A}^\epsilon(x)
+                f_3 \circ f_2 \circ f_1(x) = \ind{A}^\epsilon(x)
             \]
             is \(\frac1\epsilon\)-Lipschitz continuous by the previous part.
         \end{solution}
@@ -1225,7 +1225,7 @@ implications above.
     \domain \to \real\).
 \end{remark}
     \begin{solution}
-        \(\Indicator{A}\) is a bounded and measurable function for any measurable set \(A\subseteq \domain\).
+        \(\ind{A}\) is a bounded and measurable function for any measurable set \(A\subseteq \domain\).
     \end{solution}
 \end{exercise}
 
@@ -1376,7 +1376,7 @@ You will prove this inequality in Exercise \ref{ex: hölder's inequality}.
 \begin{example}[Not positive definite]
     Observe that the missing property for \(\norm{\cdot}_{L^p}\) to be a norm 
     is that \(\norm{X}_{L^p} = 0\) implies \(X=0\). As an example consider
-    a uniformly distributed \(U\sim \uniform(0,1)\) with density \(f(x) = \Indicator{[0,1]}\).
+    a uniformly distributed \(U\sim \uniform(0,1)\) with density \(f(x) = \ind{[0,1]}\).
     Define
     \[
         X \coloneq \begin{cases}
@@ -1388,8 +1388,8 @@ You will prove this inequality in Exercise \ref{ex: hölder's inequality}.
     Then clearly \(U\neq X\) but for any \(p\ge 1\)
     \[
         \E{\abs{X-U}^p}
-        = \int_0^1 \abs{x^p \Indicator{[0,1)}(x) - x^p} dx
-        = \int_0^1 \Indicator{\set{1}} dx = 0,
+        = \int_0^1 \abs{x^p \ind{[0,1)}(x) - x^p} dx
+        = \int_0^1 \ind{\set{1}} dx = 0,
     \]
     and consequently \(\norm{X-U}_{L^p} = 0\).
 \end{example}
@@ -2014,8 +2014,8 @@ its analogue for real-valued sequences.
     \begin{enumerate}[label=(\roman*)]
         \item \(\liminf_n A_n \subseteq \limsup_n A_n\),
         \item \((\limsup_n A_n)^\complement = \liminf_n A_n^\complement\),
-        \item \(\limsup_n \Indicator{A_n}(\omega) = \Indicator*{\limsup_n A_n}(\omega)\) for all \(\omega \in \Omega\),
-        \item \(\liminf_n \Indicator{A_n}(\omega) = \Indicator*{\liminf_n A_n}(\omega)\) for all \(\omega \in \Omega\).
+        \item \(\limsup_n \ind{A_n}(\omega) = \ind*{\limsup_n A_n}(\omega)\) for all \(\omega \in \Omega\),
+        \item \(\liminf_n \ind{A_n}(\omega) = \ind*{\liminf_n A_n}(\omega)\) for all \(\omega \in \Omega\).
     \end{enumerate}
 \end{lemma}
 \begin{proof}
@@ -2228,38 +2228,38 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
             \end{aligned}
             \]
 
-            \item\label{it: function limsup to set limsup} To prove \(\limsup_n \Indicator{A_n} = \Indicator*{\limsup_n A_n}\) 
+            \item\label{it: function limsup to set limsup} To prove \(\limsup_n \ind{A_n} = \ind*{\limsup_n A_n}\) 
             observe that 
             \[
-                \limsup_n \Indicator{A_n}(\omega)
-                = \lim_{N\to \infty} \sup_{n\ge N} \Indicator{A_n}(\omega)
+                \limsup_n \ind{A_n}(\omega)
+                = \lim_{N\to \infty} \sup_{n\ge N} \ind{A_n}(\omega)
             \]
             is in the set \(\set{0,1}\) for all \(\omega\) since
-            \(\Indicator{A_n}(\omega) \in \set{0,1}\) for all \(n\) and
+            \(\ind{A_n}(\omega) \in \set{0,1}\) for all \(n\) and
             the supremum is thereby either \(0\) or \(1\). We therefore only need to show
-            that \(\limsup_n \Indicator{A_n}(\omega) = 1\) if and only if
+            that \(\limsup_n \ind{A_n}(\omega) = 1\) if and only if
             \begin{equation}
                 \label{eq: omega in limsup_n An} 
                 \omega \in \limsup_n A_n = \bigcap_{N\in \nat} \bigcup_{n\ge N} A_n.
             \end{equation}
             Assume \eqref{eq: omega in limsup_n An} holds, then for all \(N\in
             \nat\) there exists an \(n \ge N\) such that \(\omega \in A_n\). In particular,
-            since for any \(N\in \nat\) we can find \(n\ge N\) such that \(\Indicator{A_n}(\omega) = 1\)
-            and therefore \(\sup_{n\ge N} \Indicator{A_n}(\omega) = 1\). Conversely, if
-            \(\limsup_n \Indicator{A_n}(\omega) = 1\), then for all \(N\in \nat\) we have
-            \(\sup_{n\ge N} \Indicator{A_n}(\omega) =1\) and consequently there must exist
-            \(n\ge N\) such that \(\Indicator{A_n}(\omega) = 1\) and therefore
+            since for any \(N\in \nat\) we can find \(n\ge N\) such that \(\ind{A_n}(\omega) = 1\)
+            and therefore \(\sup_{n\ge N} \ind{A_n}(\omega) = 1\). Conversely, if
+            \(\limsup_n \ind{A_n}(\omega) = 1\), then for all \(N\in \nat\) we have
+            \(\sup_{n\ge N} \ind{A_n}(\omega) =1\) and consequently there must exist
+            \(n\ge N\) such that \(\ind{A_n}(\omega) = 1\) and therefore
             \(\omega \in A_n\). This implies \eqref{eq: omega in limsup_n An}.
 
             \item Observe that we can translate this to the previous results as follows:
             \[\begin{aligned}[b]
-                \liminf_n \Indicator{A_n}
-                &= \liminf_n (1-\Indicator{A_n^\complement})
+                \liminf_n \ind{A_n}
+                &= \liminf_n (1-\ind{A_n^\complement})
                 \\
-                &= 1 - \limsup_n \Indicator{A_n^\complement}
+                &= 1 - \limsup_n \ind{A_n^\complement}
                 \\
-                \overset{\text{\ref{it: function limsup to set limsup}}}&= 1 - \Indicator*{\limsup_n A_n^\complement}
-                \overset{\text{\ref{it: de morgans on liminf/limsup}}}= \Indicator*{\liminf_n A_n}.
+                \overset{\text{\ref{it: function limsup to set limsup}}}&= 1 - \ind*{\limsup_n A_n^\complement}
+                \overset{\text{\ref{it: de morgans on liminf/limsup}}}= \ind*{\liminf_n A_n}.
             \end{aligned}
             \qedhere
             \]
@@ -2320,7 +2320,7 @@ subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
     \label{ex: as but not Lp}
     Let \(U\sim \uniform(0,1)\) and define
     \[
-        X_n = 2^n \Indicator{[0, 2^{-n})}(U).
+        X_n = 2^n \ind{[0, 2^{-n})}(U).
     \]
     Show that \(X_n \overset{\as}\to 0\) but \(X_n\) does not converge to \(0\)
     in \(L^1\) and hence in no other \(L^p\) space with \(p \ge 1\).
@@ -2831,8 +2831,8 @@ and \ref{thm: joint convergence}.
     \begin{solution}
         Clearly, \(X_n + Y_n = 0\) for all \(n\). In particular we have
         \[
-            \prob{X_n + Y_n \in A} = \Indicator{A}(0)
-            \neq \frac12\Indicator{A}(2) + \frac12 \Indicator{A}(-2)
+            \prob{X_n + Y_n \in A} = \ind{A}(0)
+            \neq \frac12\ind{A}(2) + \frac12 \ind{A}(-2)
             = \prob{2X \in A}.
         \]
         for \(A= \{0\}\) for example. Since \(\prob{2X = 0} = 0\) this is
@@ -2866,7 +2866,7 @@ and \ref{thm: joint convergence}.
 \begin{exercise}[Counterexample \(L^p\) continuous mapping \Coffeecup]
     Let \(f(x) = x^\gamma\) with \(\gamma >1\), let \(U\sim \uniform(0,1)\) and define
     \[
-        X_n = n^{\frac1q} \Indicator{[0, \frac1n)}(U).
+        X_n = n^{\frac1q} \ind{[0, \frac1n)}(U).
     \]
     Show for \(p\in [\frac{q}\gamma, q)\) we have that \(X_n \overset{L^p}\to 0\)
     but not \(f(X_n) \overset{L^p}\to 0\).

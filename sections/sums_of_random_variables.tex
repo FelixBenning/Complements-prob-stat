@@ -274,7 +274,7 @@ assumption that the random variables are in \(L^1\).
     in \(\cL^1\). Then \(\mean{X}_n \overset{\as}\to \E{X_1}\).
 \end{theorem}
 \begin{proof}[Proofsketch]
-    Define the truncated random variables \(Y_n \coloneq \Indicator{|X_n| \le n}
+    Define the truncated random variables \(Y_n \coloneq \ind{|X_n| \le n}
     X_n\). Then the variance of every \(Y_n\) is
     finite although the variance is increasing in \(n\).
     Using Borel-Cantelli it is possible to show that eventually all \(Y_n\) are
@@ -313,7 +313,7 @@ assumption that the random variables are in \(L^1\).
         We have \ref{it: independent} \(\Rightarrow\) \ref{it: measurable functions} by Theorem 102 from Ivan's lecture.
         The implication \ref{it: measurable functions} \(\Rightarrow\) \ref{it: bounded measurable functions} is trivial.
         For the implication \ref{it: bounded measurable functions} \(\Rightarrow\) \ref{it: independent} observe that for any \(A, B\) we have
-        that \(\Indicator{A}\) and \(\Indicator{B}\) are bounded measurable functions.
+        that \(\ind{A}\) and \(\ind{B}\) are bounded measurable functions.
    \end{solution}
     
    \noindent Further prove the following statements
@@ -407,7 +407,7 @@ assumption that the random variables are in \(L^1\).
     Let \((X_n)_{n\in \nat}\) be a sequence of independent and identically
     distributed random variables in \(\real\) with distribution function \(F\).
     \begin{enumerate}[label=(\alph*),noitemsep]
-        \item Let \(A\) be a measurable set and \(Y_i \coloneq \Indicator{X_i \in A}\).
+        \item Let \(A\) be a measurable set and \(Y_i \coloneq \ind{X_i \in A}\).
         Prove that
         \[
             \frac1n \sum_{i=1}^n Y_i \overset{\as}\to \prob{X_1 \in A}
@@ -417,13 +417,13 @@ assumption that the random variables are in \(L^1\).
             This is the strong law of large numbers for the independent (and
             thereby uncorrelated), identically distributed \(Y_i\), since
             \[
-                \E{Y_i} = \E{\Indicator{X_i \in A}} = \prob{X_1 \in A}.
+                \E{Y_i} = \E{\ind{X_i \in A}} = \prob{X_1 \in A}.
             \]
         \end{solution}
 
         \item Define the empirical distribution function
         \[
-            F_n(x) \coloneq \frac1n \sum_{i=1}^n \Indicator{X_i \le x}.
+            F_n(x) \coloneq \frac1n \sum_{i=1}^n \ind{X_i \le x}.
         \]
         Prove that for any \(x_1, \dots, x_k \in \real\)
         \[
@@ -618,7 +618,7 @@ where \(P_t^i\) is the price of the asset \(i\) at time \(t\) and
     \end{mdframed}
     You will prove this theorem in three steps:
     \begin{enumerate}[label=(\alph*),noitemsep]
-        \item Define the functions \(G(x) \coloneq \prob{X_1 < x}\) and \(G_n(x) \coloneq \frac1n \sum_{i=1}^n \Indicator{X_i < x}\)
+        \item Define the functions \(G(x) \coloneq \prob{X_1 < x}\) and \(G_n(x) \coloneq \frac1n \sum_{i=1}^n \ind{X_i < x}\)
         and prove for any \(x_1, \dots, x_k \in \real\)
         \[\begin{aligned}
             &(F_n(x_1), \dots, F_n(x_k), G_n(x_1), \dots, G_n(x_k))
@@ -1990,7 +1990,7 @@ This explains its name and this property is crucial for the following bound.
     for all \(x\in A\) and any \(t\in \hilbert\). Since \(e^\lambda \ge 1\)
     for all \(\lambda \ge 0\) we have
     \[\begin{aligned}
-        \prob{X \in A} = \E{\Indicator{X \in A}}
+        \prob{X \in A} = \E{\ind{X \in A}}
         &\le \E[\Big]{\exp\bigl(\scp{t, X} - \inf_{a\in A} \scp{t, a}\bigr)}
         \\
         &= \MGF_X(t)\exp\bigl(- \inf_{a\in A} \scp{t, a}\bigr) 
