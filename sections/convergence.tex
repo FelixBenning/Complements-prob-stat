@@ -1879,11 +1879,6 @@ between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
                 & m &< \underline{M}
             \end{alignat*}
             Reordering implies the claim. \qedhere
-
-			\begin{remark}
-                A shorter (but less intuitive) proof can be found here:
-                \url{https://math.stackexchange.com/a/2790390/445105}.
-			\end{remark}
 		\end{solution}
 	\end{enumerate}
 \end{exercise}
@@ -2834,26 +2829,42 @@ and \ref{thm: joint convergence}.
         X_n + Y_n \overset{d}{\not\to} X + X = 2X.
     \]
     Conclude that \((X_n, Y_n)\) does not converge to \((X,X)\) in distribution.
+    \begin{solution}
+        Clearly, \(X_n + Y_n = 0\) for all \(n\). In particular we have
+        \[
+            \Prob{X_n + Y_n \in A} = \Indicator{A}(0)
+            \neq \frac12\Indicator{A}(2) + \frac12 \Indicator{A}(-2)
+            = \Prob{2X \in A}.
+        \]
+        for \(A= \{0\}\) for example. Since \(\Prob{2X = 0} = 0\) this is
+        however a requirement for \(X_n + Y_n \overset{d}\to 2X\) by \ref{it:
+        s.zero boundary}. Thus \(X_n + Y_n \overset{d}{\not\to} 2X\).  This also
+        implies that \((X_n, Y_n)\) does not converge to \((X,X)\) in
+        distribution as otherwise we would have \(X_n + Y_n \overset{d}\to X +
+        X\) by the continuous mapping theorem.
+    \end{solution}
 \end{exercise}
 
-\begin{exercise}[Hölder continuos functions]
+\begin{exercise}[Hölder continuos functions \Coffeecup]
     Let \(f\) be a Hölder continuous function. That is
     \[
         \norm{f(x) - f(y)} \le L \norm{x-y}^\alpha
     \]
     Show that \(X_n \overset{L^p}\to X\) implies \(f(X_n) \overset{L^q}\to f(X)\) for \(q = \frac{p}{\alpha}\).
     \begin{solution}
-        We have that
-        \[
+        We have by Hölder continuity of \(f\) that
+        \begin{align*}
             \norm{f(X_n)- f(X)}_{L^q}^q
-            = \E{\norm{f(X_n) - f(X)}^q}
-            \le \E{L^q \norm{X_n - X}^{\alpha q}}
+            &= \E{\norm{f(X_n) - f(X)}^q}
+            \\
+            &\le \E{L^q \norm{X_n - X}^{\alpha q}}
             = L^q \norm{f(X_n) - f(X)}_{L^p}^p \to 0.
-        \]
+            \qedhere
+        \end{align*}
     \end{solution}
 \end{exercise}
 
-\begin{exercise}[Counterexample \(L^p\) continuous mapping]
+\begin{exercise}[Counterexample \(L^p\) continuous mapping \Coffeecup]
     Let \(f(x) = x^\gamma\) with \(\gamma >1\), let \(U\sim \uniform(0,1)\) and define
     \[
         X_n = n^{\frac1q} \Indicator{[0, \frac1n)}(U).
