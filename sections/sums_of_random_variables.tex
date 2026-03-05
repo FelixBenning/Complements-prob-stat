@@ -1643,12 +1643,11 @@ normal distribution. To do so we require the concept of covariance matrices.
     not hold in infinite dimension it is more difficult to prove CLTs
     in infinite dimensional spaces (e.g.\ function spaces). The typical
     approach is to prove convergence of all finite dimensional projections
-    (by the multivariate CLT) and prove that the sequence of distributions
-    is in a compact set. This shows that any sequence has a converging
-    subsequence. If the limit of every subsequence is the same, then we get
-    convergence. But since the finite dimensional projections of every
-    subsequence still converge to the same limit it is possible to
-    identify the limit uniquely.
+    (by the multivariate CLT) and then use other tools to deduce a functional
+    convergence. This is similar to the ideas of the proof of Glivenko-Cantelli,
+    where we first proved convergence at a finite number of points and then
+    used the monotonicity of the empirical distribution function to deduce uniform
+    convergence.
 \end{remark}
 
 
