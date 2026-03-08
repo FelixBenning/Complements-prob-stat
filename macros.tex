@@ -55,10 +55,12 @@
 \DeclarePairedDelimiter{\set}{\{}{\}}
 \DeclarePairedDelimiter{\norm}{\|}{\|}
 \DeclarePairedDelimiter{\scp}{\langle}{\rangle}
-\NewDocumentCommand{\ind}{s m}{%
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\NewDocumentCommand{\ind}{s o m}{%
   \IfBooleanTF{#1}
-    {\mathbf{1}_{\left\{#2\right\}}} % starred: wrap in braces
-    {\mathbf{1}_{#2}}                 % unstarred: simple subscript
+    {\mathbf{1}_{\set[#2]{#3}}} % starred: wrap in braces
+    {\mathbf{1}_{#3}}                 % unstarred: simple subscript
 }
 
 % spaces
@@ -86,18 +88,20 @@
 \newcommand*{\metric}{d}
 
 % Probability
-\newcommand{\eSym}{\mathsf{E}}
-\DeclarePairedDelimiterXPP{\E}[1]{\eSym}{[}{]}{}{#1}
-\newcommand*{\varSym}{\mathsf{var}}
-\DeclarePairedDelimiterXPP{\var}[1]{\varSym}{[}{]}{}{#1}
-\newcommand*{\covSym}{\mathsf{cov}}
-\DeclarePairedDelimiterXPP{\cov}[2]{\covSym}{[}{]}{}{#1, #2}
-\newcommand*{\CovSym}{\mathsf{Cov}}
-\DeclarePairedDelimiterXPP{\Cov}[1]{\CovSym}{[}{]}{}{#1}
+
+\newcommand*{\pSym}{\mathsf{P}} % probability
 \DeclarePairedDelimiterXPP{\prob}[1]{\pSym}{\{}{\}}{}{#1}
-\newcommand*{\mSym}{\mathsf{M}}
+\newcommand{\eSym}{\mathsf{E}} % expectation
+\DeclarePairedDelimiterXPP{\E}[1]{\eSym}{[}{]}{}{#1}
+\newcommand*{\varSym}{\mathsf{var}} % variance
+\DeclarePairedDelimiterXPP{\var}[1]{\varSym}{[}{]}{}{#1}
+\newcommand*{\covSym}{\mathsf{cov}} % inner covariance cov[x,y] = \E{\scp{x-\E{x}}{y-\E{y}}}
+\DeclarePairedDelimiterXPP{\cov}[2]{\covSym}{[}{]}{}{#1, #2}
+\newcommand*{\CovSym}{\mathsf{Cov}} % outer covariance Cov[X] = \E{(X-\E{X})(X-\E{X})^T}
+\DeclarePairedDelimiterXPP{\Cov}[1]{\CovSym}{[}{]}{}{#1}
+\newcommand*{\mSym}{\mathsf{M}} % median
 \DeclarePairedDelimiterXPP{\median}[1]{\mSym}{[}{]}{}{#1}
-\newcommand*{\pSym}{\mathsf{P}}
+
 \newcommand*{\density}{\varphi}
 \DeclareMathOperator{\iid}{iid}
 \newcommand*{\given}{\mid}
@@ -116,7 +120,7 @@
 \newcommand*{\bernoulli}{\mathrm{Ber}}
 \newcommand*{\exponential}{\mathrm{Exp}}
 
-\newcommand*{\as}{\text{a.s.}}
+\DeclareMathOperator{\as}{\text{a.s.}}
 
 % statistics
 \newcommand*{\mean}{\overline}
@@ -179,5 +183,14 @@
 %% References
 
 \newcommand*{\continuityOfMeasure}{(Proposition 12 in Ivan's lecture)}
+
+%%% === Lists ===
+
+\newlist{steps}{enumerate}{1}
+\setlist[steps]{
+    label=\textbf{Step \arabic*:},
+    ref={Step \arabic*},
+    wide=0pt,
+}
 
 
