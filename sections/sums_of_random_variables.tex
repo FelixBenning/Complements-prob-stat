@@ -1790,21 +1790,64 @@ I^2 =
     Let \(X, Y\) be random variables in a Hilbert space \(\hilbert\).
     Then
     \begin{enumerate}[label=(\alph*)]
-        \item \(\MGF_X(0) = 1\).
-        \item \(\MGF_{aX + b}(h) = e^{\scp{h,b}} \MGF_X(a h)\)
+        \item\label{it: (mgf) zero} \(\MGF_X(0) = 1\).
+        \item\label{it: (mgf) linear transformation} \(\MGF_{aX + b}(h) = e^{\scp{h,b}} \MGF_X(a h)\)
         for any \(a\in \real\), \(b, h\in \hilbert\),
-        \item \(\MGF_{X+Y}(h) = \MGF_X(h) \MGF_Y(h)\) for \(X,Y\) independent and all \(h\in \hilbert\).
+        \item\label{it: (mgf) idependent sum} \(\MGF_{X+Y}(h) = \MGF_X(h) \MGF_Y(h)\) for \(X,Y\) independent and all \(h\in \hilbert\).
     \end{enumerate}
     Similarly we have for the characteristic function
     \begin{enumerate}[label=(\alph*), resume]
-        \item \(\abs{\charFct_X(t)}\le 1\) and \(\charFct_X(0) = 1\).
-        \item \(\charFct_{X+Y}(t) = \charFct_X(t) \charFct_Y(t)\) for \(X,Y\) independent and all \(t\in \hilbert\).
-        \item \(\charFct_{aX + b}(t) = e^{i\scp{t,b}} \charFct_X(a t)\)
+        \item\label{it: (charfct) bounded} \(\abs{\charFct_X(t)}\le 1\) and \(\charFct_X(0) = 1\).
+        \item\label{it: (charfct) linear transformation} \(\charFct_{aX + b}(t) = e^{i\scp{t,b}} \charFct_X(a t)\)
         for any \(a\in \real\), \(b, t\in \hilbert\).
+        \item\label{it: (charfct) independent sum} \(\charFct_{X+Y}(t) = \charFct_X(t) \charFct_Y(t)\) for \(X,Y\) independent and all \(t\in \hilbert\).
     \end{enumerate}
 \end{exercise}
+\begin{solution}
+    \begin{enumerate}[wide=0pt, noitemsep]
+    \item[\ref{it: (mgf) zero}] We have
+    \(\MGF_X(0) = \E{e^{\scp{0, X}}} = \E{e^0} = 1\).
+    \item[\ref{it: (mgf) linear transformation}] We have
+    \[
+        \MGF_{aX + b}(h) = \E{e^{\scp{h, aX + b}}}
+        = e^{\scp{h, b}} \E{e^{\scp{a h, X}}}
+        = e^{\scp{h,b}} \MGF_X(a h).
+    \]
+    \item[\ref{it: (mgf) idependent sum}] We have
+    \[
+    \begin{aligned}
+        \MGF_{X+Y}(h) = \E{e^{\scp{h, X+Y}}}
+        &= \E{e^{\scp{h, X}} e^{\scp{h, Y}}}
+        \\
+        &= \E{e^{\scp{h, X}}} \E{e^{\scp{h, Y}}}
+        = \MGF_X(h) \MGF_Y(h).
+    \end{aligned}
+    \]
 
-\begin{exercise}[Moment generating functions]
+    \item[\ref{it: (charfct) bounded}] We have \(\abs{e^{i\scp{t, X}}} = 1\) and thus
+    by Jensen's inequality
+    \[
+        \abs{\charFct_X(t)} = \abs{\E{e^{i\scp{t, X}}}} \overset{\text{Jensen}}\le \E{\abs{e^{i\scp{t, X}}}} = 1.
+    \]
+    \item[\ref{it: (charfct) linear transformation}] We have
+    \[
+        \charFct_{aX + b}(t) = \E{e^{i\scp{t, aX + b}}}
+        = e^{i\scp{t, b}} \E{e^{i\scp{a t, X}}}
+        = e^{i\scp{t,b}} \charFct_X(a t).
+    \]
+    \item[\ref{it: (charfct) independent sum}] We have
+    \begin{align*}
+        \charFct_{X+Y}(t) = \E{e^{i\scp{t, X+Y}}}
+        &= \E{e^{i\scp{t, X}} e^{i\scp{t, Y}}}
+        \\
+        &= \E{e^{i\scp{t, X}}} \E{e^{i\scp{t, Y}}}
+        = \charFct_X(t) \charFct_Y(t).
+        \qedhere
+    \end{align*}
+    \end{enumerate}
+\end{solution}
+
+\begin{exercise}[Moment generating functions \Coffeecup\Coffeecup]
     Prove the formulas for the moment generating functions in the following
     table
     \begin{center}
@@ -1814,6 +1857,8 @@ I^2 =
         &  \(\MGF_X(t)\) & \(\charFct_X(t)\)
         \\
         \hline
+        \(\delta_a\) & \(e^{t a}\) & \(e^{i t a}\)
+        \\
         \(\bernoulli(p)\) & \(1 - p + p e^{t}\)
         & \(1 - p + p e^{i t}\)
         \\
@@ -1825,57 +1870,122 @@ I^2 =
         \\
         \(\Poisson(\lambda)\) & \(e^{\lambda (e^{t} - 1)}\)
         & \(e^{\lambda (e^{i t} - 1)}\) 
+        \\
+        \(\uniform(a, b)\)
+        & \(\begin{cases}
+            \frac{e^{t b} - e^{t a}}{t (b - a)} & t \neq 0
+            \\
+            1 & t = 0
+        \end{cases}\)
+        &
+        \(\begin{cases}
+            \frac{e^{i t b} - e^{i t a}}{i t (b - a)} & t \neq 0
+            \\
+            1 & t = 0
+        \end{cases}\)
     \end{tabular}
     \end{center}
 \end{exercise}
+\begin{solution}
+    Since the moment generating functions are all real analytic functions
+    they have a unique analytic continuation to \(\complex\)
+    and the characteristic function follows from the moment generating functions
+    by plugging in \(i t\). We therefore only
+    calculate the moment generating functions.
 
-\begin{exercise}[The normal distribution]
+    Let us start with \(X\sim \delta_a\), which is the deterministic case \(X\overset\as=a\).
+    Consequently, we have
+    \[
+        \MGF_X(t) = \E{e^{t X}} = e^{t a}.
+    \]
+    For \(X\sim \bernoulli(p)\) we have
+    \[
+        \MGF_X(t) = \E{e^{t X}} = (1-p) e^0 + p e^t = 1 - p + p e^t.
+    \]
+    For \(X\sim \Binomial(n, p)\) we have \(X = X_1 + \dots + X_n\) with
+    \(X_i \sim \bernoulli(p)\) independent, the claim then follows from Exercise
+    \ref{ex: properties moment generating functions} \ref{it: (mgf) idependent
+    sum}
+    \[
+        \MGF_X(t) = \prod_{i=1}^n \MGF_{X_i}(t) = (1 - p + p e^t)^n.
+    \]
+    For \(X \sim \exponential(\lambda)\) we have
+    for all \(t < \lambda\)
+    \[
+        \MGF_X(t) = \E{e^{t X}} = \int_0^\infty e^{t x} \lambda e^{-\lambda x} dx
+        = \lambda \int_0^\infty e^{-(\lambda - t) x} dx
+        = \frac{\lambda}{\lambda - t}
+    \]
+    In the last equation we have used \(\lambda -t > 0\) and if that is not the
+    case the integral diverges.
+    For \(X \sim \Poisson(\lambda)\) we have
+    \[
+        \MGF_X(t) = \E{e^{t X}} = \sum_{k=0}^\infty e^{t k} e^{-\lambda} \frac{\lambda^k}{k!}
+        = e^{-\lambda} \sum_{k=0}^\infty \frac{(\lambda e^t)^k}{k!}
+        = e^{-\lambda} e^{\lambda e^t}
+        = e^{\lambda (e^t - 1)}.
+    \]
+    For \(X \sim \uniform(a, b)\) we have for \(t\neq 0\)
+    \[
+        \MGF_X(t) = \E{e^{t X}} = \int_a^b e^{t x} \frac{1}{b - a} dx
+        = \frac{e^{t b} - e^{t a}}{t (b - a)}.
+    \]
+    For \(\complex\setminus\{0\}\) this function is analytic.
+    The value at \(t=0\) follows from Exercise \ref{ex: properties moment generating functions}.
+    Observe that it is continuous due to L'Hôpital's rule
+    \[
+        \lim_{t\to 0} \frac{e^{t b} - e^{t a}}{t (b - a)}
+        = \lim_{t\to 0} \frac{b e^{t b} - a e^{t a}}{b - a}
+        = \frac{b - a}{b - a} = 1.
+        \qedhere
+    \]
+\end{solution}
+
+\begin{exercise}[The normal distribution \Coffeecup\Coffeecup]
     \label{ex: density of normal distribution}
     Let \(X \sim \normal{\mu, \sigma^2}\).
     \begin{enumerate}[label=(\alph*)]
-        \item 
+        \item \label{it: (normal distribution) density}
         Show that if \(\sigma^2 > 0\), then \(X\) has density
         \[
             f_X(x) = \frac1{\sqrt{2\pi \sigma^2}}
             \exp\bigl(-\tfrac{(x-\mu)^2}{2\sigma^2}\bigr).
         \]
-        \begin{solution}
-            We show that the distribution of \(Z = \mu + \sigma Y\) is equal to a random variable \(X\)
-            with density \(f_X\). Let \(g\) be a bounded continuous function, then we
-            have
-            \[\begin{aligned}
-                \E{g(Z)}
-                &= \E{g(\mu + \sigma Y)}
-                \\
-                &= \int_\real g(\mu + \sigma y) \frac1{\sqrt{2\pi}} \exp\bigl(-\tfrac{y^2}2\bigr) dy
-                \\
-                \overset{x=\mu + \sigma y}&=
-                \int_\real g(x) \frac1{\sqrt{2\pi \sigma^2}} \exp\bigl(-\tfrac{(x-\mu)^2}{2\sigma^2}\bigr) dx
-                \qquad\quad ``\tfrac{1}{\sigma} dx =  dy''
-                \\
-                &= \E{g(X)}.
-            \end{aligned}
-            \]
-            Since this is true for all bounded continuous functions \(g\) we have \(X \overset{d}= Z\).
-            Consequently the density of \(Z\) is given by \(f_X\).
-        \end{solution}
 
-        \item Calculate all the moments \(\E{X^n}\) of \(X\).
+        \item\label{it: (normal distribution) moments}
+        Prove that the centered moments are given by
+        \[
+            \E{(X-\mu)^n}
+            = \begin{cases}
+                \sigma^n (n-1)!! & n \text{ even}
+                \\
+                0 & n \text{ odd}
+            \end{cases}
+        \]
+        \textbf{Hint:} Use the series expansion of \(\exp\) and compare coefficients
+        with the Taylor expansion of the moment generating function.
 
-        \item Show that \(\E{X} = \mu\) and \(\var{X} = \sigma^2\).
+        \item\label{it: (normal distribution) mean and variance}
+        Show that \(\E{X} = \mu\) and \(\var{X} = \sigma^2\).
     \end{enumerate}
     Let \(X \sim \normal{\mu, \Sigma}\) be a multivariate normal random variable.
     \begin{enumerate}[label=(\alph*), resume]
-        \item Show that if \(\Sigma\) is strictly positive definite, then \(X\) has density
+        \item\label{it: (multivariate normal distribution) density}
+        Show that if \(\Sigma\) is strictly positive definite, then \(X\) has density
         \[
             f_X(x)
             = \frac1{\sqrt{(2\pi)^\dims \det(\Sigma)}}
             \exp\Bigl(-\tfrac12 \scp[\big]{x - \mu, \Sigma^{-1}(x - \mu)}\Bigr).
         \]
+        \textbf{Hint:} What is the density of \(Y\) in the representation \(X
+        \overset{d}= \mu + A Y\) from Definition \ref{def: multivariate normal
+        distribution} \ref{it: multivariate standard normal}?
         
-        \item Prove that \(\E{X} = \mu\) and \(\Cov{X} = \Sigma\).
+        \item\label{it: (multivariate normal distribution) mean and covariance}
+        Prove that \(\E{X} = \mu\) and \(\Cov{X} = \Sigma\).
 
-        \item Assume that \(\Sigma\) is not positive semidefinite, that is
+        \item\label{it: (multivariate normal distribution) non-positive semidefinite}
+        Assume that \(\Sigma\) is not positive semidefinite, that is
         \(v \Sigma v < 0\) for some vector \(v\) prove that there is no random
         variable \(X\) with characteristic function
         \[
@@ -1884,8 +1994,63 @@ I^2 =
         \]
         \textbf{Hint:} \eqref{eq: bound on characteristic function}.
     \end{enumerate}
-
 \end{exercise}
+\begin{solution}
+\begin{enumerate}[wide=0pt, noitemsep]
+    \item[\ref{it: (normal distribution) density}]
+    We show that the distribution of \(Z = \mu + \sigma Y\) is equal to a random variable \(X\)
+    with density \(f_X\). Let \(g\) be a bounded continuous function, then we
+    have
+    \[\begin{aligned}
+        \E{g(Z)}
+        &= \E{g(\mu + \sigma Y)}
+        \\
+        &= \int_\real g(\mu + \sigma y) \frac1{\sqrt{2\pi}} \exp\bigl(-\tfrac{y^2}2\bigr) dy
+        \\
+        \overset{x=\mu + \sigma y}&=
+        \int_\real g(x) \frac1{\sqrt{2\pi \sigma^2}} \exp\bigl(-\tfrac{(x-\mu)^2}{2\sigma^2}\bigr) dx
+        \qquad\quad ``\tfrac{1}{\sigma} dx =  dy''
+        \\
+        &= \E{g(X)}.
+    \end{aligned}
+    \]
+    Since this is true for all bounded continuous functions \(g\) we have \(X \overset{d}= Z\).
+    Consequently the density of \(Z\) is given by \(f_X\).
+
+    \item[\ref{it: (normal distribution) moments}]
+    Since \(X-\mu \sim \normal{0, \sigma^2}\) we may assume without
+    loss of generality that \(\mu=0\).
+    Using the series representation of \(\exp\) in the
+    the moment generating function of the normal distribution we have
+    \[
+        \MGF_X(t)
+        = e^{\frac12 \sigma^2 t^2}
+        = \sum_{k=0}^\infty \frac{(\frac12 \sigma^2 t^2)^k}{k!}
+        = \sum_{k=0}^\infty \frac{\sigma^{2k} t^{2k}}{2^k k!}
+        = \sum_{\substack{n=0 \\ n \text{ even}}}^\infty \frac{\sigma^{n} t^{n}}{2^{\frac{n}{2}} (\frac{n}{2})!}.
+    \]
+    By comparing the coefficients with the Taylor expansion of the moment
+    generating function
+    \[
+        \MGF_X(t) = \sum_{n=0}^\infty \frac{\MGF_X^{(n)}(0)}{n!} t^n
+        = \sum_{n=0}^\infty \frac{\E{X^n}}{n!} t^n,
+    \]
+    we get for odd \(n\), \(\E{X^n} = \MGF_X^{(n)}(0) = 0\) and for even \(n\)
+    \[
+        \E{X^n} = \MGF_X^{(n)}(0) = \frac{n!}{2^{\frac{n}{2}} (\frac{n}{2})!} \sigma^n = (n-1)!! \sigma^n.
+    \]
+
+    \item[\ref{it: (normal distribution) mean and variance}]
+    By \ref{it: (normal distribution) moments} we have
+    \[
+        \E{X} = \E{X - \mu} + \mu = \mu,
+        \quad\text{and}\quad
+        \var{X} = \E{(X-\mu)^2} = \sigma^2.
+    \]
+
+    \item[\ref{it: (multivariate normal distribution) density}]
+\end{enumerate}
+\end{solution}
 
 
 \begin{exercise}[Multivariate moment generating function]
