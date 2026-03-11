@@ -1920,7 +1920,7 @@ I^2 =
 
 \begin{exercise}[Uncorrelated but not independent normal]
     \label{ex: uncorrelated but not independent normal}
-    Let \(Z \sim \normal{0,1}\) and \(\epsilon \sim \uniform(\set{-1,1})\) be independent
+    Let \(Z \sim \normal{0,1}\) and \(\epsilon \sim \uniform(\set{-1,1})\), that is \(\prob{\epsilon = 1} = \prob{\epsilon = -1} = \frac{1}{2}\), be independent
     random variables and define
     \[
         X = Z, \qquad Y = \epsilon Z.
@@ -2684,7 +2684,7 @@ parts. This has however no bearing on the exponential rate of convergence:
     \frac1n \log \prob[\big]{\abs{\mean{X}_n - \mu} \ge t}
     \le \underbrace{\frac{\log{2}}n}_{\to 0} - \inf_{\abs{a-\mu}\ge t} \CGF_X^*(a)
 \]
-With this less `sharp' view, we can remove the convexity assumption on the set.
+With this less `sharp' view, we can thereby remove the convexity assumption on the set.
 In particular this exponential rate is tight.
 
 \begin{mdframed}[innertopmargin=0pt]
