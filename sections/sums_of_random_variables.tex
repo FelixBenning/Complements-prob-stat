@@ -494,6 +494,7 @@ assumption that the random variables are in \(L^1\).
 \end{exercise}
 
 \begin{exercise}[Variance estimation \Coffeecup]
+    \label{ex: variance estimation}
     Let \((X_n)_{n\in \nat}\) be a sequence of \(\iid\) random variables in \(\real\)
     with expectation \(\mu\) and variance \(\sigma^2\). Prove that
     \begin{enumerate}[label=(\alph*),noitemsep]
@@ -1957,7 +1958,7 @@ I^2 =
     \end{enumerate}
 \end{exercise}
 
-\begin{exercise}[Delta method]
+\begin{exercise}[Delta method \Coffeecup]
     \label{ex: delta method}
     Let \(X_n\) be a sequence of random variables in \(\real\) such that
     \[
@@ -2023,6 +2024,87 @@ I^2 =
             \qedhere
         \]
     \end{enumerate}
+\end{solution}
+
+\begin{exercise}[Normality of variance estimation \Coffeecup \Coffeecup]
+    This exercise is a continuation of Exercise \ref{ex: variance estimation},
+    where we showed that various variance estimators to converge
+    to the true variance \(\sigma^2\). We will now show that the typical
+    deviation of these estimators are normal.
+    Let \((X_n)_{n\in \nat}\) be a sequence of iid random variables in \(\real\)
+    with finite fourth moments \(\E{X_1^4} < \infty\), expectation \(\mu\) and variance \(\sigma^2\).
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item\label{it: (normality of variance estimation) theoretical estimator}
+        Recall \(\hat\sigma_n^2 = \frac1n \sum_{k=1}^n (X_k - \mu)^2\), define \(K = \var{(X-\mu)^2}\) and show that
+        \[
+            \sqrt{n}(\hat\sigma_n^2 - \sigma^2) \overset{d}\to \normal{0, K}.
+        \]
+
+        \item\label{it: (normality of variance estimation) realistic estimator}
+        Prove the same asymptotic normality for
+        \[
+            \hhat{\sigma}_n^2
+            = \frac1n \sum_{k=1}^n (X_k - \mean{X}_n)^2
+            = \hat\sigma_n^2 - (\mean{X}_n - \mu)^2.
+        \]
+        and \(\tilde \sigma_n^2 = \frac{n}{n-1} \hhat{\sigma}_n^2\),
+        that is
+        \[
+            \sqrt{n}(\hhat{\sigma}_n^2 - \sigma^2) \overset{d}\to \normal{0, K}
+            \qquad\text{and}\qquad
+            \sqrt{n}(\tilde\sigma_n^2 - \sigma^2) \overset{d}\to \normal{0, K}.
+        \]
+
+        \item\label{it: (normality of variance estimation) standard deviation}
+        Prove for all \(\sigma_n^2 \in \set{\hat\sigma_n^2, \hhat{\sigma}_n^2, \tilde\sigma_n^2}\) that
+        the estimator \(\sqrt{\sigma_n^2}\) of the standard deviation \(\sigma\) is asymptotically normal, that
+        is
+        \[
+            \sqrt{n}(\sigma_n - \sigma)
+            \to \normal{0, \tfrac{K}{2\sigma}}.
+        \]
+        \textbf{Hint:} Exercise \ref{ex: delta method}.
+    \end{enumerate}
+\end{exercise}
+\begin{solution}
+   \begin{enumerate}[wide=0pt]
+        \item[\ref{it: (normality of variance estimation) theoretical
+        estimator}] We have the claim by the central limit theorem (Theorem
+        \ref{thm: central limit theorem}) since the \((X_k - \mu)^2\) are iid
+        with variance \(K\).
+
+        \item[\ref{it: (normality of variance estimation) realistic estimator}]
+        We have by Slutzky (Theorem \ref{thm: joint convergence}, \ref{it: joint conv law slutsky})
+        and continuous mapping (Theorem \ref{thm: continuous mapping}) that
+        \[
+            n^{\frac14} (\mean{X}_n - \mu)
+            = \underbrace{n^{-\frac14}}_{\to 0} \underbrace{\sqrt{n}(\mean{X}_n - \mu)}_{\overset{d}\to \normal{0, \sigma^2}}
+            \overset{d}\to 0 \cdot \normal{0, \sigma^2} = 0.
+        \]
+        Consequently, by Slutsky, continuous mapping and \(\hhat{\sigma}_n^2=\hat\sigma_n^2 - (\mean{X}_n - \mu)^2\) we have
+        \[
+            \sqrt{n}(\hhat{\sigma}_n^2 - \sigma^2)
+            = \underbrace{\sqrt{n}(\hat\sigma_n^2 - \sigma^2)}_{\overset{d}\to \normal{0, K}}
+            - \underbrace{\sqrt{n}(\mean{X}_n - \mu)^2}_{=(n^{\frac14}(\mean{X}_n - \mu))^2 \mathrlap{\overset{d}\to 0}}
+            \overset{d}\to \normal{0, K}.
+        \]
+        Finally by Slutsky and continuous mapping we have
+        \begin{align*}
+            \sqrt{n} (\tilde\sigma_n^2 - \sigma^2)
+            &= \tfrac{n}{n-1}\Bigl( \sqrt{n}(\hhat{\sigma}_n^2 - \sigma^2) + \sqrt{n}(\sigma^2 - \tfrac{n-1}n \sigma^2)\Bigr)
+            \\
+            &= \underbrace{(1 + \tfrac1{n-1})}_{\to 1}\Bigl(\underbrace{\sqrt{n}(\hhat{\sigma}_n^2 - \sigma^2)}_{\overset{d}\to \normal{0, K}} + \underbrace{\tfrac{\sigma^2}{\sqrt{n}}}_{\to 0}\Bigr)
+            \overset{d}\to \normal{0, K}.
+        \end{align*}
+        \item[\ref{it: (normality of variance estimation) standard deviation}]
+        Since \(g(x) = \sqrt{x}\) is continuously differentiable at \(\sigma^2\) with \(g'(\sigma^2) = \frac{1}{2\sigma}\neq 0\), we have by the delta method (Exercise \ref{ex: delta method}) that
+        \[
+            \sqrt{n}(\sigma_n - \sigma)
+            = \sqrt{n}(g(\sigma_n^2) - g(\sigma^2))
+            \overset{d}\to \normal[\big]{0, (g'(\sigma^2))^2 K} = \normal{0, \tfrac{K}{2\sigma}}.
+            \qedhere
+        \]
+        \end{enumerate} 
 \end{solution}
 
 \section{Large deviations and concentration}
