@@ -1,0 +1,34 @@
+
+\begin{exercise}[Infinitely often or never successful \Coffeecup]
+    Let \(X_n \sim \bernoulli(n^{-r})\) be independent Bernoulli random variables,
+    whose success probability decreases in \(n\) at rate \(r > 0\). Note that we say
+    that \(X_n\) is a success if \(X_n = 1\). Show that
+    \begin{enumerate}[label=(\alph*)]
+        \item for \(r > 1\) there are finitely many successes with probability one.
+        That is after some random but finite time \(N\in \nat\) all \(X_n\) are zero.
+        \begin{solution}
+            Since we have
+            \[
+                \sum_{n=1}^\infty \prob{X_n = 1} = \sum_{n=1}^\infty n^{-r} < \infty,
+            \]
+            we have by the first Borel-Cantelli lemma \eqref{eq: borel cantelli 1} that
+            \[
+                \prob{X_n=1 \text{ for infinitely many } n} = \prob{\limsup_{n\to \infty} \set{X_n = 1}} = 0.
+                \qedhere
+            \]
+        \end{solution}
+
+        \item for \(r \le 1\) there are infinitely many successes with probability one.
+        \begin{solution}
+            Since we have
+            \[
+                \sum_{n=1}^\infty \prob{X_n = 1} = \sum_{n=1}^\infty n^{-r} = \infty,
+            \]
+            we have by the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2} that
+            \[
+                \prob{X_n=1 \text{ for infinitely many } n} = \prob{\limsup_{n\to \infty} \set{X_n = 1}} = 1.
+                \qedhere
+            \]
+        \end{solution}
+    \end{enumerate}
+\end{exercise}

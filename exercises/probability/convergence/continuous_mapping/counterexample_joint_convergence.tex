@@ -1,0 +1,32 @@
+
+\begin{exercise}[Counterexample joint convergence \Coffeecup]
+    \label{ex: counterexample joint convergence}
+    Let \(X\) be a random variable with \(\prob{X=-1} = \prob{X=1} = \frac12\)
+    and define \(X_n \coloneq X\) and \(Y_n \coloneq -X\). Show that \(X_n
+    \overset{d}\to X\) and
+    \(Y_n \overset{d}\to X\) but 
+    \[
+        X_n + Y_n \overset{d}{\not\to} X + X = 2X.
+    \]
+    Conclude that \((X_n, Y_n)\) does not converge to \((X,X)\) in distribution.
+    \begin{remark}
+        Observe that \(X_n \overset{p}\to X\). It is therefore not sufficient
+        that one of the sequences converges in probability as Slutzky (Theorem
+        \ref{thm: joint convergence}~\ref{it: joint conv law slutsky}) may
+        suggest.
+    \end{remark}
+    \begin{solution}
+        Clearly, \(X_n + Y_n = 0\) for all \(n\). In particular we have
+        \[
+            \prob{X_n + Y_n \in A} = \ind{A}(0)
+            \neq \frac12\ind{A}(2) + \frac12 \ind{A}(-2)
+            = \prob{2X \in A}.
+        \]
+        for \(A= \{0\}\) for example. Since \(\prob{2X = 0} = 0\) this is
+        however a requirement for \(X_n + Y_n \overset{d}\to 2X\) by \ref{it:
+        s.zero boundary}. Thus \(X_n + Y_n \overset{d}{\not\to} 2X\).  This also
+        implies that \((X_n, Y_n)\) does not converge to \((X,X)\) in
+        distribution as otherwise we would have \(X_n + Y_n \overset{d}\to X +
+        X\) by the continuous mapping theorem.
+    \end{solution}
+\end{exercise}

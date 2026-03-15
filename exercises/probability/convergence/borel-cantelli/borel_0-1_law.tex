@@ -1,0 +1,49 @@
+
+\begin{exercise}[Borel's \(0\)-\(1\) law \Coffeecup]
+    \label{ex: borel cantelli 0-1 law}
+    Let \((A_n)_{n=1}^\infty\) be a sequence of independent events. Prove that 
+    the probability of their liminf and limsup are either zero or one, that is
+    \[
+        \prob[\Big]{\limsup_{n\to \infty} A_n} \in \{0,1\}
+        \quad\text{and}\quad
+        \prob[\Big]{\liminf_{n\to \infty} A_n} \in \{0,1\}.
+    \]
+    Consequently, if the probability is greater zero it must be one!
+
+    \noindent\textbf{Hint:} Use the Borel-Cantelli Lemmas (Theorem \ref{thm: borel-cantelli})
+    and Lemma \ref{lem: liminf and limsup properties}. Without justification you
+    may use the measure theoretic fact that \((A_n^\complement)_{n\in \nat}\)
+    is indpendent if \((A_n)_{n\in \nat}\) is independent.
+    \begin{remark}[Kolmogorov's \(0\)-\(1\) law]
+        \label{rem: kolmogorov 0-1 law}
+        The Borel-Cantelli \(0\)-\(1\) law is a special case of Kolmogorov's \(0\)-\(1\) law
+        about ``tail events'' \citep[Thm.~2.37, Cor.~2.38]{klenkeProbabilityTheoryComprehensive2014},
+        as the liminf and limsup are such ``tail events''.
+    \end{remark}
+
+    \begin{solution}
+        Observe that there are only two possibilities, either
+        \[
+            \sum_{n=1}^\infty \prob{A_n} < \infty
+                \quad\text{or}\quad
+            \sum_{n=1}^\infty \prob{A_n} = \infty.
+        \]
+        In the first case we have by the first Borel-Cantelli lemma \eqref{eq: borel cantelli 1} that
+        \[
+            \prob[\Big]{\limsup_{n\to \infty} A_n} = 0.
+        \]
+        in the second case we have by the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2} that
+        \[
+            \prob[\Big]{\limsup_{n\to \infty} A_n} = 1.
+        \]
+        Consequently, we have the claim for \(\limsup_n A_n\). Due to
+        \[
+            \liminf_n A_n = \limsup_n A_n^\complement
+        \]
+        by Lemma \ref{lem: liminf and limsup properties} and the independence of
+        \(A_n^\complement\), the
+        same arguments apply to \(A_n^\complement\) so we also have the claim for
+        \(\liminf_n A_n\).
+        \qedhere
+    \end{solution}
+\end{exercise}

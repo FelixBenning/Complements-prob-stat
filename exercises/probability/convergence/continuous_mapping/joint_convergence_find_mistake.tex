@@ -1,0 +1,30 @@
+
+\begin{exercise}[Find the mistake \Coffeecup]
+    Let \((X_n)_{n\in \nat}\) and \(X\) be random variables in \(\real^\dims\).
+    Which step in the following chain of implications is \textbf{wrong}?
+    \[
+        X_n \overset{d}\to X
+        \overset{?}\implies X_n - X \overset{d}\to 0
+        \overset{?}\implies X_n - X \overset{p}\to 0
+        \overset{?}\implies X_n \overset{p}\to X.
+    \]
+    Justify all other steps and find a counterexample for the wrong step.
+    \begin{solution}
+        The first step is wrong. Consider \(X_n = -X\) with
+        \(\prob{X=-1}=\prob{X=1}=\frac12\). Then
+        as in  Exercise \ref{ex: convergence in distribution but not in
+        probability} \(X_n \to X\), but \(X_n - X = -2X\) does not converge to
+        zero in distribution.
+
+        All the other steps are correct. The second step is the special case
+        that convergence in distribution to a constant implies convergence in
+        probability to that constant (Theorem \ref{thm: convergence
+        implications}~\ref{it: d to p}). The third step follows from 
+        \[
+            \prob{\norm{X_n - X} > \epsilon}
+            =\prob[\big]{\norm{(X_n - X) - 0} > \epsilon}
+            \to 0.
+            \qedhere
+        \]
+    \end{solution}
+\end{exercise}

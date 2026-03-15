@@ -1,0 +1,20 @@
+
+\begin{exercise}[Counterexample \(L^p\) continuous mapping \Coffeecup]
+    Let \(f(x) = x^\gamma\) with \(\gamma >1\), let \(U\sim \uniform(0,1)\) and define
+    \[
+        X_n = n^{\frac1q} \ind{[0, \frac1n)}(U).
+    \]
+    Show for \(p\in [\frac{q}\gamma, q)\) we have that \(X_n \overset{L^p}\to 0\)
+    but not \(f(X_n) \overset{L^p}\to 0\).
+    \begin{solution}
+        We have
+        \[
+            \norm{X_n-0}_{L^p}^p = \norm{X_n}_{L^p}^p = n^{\frac{p}{q}} \prob{U < \tfrac1n} = n^{\frac{p}{q}-1} \to 0
+        \]
+        for \(p < q\). However, we have
+        \[
+            \norm{f(X_n)- f(0)}_{L^p}^p = \norm{f(X_n)}_{L^p}^p = n^{\frac{\gamma p}{q}} \prob{U < \tfrac1n} = n^{\frac{\gamma p}{q}-1} \to \infty
+        \]
+        for \(p > \frac{q}\gamma\).    
+    \end{solution}
+\end{exercise}

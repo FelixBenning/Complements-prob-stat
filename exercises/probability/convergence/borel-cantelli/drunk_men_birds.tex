@@ -1,0 +1,72 @@
+\begin{exercise}[Drunk Men and Drunk Birds]
+
+There is a saying, attributed to  Japanese-American mathematician Shizuo
+Kakutani: ``A drunk man will find his way home, but a drunk bird may get lost
+forever." Let us try to understand this. A drunk birds can be modeled by three
+dimensional random walk. Suppose the bird starts at the origin of the three
+dimensional integer lattice $\integer^3$. It moves only at integer time points. For
+$n=0,1,2,3,\ldots$ let $S_n=(S_n^x,S_n^y,S_n^z)\in\integer^3$ denote its location.
+If at a certain time the bird is at location $(x,y,z)$, then at the next time
+point it can be at one of the $8$ locations given by $(x\pm 1,y\pm 1,z\pm 1)$.
+Thus we can say
+
+\begin{align*}
+S_n^x ={} & S_{n-1}^x + X_n\;,\\
+S_n^y ={} & S_{n-1}^y + Y_n\;,\\
+S_n^z ={} & S_{n-1}^z + Z_n\;,
+\end{align*}
+where
+\[
+X_n = \begin{cases}
+1 & \mbox{ with probability } 1/2\;,\\
+-1 & \mbox{ with probability } 1/2\;,
+\end{cases}
+\]
+\[
+Y_n = \begin{cases}
+1 & \mbox{ with probability } 1/2\;,\\
+-1 & \mbox{ with probability } 1/2\;,
+\end{cases}
+\]
+\[
+Z_n = \begin{cases}
+1 & \mbox{ with probability } 1/2\;,\\
+-1 & \mbox{ with probability } 1/2\;,
+\end{cases}
+\]
+and $(X_1,X_2,X_3,\ldots,Y_1,Y_2,Y_3,\ldots,Z_1,Z_2,Z_3,\ldots)$ are independent.
+\[
+\prob*{S_n=(0,0,0)} 
+= \prob*{S_n^x=0}\prob*{S_n^y=0}\prob*{S_n^z=0}
+\]
+For $n$ odd, 
+\[
+\prob*{S_n^x=0}=
+\prob*{S_n^y=0}=
+\prob*{S_n^z=0}=0\;.
+\]
+For $n$ even, say $n=2N$
+\[
+\prob*{S_n^x=0}=
+\prob*{S_n^y=0}=
+\prob*{S_n^z=0}=\left(2^{-2N}\binom{2N}{N}\right)^3\;.
+\]
+By Stirling's approximation
+\[
+2^{-2N}\binom{2N}{N} \approx \frac{C}{N^{1/2}} 
+\approx \frac{C}{n^{1/2}}.
+\]
+Thus, for $n$ even
+\[
+\prob*{S_n=0} \approx C n^{-3/2}\;.
+\]
+Thus, the probability that $S_n=0$ happens infinitely often is $0$. Thus, a
+drunk bird may get lost forever. But for two dimensional or one dimensional
+random walk with probability $1$ $S_n=0$ happens infinitely often. Thus a drunk
+man will find his way home. Note that, to prove this we cannot use the second
+Borel-Cantelli Lemma. Because the second Borel-Cantelli Lemma requires the
+events to be independent, but the events $\{S_n=0\}$ are not independent. But
+the result is true and can be proved in different ways, generally you will learn
+this in a course on Markov Chains.
+
+\end{exercise}

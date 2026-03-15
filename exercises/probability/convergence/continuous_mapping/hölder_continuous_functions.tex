@@ -1,0 +1,19 @@
+
+\begin{exercise}[Hölder continuos functions \Coffeecup]
+    Let \(f\) be a Hölder continuous function. That is
+    \[
+        \norm{f(x) - f(y)} \le L \norm{x-y}^\alpha
+    \]
+    Show that \(X_n \overset{L^p}\to X\) implies \(f(X_n) \overset{L^q}\to f(X)\) for \(q = \frac{p}{\alpha}\).
+    \begin{solution}
+        We have by Hölder continuity of \(f\) that
+        \begin{align*}
+            \norm{f(X_n)- f(X)}_{L^q}^q
+            &= \E{\norm{f(X_n) - f(X)}^q}
+            \\
+            &\le \E{L^q \norm{X_n - X}^{\alpha q}}
+            = L^q \norm{f(X_n) - f(X)}_{L^p}^p \to 0.
+            \qedhere
+        \end{align*}
+    \end{solution}
+\end{exercise}

@@ -1,0 +1,150 @@
+\begin{exercise}[Median -- Projection in \(L^1\) \Coffeecup\Coffeecup]
+	We define the median of \(X\) to be the set
+    \[
+        \mSym[X] \coloneq \set[\Big]{m \in \real : \prob{X \ge m}\ge \tfrac12, \prob{X\le m} \ge \tfrac12}.
+    \]
+	\begin{enumerate}[label=(\alph*), noitemsep]
+        \item Show that if \(a,b\in \mSym[X]\), then \((a,b) \subseteq \mSym[X]\).
+        That is \(\mSym[X]\) is an interval!
+
+        \item The next goal is to show that the median interval is closed
+        and characterize the upper and lower bound. Prove for \(F(x) = \prob{X\le x}\)
+        \begin{alignat*}{2}
+            \max \mSym[X] &= \inf \set{x \in \real : F(x) > \tfrac12}
+            &&\eqcolon \overline{M},
+            \\
+            \min \mSym[X] &= \inf \set{x \in \real : F(x) \ge \tfrac12} \overset{\text{def.}}= F^{\leftarrow}(\tfrac12)
+            &&\eqcolon \underline{M}.
+        \end{alignat*}
+        This has two components: \(\overline{M}\) and \(\underline{M}\) are the boundaries of \(\mSym[X]\)
+        and they are contained in \(\mSym[X]\).
+
+        \textbf{Hint:} Use \(\prob{X < x} = \prob{\bigcup_{k\in \nat}\set{X \le x - \tfrac1k}}\) and the continuity of measure.
+        \begin{solution}
+            Since the distribution function \(F\) is right-continuous we have
+            \[
+                \prob{X \le \overline{M}} = F(\overline{M}) = \lim_{x \downarrow \overline{M}} F(x) \ge \tfrac12
+            \]
+            as all \(x \ge \overline{M}\) have the property \(F(x) > \tfrac12\) by
+            definition of \(\overline{M}\). For the other direction we use the
+            continuity of measure:
+            \[\begin{aligned}
+                \prob{X \ge \overline{M}}
+                &= 1 - \prob{X < \overline{M}}
+                \\
+                &= 1- \prob[\Big]{\bigcup_{k\in \nat} \set{X \le \overline{M} - \tfrac1k}}
+                \\
+                &= 1 - \lim_{k\to \infty} F(\overline{M}-\tfrac1k)
+                \\
+                &\ge 1- \tfrac12 = \tfrac12
+            \end{aligned}
+            \]
+            as any \(x< \overline{M}\) has the property \(F(x) \le \tfrac12\).
+            Consequently, \(\overline{M} \in \mSym[X]\).
+            As we have not used the strict inequalities due to the limits, the
+            same arguments work for the minimum \(\underline{M} = \inf\set{x\in
+            \real F(x) \ge \tfrac12}\). We only replace \(F(x) > \tfrac12\) by
+            \(F(x) \ge \tfrac12\) for all \(x \ge \underline{M}\) for the first
+            part and use \(F(x) < \tfrac12\) for all \(x < \underline{M}\) for
+            the second. Now by definition of \(\overline{M}\) we have for any
+            \(m > \overline{M}\) that \(F(m) > \tfrac12\) and therefore
+            \[
+                \prob{X \ge m} = 1 - F(m) < \tfrac12 \qquad \forall m > \overline{M}.
+            \]
+            This implies \(\overline{M} = \max \mSym[X]\).
+            Similarly, we have for any \(m < \underline{M}\) that \(F(m) < \tfrac12\)
+            and therefore \(\underline{M} = \min \mSym[X]\).
+        \end{solution}
+
+        \item\label{it: characterization of distribution function} Prove that
+        \[
+            \begin{cases}
+                F(x) > \tfrac12 & x > \overline{M} 
+                \\
+                F(x) = \tfrac12 & x \in (\underline{M}, \overline{M})
+                \\
+                F(x) < \tfrac12  & x < \underline{M}
+            \end{cases}
+        \]
+        In particular, if the distribution function \(F\) jumps over
+        \(\tfrac12\) such that there exists no \(x\) with \(F(x) = \frac12\),
+        then \(\underline{M} = \overline{M}\). For the case
+        \(\underline{M} \neq \overline{M}\) prove \(F(\underline{M})= \tfrac12\).
+        \begin{solution}
+            \(F(x) > \tfrac12\) for \(x>\overline{M}\) follows from the definition
+            of \(\overline{M}\). Similarly \(F(x) < \tfrac12\) for \(x<\underline{M}\)
+            follows from the definition of \(\underline{M}\). Now for any
+            \(x \in (\underline{M}, \overline{M})\) we have \(x> \underline{M}\) and
+            consequently \(F(x) \ge \tfrac12\). And since \(F(x) > \tfrac12\) would imply
+            \(x > \overline{M}\) by definition of \(\overline{M}\) we must conclude
+            \(F(x) = \tfrac12\). Finally if \(\underline{M} \neq \overline{M}\)
+            then \(F(\underline{M}) = \tfrac12\) follows from right-continuity of \(F\).
+        \end{solution}
+
+		\item Assuming \(X\in \cL^1\) prove that the median minimizes the \(L^1\) error, i.e.
+        \[
+            \mSym[X] =\arg\min_{m} \E{\abs{X-m}}.
+        \]
+		% If you wish to prove the general
+		% case, note that \(f(m)=2F_X(m)-1\) is right-continuous and monotonously
+		% increasing. Monotonicity also implies it can only have a countable number
+		% of discontinuities.
+
+ 		\textbf{Hint:}
+            Use \(\E{X}=\int_0^\infty \prob{X\ge t}dt = \int_0^\infty \prob{X>t}dt\)
+            for \(X\ge 0\) to prove
+            \[
+                \E{\abs{X-m_2}} - \E{\abs{X-m_1}}
+                = \int_{m_1}^{m_2} \underbrace{\prob{X\le x} - \prob{X>x}}_{=2F(x)-1}dx
+            \]
+		\begin{solution}
+			We have
+			\begin{align*}
+				\E{\abs{X-m}_+}
+				&= \int_0^\infty \underbrace{\prob{\abs{X-m}_+ > t}}_{
+					\begin{aligned}
+						&=\prob{X-m>t}\\
+						&=\prob{X> t-m}
+					\end{aligned}
+				} dt\\
+				&= \int_m^\infty \prob{X>s}ds
+			\end{align*}
+			And similarly
+			\begin{align*}
+				\E{(X-m)_-}
+				&= \int_0^\infty \underbrace{\prob{(X-m)_- \ge t}}_{
+					\begin{aligned}
+						&=\prob{m-X\ge t} \quad \mathrlap{(\forall t>0)}\\
+						&=\prob{m-t\ge X}
+					\end{aligned}
+				} dt\\
+				&= \int_{-\infty}^m \prob{X\le s}ds
+			\end{align*}
+			Put together we have
+            \[
+				\E{\abs{X-m}}
+				= \int_{-\infty}^m \prob{X\le s}ds + \int_m^\infty \prob{X>s}ds.
+            \]
+            Consequently, we have for \(m_1 < m_2\)
+            \[\begin{aligned}
+                \E{\abs{X-m_2}} - \E{\abs{X-m_1}}
+                &= \int_{m_1}^{m_2} \prob{X\le s}ds - \int_{m_1}^{m_2} \prob{X>s}ds
+                \\
+                &= \int_{m_1}^{m_2} \underbrace{\prob{X\le s} - (1-\prob{X\le s})}_{=2F(x) -1}ds
+            \end{aligned}
+            \]
+            Using \ref{it: characterization of distribution function} we deduce
+            \begin{alignat*}{3}
+                \E{\abs{X-m}} - \E{\abs{x-\overline{M}}} &> 0
+                & m &> \overline{M} 
+                \\
+                \E{\abs{X-m_2}} - \E{\abs{x-m_1}} &= 0
+                \qquad & m_1, m_2 &\in (\underline{M}, \overline{M})
+                \\
+                \E{\abs{x-\underline{M}}} - \E{\abs{X-m}} &< 0
+                & m &< \underline{M}
+            \end{alignat*}
+            Reordering implies the claim. \qedhere
+		\end{solution}
+	\end{enumerate}
+\end{exercise}
