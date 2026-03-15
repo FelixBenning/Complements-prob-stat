@@ -4,22 +4,22 @@
     distribution function. Show that \(F\) is continuous at \(x\) if and only if
     \(\prob{X = x} = 0\).
     \textbf{Hint:} Use Exercise \ref{ex: monotone functions have countably many discontinuities}.
-    \begin{solution}
-        Since the sets \(\set{X \le x - \frac1n}\) are increasing
-        in size, we have by continuity of the probability measure
-        \[
-            \prob{X < x}
-            = \prob[\Big]{\bigcup_{n\in \nat} \set{X \le x - \tfrac1n}}
-            = \lim_{n\to\infty} \prob{X \le x - \tfrac1n}
-            = F_-(x).
-        \]
-        Consequently,
-        \[
-            \prob{X = x} = \prob{X \le x} - \prob{X < x} = F(x) - F_-(x).
-        \]
-        By Exercise \ref{ex: monotone functions have countably many
-        discontinuities} \ref{it: F continuous if and only if all coincide} we
-        have that \(F\) is continuous at \(x\) if and only if \(F(x) = F_-(x)\).
-        Consequently continuity of \(F\) is equivalent to \(\prob{X = x} = 0\).
-    \end{solution}
 \end{exercise}
+\begin{solution}
+    Since the sets \(\set{X \le x - \frac1n}\) are increasing
+    in size, we have by continuity of the probability measure
+    \[
+        \prob{X < x}
+        = \prob[\Big]{\bigcup_{n\in \nat} \set{X \le x - \tfrac1n}}
+        = \lim_{n\to\infty} \prob{X \le x - \tfrac1n}
+        = F_-(x).
+    \]
+    Consequently,
+    \[
+        \prob{X = x} = \prob{X \le x} - \prob{X < x} = F(x) - F_-(x).
+    \]
+    By Exercise \ref{ex: monotone functions have countably many
+    discontinuities} \ref{it: F continuous if and only if all coincide} we
+    have that \(F\) is continuous at \(x\) if and only if \(F(x) = F_-(x)\).
+    Consequently continuity of \(F\) is equivalent to \(\prob{X = x} = 0\).
+\end{solution}

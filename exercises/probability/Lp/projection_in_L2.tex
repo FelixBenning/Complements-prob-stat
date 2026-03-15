@@ -6,23 +6,13 @@
     \subseteq \cL^2(\real)\). Then identify \(\real\) with \(\set{[x]:
     x\in\real} \subseteq L^2\) such that \(\real \subseteq L^2(\real)\).
     \begin{enumerate}[label=(\alph*), noitemsep]
-        \item Show that \(\real\) and \(\real^\perp \coloneq \set{[X] \in L^2 :
+        \item\label{it: (L2 projection) orthogonal decomposition}
+        Show that \(\real\) and \(\real^\perp \coloneq \set{[X] \in L^2 :
         \E{X}=0}\) are orthogonal subspaces of \(L^2\) with \(L^2 = \real
         \oplus \real^\perp\).
-        \begin{solution}
-            Let \(r\in \real\) and \([X]\in \real^\perp\), then
-            \[
-                \scp{[r], [X]}_{L^2} = \E{rX} = r\E{X} = 0.
-            \]
-            Consequently \(\real \perp \real^\perp\).  Moreover for any \([X]
-            \in L^2\), we have
-            \[
-                X = \underbrace{\E{X}}_{\in \real} + \underbrace{(X-\E{X})}_{\in \real^\perp}.
-            \]
-            Thus \(L^2 = \real \oplus \real^\perp\).
-        \end{solution}
 
-        \item Show that the orthogonal projection onto \(\real\) is given by
+        \item\label{it: (L2 projection) expectation is projection}
+        Show that the orthogonal projection onto \(\real\) is given by
         \[
             \eSym \colon \begin{cases}
                 L^2 \to \real,
@@ -30,17 +20,9 @@
                 [X] \mapsto \E{X}.
             \end{cases}
         \]
-        \begin{solution}
-            Since \(\E{\E{X}} = \E{X}\) we have \(\eSym^2 = \eSym\)
-            and therefore the expectation is a projection as it is also a
-            linear operator. It is an orthogonal projection since
-            \[
-                \scp{\E{X}, [Y]}_{L^2} = \E{\E{X}Y} = \E{X}\E{Y} = \scp{[X], \E{Y}}_{L^2}.
-                \qedhere
-            \]
-        \end{solution}
 
-        \item Let \(\pi \colon L^2 \to \real^\perp\) be the orthogonal projection
+        \item\label{it: (L2 projection) covariance is inner product}
+        Let \(\pi \colon L^2 \to \real^\perp\) be the orthogonal projection
         onto \(\real^\perp\), that is \(\pi = 1 - \eSym\). Show that
         \[
             \cov{X}{Y}
@@ -49,56 +31,79 @@
             = \scp{\pi[X], \pi[Y]}_{L^2}
         \]
         In particular \(\covSym\) coincides with the inner product on \(\real^\perp\)!
-        \begin{solution}
-            By definition of the covariance
-            \[
-                \cov{X}{Y}
-                = \E{(X-\E{X})(Y-\E{Y})}
-                = \E{\pi[X]\pi[Y]} = \scp{\pi[X], \pi[Y]}_{L^2}.
-            \]
-            The other equalities essentially follow from the fact that this is an
-            orthogonal projection:
-            \[
-                \scp{\pi[X], Y}_{L^2}
-                = \scp{\pi[X], \E{Y} + \pi[Y]}_{L^2}
-                = \underbrace{\scp{\pi[X], \E{Y}}_{L^2}}_{=0} + \scp{\pi[X], \pi[Y]}_{L^2}
-            \]
-            This can also be seen by direct calculation:
-            \[
-                \scp{\pi[X], \E{Y}}_{L^2} = \E{(X-\E{X})\E{Y}} = \E{X -\E{X}}\E{Y} = 0.
-                \qedhere
-            \]
-        \end{solution}
 
-        \item Show that the expectation is the closest real number to \(X\in
+        \item\label{it: (L2 projection) expectation is argmin}
+        Show that the expectation is the closest real number to \(X\in
         \cL^2\) in the \(L^2\) distance, that is
         \[
             \E{X} = \argmin_{c\in \real} \E{(X - c)^2} = \argmin_{c\in \real} \norm{X - c}_{L^2}.
         \]
-        \begin{solution}
-            This is a property of the orthogonal projection. Specifically,
-            \[
-                \norm{X - c}_{L^2}^2
-                = \norm{\pi[X] + \E{X} - c}_{L^2}^2
-                = \norm{\pi[X]}_{L^2}^2 + \norm{c-\E{X}}_{L^2}^2,
-            \]
-            as the mixed terms disappear, indeed:
-            \[
-                \scp{\pi[X], c-\E{X}}_{L^2} = \E{X - \E{X}}(c-\E{X}) = 0.
-            \]
-            Since \(\norm{\pi[X]}_{L^2}^2\) does not depend on \(c\) and the
-            square is a monotone function, we consequently have
-            \[
-                \argmin_{c\in \real} \norm{X - c}_{L^2}
-                = \argmin_{c\in \real} \norm{c-\E{X}}_{L^2}
-                = \argmin_{c\in \real} \abs{c-\E{X}}
-                = \E{X}.
-                \qedhere
-            \]
-        \end{solution}
     \end{enumerate}
     \begin{remark}[Generalization to Hilbert spaces]
         The same arguments work if we replace \(\real\) by any Hilbert space
         \((\hilbert, \scp{\cdot, \cdot})\).
     \end{remark}
 \end{exercise}
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: (L2 projection) orthogonal decomposition}]
+    Let \(r\in \real\) and \([X]\in \real^\perp\), then
+    \[
+        \scp{[r], [X]}_{L^2} = \E{rX} = r\E{X} = 0.
+    \]
+    Consequently \(\real \perp \real^\perp\).  Moreover for any \([X]
+    \in L^2\), we have
+    \[
+        X = \underbrace{\E{X}}_{\in \real} + \underbrace{(X-\E{X})}_{\in \real^\perp}.
+    \]
+    Thus \(L^2 = \real \oplus \real^\perp\).
+
+    \item[\ref{it: (L2 projection) expectation is projection}]
+    Since \(\E{\E{X}} = \E{X}\) we have \(\eSym^2 = \eSym\)
+    and therefore the expectation is a projection as it is also a
+    linear operator. It is an orthogonal projection since
+    \[
+        \scp{\E{X}, [Y]}_{L^2} = \E{\E{X}Y} = \E{X}\E{Y} = \scp{[X], \E{Y}}_{L^2}.
+    \]
+
+    \item[\ref{it: (L2 projection) covariance is inner product}]
+    By definition of the covariance
+    \[
+        \cov{X}{Y}
+        = \E{(X-\E{X})(Y-\E{Y})}
+        = \E{\pi[X]\pi[Y]} = \scp{\pi[X], \pi[Y]}_{L^2}.
+    \]
+    The other equalities essentially follow from the fact that this is an
+    orthogonal projection:
+    \[
+        \scp{\pi[X], Y}_{L^2}
+        = \scp{\pi[X], \E{Y} + \pi[Y]}_{L^2}
+        = \underbrace{\scp{\pi[X], \E{Y}}_{L^2}}_{=0} + \scp{\pi[X], \pi[Y]}_{L^2}
+    \]
+    This can also be seen by direct calculation:
+    \[
+        \scp{\pi[X], \E{Y}}_{L^2} = \E{(X-\E{X})\E{Y}} = \E{X -\E{X}}\E{Y} = 0.
+    \]
+
+    \item[\ref{it: (L2 projection) expectation is argmin}]
+    This is a property of the orthogonal projection. Specifically,
+    \[
+        \norm{X - c}_{L^2}^2
+        = \norm{\pi[X] + \E{X} - c}_{L^2}^2
+        = \norm{\pi[X]}_{L^2}^2 + \norm{c-\E{X}}_{L^2}^2,
+    \]
+    as the mixed terms disappear, indeed:
+    \[
+        \scp{\pi[X], c-\E{X}}_{L^2} = \E{X - \E{X}}(c-\E{X}) = 0.
+    \]
+    Since \(\norm{\pi[X]}_{L^2}^2\) does not depend on \(c\) and the
+    square is a monotone function, we consequently have
+    \[
+        \argmin_{c\in \real} \norm{X - c}_{L^2}
+        = \argmin_{c\in \real} \norm{c-\E{X}}_{L^2}
+        = \argmin_{c\in \real} \abs{c-\E{X}}
+        = \E{X}.
+        \qedhere
+    \]
+\end{enumerate} 
+\end{solution}

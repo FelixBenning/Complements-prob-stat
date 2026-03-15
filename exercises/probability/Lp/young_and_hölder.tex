@@ -3,7 +3,8 @@
     \label{ex: hölder's inequality}
     Let \(\frac1p + \frac1q = 1\) with \(p,q > 1\).
     \begin{enumerate}[label=(\alph*)]
-        \item Prove ``Young's inequality'': for \(a,b \ge 0\) we have
+        \item\label{it: young inequality}
+        Prove ``Young's inequality'': for \(a,b \ge 0\) we have
         \[
             ab \le \tfrac{a^p}p + \tfrac{b^q}q.
         \]
@@ -12,27 +13,10 @@
         \emph{Option 2 (brute force)}: Find the minimum of 
         the function \(f(x) = \frac{x^p}p + \frac{b^q}q - xb\).
         \begin{solution}
-            \emph{Option 1:} Using the convexity of the exponential function,
-            \[\begin{aligned}
-                ab
-                = e^{\log(a) + \log(b)}
-                = e^{\frac1p (p\log(a)) + \frac1q (q\log(b))}
-                &\le \frac1p e^{p\log(a)} + \frac1q e^{q\log(b)}
-                \\
-                &= \frac{a^p}p + \frac{b^q}q.
-            \end{aligned}
-            \]
-            \emph{Option 2:} On \([0, \infty)\), \(f\) is convex  as \(f''(x) = (p-1)x^{p-2} \ge 0\).
-            The minimum is therefore attained at \(f'(x) = x^{p-1} - b = 0\), that is
-            at \(x_* = b^{\frac1{p-1}}\). Since \(q= \frac{p}{p-1}\) we have that \(x_*^p = b^q\).
-            \[
-                f(x_*) = \frac{b^q}p + \frac{b^q}q - b^{\frac{1}{p-1} + 1} = 0.
-            \]
-            Consequently, for all \(x \ge 0\) we have \(f(x) \ge f(x_*) = 0\).
-            In particular for \(x = a\) we have the claim.
         \end{solution}
 
-        \item Prove ``Hölder's inequality'' 
+        \item\label{it: holder's inequality proof}
+        Prove ``Hölder's inequality'' 
         For \(p,q >1\) with \(\frac1p + \frac1q = 1\) we have
         \[
             \E{\abs{XY}} \le \E{\abs{X}^p}^{\frac1p}\E{\abs{Y}^q}^{\frac1q} = \norm{X}_{L^p} \norm{Y}_{L^q}.
@@ -43,27 +27,52 @@
         otherwise the right hand side is infinite and the claim is trivial.
         Apply Young's inequality to \(a =
         \frac{\abs{X}}{\norm{X}_{L^p}}\) and \(b = \frac{\abs{Y}}{\norm{Y}_{L^q}}\).
-        \begin{solution}
-            Applying Young's inequality we have
-            \[
-                \frac{\abs{X}}{\norm{X}_{L^p}} \cdot \frac{\abs{Y}}{\norm{Y}_{L^q}}
-                \le \frac1p \Bigl(\frac{\abs{X}}{\norm{X}_{L^p}}\Bigr)^p
-                + \frac1q \Bigl(\frac{\abs{Y}}{\norm{Y}_{L^q}}\Bigr)^q.
-            \]
-            Taking expectation on both sides we get
-            \[
-                \frac{\E[\big]{\abs{XY}}}{\norm{X}_{L^p} \norm{Y}_{L^q}}
-                \le 
-                    \frac1p \E[\Big]{\Bigl(\frac{\abs{X}}{\norm{X}_{L^p}}\Bigr)^p}
-                    + \frac1q \E[\Big]{\Bigl(\frac{\abs{Y}}{\norm{Y}_{L^q}}\Bigr)^q}
-                = 
-                    \frac1p + \frac1q
-                = 1,
-            \]
-            where we use that \(\norm{X}_{L^p}^p = \E{\abs{X}^p}\) is
-            deterministic to move it outside of the expectation. Multiplying
-            both sides by \(\norm{X}_{L^p} \norm{Y}_{L^q}\)
-            implies the claim.
-        \end{solution}
     \end{enumerate}
 \end{exercise}
+
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: young inequality}]
+    \emph{Option 1:} Using the convexity of the exponential function,
+    \[\begin{aligned}
+        ab
+        = e^{\log(a) + \log(b)}
+        = e^{\frac1p (p\log(a)) + \frac1q (q\log(b))}
+        &\le \frac1p e^{p\log(a)} + \frac1q e^{q\log(b)}
+        \\
+        &= \frac{a^p}p + \frac{b^q}q.
+    \end{aligned}
+    \]
+    \emph{Option 2:} On \([0, \infty)\), \(f\) is convex  as \(f''(x) = (p-1)x^{p-2} \ge 0\).
+    The minimum is therefore attained at \(f'(x) = x^{p-1} - b = 0\), that is
+    at \(x_* = b^{\frac1{p-1}}\). Since \(q= \frac{p}{p-1}\) we have that \(x_*^p = b^q\).
+    \[
+        f(x_*) = \frac{b^q}p + \frac{b^q}q - b^{\frac{1}{p-1} + 1} = 0.
+    \]
+    Consequently, for all \(x \ge 0\) we have \(f(x) \ge f(x_*) = 0\).
+    In particular for \(x = a\) we have the claim.
+
+    \item[\ref{it: holder's inequality proof}]
+    Applying Young's inequality we have
+    \[
+        \frac{\abs{X}}{\norm{X}_{L^p}} \cdot \frac{\abs{Y}}{\norm{Y}_{L^q}}
+        \le \frac1p \Bigl(\frac{\abs{X}}{\norm{X}_{L^p}}\Bigr)^p
+        + \frac1q \Bigl(\frac{\abs{Y}}{\norm{Y}_{L^q}}\Bigr)^q.
+    \]
+    Taking expectation on both sides we get
+    \[
+        \frac{\E[\big]{\abs{XY}}}{\norm{X}_{L^p} \norm{Y}_{L^q}}
+        \le 
+            \frac1p \E[\Big]{\Bigl(\frac{\abs{X}}{\norm{X}_{L^p}}\Bigr)^p}
+            + \frac1q \E[\Big]{\Bigl(\frac{\abs{Y}}{\norm{Y}_{L^q}}\Bigr)^q}
+        = 
+            \frac1p + \frac1q
+        = 1,
+    \]
+    where we use that \(\norm{X}_{L^p}^p = \E{\abs{X}^p}\) is
+    deterministic to move it outside of the expectation. Multiplying
+    both sides by \(\norm{X}_{L^p} \norm{Y}_{L^q}\)
+    implies the claim.
+    \qedhere
+\end{enumerate}
+\end{solution}

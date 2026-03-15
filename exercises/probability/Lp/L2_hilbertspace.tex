@@ -7,28 +7,28 @@
         \langle [X], [Y] \rangle_{L^2} \coloneq \langle X, Y\rangle_{L^2} \coloneq \E{\scp{X,Y}}
     \]
     defines an inner product on \(L^2\) which induces the norm \(\norm{\cdot}_{L^2}\).
-    \begin{solution}
-        Clearly \(\scp{X, X}_{L^2} = \norm{X}_{L^2}^2\) so the inner product induces
-        the norm \(\norm{\cdot}_{L^2}\). We need to show the inner product properties:
-        \begin{enumerate}[label=(\roman*)]
-            \item\label{it: inner product positive}
-            \(\scp{X, X}_{L^2} \ge 0\) with equality if and only if \([X]=0 \overset{\text{Fact } \ref{fact: Lp zero norm}}\iff X=0\) a.s.
-            \\ \null \hfill (positive definiteness)
-            \item\label{it: inner product symmetry}
-            \(\scp{X, Y}_{L^2} = \scp{Y, X}_{L^2}\).
-            \hfill (symmetry)
-            \item\label{it: inner product linearity}
-            \(\scp{aX + bY, Z}_{L^2} = a \scp{X, Z}_{L^2} + b \scp{Y, Z}_{L^2}\)
-            for all \(a,b\in \real\).
-            \hfill (linearity in first argument)
-        \end{enumerate}
-        Property \ref{it: inner product positive} follows from \(\scp{X, X}_{L^2} = \norm{X}_{L^2}^2\)
-        and this property is established in Theorem \ref{thm: seminorm properties} and
-        Fact \ref{fact: Lp zero norm}.
-        Property \ref{it: inner product symmetry} follows from the
-        commutativity of multiplication. Property \ref{it: inner product linearity}
-        follows from the linearity of expectation.
-        \(L^2\) is further a complete normed space by Fact \ref{fact: Lp complete}.
-        Consequently, \((L^2, \scp{\cdot, \cdot}_{L^2})\) is a Hilbert space.
-    \end{solution}
 \end{exercise}
+\begin{solution}
+    Clearly \(\scp{X, X}_{L^2} = \norm{X}_{L^2}^2\) so the inner product induces
+    the norm \(\norm{\cdot}_{L^2}\). We need to show the inner product properties:
+    \begin{enumerate}[label=(\roman*)]
+        \item\label{it: inner product positive}
+        \(\scp{X, X}_{L^2} \ge 0\) with equality if and only if \([X]=0 \overset{\text{Fact } \ref{fact: Lp zero norm}}\iff X=0\) a.s.
+        \\ \null \hfill (positive definiteness)
+        \item\label{it: inner product symmetry}
+        \(\scp{X, Y}_{L^2} = \scp{Y, X}_{L^2}\).
+        \hfill (symmetry)
+        \item\label{it: inner product linearity}
+        \(\scp{aX + bY, Z}_{L^2} = a \scp{X, Z}_{L^2} + b \scp{Y, Z}_{L^2}\)
+        for all \(a,b\in \real\).
+        \hfill (linearity in first argument)
+    \end{enumerate}
+    Property \ref{it: inner product positive} follows from \(\scp{X, X}_{L^2} = \norm{X}_{L^2}^2\)
+    and this property is established in Theorem \ref{thm: seminorm properties} and
+    Fact \ref{fact: Lp zero norm}.
+    Property \ref{it: inner product symmetry} follows from the
+    commutativity of multiplication. Property \ref{it: inner product linearity}
+    follows from the linearity of expectation.
+    \(L^2\) is further a complete normed space by Fact \ref{fact: Lp complete}.
+    Consequently, \((L^2, \scp{\cdot, \cdot}_{L^2})\) is a Hilbert space.
+\end{solution}

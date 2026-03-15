@@ -8,72 +8,20 @@
     \]
     Show that
     \begin{enumerate}[label=(\alph*), noitemsep]
-        \item\label{it: quantile if invertible} if \(F\) is invertible, then \(F^{\leftarrow}(p) = F^{-1}(p)\) for all
+        \item\label{it: quantile if invertible}
+        if \(F\) is invertible, then \(F^{\leftarrow}(p) = F^{-1}(p)\) for all
         \(p \in (0,1)\),
-        \begin{solution}
-            Since \(F\) is monotonically increasing as a distribution
-            function and additionally invertible, it is strict monotonically
-            increasing. That is
-            \[
-                F(x) < F(y) \quad \text{for all } x < y.
-            \]
-            So clearly for all \(x< F^{-1}(p)\) we have \(F(x) < p\) and
-            therefore they are not contained in the set \(\set{x\in \real : F(x)
-            \ge p}\). This implies \(F^{-1}(p)\) is the smallest element in this set
-            and consequently \(F^{\leftarrow}(p) = F^{-1}(p)\).
-        \end{solution}
 
-        \item\label{it: monotonicity} \(F^{\leftarrow}\) is non-decreasing,
-        \begin{solution}
-            Let \(p < q\). Then for any \(x \in \real\) such that \(F(x) \ge q\)
-            we also have \(F(x) \ge p\). Consequently,
-            \[
-                \set{x \in \real : F(x) \ge q} \subseteq \set{x \in \real : F(x) \ge p},
-            \]
-            This implies the infimum of the former is greater than the infimum of the latter
-            and thus
-            \[
-                F^{\leftarrow}(p) = \inf\{x \in \real : F(x) \ge p\} \le \inf\{x \in \real : F(x) \ge q\} = F^{\leftarrow}(q).
-                \qedhere
-            \]
-        \end{solution}
+        \item\label{it: monotonicity}
+        \(F^{\leftarrow}\) is non-decreasing,
 
-        \item\label{it: F-(F(x)) le x} \(F^{\leftarrow}(F(x)) \le x\) for all \(x \in \real\),
-        \begin{solution}
-            Since \(x\in \set{y\in \real : F(y) \ge F(x)}\), we have
-            \[
-                x \ge \inf\set{y\in \real : F(y) \ge F(x)} = F^{\leftarrow}(F(x)).
-                \qedhere
-            \]
-        \end{solution}
+        \item\label{it: F-(F(x)) le x}
+        \(F^{\leftarrow}(F(x)) \le x\) for all \(x \in \real\),
 
-        \item\label{it: F(F-(p)) > p} \(F(F^{\leftarrow}(p)) \ge p\) for all \(p \in (0,1)\),
-        \begin{solution}
-            Let \(x_n \in \set{x\in \real : F(x) \ge p}\) be a sequence with \(x_n \downarrow F^{\leftarrow}(p)\). Then
-            by right-continuity of the distribution function \(F\)
-            \[
-                p \le \lim_{n\to \infty} F(x_n)
-                = F\Bigl(\lim_{n\to \infty} x_n\Bigr)
-                = F(F^{\leftarrow}(p)).
-                \qedhere
-            \]
-        \end{solution}
+        \item\label{it: F(F-(p)) > p}
+        \(F(F^{\leftarrow}(p)) \ge p\) for all \(p \in (0,1)\),
 
         \item\label{it: F-(p)< x iff p<F(x)} \(F^{\leftarrow}(p) \le x\) if and only if \(p \le F(x)\),
-        \begin{solution}
-            Assume \(F^{\leftarrow}(p) \le x\). Then by \ref{it: F(F-(p)) > p} 
-            and the monotonicity of \(F\) we have
-            \[
-                p \overset{\ref{it: F(F-(p)) > p}}\le F(F^{\leftarrow}(p)) \le F(x).
-            \]
-            For the opposite direction assume \(p\le F(x)\), then by the
-            monotonicity of \(F^{\leftarrow}\) \ref{it: monotonicity}
-            and \ref{it: F-(F(x)) le x} we have
-            \[
-                F^{\leftarrow}(p) \overset{\ref{it: monotonicity}}\le F^{\leftarrow}(F(x)) \overset{\ref{it: F-(F(x)) le x}}\le x.
-                \qedhere
-            \]
-        \end{solution}
 
         \item\label{it: inverse transform sampling}
         \(X\coloneq F^{\leftarrow}(U) \sim F\) for a standard uniform \(U\sim \uniform(0,1)\), i.e.\ 
@@ -81,50 +29,104 @@
             F(x) = \prob{X \le x}
             \qquad \forall x \in \real.
         \]
-        \begin{solution}
-            We simply use \ref{it: F-(p)< x iff p<F(x)} and the definition of \(U\) to get
-            \[
-                \prob{X \le x}
-                = \prob{F^{\leftarrow}(U) \le x}
-                \overset{\ref{it: F-(p)< x iff p<F(x)}}\le \prob{U \le F(x)}
-                = \int_0^{F(x)} 1 \, du
-                = F(x).
-                \qedhere
-            \]
-        \end{solution}
 
-        \item Propose a way to simulate an exponential distribution \(X \sim
+        \item\label{it: simulate exponential rvs} Propose a way to simulate an exponential distribution \(X \sim
         \exponential(\lambda)\) using a standard uniform random variable \(U\sim
         \uniform(0,1)\).
-        \begin{solution}
-            The CDF of an exponential distribution is \(F(x) = 1 - e^{-\lambda x}\) for \(x \ge 0\).
-            Since this function is invertible on \([0, \infty]\) we use
-            \ref{it: quantile if invertible}. To get
-            \[
-                F^{\leftarrow}(p) = -\tfrac{1}{\lambda} \log(1-p).
-            \]
-            Using \(U \sim \uniform(0,1)\) we thus set \(X = F^{\leftarrow}(U)\),
-            and finish by \ref{it: inverse transform sampling}.
-        \end{solution}
-
     \end{enumerate}
     The function \(F^{\leftarrow}\) is also called a \emph{quantile function} of
     the distribution function \(F\). The reason for this is
     the following: Show that
     \begin{enumerate}[resume, label=(\alph*), noitemsep]
-        \item \(Q(p) \coloneq (-\infty, F^{\leftarrow}(p)]\) is the smallest
+        \item\label{it: quantiles}
+         \(Q(p) \coloneq (-\infty, F^{\leftarrow}(p)]\) is the smallest
         interval of the form \((-\infty, a]\) such that \(\prob{X \in (-\infty,
         a]} \ge p\) for \(X\sim F\). We say that \(Q(p)\) is a \(p\)-quantile.
-        \begin{solution}
-            For any \(a < F^{\leftarrow}(p)\) we have by definition of \(F^{\leftarrow}\) that
-            \(F(a) < p\) and thus
-            \[
-                \prob{X \in (-\infty, a]} = F(a) < p.
-            \]
-            However for \(a=F^{\leftarrow}(p)\) we have \(F(a)\ge p\) by
-            \ref{it: F(F-(p)) > p}.  Consequently, \(F^{\leftarrow}(p)\) is the
-            smallest \(a\) such that \(\prob{X \in (-\infty, a]} \ge p\).
-        \end{solution}
-
     \end{enumerate}
 \end{exercise}
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: quantile if invertible}]
+    Since \(F\) is monotonically increasing as a distribution
+    function and additionally invertible, it is strict monotonically
+    increasing. That is
+    \[
+        F(x) < F(y) \quad \text{for all } x < y.
+    \]
+    So clearly for all \(x< F^{-1}(p)\) we have \(F(x) < p\) and
+    therefore they are not contained in the set \(\set{x\in \real : F(x)
+    \ge p}\). This implies \(F^{-1}(p)\) is the smallest element in this set
+    and consequently \(F^{\leftarrow}(p) = F^{-1}(p)\).
+
+    \item[\ref{it: monotonicity}]
+    Let \(p < q\). Then for any \(x \in \real\) such that \(F(x) \ge q\)
+    we also have \(F(x) \ge p\). Consequently,
+    \[
+        \set{x \in \real : F(x) \ge q} \subseteq \set{x \in \real : F(x) \ge p},
+    \]
+    This implies the infimum of the former is greater than the infimum of the latter
+    and thus
+    \[
+        F^{\leftarrow}(p) = \inf\{x \in \real : F(x) \ge p\} \le \inf\{x \in \real : F(x) \ge q\} = F^{\leftarrow}(q).
+    \]
+
+    \item[\ref{it: F-(F(x)) le x}]
+    Since \(x\in \set{y\in \real : F(y) \ge F(x)}\), we have
+    \[
+        x \ge \inf\set{y\in \real : F(y) \ge F(x)} = F^{\leftarrow}(F(x)).
+    \]
+
+    \item[\ref{it: F(F-(p)) > p}]
+    Let \(x_n \in \set{x\in \real : F(x) \ge p}\) be a sequence with \(x_n \downarrow F^{\leftarrow}(p)\). Then
+    by right-continuity of the distribution function \(F\)
+    \[
+        p \le \lim_{n\to \infty} F(x_n)
+        = F\Bigl(\lim_{n\to \infty} x_n\Bigr)
+        = F(F^{\leftarrow}(p)).
+    \]
+    
+    \item[\ref{it: F-(p)< x iff p<F(x)}]
+    Assume \(F^{\leftarrow}(p) \le x\). Then by \ref{it: F(F-(p)) > p} 
+    and the monotonicity of \(F\) we have
+    \[
+        p \overset{\ref{it: F(F-(p)) > p}}\le F(F^{\leftarrow}(p)) \le F(x).
+    \]
+    For the opposite direction assume \(p\le F(x)\), then by the
+    monotonicity of \(F^{\leftarrow}\) \ref{it: monotonicity}
+    and \ref{it: F-(F(x)) le x} we have
+    \[
+        F^{\leftarrow}(p) \overset{\ref{it: monotonicity}}\le F^{\leftarrow}(F(x)) \overset{\ref{it: F-(F(x)) le x}}\le x.
+    \]
+
+    \item[\ref{it: inverse transform sampling}]
+    We simply use \ref{it: F-(p)< x iff p<F(x)} and the definition of \(U\) to get
+    \[
+        \prob{X \le x}
+        = \prob{F^{\leftarrow}(U) \le x}
+        \overset{\ref{it: F-(p)< x iff p<F(x)}}\le \prob{U \le F(x)}
+        = \int_0^{F(x)} 1 \, du
+        = F(x).
+    \]
+
+    \item[\ref{it: simulate exponential rvs}]
+    The CDF of an exponential distribution is \(F(x) = 1 - e^{-\lambda x}\) for \(x \ge 0\).
+    Since this function is invertible on \([0, \infty]\) we use
+    \ref{it: quantile if invertible}. To get
+    \[
+        F^{\leftarrow}(p) = -\tfrac{1}{\lambda} \log(1-p).
+    \]
+    Using \(U \sim \uniform(0,1)\) we thus set \(X = F^{\leftarrow}(U)\),
+    and finish by \ref{it: inverse transform sampling}.
+
+    \item[\ref{it: quantiles}]
+    For any \(a < F^{\leftarrow}(p)\) we have by definition of \(F^{\leftarrow}\) that
+    \(F(a) < p\) and thus
+    \[
+        \prob{X \in (-\infty, a]} = F(a) < p.
+    \]
+    However for \(a=F^{\leftarrow}(p)\) we have \(F(a)\ge p\) by
+    \ref{it: F(F-(p)) > p}.  Consequently, \(F^{\leftarrow}(p)\) is the
+    smallest \(a\) such that \(\prob{X \in (-\infty, a]} \ge p\).
+    \qedhere
+\end{enumerate}
+\end{solution}

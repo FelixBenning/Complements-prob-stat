@@ -9,21 +9,21 @@
         This is a weak form of the dominated convergence theorem, where the constant
         is the dominating function.
     \end{remark}
-    \begin{solution}
-        We have for every \(\epsilon > 0\)
-        \[\begin{aligned}
-            \E[\big]{\norm{X_n - X}^p}
-            &= \E[\big]{\norm{X_n - X}^p \ind{\norm{X_n - X} < \epsilon}}
-            + \E[\big]{\norm{X_n - X}^p \ind{\norm{X_n - X} \ge \epsilon}}
-            \\
-            &\le \epsilon^p + (2c)^p \prob[\big]{\norm{X_n - X} \ge \epsilon}.
-        \end{aligned}
-        \]
-        Due to \(X_n \overset{p}\to X\) the second term converges to \(0\)
-        and we thus have
-        \[
-            \limsup_{n\to \infty} \E[\big]{\norm{X_n - X}^p} \le \epsilon^p.
-        \]
-        Since this is true for any \(\epsilon > 0\) we have the claim.
-    \end{solution}
 \end{exercise}
+\begin{solution}
+    We have for every \(\epsilon > 0\)
+    \[\begin{aligned}
+        \E[\big]{\norm{X_n - X}^p}
+        &= \E[\big]{\norm{X_n - X}^p \ind{\norm{X_n - X} < \epsilon}}
+        + \E[\big]{\norm{X_n - X}^p \ind{\norm{X_n - X} \ge \epsilon}}
+        \\
+        &\le \epsilon^p + (2c)^p \prob[\big]{\norm{X_n - X} \ge \epsilon}.
+    \end{aligned}
+    \]
+    Due to \(X_n \overset{p}\to X\) the second term converges to \(0\)
+    and we thus have
+    \[
+        \limsup_{n\to \infty} \E[\big]{\norm{X_n - X}^p} \le \epsilon^p.
+    \]
+    Since this is true for any \(\epsilon > 0\) we have the claim.
+\end{solution}

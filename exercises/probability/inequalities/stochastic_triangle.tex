@@ -6,22 +6,22 @@
         \prob*{\norm{X - Z} \ge \epsilon} \le \prob*{\norm{X - Y} \ge \tfrac\epsilon2} + \prob*{\norm{Y - Z} \ge \tfrac\epsilon2}.
     \] 
     \textbf{Hint:} Use set inclusions.
-    \begin{solution}
-        The claim follows directly from
-        \[
-            \set{\norm{X - Z} \ge \epsilon}
-            \subseteq \set{\norm{X - Y} \ge \tfrac\epsilon2} \cup \set{\norm{Y - Z} \ge \tfrac\epsilon2},
-        \]
-        which is proven using that \(A \subseteq B\) is equivalent
-        to \(B^\complement \subseteq A^\complement\) and
-        \begin{align*}
-            \Bigl(\set{\norm{X - Y} \ge \tfrac\epsilon2} \cup \set{\norm{Y - Z} \ge \tfrac\epsilon2}\Bigr)^\complement
-            &=\set{\norm{X - Y} < \tfrac\epsilon2} \cap \set{\norm{Y - Z} < \tfrac\epsilon2}
-            \\
-            &\subseteq \set{\norm{X - Z} < \epsilon}
-            \\
-            &= \set{\norm{X - Z} \ge \epsilon}^\complement.
-        \end{align*}
-        The standard triangle inequality is used for the inclusion step.
-    \end{solution}
 \end{exercise}
+\begin{solution}
+    The claim follows directly from
+    \[
+        \set{\norm{X - Z} \ge \epsilon}
+        \subseteq \set{\norm{X - Y} \ge \tfrac\epsilon2} \cup \set{\norm{Y - Z} \ge \tfrac\epsilon2},
+    \]
+    which is proven using that \(A \subseteq B\) is equivalent
+    to \(B^\complement \subseteq A^\complement\) and
+    \begin{align*}
+        \Bigl(\set{\norm{X - Y} \ge \tfrac\epsilon2} \cup \set{\norm{Y - Z} \ge \tfrac\epsilon2}\Bigr)^\complement
+        &=\set{\norm{X - Y} < \tfrac\epsilon2} \cap \set{\norm{Y - Z} < \tfrac\epsilon2}
+        \\
+        &\subseteq \set{\norm{X - Z} < \epsilon}
+        \\
+        &= \set{\norm{X - Z} \ge \epsilon}^\complement.
+    \end{align*}
+    The standard triangle inequality is used for the inclusion step.
+\end{solution}

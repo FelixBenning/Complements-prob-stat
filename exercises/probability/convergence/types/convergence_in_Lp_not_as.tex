@@ -25,55 +25,61 @@
     \]
     Show that
     \begin{enumerate}[label=(\alph*), noitemsep]
-        \item \(X_n \xrightarrow{L^p} 0\),
-        \begin{solution}
-            We have for any \(p \ge 1\)
-            \[
-                \E{|X_n|^p} = \int_0^1 \ind{
-                    \left[\frac{k}{2^{m}}, \frac{k+1}{2^{m}} \right)
-                }(u) \, du
-                = \frac{1}{2^m} = 2^{-\lfloor \log_2(n) \rfloor} \to 0.
-            \]
-            Consequently, \(X_n \xrightarrow{L^p} 0\).
-        \end{solution}
+        \item\label{it: (conv in Lp but not as) in Lp}
+        \(X_n \xrightarrow{L^p} 0\),
 
-        \item \(X_n \xrightarrow{p} 0\),
-        \begin{solution}
-            \(X_n \xrightarrow{L^p} 0\) implies \(X_n \xrightarrow{p} 0\) by Theorem
-            \ref{thm: convergence implications} \ref{it: L1 to p}.
+        \item\label{it: (conv in Lp but not as) in prob}
+        \(X_n \xrightarrow{p} 0\),
 
-            Alternatively:
-            \[
-                \prob[\bigl]{|X_n - 0| \ge \epsilon}
-                = \prob{X_n = 1}
-                = 2^{-\lfloor \log_2(n) \rfloor} \to 0.
-            \]
-            for any \(\epsilon \in (0,1]\) and \(\prob[\bigl]{|X_n - 0| \ge
-            \epsilon}=0\) for \(\epsilon > 1\).
-        \end{solution}
-
-        \item \(X_n\) does not converge almost surely to \(0\).
-        \begin{solution}
-            Choose any \(\omega \in \set{U\in [0,1)}\). We will show that there exists an
-            \(\epsilon > 0\), specifically any \(\epsilon < 1\) such that
-            \(|X_n(\omega) - 0| \ge \epsilon\) for infinitely many \(n\).
-            Since we show this for any \(\omega\in \set{U\in [0,1)}\), this would imply
-            \[
-                \prob{X_n \not\to 0} \ge \prob{U \in [0,1)} = 1.
-            \]
-            For any \(N\in \nat\) the task is consequently to find \(n\ge N\)
-            such that \(X_n(\omega) = 1\). Let \(m \coloneq \lfloor \log_2(N) \rfloor + 1\).
-            Then there exists a \(k \in \{0, \ldots, 2^m-1\}\) such that
-            \[
-                \frac{k}{2^m} \le U(\omega) < \frac{k+1}{2^m}.
-            \]
-            Consequently, for \(n = 2^m + k\) we have \(n \ge N\) and
-            \[
-                X_n(\omega) = \ind{\left[
-                    \frac{k}{2^{m}}, \frac{k+1}{2^{m}}
-                \right)}(U(\omega)) = 1.
-                \qedhere
-            \]
-        \end{solution}
+        \item\label{it: (conv in Lp but not as) not as}
+        \(X_n\) does not converge almost surely to \(0\).
     \end{enumerate}
 \end{exercise}
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: (conv in Lp but not as) in Lp}]
+    We have for any \(p \ge 1\)
+    \[
+        \E{|X_n|^p} = \int_0^1 \ind{
+            \left[\frac{k}{2^{m}}, \frac{k+1}{2^{m}} \right)
+        }(u) \, du
+        = \frac{1}{2^m} = 2^{-\lfloor \log_2(n) \rfloor} \to 0.
+    \]
+    Consequently, \(X_n \xrightarrow{L^p} 0\).
+
+    \item[\ref{it: (conv in Lp but not as) in prob}]
+    \(X_n \xrightarrow{L^p} 0\) implies \(X_n \xrightarrow{p} 0\) by Theorem
+    \ref{thm: convergence implications} \ref{it: L1 to p}.
+
+    Alternatively:
+    \[
+        \prob[\bigl]{|X_n - 0| \ge \epsilon}
+        = \prob{X_n = 1}
+        = 2^{-\lfloor \log_2(n) \rfloor} \to 0.
+    \]
+    for any \(\epsilon \in (0,1]\) and \(\prob[\bigl]{|X_n - 0| \ge
+    \epsilon}=0\) for \(\epsilon > 1\).
+
+    \item[\ref{it: (conv in Lp but not as) not as}]
+    Choose any \(\omega \in \set{U\in [0,1)}\). We will show that there exists an
+    \(\epsilon > 0\), specifically any \(\epsilon < 1\) such that
+    \(|X_n(\omega) - 0| \ge \epsilon\) for infinitely many \(n\).
+    Since we show this for any \(\omega\in \set{U\in [0,1)}\), this would imply
+    \[
+        \prob{X_n \not\to 0} \ge \prob{U \in [0,1)} = 1.
+    \]
+    For any \(N\in \nat\) the task is consequently to find \(n\ge N\)
+    such that \(X_n(\omega) = 1\). Let \(m \coloneq \lfloor \log_2(N) \rfloor + 1\).
+    Then there exists a \(k \in \{0, \ldots, 2^m-1\}\) such that
+    \[
+        \frac{k}{2^m} \le U(\omega) < \frac{k+1}{2^m}.
+    \]
+    Consequently, for \(n = 2^m + k\) we have \(n \ge N\) and
+    \[
+        X_n(\omega) = \ind{\left[
+            \frac{k}{2^{m}}, \frac{k+1}{2^{m}}
+        \right)}(U(\omega)) = 1.
+        \qedhere
+    \]
+\end{enumerate}
+\end{solution}
