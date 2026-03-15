@@ -1,0 +1,32 @@
+% counterexample: convergence in distribution but not in probability
+
+\begin{exercise}[Convergence in distribution but not probability \Coffeecup]
+    \label{ex: convergence in distribution but not in probability}
+    Let \(X\) be a random variable with \(\prob{X=-1} = \frac12\) and \(\prob{X=1}=\frac12\).
+    \[
+        X_n \coloneq (-1)^n X
+    \]
+    Prove that
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item \(X_n \xrightarrow{d} X\)
+        \begin{solution}
+            Observe that the distribution of \(X\) is symmetric, that is
+            \[
+                \prob{-X \le x} = \prob{X \le x} \qquad \forall x\in \real.
+            \]
+            Consequently, for any \(x \in \real\) we have \(\prob{X_n \le x} = \prob{X \le x}\).
+            In particular this implies \(\prob{X_n \le x} \to \prob{X \le x}\) for all \(x\).
+        \end{solution}
+
+        \item \(X_n\) does not converge in probability to \(X\).
+        \begin{solution}
+            We have for \(\epsilon = 1\) and every odd \(n\)
+            \[
+                \prob{\abs{X - X_n} \ge \epsilon}
+                = \prob{2\abs{X} \ge 1} = 1
+            \]
+            The sequence \(\prob{|X_n - X| \ge \epsilon}\) thus does not converge to \(0\).
+        \end{solution}
+    \end{enumerate}
+\end{exercise}
+

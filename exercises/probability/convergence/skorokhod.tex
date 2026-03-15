@@ -1,0 +1,41 @@
+\begin{exercise}[Skorokhod's representation theorem \Coffeecup\Coffeecup]
+    \label{ex: skorokhod representation}
+    Let \((X_n)_{n \in \nat}\) be a sequence of random variables in \(\real\)
+    such that \(X_n \xrightarrow{d} X\). Show that there exist random variables
+    \((Y_n)_{n\in \nat}\) and \(Y\), where the \(Y_n\) and \(Y\) are all defined on the
+    same probability space such that
+    \begin{enumerate}[label=(\roman*), noitemsep]
+        \item \(Y_n \overset{d}= X_n\) for all \(n\in \nat\) and \(Y \overset{d}= X\),
+        \item \(Y_n \overset{\as}\to Y\).
+    \end{enumerate}
+    \textbf{Hint:} Use \(F_n(x) = \prob{X_n \le x}\), Exercise \ref{ex:
+    stochastic simulation} and that a monotonous function has at most countably
+    many discontinuities (Exercise \ref{ex: monotone functions have countably
+    many discontinuities}).
+    \begin{remark}
+        We assume \(X_n\) in \(\real\) to simplify the proof. Skorokhod's representation 
+        theorem holds in much greater generality.
+    \end{remark}
+    \begin{solution}
+        Choose \(U\sim \uniform(0,1)\) and define
+        \[
+            Y_n \coloneq F_n^{\leftarrow}(U)
+            \quad \text{and}\quad
+            Y = F^{\leftarrow}(U)
+        \] where \(F_n\) are the distribution functions of \(X_n\) and \(F\) the
+        one of \(X\). Then by Exercise \ref{ex: stochastic simulation} we have
+        \(Y_n \overset{d}= X_n\) for all \(n\in \nat\) and
+        \(Y \overset{d}= X\).  It remains to show that \(Y_n \overset{\as}\to
+        Y\). Since \(X_n \overset{d}\to X\) in distribution, we have that
+        \(F_n(x) \to F(x)\) for all \(x\in \real\) at which \(F\) is continuous.
+        Since the set \(D_F\) of discontinuity points of \(F\) is countable, we have
+        \[
+            \prob{U \in D_F} = \sum_{x\in D_F}\prob{U = x} = 0.
+        \]
+        And for all \(\omega \in \set{U \notin D_F}\) we have
+        \[
+            Y_n(\omega) = F_n(U(\omega)) \to F(U(\omega))=Y(\omega)
+        \]
+        Consequently, \(\prob{ Y_n \to Y } = \prob{U \notin D_F} = 1\) and thus \(Y_n \overset{\as}\to Y\).
+    \end{solution}
+\end{exercise}

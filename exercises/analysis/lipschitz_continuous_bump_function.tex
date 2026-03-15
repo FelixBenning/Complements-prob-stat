@@ -1,0 +1,63 @@
+
+\begin{exercise}[Lipschitz continuous bump functions \Coffeecup\Coffeecup]
+    \label{ex: lipschitz bump functions}
+    Let \((\domain, \metric)\) be a metric space and \(A \subseteq \domain\). 
+    Show that
+    \begin{enumerate}[label=(\alph*)]
+        \item \(x\mapsto \metric(x,A)\coloneq \inf_{z \in A} \metric(x,z)\) is \(1\)-Lipschitz continuous.
+        \begin{solution}
+        By the triangle inequality we have for \(x,y\in \domain\)
+        \[
+            \metric(x,A)
+            =\inf_{z\in A} \metric(x,z)
+            \le \inf_{z\in A} \bigl(\metric(x,y) + \metric(y,z)\bigr)
+            = \metric(x,y) + \metric(y,A).
+        \]
+        with reordering this implies
+        \[
+            \metric(x,A) - \metric(y,A) \le \metric(x,y)
+        \]
+        By symmetry we also have  \(\metric(y,A) - \metric(x,A) \le \metric(x,y)\)
+        and thereby the claim.
+        \end{solution}
+
+        \item \(x\mapsto x_+ = \max\set{x,0}\) is \(1\)-Lipschitz continuous.
+        \begin{solution}
+            Choose \(x,y\in \real\), without loss of generality
+            assume \(x \ge y\). If \(y\le x\le 0\), then \(x_+ = y_+ = 0\) and thus
+            \(
+                \abs{x_+ - y_+} = 0 \le \abs{x-y}. 
+            \)
+
+            If \(x\ge 0\), then
+            \(
+                \abs{x_+ - y_+} = x - y_+ \le x-y = \abs{x-y}.
+            \)
+        \end{solution}
+
+        \item If \(f\) is \(L_1\)-Lipschitz continuous and \(g\) is \(L_2\)-Lipschitz continuous, then
+        \(f\circ g\) is \(L_1L_2\)-Lipschitz continuous.
+        \begin{solution}
+            We have for any \(x,y\in \domain\)
+            \[
+                \abs{f(g(x)) - f(g(y))}
+                \le L_1 \abs{g(x) - g(y)}
+                \le L_1L_2 \abs{x-y}.
+                \qedhere
+            \]
+        \end{solution}
+
+
+        \item the bump function \(\ind{A}^\epsilon(x) = (1 - \frac{\metric(x,A)}\epsilon)_+\)
+        is \(\frac1\epsilon\)-Lipschitz continuous.
+        \begin{solution}
+            \(f_1(x) = \metric(x,A)\) is \(1\)-Lipschitz continuous,
+            \(f_2(x) = 1 - \frac{x}{\epsilon}\) is \(\frac1\epsilon\)-Lipschitz continuous
+            as a Linear function, and \(f_3(x) = x_+\) is \(1\)-Lipschitz continuous. Consequently
+            \[
+                f_3 \circ f_2 \circ f_1(x) = \ind{A}^\epsilon(x)
+            \]
+            is \(\frac1\epsilon\)-Lipschitz continuous by the previous part.
+        \end{solution}
+    \end{enumerate}
+\end{exercise}

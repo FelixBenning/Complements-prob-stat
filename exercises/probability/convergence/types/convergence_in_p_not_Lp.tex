@@ -1,0 +1,46 @@
+
+\begin{exercise}[Convergence in probability but not \(L^p\) \Coffeecup]
+    \label{ex: convergence in probability but not in Lp}
+    Let \(U\sim \uniform(0,1)\) be a standard uniform random variable and define
+    \[
+        X_n \coloneq n \ind{[0, 1/n)}(U)
+    \]
+    Show that
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item the sequence \((X_n)_{n\in \nat}\) converges to \(0\) in probability,
+        \begin{solution}
+            We have for any \(\epsilon > 0\)
+            \[
+                \prob{|X_n - 0| \ge \epsilon}
+                \le \prob(X_n \neq 0)
+                = \prob[\big]{U\le \tfrac1n}
+                = \tfrac1n
+                \to 0.
+                \qedhere
+            \]
+        \end{solution}
+
+        \item the sequence \((X_n)_{n\in \nat}\) does not converge to \(0\) in \(L^1\),
+        \begin{solution}
+            We have
+            \[
+                \E{|X_n - 0|}
+                = \E{X_n}
+                = n \cdot \prob[\big]{U \in [0, 1/n)}
+                = n \cdot \frac1n
+                = 1 \not\to 0.
+                \qedhere
+            \]            
+        \end{solution}
+
+        \item For every \(p \ge 1\) construct a sequence \((Y_n)_{n\in \nat}\) such that
+        \(Y_n\xrightarrow{L^q} 0\) for all \(q < p\) but not for \(q \ge p\).
+        \begin{solution}
+            Define \(Y_n \coloneq X_n^{1/p}\) with \(X_n\) as above. Then
+            \[
+                \E{|Y_n - 0|^q} = \E{X_n^{q/p}} = n^{q/p} \cdot \prob[\big]{U \in [0, 1/n)} = n^{q/p - 1}.
+            \]
+            This converges to \(0\) for all \(q < p\) but not for \(q \ge p\).
+        \end{solution}
+        \end{enumerate}
+\end{exercise}

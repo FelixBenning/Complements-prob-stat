@@ -1,0 +1,59 @@
+
+\begin{exercise}[Stochastic limits are unique \Coffeecup\Coffeecup]
+    \label{ex: unique stochastic limits}
+    Show that
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item if \(X_n \overset{p}\to X\) and \(X_n \overset{p}\to Y\), then
+        \(\prob{X = Y}=1\).
+
+        \textbf{Hint:} How is uniqueness of limits proven in analysis?
+        \begin{solution}
+            We have for any \(\epsilon > 0\) and any \(n\in \nat\) by the
+            stochastic triangle inequality (Exercise \ref{ex: stochastic
+            triangle})
+            \[\begin{aligned}
+                \prob{\norm{X - Y} \ge \epsilon}
+                \le \underbrace{\prob{\norm{X - X_n} \ge \tfrac\epsilon2}}_{\to 0} + \underbrace{\prob{\norm{X_n - Y} \ge \tfrac\epsilon2}}_{\to 0},
+            \end{aligned}
+            \]
+            Since this inequality holds for any \(n\in \nat\) and \(X_n\)
+            converges to both \(X\) and \(Y\) in probability, this term must
+            therefore be equal to zero. That is \(\prob{\norm{X - Y} \ge
+            \epsilon} = 0\) for any \(\epsilon > 0\). Since this is true for any
+            \(\epsilon > 0\) we have by continuity of the probability measure
+            \[
+                \prob{X \neq Y} = \prob[\Big]{\bigcup_{n\in \nat}\norm{X - Y} > \frac1n} = \lim_{n\to\infty} \prob{\norm{X - Y} \ge \tfrac1n} = 0.
+            \]
+        \end{solution}
+    \end{enumerate}
+    Deduce
+    \begin{enumerate}[label=(\alph*), resume,noitemsep]
+        \item if \(X_n \overset{\as}\to X\) and \(X_n \overset{\as}\to Y\), then \(\prob{X = Y}=1,\)
+        \item if \(X_n \overset{L^p}\to X\) and \(X_n \overset{L^p}\to Y\), then \(\prob{X = Y}=1.\)
+        \begin{solution}
+            If \(X_n \overset{\as}\to X\) and \(X_n \overset{\as}\to Y\), then
+            \(X_n \overset{p}\to X\) and \(X_n \overset{p}\to Y\) by Theorem
+            \ref{thm: convergence implications} \ref{it: as to p}. The claim
+            then follows from the previous part. Similarly for \(L^p\) convergence.
+        \end{solution}
+    \end{enumerate}
+    Finally, 
+    \begin{enumerate}[label=(\alph*), resume, noitemsep]
+        \item\label{it: non-unique limits convergence in dist} show that the statement is not true for convergence in
+        distribution.
+
+        \textbf{Hint:} Clearly \(X_n\) must converge in distribution but not
+        in probability as the limits would otherwise be almost surely equal by the
+        previous parts.
+
+        \begin{solution}
+            We may choose \(X\) as in Exercise \ref{ex: convergence in distribution but not in probability}.
+            Since \(X_n \coloneq X\) converges both to \(X\) and \(-X\) in
+            distribution the limit is clearly not unique as
+            \[
+                \prob{X = -X} = \prob{X=0}= 0.
+                \qedhere
+            \]
+        \end{solution}
+    \end{enumerate}
+\end{exercise}

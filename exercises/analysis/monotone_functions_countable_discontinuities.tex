@@ -1,0 +1,89 @@
+\begin{exercise}[Monotone functions have countable discontinuities \Coffeecup\Coffeecup\Coffeecup]
+    \label{ex: monotone functions have countably many discontinuities}
+    Let \(F\colon \real \to \real\) be a non-decreasing function.
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item Let \(x\in \real\). Prove that the limit
+        \[
+            F_-(x) \coloneq \lim_{n\to \infty} F(x_n)
+        \]
+        exists for any sequence \((x_n)_{n\in \nat} \subseteq \real\) with \(x_n < x\)
+        and \(x_n \to x\). Prove that this limit is the same for any such
+        sequence such that \(F_-(x)\) is well-defined.
+        Also prove that \(F_+(x) \coloneq \lim_{y\downarrow x} F(y)\) is
+        well-defined.
+
+        \textbf{Hint:} Consider monotonically increasing sequences \(x_n\) first.
+        Then prove that the liminf and limsup coincide for general sequences
+        using monotone subsequences.
+        \begin{solution}
+            Let \(x_n\uparrow x\) be a monotonically increasing sequence. Then
+            \(F(x_n)\) is also monotonically increasing and thus assumes a limit.
+            We will prove \(\lim_n F(x_n) \le \lim_n F(y_n)\)
+            for another monotonically increasing sequence \(y_n\uparrow x\).
+            Since \(x_n\) and \(y_n\) are exchangeable we then also have equality.
+            Now for any \(n\in \nat\) there exists an \(m_n\in \nat\) such that
+            \(x_n \le y_{m_n} \le x\) as \(x_n < x\) and \(y_n\to x\). Consequently
+            since \(F\) is non-decreasing we have
+            \[
+                \lim_{n\to\infty} F(x_n) \le \lim_{n\to\infty}F(y_{m_n}) \overset{\text{subsequence}}= \lim_{n\to\infty}F(y_n).
+            \]
+            Thus we have proven that the limit of monotonically increasing
+            sequences is unique and denoted by \(F_-(x)\). Let \(x_n \to x\) with \(x_n < x\) be an
+            arbitrary sequence. Let \(x_{n_k}\) be a subsequence with
+            \[
+                F(x_{n_k}) \to \liminf_{n\to\infty} F(x_n)
+            \]
+            Since \(x_{n_k} \to x\) and \(x_{n_k} < x\) we can find a monotonically increasing subsequence.
+            This subsequence converges to \(F_-(x)\) and since it must have the
+            same limit as the original sequence \(x_{n_k}\) we have
+            \[
+                \liminf_{n\to\infty} F(x_n) = F_-(x).       
+            \]
+            The same argument works for the limsup. Thus the limit exists and is
+            given by \(F_-(x)\). The exact same argument also works for
+            \(F_+(x)\) with decreasing sequences.
+        \end{solution}
+
+        \item\label{it: F continuous if and only if all coincide} Prove that \(F\) is continuous at \(x\) if and only
+        if \(F(x) = F_-(x) = F_+(x)\). That is
+        \(F\) only has jump discontinuities.
+        \begin{solution}
+            Clearly we have \(F_-(x) = F_+(x)\) if \(F\) is continuous.  So we
+            only need to prove \(F\) continuous in \(x\) when this equality
+            holds true.  Note that
+            \(F_-(x) \le F(x) \le F_+(x)\) since \(F\) is non-decreasing.
+            So if we have the equality then by a sandwich argument they are
+            both equal to \(F(x)\). Let us assume equality. To prove
+            sequential continuity in \(x\) we choose a sequence \(x_n\to x\).
+            This sequence can be split into the parts that are smaller than \(x\)
+            converging to \(F_-(x)\), the parts that are equal to \(x\),
+            converging to \(F(x)\) and the parts that are larger than \(x\)
+            converging to \(F_+(x)\). Since all these limits coincide the entire
+            sequence converges to \(F(x)\). Consequently \(F\) is continuous in
+            \(x\).
+        \end{solution}
+
+        \item Prove that \(F\) restricted to a compact interval \([a,b]\)
+        has only countably many jumps (places where \(F_-(x) < F_+(x)\)).
+
+        \textbf{Hint:} How many jumps are there of size greater than \(1/n\)?
+        \begin{solution}
+            Since \(F(b) - F(a)\) is finite and \(F\) monotonically increasing,
+            there are at most \(\lceil n(F(b)-F(a))\rceil\) jumps of size
+            \(\frac1n\). Thus for any \(n\in \nat\) the number of jumps of greater
+            size is finite. This implies that the discontinuity set
+            \[
+                D_F = \set{x: F_-(x) \neq F_+(x)} = \bigcup_{n\in \nat} \set[\big]{x: F_+(x) - F_-(x) > \tfrac1n}
+            \]
+            is countable.
+        \end{solution}
+
+        \item Prove that \(F\) has at most countably many discontinuities.
+        \begin{solution}
+            Since \(F\) only has countably many discontinuities in each
+            interval \([n, n+1]\) for \(n\in \integer\) and the countable union
+            of countable sets is countable, we have that the set of all
+            discontinuities is at most countable.
+        \end{solution}
+    \end{enumerate}
+\end{exercise}

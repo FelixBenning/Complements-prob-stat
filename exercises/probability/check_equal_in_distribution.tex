@@ -1,0 +1,26 @@
+
+\begin{exercise}[How to check ``Equal in distribution'' \Coffeecup]
+    \label{ex: equal in distribution}
+    Let \(X\) and \(Y\) be two random variables in a metric space \(\domain\) with
+    \begin{equation}
+        \label{eq: equal in distribution}    
+        \E{f(X)} = \E{f(Y)}
+    \end{equation}
+    for all bounded (measurable) functions \(f\colon \domain \to \real\). Show
+    that this implies that \(X\) and \(Y\) are equal in distribution, that is
+    \[
+        \prob{X \in A} = \prob{Y \in A}
+    \]
+    for all (measurable) sets \(A\subseteq \domain\).
+    
+\begin{remark}
+    Observe that this is very similar to Portemanteu's theorem (cf.~Definition
+    \ref{def: types of convergence}) that characterizes convergence in
+    distribution. And it can be shown that it is enough to check \eqref{eq:
+    equal in distribution} for all bounded and Lipschitz functions \(f\colon
+    \domain \to \real\).
+\end{remark}
+    \begin{solution}
+        \(\ind{A}\) is a bounded and measurable function for any measurable set \(A\subseteq \domain\).
+    \end{solution}
+\end{exercise}
