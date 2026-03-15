@@ -9,23 +9,17 @@
     \((U_n)_{n\in \nat}\) be independent and uniformly distributed on
     \([0,1]^\dims\).
     \begin{enumerate}[label=(\alph*), noitemsep]
-        \item Prove that \(\hat I_n \coloneq \frac1n\sum_{i=1}^n f(U_i) \overset\as\to I\).
-        \begin{solution}
-            Since \(I= \E{f(U)}\) this is the strong law of large numbers,
-        \end{solution}
+        \item\label{it: (monte carlo) convergence}
+        Prove that \(\hat I_n \coloneq \frac1n\sum_{i=1}^n f(U_i) \overset\as\to I\).
 
-        \item Using \(\norm{f}_\infty = \sup_{x\in [0,1]^\dims} \abs{f(x)}\) Prove that
+        \item\label{it: (monte carlo) PAC bound}
+        Using \(\norm{f}_\infty = \sup_{x\in [0,1]^\dims} \abs{f(x)}\) Prove that
         \[
             \prob[\big]{\abs{\hat I_n - I} > \epsilon} \le 2\exp\Bigl(-\frac{n \epsilon^2}{2\norm{f}_\infty^2}\Bigr)
         \]
-        \begin{solution}
-            Since \(f\) is continuous, it is bounded on the compact set \([0,1]^\dims\)
-            and thereby \(f(U) \in [-\norm{f}_\infty, \norm{f}_\infty]\).
-            By Hoeffding's inequality (Corollary \ref{cor: hoeffding inequality for bounded random variables})
-            for bounded random variables we therefore have the claim.
-        \end{solution}
 
-        \item Let \(n = n(\epsilon, \delta)\) be the smallest \(n\) such that the following
+        \item\label{it: (monte carlo) sample complexity}
+        Let \(n = n(\epsilon, \delta)\) be the smallest \(n\) such that the following
         PAC bound holds
         \[
             \prob[\big]{\abs{\hat I_n - I} > \epsilon} \le \delta
@@ -49,19 +43,33 @@
             interesting for high-dimensional integration problems -- specifically,
             when \(\frac{\dims}k \ge 2\).
         \end{remark}
-        \begin{solution}
-            By the previous exercise it is sufficient to have
-            \begin{align*}
-                2\exp\Bigl(-\frac{n\epsilon^2}{2\norm{f}_\infty^2}\Bigr) \le \delta
-                &\iff -\frac{n\epsilon^2}{2\norm{f}_\infty^2} \le \ln(\tfrac{\delta}2)
-                \\
-                &\iff \ln(\tfrac{2}\delta) \le \frac{n \epsilon^2}{2\norm{f}_\infty^2}
-                \\
-                &\iff 2\norm{f}_\infty^2 \frac{\ln(\tfrac2\delta)}{\epsilon^2} \le n
-            \end{align*}
-            Since this is a sufficient condition, the smallest \(n(\delta, \epsilon)\)
-            is smaller than the first natural number that satisfies it, leading
-            to the claim.
-        \end{solution}
     \end{enumerate}
 \end{exercise}
+
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: (monte carlo) convergence}]
+    Since \(I= \E{f(U)}\) this is the strong law of large numbers.
+
+    \item[\ref{it: (monte carlo) PAC bound}]
+    Since \(f\) is continuous, it is bounded on the compact set \([0,1]^\dims\)
+    and thereby \(f(U) \in [-\norm{f}_\infty, \norm{f}_\infty]\).
+    By Hoeffding's inequality (Corollary \ref{cor: hoeffding inequality for bounded random variables})
+    for bounded random variables we therefore have the claim.
+
+    \item[\ref{it: (monte carlo) sample complexity}]
+    By the previous exercise it is sufficient to have
+    \begin{align*}
+        2\exp\Bigl(-\frac{n\epsilon^2}{2\norm{f}_\infty^2}\Bigr) \le \delta
+        &\iff -\frac{n\epsilon^2}{2\norm{f}_\infty^2} \le \ln(\tfrac{\delta}2)
+        \\
+        &\iff \ln(\tfrac{2}\delta) \le \frac{n \epsilon^2}{2\norm{f}_\infty^2}
+        \\
+        &\iff 2\norm{f}_\infty^2 \frac{\ln(\tfrac2\delta)}{\epsilon^2} \le n
+    \end{align*}
+    Since this is a sufficient condition, the smallest \(n(\delta, \epsilon)\)
+    is smaller than the first natural number that satisfies it, leading
+    to the claim.
+    \qedhere
+\end{enumerate}
+\end{solution}
