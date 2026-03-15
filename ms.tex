@@ -3,7 +3,56 @@
 \input{packages.tex}
 \input{macros.tex}
 
-% \solutiontrue % set to true to show solutions, false to hide them
+\DeclareExerciseEnvironmentTemplate{theorem}{%
+  \par\noindent
+  \textbf{%
+    \XSIMmixedcase{\GetExerciseName}~\GetExerciseProperty{counter}%
+  }{\normalfont%
+    \GetExercisePropertyT{subtitle}{ (\PropertyValue)}}\textbf{. }
+  \IfInsideSolutionF{%
+    \GetExercisePropertyT{points}{%
+      \marginpar{%
+        \printgoal{\PropertyValue}%
+        \GetExercisePropertyT{bonus-points}{+\printgoal{\PropertyValue}}%
+        \,\IfExerciseGoalSingularTF{points}
+          {\XSIMtranslate{point}}
+          {\XSIMtranslate{points}}%
+      }%
+    }%
+  }%
+}{\par\addvspace{\baselineskip}}
+
+\renewcommand\printsolutions{%
+  \def\currentchapter{}%
+  \def\currentsection{}%
+  \def\lastchapter{}%
+  \def\lastsection{}%
+  \addcontentsline{toc}{chapter}{Solutions}%
+  \chapter*{Solutions}%
+  \ForEachUsedExerciseByType{%
+    \let\lastchapter\currentchapter
+    \let\lastsection\currentsection
+    \edef\currentchapter{\ExercisePropertyGet{##1}{##2}{chapter-value}}%
+    \edef\currentsection{\ExercisePropertyGet{##1}{##2}{section-value}}%
+    % \ifx\lastchapter\currentchapter\else
+    %   \addcontentsline{toc}{chapter}{Solutions Chapter \ExercisePropertyGet{##1}{##2}{chapter}}
+    %   \chapter*{Solutions Chapter \ExercisePropertyGet{##1}{##2}{chapter}}
+    % \fi
+    \ifx\lastsection\currentsection\else
+      \addcontentsline{toc}{section}{Exercises \ExercisePropertyGet{##1}{##2}{section}}
+      \section*{Exercises \ExercisePropertyGet{##1}{##2}{section}}
+    \fi
+    \XSIMprint{solution}{##1}{##2}%
+  }%
+}
+
+\xsimsetup{
+    exercise/template=theorem,
+    solution/template=theorem,
+    exercise/the-counter = \thesection.\arabic{exercise},
+    exercise/within=section,
+    % solution/print=true,
+}
 
 \title{
     Compl\'ements de probabilit\'es et statistiques
@@ -24,12 +73,15 @@
 % \input{sections/order_statistics.tex}
 % \input{sections/random_walk.tex}
 
+\addcontentsline{toc}{chapter}{Bibliography}
 \bibliographystyle{unsrtnat}
 \bibliography{references.bib}
 
 \appendix
 
 % \input{sections/appendix.tex}
+
+\printsolutions
 
 \end{document}
 

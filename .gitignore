@@ -277,5 +277,7 @@ TSWLatexianTemp*
 # pdf
 *.pdf
 
+*.xsim
+
 # MacOS junk
 .DS_Store
