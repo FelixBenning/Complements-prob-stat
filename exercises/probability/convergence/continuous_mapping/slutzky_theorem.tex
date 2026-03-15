@@ -4,16 +4,17 @@
     such that \(X_n \overset{d}\to X\). And let \((Y_n)_{n\in \nat}\) be random
     variables in \(\real\) such that \(Y_n \overset{d}\to c\) for some
     constant \(c\in \real\). Prove
-    \begin{enumerate}[label=(\alph*)]
+    \begin{enumerate}[label=(\alph*), noitemsep]
         \item \(X_n + Y_n \overset{d}\to X + c\),
         \item \(X_n Y_n \overset{d}\to X c\),
         \item if \(c \neq 0\) then \(X_n/Y_n \overset{d}\to X/c\).
     \end{enumerate}
-    \begin{solution}
-        Since \(X_n \overset{d}\to X\) and \(Y_n \overset{d}\to c\) implies
-        \((X_n, Y_n) \overset{d}\to (X,c)\) by Theorem \ref{thm: joint
-        convergence}~\ref{it: joint conv law slutsky}, we have all the claims by
-        the continuous mapping theorem, since the sum and product are continuous
-        and \(\frac1x\) is continuous in \(c \neq 0\).
-    \end{solution}
 \end{exercise}
+
+\begin{solution}
+    Since \(X_n \overset{d}\to X\) and \(Y_n \overset{d}\to c\) implies
+    \((X_n, Y_n) \overset{d}\to (X,c)\) by Theorem \ref{thm: joint
+    convergence}~\ref{it: joint conv law slutsky}, we have all the claims by
+    the continuous mapping theorem, since the sum and product are continuous
+    and \(\frac1x\) is continuous in \(c \neq 0\).
+\end{solution}

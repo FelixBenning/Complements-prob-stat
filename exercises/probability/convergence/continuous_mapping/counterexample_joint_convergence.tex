@@ -15,18 +15,19 @@
         \ref{thm: joint convergence}~\ref{it: joint conv law slutsky}) may
         suggest.
     \end{remark}
-    \begin{solution}
-        Clearly, \(X_n + Y_n = 0\) for all \(n\). In particular we have
-        \[
-            \prob{X_n + Y_n \in A} = \ind{A}(0)
-            \neq \frac12\ind{A}(2) + \frac12 \ind{A}(-2)
-            = \prob{2X \in A}.
-        \]
-        for \(A= \{0\}\) for example. Since \(\prob{2X = 0} = 0\) this is
-        however a requirement for \(X_n + Y_n \overset{d}\to 2X\) by \ref{it:
-        s.zero boundary}. Thus \(X_n + Y_n \overset{d}{\not\to} 2X\).  This also
-        implies that \((X_n, Y_n)\) does not converge to \((X,X)\) in
-        distribution as otherwise we would have \(X_n + Y_n \overset{d}\to X +
-        X\) by the continuous mapping theorem.
-    \end{solution}
 \end{exercise}
+
+\begin{solution}
+    Clearly, \(X_n + Y_n = 0\) for all \(n\). In particular we have
+    \[
+        \prob{X_n + Y_n \in A} = \ind{A}(0)
+        \neq \frac12\ind{A}(2) + \frac12 \ind{A}(-2)
+        = \prob{2X \in A}.
+    \]
+    for \(A= \{0\}\) for example. Since \(\prob{2X = 0} = 0\) this is
+    however a requirement for \(X_n + Y_n \overset{d}\to 2X\) by \ref{it:
+    s.zero boundary}. Thus \(X_n + Y_n \overset{d}{\not\to} 2X\).  This also
+    implies that \((X_n, Y_n)\) does not converge to \((X,X)\) in
+    distribution as otherwise we would have \(X_n + Y_n \overset{d}\to X +
+    X\) by the continuous mapping theorem.
+\end{solution}

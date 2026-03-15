@@ -4,27 +4,34 @@
     Let \((X_n)_{n\in \nat}\) and \(X\) be real-valued random variables
     with \(X_n \overset{d}\to X\). Show that
     \begin{enumerate}[label=(\alph*), noitemsep]
-        \item \(X_n^2 \overset{d}\to X^2\),
-        \begin{solution}
-            This is a direct application of the continuous mapping theorem with the function \(f(x) = x^2\) that is continuous everywhere.            
-        \end{solution}
+        \item\label{it: (basic appl cont map) square}
+        \(X_n^2 \overset{d}\to X^2\),
 
-        \item \(\sgn(X_n) \overset{d}\to \sgn(X)\) if \(\prob{X=0} = 0\).
+        \item\label{it: (basic appl cont map) sign}
+        \(\sgn(X_n) \overset{d}\to \sgn(X)\) if \(\prob{X=0} = 0\).
 
         Construct a counterexample for the case \(\prob{X=0} > 0\).
-        \begin{solution}
-            For the first part we again apply the continuous mapping theorem with the function \(f(x) = \sgn(x)\) that is continuous at all points except zero. Since \(\prob{X=0} = 0\) we have that \(f\) is almost surely continuous in \(X\) and thus the continuous mapping theorem applies.
-
-            For the counterexample we can take any deterministic sequence \(x_n\to 0\)
-            such that \(\sgn(x_n)\) does not converge to \(\sgn(0)\). This does depend a bit on the definition
-            of \(\sgn(0)\) but exists in all cases. Then \(X_n = x_n\) has the same problem.
-            Specifically, for the Lipschitz function \(g(x) = \min\set{\abs{x},
-            1}\) we have
-            \[
-                \E{g(X_n)} = x_n \not\to 0 = \E{g(0)}
-            \]
-            and thus \(X_n \overset{d}{\not\to} 0\) by \ref{it: b.lip}.
-        \end{solution}
     \end{enumerate}
 \end{exercise}
+
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: (basic appl cont map) square}]
+    This is a direct application of the continuous mapping theorem with the function \(f(x) = x^2\) that is continuous everywhere.            
+
+    \item[\ref{it: (basic appl cont map) sign}]
+    For the first part we again apply the continuous mapping theorem with the function \(f(x) = \sgn(x)\) that is continuous at all points except zero. Since \(\prob{X=0} = 0\) we have that \(f\) is almost surely continuous in \(X\) and thus the continuous mapping theorem applies.
+
+    For the counterexample we can take any deterministic sequence \(x_n\to 0\)
+    such that \(\sgn(x_n)\) does not converge to \(\sgn(0)\). This does depend a bit on the definition
+    of \(\sgn(0)\) but exists in all cases. Then \(X_n = x_n\) has the same problem.
+    Specifically, for the Lipschitz function \(g(x) = \min\set{\abs{x},
+    1}\) we have
+    \[
+        \E{g(X_n)} = x_n \not\to 0 = \E{g(0)}
+    \]
+    and thus \(X_n \overset{d}{\not\to} 0\) by \ref{it: b.lip}.
+    \qedhere
+\end{enumerate}
+\end{solution}
 

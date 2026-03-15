@@ -2,68 +2,67 @@
 \begin{exercise}[Liminf and Limsup Properties \Coffeecup]
     \label{ex: liminf and limsup properties}
     Prove Lemma \ref{lem: liminf and limsup properties}. 
-
-    \begin{solution}
-        \begin{enumerate}[label=(\roman*)]
-            \item To show that  \(\liminf_n A_n \subseteq \limsup_n A_n\) let
-            \[
-                \omega \in \liminf_n A_n = \bigcup_{N\in \nat} \bigcap_{n\ge N} A_n.
-            \]
-            then there exists an \(N\) such that for all \(n \ge N\) we have
-            \(\omega \in A_n\). In particular, there are infinitely many \(n\)
-            such that \(\omega \in A_n\) and consequently for all \(N\in \nat\) there
-            exists \(n\ge N\) such that \(\omega \in A_n\), which implies
-            \[
-                \omega \in \bigcap_{N\in \nat} \bigcup_{n\ge N} A_n = \limsup_n A_n.
-            \]
-            
-            \item\label{it: de morgans on liminf/limsup} We have using De Morgan's laws that
-            \[
-            \begin{aligned}
-                (\limsup_n A_n)^\complement
-                &= \Bigl(\bigcap_{N\in \nat} \bigcup_{n\ge N} A_n\Bigr)^\complement
-                = \bigcup_{N\in \nat} \Bigl(\bigcup_{n\ge N} A_n\Bigr)^\complement
-                = \bigcup_{N\in\nat} \bigcap_{n\ge N} A_n^\complement
-                \\
-                &= \liminf_n A_n^\complement.
-            \end{aligned}
-            \]
-
-            \item\label{it: function limsup to set limsup} To prove \(\limsup_n \ind{A_n} = \ind*{\limsup_n A_n}\) 
-            observe that 
-            \[
-                \limsup_n \ind{A_n}(\omega)
-                = \lim_{N\to \infty} \sup_{n\ge N} \ind{A_n}(\omega)
-            \]
-            is in the set \(\set{0,1}\) for all \(\omega\) since
-            \(\ind{A_n}(\omega) \in \set{0,1}\) for all \(n\) and
-            the supremum is thereby either \(0\) or \(1\). We therefore only need to show
-            that \(\limsup_n \ind{A_n}(\omega) = 1\) if and only if
-            \begin{equation}
-                \label{eq: omega in limsup_n An} 
-                \omega \in \limsup_n A_n = \bigcap_{N\in \nat} \bigcup_{n\ge N} A_n.
-            \end{equation}
-            Assume \eqref{eq: omega in limsup_n An} holds, then for all \(N\in
-            \nat\) there exists an \(n \ge N\) such that \(\omega \in A_n\). In particular,
-            since for any \(N\in \nat\) we can find \(n\ge N\) such that \(\ind{A_n}(\omega) = 1\)
-            and therefore \(\sup_{n\ge N} \ind{A_n}(\omega) = 1\). Conversely, if
-            \(\limsup_n \ind{A_n}(\omega) = 1\), then for all \(N\in \nat\) we have
-            \(\sup_{n\ge N} \ind{A_n}(\omega) =1\) and consequently there must exist
-            \(n\ge N\) such that \(\ind{A_n}(\omega) = 1\) and therefore
-            \(\omega \in A_n\). This implies \eqref{eq: omega in limsup_n An}.
-
-            \item Observe that we can translate this to the previous results as follows:
-            \[\begin{aligned}[b]
-                \liminf_n \ind{A_n}
-                &= \liminf_n (1-\ind{A_n^\complement})
-                \\
-                &= 1 - \limsup_n \ind{A_n^\complement}
-                \\
-                \overset{\text{\ref{it: function limsup to set limsup}}}&= 1 - \ind*{\limsup_n A_n^\complement}
-                \overset{\text{\ref{it: de morgans on liminf/limsup}}}= \ind*{\liminf_n A_n}.
-            \end{aligned}
-            \qedhere
-            \]
-        \end{enumerate}        
-    \end{solution}
 \end{exercise}
+\begin{solution}
+    \begin{enumerate}[label=(\roman*), wide=0pt]
+        \item To show that  \(\liminf_n A_n \subseteq \limsup_n A_n\) let
+        \[
+            \omega \in \liminf_n A_n = \bigcup_{N\in \nat} \bigcap_{n\ge N} A_n.
+        \]
+        then there exists an \(N\) such that for all \(n \ge N\) we have
+        \(\omega \in A_n\). In particular, there are infinitely many \(n\)
+        such that \(\omega \in A_n\) and consequently for all \(N\in \nat\) there
+        exists \(n\ge N\) such that \(\omega \in A_n\), which implies
+        \[
+            \omega \in \bigcap_{N\in \nat} \bigcup_{n\ge N} A_n = \limsup_n A_n.
+        \]
+        
+        \item\label{it: de morgans on liminf/limsup} We have using De Morgan's laws that
+        \[
+        \begin{aligned}
+            (\limsup_n A_n)^\complement
+            &= \Bigl(\bigcap_{N\in \nat} \bigcup_{n\ge N} A_n\Bigr)^\complement
+            = \bigcup_{N\in \nat} \Bigl(\bigcup_{n\ge N} A_n\Bigr)^\complement
+            = \bigcup_{N\in\nat} \bigcap_{n\ge N} A_n^\complement
+            \\
+            &= \liminf_n A_n^\complement.
+        \end{aligned}
+        \]
+
+        \item\label{it: function limsup to set limsup} To prove \(\limsup_n \ind{A_n} = \ind*{\limsup_n A_n}\) 
+        observe that 
+        \[
+            \limsup_n \ind{A_n}(\omega)
+            = \lim_{N\to \infty} \sup_{n\ge N} \ind{A_n}(\omega)
+        \]
+        is in the set \(\set{0,1}\) for all \(\omega\) since
+        \(\ind{A_n}(\omega) \in \set{0,1}\) for all \(n\) and
+        the supremum is thereby either \(0\) or \(1\). We therefore only need to show
+        that \(\limsup_n \ind{A_n}(\omega) = 1\) if and only if
+        \begin{equation}
+            \label{eq: omega in limsup_n An} 
+            \omega \in \limsup_n A_n = \bigcap_{N\in \nat} \bigcup_{n\ge N} A_n.
+        \end{equation}
+        Assume \eqref{eq: omega in limsup_n An} holds, then for all \(N\in
+        \nat\) there exists an \(n \ge N\) such that \(\omega \in A_n\). In particular,
+        since for any \(N\in \nat\) we can find \(n\ge N\) such that \(\ind{A_n}(\omega) = 1\)
+        and therefore \(\sup_{n\ge N} \ind{A_n}(\omega) = 1\). Conversely, if
+        \(\limsup_n \ind{A_n}(\omega) = 1\), then for all \(N\in \nat\) we have
+        \(\sup_{n\ge N} \ind{A_n}(\omega) =1\) and consequently there must exist
+        \(n\ge N\) such that \(\ind{A_n}(\omega) = 1\) and therefore
+        \(\omega \in A_n\). This implies \eqref{eq: omega in limsup_n An}.
+
+        \item Observe that we can translate this to the previous results as follows:
+        \[\begin{aligned}[b]
+            \liminf_n \ind{A_n}
+            &= \liminf_n (1-\ind{A_n^\complement})
+            \\
+            &= 1 - \limsup_n \ind{A_n^\complement}
+            \\
+            \overset{\text{\ref{it: function limsup to set limsup}}}&= 1 - \ind*{\limsup_n A_n^\complement}
+            \overset{\text{\ref{it: de morgans on liminf/limsup}}}= \ind*{\liminf_n A_n}.
+        \end{aligned}
+        \qedhere
+        \]
+    \end{enumerate}        
+\end{solution}

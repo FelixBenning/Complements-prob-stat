@@ -7,48 +7,49 @@
         \item\label{it: limsup convergence} \(\prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon} = 0\) for all \(\epsilon >0\)
         \item\label{it: sup convergence} \(\lim_{N\to \infty} \prob[\big]{\sup_{n \ge N} |X_n - X| \ge \epsilon} = 0\) for all \(\epsilon > 0\).
     \end{enumerate}
-    \begin{solution}
-        First we prove \ref{it: as convergence} \(\Rightarrow\) \ref{it: limsup set convergence}.
-        By definition of convergence we have
-        \[\begin{aligned}
-            0 = \prob{X_n \not\to X}
-            &= \prob[\Big]{\bigcup_{\epsilon >0} \bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| \ge \epsilon}}
-            \\
-            \overset{\text{fix } \epsilon}&\ge \prob[\Big]{\bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| \ge \epsilon}}
-            \\
-            \overset{\text{def.}}&= \prob[\big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \epsilon}}.
-        \end{aligned}
-        \]
-        For the converse direction \ref{it: limsup set convergence} \(\Rightarrow\) \ref{it: as convergence}, we use
-        \[\begin{aligned}
-            \prob{X_n \not\to X}
-            &= \prob[\Big]{\bigcup_{m\in \nat} \bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| < \tfrac1m}}
-            \\
-            &= \lim_{m\to \infty} \prob[\Big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \tfrac1m} = 0} = 0.
-        \end{aligned}
-        \]
-        The last equation follows from the assumption as \(\epsilon=\frac1m\) are just special cases.
-        Next we show \ref{it: limsup set convergence} \(\Leftrightarrow\) \ref{it: limsup convergence}.
-        Observe that by definition of the limsup of sets
-        \[\begin{aligned}
-            \prob[\big]{\limsup_{n \to \infty} \set{\abs{X_n - X} \ge \epsilon}}
-            &= \prob[\big]{\forall N \in \nat,\; \exists n\ge N: \abs{X_n - X} \ge \epsilon}.
-            \\
-            &= \prob[\Big]{\forall N \in \nat: \sup_{n\ge N} \abs{X_n - X} \ge \epsilon}.
-            \\
-            &= \prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon}.
-        \end{aligned}
-        \]
-        Consequently the two statements are equivalent. Next we show
-        \ref{it: limsup convergence} \(\Leftrightarrow\) \ref{it: sup
-        convergence}.  For this observe that the sets \(\set{\sup_{n \ge N} |X_n
-        - X| \ge \epsilon}\) are a decreasing sequence in \(N\) and therefore
-        \begin{align*}
-            \prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon}
-            &= \prob[\Big]{\bigcap_{N\in \nat} \set{\sup_{n \ge N} |X_n - X| \ge \epsilon}}
-            \\
-            &= \lim_{N\to \infty} \prob[\big]{\sup_{n \ge N} |X_n - X| \ge \epsilon}.
-            \qedhere
-        \end{align*}
-    \end{solution}
 \end{exercise}
+
+\begin{solution}
+    First we prove \ref{it: as convergence} \(\Rightarrow\) \ref{it: limsup set convergence}.
+    By definition of convergence we have
+    \[\begin{aligned}
+        0 = \prob{X_n \not\to X}
+        &= \prob[\Big]{\bigcup_{\epsilon >0} \bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| \ge \epsilon}}
+        \\
+        \overset{\text{fix } \epsilon}&\ge \prob[\Big]{\bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| \ge \epsilon}}
+        \\
+        \overset{\text{def.}}&= \prob[\big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \epsilon}}.
+    \end{aligned}
+    \]
+    For the converse direction \ref{it: limsup set convergence} \(\Rightarrow\) \ref{it: as convergence}, we use
+    \[\begin{aligned}
+        \prob{X_n \not\to X}
+        &= \prob[\Big]{\bigcup_{m\in \nat} \bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| < \tfrac1m}}
+        \\
+        &= \lim_{m\to \infty} \prob[\Big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \tfrac1m} = 0} = 0.
+    \end{aligned}
+    \]
+    The last equation follows from the assumption as \(\epsilon=\frac1m\) are just special cases.
+    Next we show \ref{it: limsup set convergence} \(\Leftrightarrow\) \ref{it: limsup convergence}.
+    Observe that by definition of the limsup of sets
+    \[\begin{aligned}
+        \prob[\big]{\limsup_{n \to \infty} \set{\abs{X_n - X} \ge \epsilon}}
+        &= \prob[\big]{\forall N \in \nat,\; \exists n\ge N: \abs{X_n - X} \ge \epsilon}.
+        \\
+        &= \prob[\Big]{\forall N \in \nat: \sup_{n\ge N} \abs{X_n - X} \ge \epsilon}.
+        \\
+        &= \prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon}.
+    \end{aligned}
+    \]
+    Consequently the two statements are equivalent. Next we show
+    \ref{it: limsup convergence} \(\Leftrightarrow\) \ref{it: sup
+    convergence}.  For this observe that the sets \(\set{\sup_{n \ge N} |X_n
+    - X| \ge \epsilon}\) are a decreasing sequence in \(N\) and therefore
+    \begin{align*}
+        \prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon}
+        &= \prob[\Big]{\bigcap_{N\in \nat} \set{\sup_{n \ge N} |X_n - X| \ge \epsilon}}
+        \\
+        &= \lim_{N\to \infty} \prob[\big]{\sup_{n \ge N} |X_n - X| \ge \epsilon}.
+        \qedhere
+    \end{align*}
+\end{solution}

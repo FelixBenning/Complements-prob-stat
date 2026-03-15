@@ -18,60 +18,61 @@
     the previous levels. For it you already need to know Markov chains
     and modify the proof of the second Borel-Cantelli lemma for your purposes.
     You may want to come back to this later.
-    \begin{solution}
-        Let \(\alphabet\) be a finite alphabet of keys and let \(X_n\in
-        \alphabet\) be the letter typed at time \(n\). Let \(y\in \alphabet^m\)
-        be the desired text of length \(m\). We essentially assume \(m=1\)
-        without loss of generality with the definition of
-        \[
-            Y_n = (X_{nm}, X_{nm+1}, \ldots, X_{m(n+1)-1}) \in \alphabet^m,
-        \]
-        which is still a sequence of iid random variables in \ref{it: level iid}
-        (or still a Markov chain in \ref{it: level markov chain}).  Let us consider \ref{it: level iid}
-        first. Since
-        \[\begin{aligned}
-            \delta \coloneq \prob{Y_n = y}
-            &= \prob{X_{nm} = y_1, X_{nm+1} = y_2, \ldots, X_{m(n+1)-1} = y_m}
-            \\
-            &= \prod_{i=1}^m \prob{X_{nm+i-1} = y_i} > 0,
-        \end{aligned}
-        \]
-        Due to \(\sum_{n=1}^\infty \prob{Y_n = y} = \sum_{n=1}^\infty \delta = \infty\)
-        we may apply the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2} to get
-        \[
-            \prob[\big]{Y_n = y \text{ for infinitely many } n}
-            = \prob[\big]{\limsup_{n\to\infty} \set{Y_n = y}}
-            \overset{\text{\eqref{eq: borel cantelli 2}}}= 1.
-        \]
-        Observe that we have proven more than the desired claim: The monkey will
-        not only type the desired text \(y\) at least once but infinitely many
-        times with probability one!
-
-        For the proof of \ref{it: level markov chain} we need to avoid independence.
-        Since any transition probability is positive, we have
-        \[
-            \delta \coloneq \prob{Y_n = y \mid Y_{n-1} \neq y}
-            = \sum_{\substack{x \in \alphabet^m \\ x \neq y}}\prob{Y_n = y \mid Y_{n-1} = x}
-            > 0.
-        \]
-        We will now modify the proof of the second Borel-Cantelli lemma 
-        in the place where independece was used. Specifically, we have
-        \begin{equation}
-            \label{eq: modified borel cantelli 2}
-            \prob[\big]{(\limsup_{n\to\infty} \set{Y_n = y})^\complement}
-            = \lim_{N\to \infty} \lim_{k\to \infty} \prob[\Big]{\bigcap_{n=N}^k \set{Y_n \neq y}}.
-        \end{equation}
-        with
-        \[\begin{aligned}
-            \prob[\Big]{\bigcap_{n=N}^k \set{Y_n \neq y}}
-            &= \prod_{n=N}^k \prob{Y_n \neq y \mid Y_{n-1} \neq y,\ldots, Y_{N} \neq y}
-            \\
-            \overset{\text{Markov}}&= \prob{Y_n\neq y}\prod_{n=N+1}^k \prob{Y_n \neq y \mid Y_{n-1} \neq y}
-            \\
-            &\le (1-\delta)^{k-N-1}.
-        \end{aligned}
-        \]
-        Thereby \eqref{eq: modified borel cantelli 2} is zero. Consequently,
-        the probability that \(Y_n = y\) happens infinitely often is one.
-    \end{solution}
 \end{exercise}
+
+\begin{solution}
+    Let \(\alphabet\) be a finite alphabet of keys and let \(X_n\in
+    \alphabet\) be the letter typed at time \(n\). Let \(y\in \alphabet^m\)
+    be the desired text of length \(m\). We essentially assume \(m=1\)
+    without loss of generality with the definition of
+    \[
+        Y_n = (X_{nm}, X_{nm+1}, \ldots, X_{m(n+1)-1}) \in \alphabet^m,
+    \]
+    which is still a sequence of iid random variables in \ref{it: level iid}
+    (or still a Markov chain in \ref{it: level markov chain}).  Let us consider \ref{it: level iid}
+    first. Since
+    \[\begin{aligned}
+        \delta \coloneq \prob{Y_n = y}
+        &= \prob{X_{nm} = y_1, X_{nm+1} = y_2, \ldots, X_{m(n+1)-1} = y_m}
+        \\
+        &= \prod_{i=1}^m \prob{X_{nm+i-1} = y_i} > 0,
+    \end{aligned}
+    \]
+    Due to \(\sum_{n=1}^\infty \prob{Y_n = y} = \sum_{n=1}^\infty \delta = \infty\)
+    we may apply the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2} to get
+    \[
+        \prob[\big]{Y_n = y \text{ for infinitely many } n}
+        = \prob[\big]{\limsup_{n\to\infty} \set{Y_n = y}}
+        \overset{\text{\eqref{eq: borel cantelli 2}}}= 1.
+    \]
+    Observe that we have proven more than the desired claim: The monkey will
+    not only type the desired text \(y\) at least once but infinitely many
+    times with probability one!
+
+    For the proof of \ref{it: level markov chain} we need to avoid independence.
+    Since any transition probability is positive, we have
+    \[
+        \delta \coloneq \prob{Y_n = y \mid Y_{n-1} \neq y}
+        = \sum_{\substack{x \in \alphabet^m \\ x \neq y}}\prob{Y_n = y \mid Y_{n-1} = x}
+        > 0.
+    \]
+    We will now modify the proof of the second Borel-Cantelli lemma 
+    in the place where independece was used. Specifically, we have
+    \begin{equation}
+        \label{eq: modified borel cantelli 2}
+        \prob[\big]{(\limsup_{n\to\infty} \set{Y_n = y})^\complement}
+        = \lim_{N\to \infty} \lim_{k\to \infty} \prob[\Big]{\bigcap_{n=N}^k \set{Y_n \neq y}}.
+    \end{equation}
+    with
+    \[\begin{aligned}
+        \prob[\Big]{\bigcap_{n=N}^k \set{Y_n \neq y}}
+        &= \prod_{n=N}^k \prob{Y_n \neq y \mid Y_{n-1} \neq y,\ldots, Y_{N} \neq y}
+        \\
+        \overset{\text{Markov}}&= \prob{Y_n\neq y}\prod_{n=N+1}^k \prob{Y_n \neq y \mid Y_{n-1} \neq y}
+        \\
+        &\le (1-\delta)^{k-N-1}.
+    \end{aligned}
+    \]
+    Thereby \eqref{eq: modified borel cantelli 2} is zero. Consequently,
+    the probability that \(Y_n = y\) happens infinitely often is one.
+\end{solution}
