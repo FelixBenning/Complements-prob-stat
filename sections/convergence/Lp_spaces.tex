@@ -1,0 +1,627 @@
+\section[\texorpdfstring{\(L^p\)}{Lp} spaces]{\texorpdfstring{\(L^p\)}{Lp} spaces  \marginpar{\red{Lecture 2}}}
+\label{sec: Lp spaces}
+
+\begin{definition}
+    We define the \(\cL^p\) space to be
+    \[
+        \cL^p \coloneq \cL^p(\domain) \coloneq \set{X\colon \Omega \to \domain : \E{\norm{X}^p} < \infty}
+    \]
+    and define the seminorm for \(X\in \cL^p\) as
+    \[
+        \norm{X}_{L^p} \coloneq \E[\big]{\norm{X}^p}^{\frac1p}.
+    \]
+\end{definition}
+
+We called \(\norm{\cdot}_{L^p}\) a ``seminorm''. For this we need to prove that
+it actually satisfies the seminorm properties. This is the content of the
+following theorem.
+
+\begin{theorem}[Seminorm]
+    \label{thm: seminorm properties}
+    \(\norm{\cdot}_{L^p}\) satisfies the seminorm properties. That is for \(X,Y
+    \in \cL^p(\domain)\) with \((\domain, \norm{\cdot})\) a normed space we have
+    \begin{enumerate}[label=(\roman*)]
+        \item\label{it: positive}
+        \(\norm{X}_{L^p} \ge 0\),
+        \hfill (positive)
+        \item\label{it: scaling}
+        \(\norm{\lambda X}_{L^p} = |\lambda| \norm{X}_{L^p}\)
+        for all \(\lambda \in \real\),
+        \hfill (scaling)
+        \item\label{it: triangle inequality}
+        \(\norm{X + Y}_{L^p} \le \norm{X}_{L^p} + \norm{Y}_{L^p}\).
+        \hfill (triangle/Minkowski inequality)
+    \end{enumerate}
+    Moreover we have for any \(p \le q\)
+    \begin{equation}
+        \label{eq: Lp norm domination}
+        \norm{X}_{L^p} \le \norm{X}_{L^q}.
+    \end{equation}
+\end{theorem}
+
+\begin{remark}[\(L^p\) convergence]
+    \label{rem: Lp convergence}
+    Observe that \(X_n \xrightarrow{L^p} X\) (Definition \ref{def: types of convergence}) if and only if \(\norm{X_n -X}_{L^p} \to
+    0\). And Equation \eqref{eq: Lp norm domination} means for \(1\le p\le q\) that \(\norm{X_n - X}_{L^q} \to 0\) implies \(\norm{X_n - X}_{L^p} \to 0\).
+\end{remark}
+
+We will prove the semi-norm properties later as a special case of the triangle
+inequality for Orlicz norms (Theorem \ref{thm: orlicz seminorm}). For now we
+will only prove the norm domination property \eqref{eq: Lp norm domination}.
+For this we require Hölder's inequality.
+
+\begin{theorem}[Hölder's inequality]
+    \label{thm: holder's inequality}
+    For \(r,s >1\) with \(\frac1s + \frac1r = 1\) we have
+    \[
+        \E{\abs{XY}} \le \E{\abs{X}^r}^{\frac1r}\E{\abs{Y}^s}^{\frac1s} = \norm{X}_{L^r} \norm{Y}_{L^s}.
+    \]
+    This also holds true if the quantities are not finite!
+\end{theorem}
+
+You will prove this inequality in Exercise \ref{ex: hölder's inequality}.
+
+\begin{proof}[Proof of \eqref{eq: Lp norm domination}]
+    Assume without loss of generality the strict
+    inequality \(p< q\) and define \(r
+    \coloneq \frac{q}p>1\) and \(s \coloneq \frac{p}{q-p}>1\) such
+    that \(\frac1{r} + \frac1{s} = 1\). Then
+    \[
+    \begin{aligned}
+        \norm{X}_{L^p}^p = \E{\norm{X}^p}
+        &= \E{\abs{\norm{X}^p \cdot 1}}
+        \\
+        \overset{\text{Hölder}}&\le \E{\norm{X}^{pr}}^{\frac1r} \E{1^s}^{\frac1s}
+        = \E{\norm{X}^q}^{\frac{p}q}
+        = \norm{X}_{L^q}^p.
+    \end{aligned}\]
+    Taking the \(p\)-th root gives \eqref{eq: Lp norm domination}.
+\end{proof}
+
+\begin{example}[Not positive definite]
+    Observe that the missing property for \(\norm{\cdot}_{L^p}\) to be a norm 
+    is that \(\norm{X}_{L^p} = 0\) implies \(X=0\). As an example consider
+    a uniformly distributed \(U\sim \uniform(0,1)\) with density \(f(x) = \ind{[0,1]}\).
+    Define
+    \[
+        X \coloneq \begin{cases}
+            U & U \neq 1
+            \\
+            0 & U = 1.
+        \end{cases}
+    \]
+    Then clearly \(U\neq X\) but for any \(p\ge 1\)
+    \[
+        \E{\abs{X-U}^p}
+        = \int_0^1 \abs{x^p \ind{[0,1)}(x) - x^p} dx
+        = \int_0^1 \ind{\set{1}} dx = 0,
+    \]
+    and consequently \(\norm{X-U}_{L^p} = 0\).
+\end{example}
+
+\begin{fact}
+    \label{fact: Lp zero norm}
+    \(\norm{X-Y}_{L^p} = 0\) if and only if \(\prob{X=Y}=1 \overset{\text{def.}}\iff X\overset{\as}= Y\).
+\end{fact}
+\begin{proof}[Proofsketch]
+    Measure theory: \(f\ge 0\) and \(\int f d\mu = 0\) 
+    implies \(\mu(f\neq 0) = 0\).
+\end{proof}
+
+Using this inequality we can now prove Theorem \ref{thm: seminorm properties}
+
+
+\begin{definition}[\(L^p\) space]
+    We define the normed space \((L^p,\norm{\cdot}_{L^p})\) as
+    \[
+        L^p \coloneq L^p(\domain) \coloneq \set{[X]: X \in \cL^p(\domain)},
+        \quad\text{with}\quad
+        \norm{[X]}_{L^p} \coloneq \norm{X}_{L^p}
+    \]
+    where \([X]\) is the equivalence class of the equivalence relation
+    \[
+        X\sim Y :\iff \norm{X-Y}_{L^p} = 0 \iff X\overset{\as}= Y.
+    \]
+\end{definition}
+\begin{remark}[Norm well defined]
+    The definition of the norm is well-defined as for \(X,Y\in [X]\)
+    we have by the triangle inequality
+    \[
+        \norm{X}_{L^p} \le \norm{Y}_{L^p} + \norm{X - Y}_{L^p} \overset{X,Y\in [X]}= \norm{Y}_{L^p}
+        \overset{\text{similarly}}\le \norm{X}_{L^p}.
+    \]
+\end{remark}
+
+It turns out that proving the seminorm properties (Theorem \ref{thm: seminorm
+properties}), is easier in a more general setting. Specifically, since
+deterministic values may be moved outside of the expectation, we have
+\[
+    \norm{X}_{L^p} = \inf\set[\Big]{\lambda > 0 : \E[\Big]{\bigl(\tfrac{\norm{X}}{\lambda}\bigr)^p} \le 1}.
+\]
+With \(\psi(x) = x^p\) the \(L^p\) norm is thus a special case of
+an ``Orlicz norm''.
+\begin{definition}[Orlicz norm]
+    \label{def: orlicz norm}
+    Let \(\psi\colon [0,\infty) \to [0,\infty)\) be a non-decreasing, convex function
+    with \(\psi(0) = 0\) and \(\lim_{x\to \infty} \psi(x) = \infty\). Then we define
+    for \(X\colon \Omega \to \domain\) the \textbf{Orlicz norm}
+    \[
+        \norm{X}_{\psi} \coloneq \inf\set[\Big]{\lambda > 0 : \E[\Big]{\psi\bigl(\tfrac{\norm{X}}{\lambda}\bigr)} \le 1}.
+    \]
+    The \textbf{Orlicz spaces} are given by \(\cL^\psi \coloneq \set{X\colon \Omega \to \domain : \norm{X}_{\psi} < \infty}\).
+\end{definition}
+
+\begin{theorem}
+    \label{thm: orlicz seminorm}
+    The Orlicz norm is a seminorm.
+\end{theorem}
+\begin{proof}
+    The Orlicz norm is non-negative by definition of the infimum. The scaling
+    property follows from
+    \[\begin{aligned}
+        \norm{\alpha X}_{\psi}
+        &= \inf\set[\Big]{\lambda > 0 : \E[\Big]{\psi\bigl(\tfrac{\abs{\alpha}\norm{X}}{\lambda}\bigr)} \le 1}
+        \\
+        \overset{\mu=\frac{\lambda}{\abs{\alpha}}}&= \abs{\alpha} \inf\set[\Big]{\mu > 0 : \E[\Big]{\psi\bigl(\tfrac{\norm{X}}{\mu}\bigr)} \le 1}
+        &= |\alpha| \norm{X}_{\psi}.
+    \end{aligned}
+    \]
+
+    Let \(a\coloneq \norm{X}_{\psi}\) and \(b\coloneq \norm{Y}_{\psi}\). Then
+    for any \(\epsilon >0\) we have by definition of the Orlicz norm
+    \begin{equation}
+        \label{eq: orlicz epsilon}     
+        \E{\psi\bigl(\tfrac{\norm{X}}{a + \epsilon}\bigr)} \le 1,
+        \quad\text{and}\quad
+        \E{\psi\bigl(\tfrac{\norm{Y}}{b + \epsilon}\bigr)} \le 1.
+    \end{equation}
+    Using \(\lambda = \frac{a+\epsilon}{a+b+2\epsilon}\in[0,1]\) and thereby \(1-\lambda = \frac{b+\epsilon}{a+b+2\epsilon}\) we get
+    \[
+        \frac{\norm{X}+\norm{Y}}{a + b + 2\epsilon} = \lambda \frac{\norm{X}}{a + \epsilon} + (1-\lambda) \frac{\norm{Y}}{b + \epsilon}.
+    \]
+    Finally, using that \(\psi\) is non-decreasing and convex:
+    \[\begin{aligned}
+        \E[\Big]{\psi\Bigl(\frac{\norm{X+Y}}{a + b + 2\epsilon}\Bigr)}
+        \overset{\text{non-dec.}}&\le \E[\Big]{\psi\Bigl(\frac{\norm{X}+\norm{Y}}{a + b + 2\epsilon}\Bigr)}
+        \\
+        \overset{\text{conv.}}&\le \lambda \E[\Big]{\psi\Bigl(\frac{X}{a + \epsilon}\Bigr)} + (1-\lambda) \E[\Big]{\psi\Bigl(\frac{Y}{b + \epsilon}\Bigr)}
+        \\
+        \overset{\ref{eq: orlicz epsilon}}&\le \lambda + (1-\lambda) = 1.
+    \end{aligned}
+    \]
+    Thus by definition of the Orlicz norm we have shown
+    \[
+        \norm{X + Y}_{\psi} \le a + b + 2\epsilon
+        \overset{\text{def.}}= \norm{X}_{\psi} + \norm{Y}_{\psi} + 2\epsilon.
+    \]
+    As this is true for any \(\epsilon > 0\), we have shown the triangle inequality.
+\end{proof}
+
+Again we have that the norm of differences is only zero for almost surely equal
+random variables.
+
+\begin{fact}
+    \(\norm{X}_\psi = 0\) if and only if \(X\overset{\as}= 0\).
+\end{fact}
+\begin{proof}[Proofsketch]
+    If \(X \overset{\as}= 0\), then \(\psi(0)=0\) implies the Orlicz
+    norm is zero. The other direction uses the property \(\lim_{x\to\infty}
+    \psi(x) = \infty\) as \(\lambda \to 0\) explodes the input if \(\norm{X}\)
+    is non-zero.
+\end{proof}
+
+\begin{fact}[\(L^p\) is a Banach space]
+    \label{fact: Lp complete}
+    If \((\domain, \norm{\cdot})\) is a Banach space, then for every \(p \ge 1\)
+    the normed space \((L^p(\domain), \norm{\cdot}_{L^p})\) is
+    also a Banach space. That is it is \underline{complete},
+    which means that every Cauchy sequence converges in \(L^p\). 
+\end{fact}
+\begin{proof}
+See e.g. \citep[Thm.~6.25 and 7.3]{klenkeProbabilityTheoryComprehensive2014}.
+\end{proof}
+
+Note that for any \(X,Y\in [X] \in L^p\) we have \(X\overset{\as}= Y\)
+and recall that most limits in probability were unique in the same sense
+(Exercise \ref{ex: unique stochastic limits}).
+Since most equations in probability theory only hold almost surely, this caveat
+is often omitted and one simply writes \(X=Y\), blurring the lines
+between the equivalence classes \(L^p\) and the representatives in \(\cL^p\).
+
+\subsection*{Exercises}
+
+\begin{exercise}[Proof of Hölder's inequality \Coffeecup]
+    \label{ex: hölder's inequality}
+    Let \(\frac1p + \frac1q = 1\) with \(p,q > 1\).
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove ``Young's inequality'': for \(a,b \ge 0\) we have
+        \[
+            ab \le \tfrac{a^p}p + \tfrac{b^q}q.
+        \]
+        \textbf{Hint:} \emph{Option 1}: Let \(x = p \log(a)\) and \(y = q \log(b)\)
+        and use convexity of the exponential function.
+        \emph{Option 2 (brute force)}: Find the minimum of 
+        the function \(f(x) = \frac{x^p}p + \frac{b^q}q - xb\).
+        \begin{solution}
+            \emph{Option 1:} Using the convexity of the exponential function,
+            \[\begin{aligned}
+                ab
+                = e^{\log(a) + \log(b)}
+                = e^{\frac1p (p\log(a)) + \frac1q (q\log(b))}
+                &\le \frac1p e^{p\log(a)} + \frac1q e^{q\log(b)}
+                \\
+                &= \frac{a^p}p + \frac{b^q}q.
+            \end{aligned}
+            \]
+            \emph{Option 2:} On \([0, \infty)\), \(f\) is convex  as \(f''(x) = (p-1)x^{p-2} \ge 0\).
+            The minimum is therefore attained at \(f'(x) = x^{p-1} - b = 0\), that is
+            at \(x_* = b^{\frac1{p-1}}\). Since \(q= \frac{p}{p-1}\) we have that \(x_*^p = b^q\).
+            \[
+                f(x_*) = \frac{b^q}p + \frac{b^q}q - b^{\frac{1}{p-1} + 1} = 0.
+            \]
+            Consequently, for all \(x \ge 0\) we have \(f(x) \ge f(x_*) = 0\).
+            In particular for \(x = a\) we have the claim.
+        \end{solution}
+
+        \item Prove ``Hölder's inequality'' 
+        For \(p,q >1\) with \(\frac1p + \frac1q = 1\) we have
+        \[
+            \E{\abs{XY}} \le \E{\abs{X}^p}^{\frac1p}\E{\abs{Y}^q}^{\frac1q} = \norm{X}_{L^p} \norm{Y}_{L^q}.
+        \]
+
+        \textbf{Hint:} 
+        Assume without loss of generality \(X \in \cL^p(\real)\) and \(Y\in \cL^q(\real)\),
+        otherwise the right hand side is infinite and the claim is trivial.
+        Apply Young's inequality to \(a =
+        \frac{\abs{X}}{\norm{X}_{L^p}}\) and \(b = \frac{\abs{Y}}{\norm{Y}_{L^q}}\).
+        \begin{solution}
+            Applying Young's inequality we have
+            \[
+                \frac{\abs{X}}{\norm{X}_{L^p}} \cdot \frac{\abs{Y}}{\norm{Y}_{L^q}}
+                \le \frac1p \Bigl(\frac{\abs{X}}{\norm{X}_{L^p}}\Bigr)^p
+                + \frac1q \Bigl(\frac{\abs{Y}}{\norm{Y}_{L^q}}\Bigr)^q.
+            \]
+            Taking expectation on both sides we get
+            \[
+                \frac{\E[\big]{\abs{XY}}}{\norm{X}_{L^p} \norm{Y}_{L^q}}
+                \le 
+                    \frac1p \E[\Big]{\Bigl(\frac{\abs{X}}{\norm{X}_{L^p}}\Bigr)^p}
+                    + \frac1q \E[\Big]{\Bigl(\frac{\abs{Y}}{\norm{Y}_{L^q}}\Bigr)^q}
+                = 
+                    \frac1p + \frac1q
+                = 1,
+            \]
+            where we use that \(\norm{X}_{L^p}^p = \E{\abs{X}^p}\) is
+            deterministic to move it outside of the expectation. Multiplying
+            both sides by \(\norm{X}_{L^p} \norm{Y}_{L^q}\)
+            implies the claim.
+        \end{solution}
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[\(L^2\)-Hilbertspace \Coffeecup]
+    \label{ex: L2 hilbert space}
+    Let \(X,Y\) be \(\cL^2\) random variables in a Hilbert space \((\hilbert, \scp{\cdot, \cdot})\).
+    Show that 
+    \[
+        \langle [X], [Y] \rangle_{L^2} \coloneq \langle X, Y\rangle_{L^2} \coloneq \E{\scp{X,Y}}
+    \]
+    defines an inner product on \(L^2\) which induces the norm \(\norm{\cdot}_{L^2}\).
+    \begin{solution}
+        Clearly \(\scp{X, X}_{L^2} = \norm{X}_{L^2}^2\) so the inner product induces
+        the norm \(\norm{\cdot}_{L^2}\). We need to show the inner product properties:
+        \begin{enumerate}[label=(\roman*)]
+            \item\label{it: inner product positive}
+            \(\scp{X, X}_{L^2} \ge 0\) with equality if and only if \([X]=0 \overset{\text{Fact } \ref{fact: Lp zero norm}}\iff X=0\) a.s.
+            \\ \null \hfill (positive definiteness)
+            \item\label{it: inner product symmetry}
+            \(\scp{X, Y}_{L^2} = \scp{Y, X}_{L^2}\).
+            \hfill (symmetry)
+            \item\label{it: inner product linearity}
+            \(\scp{aX + bY, Z}_{L^2} = a \scp{X, Z}_{L^2} + b \scp{Y, Z}_{L^2}\)
+            for all \(a,b\in \real\).
+            \hfill (linearity in first argument)
+        \end{enumerate}
+        Property \ref{it: inner product positive} follows from \(\scp{X, X}_{L^2} = \norm{X}_{L^2}^2\)
+        and this property is established in Theorem \ref{thm: seminorm properties} and
+        Fact \ref{fact: Lp zero norm}.
+        Property \ref{it: inner product symmetry} follows from the
+        commutativity of multiplication. Property \ref{it: inner product linearity}
+        follows from the linearity of expectation.
+        \(L^2\) is further a complete normed space by Fact \ref{fact: Lp complete}.
+        Consequently, \((L^2, \scp{\cdot, \cdot}_{L^2})\) is a Hilbert space.
+    \end{solution}
+\end{exercise}
+
+\begin{exercise}[Expectation -- Projection in \(L^2\) \Coffeecup\Coffeecup]
+    \label{ex: projection in L2}
+    Recall that by Exercise \ref{ex: L2 hilbert space}, \(L^2\) is a Hilbertspace.
+    Identify deterministic random variables with real numbers  such that \(\real
+    \subseteq \cL^2(\real)\). Then identify \(\real\) with \(\set{[x]:
+    x\in\real} \subseteq L^2\) such that \(\real \subseteq L^2(\real)\).
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item Show that \(\real\) and \(\real^\perp \coloneq \set{[X] \in L^2 :
+        \E{X}=0}\) are orthogonal subspaces of \(L^2\) with \(L^2 = \real
+        \oplus \real^\perp\).
+        \begin{solution}
+            Let \(r\in \real\) and \([X]\in \real^\perp\), then
+            \[
+                \scp{[r], [X]}_{L^2} = \E{rX} = r\E{X} = 0.
+            \]
+            Consequently \(\real \perp \real^\perp\).  Moreover for any \([X]
+            \in L^2\), we have
+            \[
+                X = \underbrace{\E{X}}_{\in \real} + \underbrace{(X-\E{X})}_{\in \real^\perp}.
+            \]
+            Thus \(L^2 = \real \oplus \real^\perp\).
+        \end{solution}
+
+        \item Show that the orthogonal projection onto \(\real\) is given by
+        \[
+            \eSym \colon \begin{cases}
+                L^2 \to \real,
+                \\
+                [X] \mapsto \E{X}.
+            \end{cases}
+        \]
+        \begin{solution}
+            Since \(\E{\E{X}} = \E{X}\) we have \(\eSym^2 = \eSym\)
+            and therefore the expectation is a projection as it is also a
+            linear operator. It is an orthogonal projection since
+            \[
+                \scp{\E{X}, [Y]}_{L^2} = \E{\E{X}Y} = \E{X}\E{Y} = \scp{[X], \E{Y}}_{L^2}.
+                \qedhere
+            \]
+        \end{solution}
+
+        \item Let \(\pi \colon L^2 \to \real^\perp\) be the orthogonal projection
+        onto \(\real^\perp\), that is \(\pi = 1 - \eSym\). Show that
+        \[
+            \cov{X}{Y}
+            = \scp{\pi[X], Y}_{L^2}
+            = \scp{X, \pi[Y]}_{L^2}
+            = \scp{\pi[X], \pi[Y]}_{L^2}
+        \]
+        In particular \(\covSym\) coincides with the inner product on \(\real^\perp\)!
+        \begin{solution}
+            By definition of the covariance
+            \[
+                \cov{X}{Y}
+                = \E{(X-\E{X})(Y-\E{Y})}
+                = \E{\pi[X]\pi[Y]} = \scp{\pi[X], \pi[Y]}_{L^2}.
+            \]
+            The other equalities essentially follow from the fact that this is an
+            orthogonal projection:
+            \[
+                \scp{\pi[X], Y}_{L^2}
+                = \scp{\pi[X], \E{Y} + \pi[Y]}_{L^2}
+                = \underbrace{\scp{\pi[X], \E{Y}}_{L^2}}_{=0} + \scp{\pi[X], \pi[Y]}_{L^2}
+            \]
+            This can also be seen by direct calculation:
+            \[
+                \scp{\pi[X], \E{Y}}_{L^2} = \E{(X-\E{X})\E{Y}} = \E{X -\E{X}}\E{Y} = 0.
+                \qedhere
+            \]
+        \end{solution}
+
+        \item Show that the expectation is the closest real number to \(X\in
+        \cL^2\) in the \(L^2\) distance, that is
+        \[
+            \E{X} = \argmin_{c\in \real} \E{(X - c)^2} = \argmin_{c\in \real} \norm{X - c}_{L^2}.
+        \]
+        \begin{solution}
+            This is a property of the orthogonal projection. Specifically,
+            \[
+                \norm{X - c}_{L^2}^2
+                = \norm{\pi[X] + \E{X} - c}_{L^2}^2
+                = \norm{\pi[X]}_{L^2}^2 + \norm{c-\E{X}}_{L^2}^2,
+            \]
+            as the mixed terms disappear, indeed:
+            \[
+                \scp{\pi[X], c-\E{X}}_{L^2} = \E{X - \E{X}}(c-\E{X}) = 0.
+            \]
+            Since \(\norm{\pi[X]}_{L^2}^2\) does not depend on \(c\) and the
+            square is a monotone function, we consequently have
+            \[
+                \argmin_{c\in \real} \norm{X - c}_{L^2}
+                = \argmin_{c\in \real} \norm{c-\E{X}}_{L^2}
+                = \argmin_{c\in \real} \abs{c-\E{X}}
+                = \E{X}.
+                \qedhere
+            \]
+        \end{solution}
+    \end{enumerate}
+    \begin{remark}[Generalization to Hilbert spaces]
+        The same arguments work if we replace \(\real\) by any Hilbert space
+        \((\hilbert, \scp{\cdot, \cdot})\).
+    \end{remark}
+\end{exercise}
+
+\begin{exercise}[Median -- Projection in \(L^1\) \Coffeecup\Coffeecup]
+	We define the median of \(X\) to be the set
+    \[
+        \mSym[X] \coloneq \set[\Big]{m \in \real : \prob{X \ge m}\ge \tfrac12, \prob{X\le m} \ge \tfrac12}.
+    \]
+	\begin{enumerate}[label=(\alph*), noitemsep]
+        \item Show that if \(a,b\in \mSym[X]\), then \((a,b) \subseteq \mSym[X]\).
+        That is \(\mSym[X]\) is an interval!
+
+        \item The next goal is to show that the median interval is closed
+        and characterize the upper and lower bound. Prove for \(F(x) = \prob{X\le x}\)
+        \begin{alignat*}{2}
+            \max \mSym[X] &= \inf \set{x \in \real : F(x) > \tfrac12}
+            &&\eqcolon \overline{M},
+            \\
+            \min \mSym[X] &= \inf \set{x \in \real : F(x) \ge \tfrac12} \overset{\text{def.}}= F^{\leftarrow}(\tfrac12)
+            &&\eqcolon \underline{M}.
+        \end{alignat*}
+        This has two components: \(\overline{M}\) and \(\underline{M}\) are the boundaries of \(\mSym[X]\)
+        and they are contained in \(\mSym[X]\).
+
+        \textbf{Hint:} Use \(\prob{X < x} = \prob{\bigcup_{k\in \nat}\set{X \le x - \tfrac1k}}\) and the continuity of measure.
+        \begin{solution}
+            Since the distribution function \(F\) is right-continuous we have
+            \[
+                \prob{X \le \overline{M}} = F(\overline{M}) = \lim_{x \downarrow \overline{M}} F(x) \ge \tfrac12
+            \]
+            as all \(x \ge \overline{M}\) have the property \(F(x) > \tfrac12\) by
+            definition of \(\overline{M}\). For the other direction we use the
+            continuity of measure:
+            \[\begin{aligned}
+                \prob{X \ge \overline{M}}
+                &= 1 - \prob{X < \overline{M}}
+                \\
+                &= 1- \prob[\Big]{\bigcup_{k\in \nat} \set{X \le \overline{M} - \tfrac1k}}
+                \\
+                &= 1 - \lim_{k\to \infty} F(\overline{M}-\tfrac1k)
+                \\
+                &\ge 1- \tfrac12 = \tfrac12
+            \end{aligned}
+            \]
+            as any \(x< \overline{M}\) has the property \(F(x) \le \tfrac12\).
+            Consequently, \(\overline{M} \in \mSym[X]\).
+            As we have not used the strict inequalities due to the limits, the
+            same arguments work for the minimum \(\underline{M} = \inf\set{x\in
+            \real F(x) \ge \tfrac12}\). We only replace \(F(x) > \tfrac12\) by
+            \(F(x) \ge \tfrac12\) for all \(x \ge \underline{M}\) for the first
+            part and use \(F(x) < \tfrac12\) for all \(x < \underline{M}\) for
+            the second. Now by definition of \(\overline{M}\) we have for any
+            \(m > \overline{M}\) that \(F(m) > \tfrac12\) and therefore
+            \[
+                \prob{X \ge m} = 1 - F(m) < \tfrac12 \qquad \forall m > \overline{M}.
+            \]
+            This implies \(\overline{M} = \max \mSym[X]\).
+            Similarly, we have for any \(m < \underline{M}\) that \(F(m) < \tfrac12\)
+            and therefore \(\underline{M} = \min \mSym[X]\).
+        \end{solution}
+
+        \item\label{it: characterization of distribution function} Prove that
+        \[
+            \begin{cases}
+                F(x) > \tfrac12 & x > \overline{M} 
+                \\
+                F(x) = \tfrac12 & x \in (\underline{M}, \overline{M})
+                \\
+                F(x) < \tfrac12  & x < \underline{M}
+            \end{cases}
+        \]
+        In particular, if the distribution function \(F\) jumps over
+        \(\tfrac12\) such that there exists no \(x\) with \(F(x) = \frac12\),
+        then \(\underline{M} = \overline{M}\). For the case
+        \(\underline{M} \neq \overline{M}\) prove \(F(\underline{M})= \tfrac12\).
+        \begin{solution}
+            \(F(x) > \tfrac12\) for \(x>\overline{M}\) follows from the definition
+            of \(\overline{M}\). Similarly \(F(x) < \tfrac12\) for \(x<\underline{M}\)
+            follows from the definition of \(\underline{M}\). Now for any
+            \(x \in (\underline{M}, \overline{M})\) we have \(x> \underline{M}\) and
+            consequently \(F(x) \ge \tfrac12\). And since \(F(x) > \tfrac12\) would imply
+            \(x > \overline{M}\) by definition of \(\overline{M}\) we must conclude
+            \(F(x) = \tfrac12\). Finally if \(\underline{M} \neq \overline{M}\)
+            then \(F(\underline{M}) = \tfrac12\) follows from right-continuity of \(F\).
+        \end{solution}
+
+		\item Assuming \(X\in \cL^1\) prove that the median minimizes the \(L^1\) error, i.e.
+        \[
+            \mSym[X] =\arg\min_{m} \E{\abs{X-m}}.
+        \]
+		% If you wish to prove the general
+		% case, note that \(f(m)=2F_X(m)-1\) is right-continuous and monotonously
+		% increasing. Monotonicity also implies it can only have a countable number
+		% of discontinuities.
+
+ 		\textbf{Hint:}
+            Use \(\E{X}=\int_0^\infty \prob{X\ge t}dt = \int_0^\infty \prob{X>t}dt\)
+            for \(X\ge 0\) to prove
+            \[
+                \E{\abs{X-m_2}} - \E{\abs{X-m_1}}
+                = \int_{m_1}^{m_2} \underbrace{\prob{X\le x} - \prob{X>x}}_{=2F(x)-1}dx
+            \]
+		\begin{solution}
+			We have
+			\begin{align*}
+				\E{\abs{X-m}_+}
+				&= \int_0^\infty \underbrace{\prob{\abs{X-m}_+ > t}}_{
+					\begin{aligned}
+						&=\prob{X-m>t}\\
+						&=\prob{X> t-m}
+					\end{aligned}
+				} dt\\
+				&= \int_m^\infty \prob{X>s}ds
+			\end{align*}
+			And similarly
+			\begin{align*}
+				\E{(X-m)_-}
+				&= \int_0^\infty \underbrace{\prob{(X-m)_- \ge t}}_{
+					\begin{aligned}
+						&=\prob{m-X\ge t} \quad \mathrlap{(\forall t>0)}\\
+						&=\prob{m-t\ge X}
+					\end{aligned}
+				} dt\\
+				&= \int_{-\infty}^m \prob{X\le s}ds
+			\end{align*}
+			Put together we have
+            \[
+				\E{\abs{X-m}}
+				= \int_{-\infty}^m \prob{X\le s}ds + \int_m^\infty \prob{X>s}ds.
+            \]
+            Consequently, we have for \(m_1 < m_2\)
+            \[\begin{aligned}
+                \E{\abs{X-m_2}} - \E{\abs{X-m_1}}
+                &= \int_{m_1}^{m_2} \prob{X\le s}ds - \int_{m_1}^{m_2} \prob{X>s}ds
+                \\
+                &= \int_{m_1}^{m_2} \underbrace{\prob{X\le s} - (1-\prob{X\le s})}_{=2F(x) -1}ds
+            \end{aligned}
+            \]
+            Using \ref{it: characterization of distribution function} we deduce
+            \begin{alignat*}{3}
+                \E{\abs{X-m}} - \E{\abs{x-\overline{M}}} &> 0
+                & m &> \overline{M} 
+                \\
+                \E{\abs{X-m_2}} - \E{\abs{x-m_1}} &= 0
+                \qquad & m_1, m_2 &\in (\underline{M}, \overline{M})
+                \\
+                \E{\abs{x-\underline{M}}} - \E{\abs{X-m}} &< 0
+                & m &< \underline{M}
+            \end{alignat*}
+            Reordering implies the claim. \qedhere
+		\end{solution}
+	\end{enumerate}
+\end{exercise}
+
+\begin{remark}[Median is more stable]
+    Observe that both the median and expectation are defined in greater
+    generality than their interpretation as projections permits
+    \begin{center}
+       \def\arraystretch{1.2} 
+    \begin{tabular}{l|ll}
+        & expectation & median 
+        \\
+        \hline
+        defined & in \(L^1\) & always
+        \\
+        minimizes & \(L^2\)-norm & \(L^1\)-norm
+    \end{tabular}
+    \end{center}
+    However the median is more stable and works for heavy tailed
+    distributions that do not have a well defined expectation -- it is
+    more robust to outliers.
+\end{remark}
+
+\begin{remark}[Median in higher dimension]
+    The median is much more difficult to work with than the expectation
+    as it is set-valued in general and more difficult to compute.
+    In higher dimension it is even more difficult to define as there is no
+    natural ordering and consequently no distribution function or quantile
+    function. Finding a good generalization is still an active area of
+    research! A recent approach \citep{hallinDistributionQuantileFunctions2021}
+    exploits the idea that the distribution function is a monotonous function.
+    More specifically, the shifted function \(F(x) - \frac12\) is decreasing
+    before the median and increasing after the median. Integrating this function
+    therefore gives a convex function that is minimized at the median.
+    While a monotonous function is only defined on ordered sets, convexity
+    generalizes to higher dimensions. This idea is used in
+    \citep{hallinDistributionQuantileFunctions2021} to define higher dimensional
+    quantile functions as the unique gradient of a convex function
+    that satisfies Property \ref{it: inverse transform sampling} of Exercise \ref{ex:
+    stochastic simulation}.
+\end{remark}

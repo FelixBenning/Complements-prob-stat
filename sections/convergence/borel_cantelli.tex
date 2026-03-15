@@ -1,0 +1,661 @@
+\section{Characterization of almost sure convergence}
+\label{sec: borel cantelli}
+
+
+In Theorem \ref{thm: convergence implications} we have
+seen that almost sure convergence implies convergence in probability. In this
+section we will discover that the speed at which the term
+\begin{equation*}
+    \prob*{\norm{X_n - X} \ge \epsilon}
+\end{equation*}
+converges to zero determines whether we also have almost sure convergence.
+Roughly speaking if this probability decays like \(\frac1n\) or slower, then
+we do not have almost sure convergence. But if it decays faster, then we do.
+The key results to formalize this claim are known as the Borel-Cantelli lemmas
+(Theorem \ref{thm: borel-cantelli}). With these we will characterize almost sure
+convergence in terms of speed of convergence in Corollary \ref{cor:
+characterization of almost sure convergence}.
+
+To state the Borel-Cantelli lemmas we recall some definitions about limits of
+events.
+
+\begin{definition}[Limits of events]
+    If the sequence of events \((A_n)_{n=1}^\infty\) 
+    \begin{itemize}
+        \item is \emph{increasing}, that is \(A_1\subseteq A_2\subseteq \ldots\),
+        then we write
+        \[
+            \lim_{n\to \infty} A_n \coloneq \bigcup_{n\in \nat} A_n
+            \qquad \text{ or } \quad A_n \uparrow \bigcup_{n\in \nat} A_n.
+        \]
+        \item is \emph{decreasing}, that is \(A_1\supseteq A_2\supseteq \ldots\),
+        then we write
+        \[
+            \lim_{n\to \infty} A_n \coloneq \bigcap_{n\in \nat} A_n
+            \qquad \text{ or } \quad A_n \downarrow \bigcap_{n\in \nat} A_n.
+        \]
+    \end{itemize}
+\end{definition}
+
+\begin{remark}[Continuity of the probability measure]
+    \label{rem: continuity of probability}
+    Recall that the probability measure is continuous for increasing and decreasing
+    sequences of events \continuityOfMeasure, that is
+    \begin{equation}
+        \label{eq: continuity of probability}
+        \prob[\big]{\lim_{n\to \infty} A_n}
+        = \lim_{n\to \infty} \prob{A_n}.
+    \end{equation}
+    We have already used this in the proof that almost sure convergence implies
+    convergence in probability in Theorem \ref{thm: convergence implications}.
+\end{remark}
+
+Now recall that an event \(A\) ``happens'' if \(\omega \in A\). This
+motivates the following definition.
+
+\begin{definition}[``Infinitely many'' and ``eventually all'']
+    Let \((A_n)_{n=1}^\infty\) be a sequence of events. Then
+    \begin{itemize}
+        \item 
+        the \emph{limes superior}
+        is the event that infinitely many of the events \(A_n\) happen
+        \[\begin{aligned}
+            \limsup_{n\to\infty} A_n 
+            &\coloneq \bigcap_{N\in \nat} \bigcup_{n \ge N} A_n,
+            \\
+            &= \set{\omega \in \Omega : \omega \in A_n \text{ for infinitely many } n}.
+        \end{aligned}
+        \]
+        
+        \item
+        the \emph{limes inferior}
+        is the event that eventually all of the events \(A_n\) happen
+        \[\begin{aligned}
+            \liminf_{n\to\infty} A_n 
+            &\coloneq \bigcup_{N\in \nat} \bigcap_{n \ge N} A_n,
+            \\
+            &= \set{\omega \in \Omega : \omega \in A_n \text{ for all \(n\) after some } N\in \nat}.
+        \end{aligned}
+        \]
+    \end{itemize}
+\end{definition}
+
+To better understand these definitions it is helpful to convince yourself of the
+following properties and compare the limes superior/inferior for sets with
+its analogue for real-valued sequences.
+
+\begin{lemma}[Liminf and limsup properties]
+    \label{lem: liminf and limsup properties}
+    We have
+    \begin{enumerate}[label=(\roman*)]
+        \item \(\liminf_n A_n \subseteq \limsup_n A_n\),
+        \item \((\limsup_n A_n)^\complement = \liminf_n A_n^\complement\),
+        \item \(\limsup_n \ind{A_n}(\omega) = \ind*{\limsup_n A_n}(\omega)\) for all \(\omega \in \Omega\),
+        \item \(\liminf_n \ind{A_n}(\omega) = \ind*{\liminf_n A_n}(\omega)\) for all \(\omega \in \Omega\).
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    Exercise \ref{ex: liminf and limsup properties}. Note that indicators are always in \(\{0,1\}\)
+    and use the definition of the limes superior and inferior.
+\end{proof}
+
+\begin{mdframed}[innertopmargin=0pt]
+\begin{theorem}[Borel-Cantelli Lemmas]
+    \label{thm: borel-cantelli}
+    Let \((A_n)_{n=1}^\infty\) be a sequence of events. Then
+    \begin{alignat}{3}
+        \tag{BC-1}\label{eq: borel cantelli 1}
+        \sum_{n=1}^\infty \prob*{A_n}<\infty& \quad & \implies & \quad & \prob[\Big]{\limsup_{n\to \infty} A_n}=0.
+    \intertext{
+        If the events \(A_n\) are further \textbf{independent} events, then
+    }
+        \tag{BC-2}\label{eq: borel cantelli 2}
+        \sum_{n=1}^\infty \prob{A_n}=\infty& &\implies& &\prob[\Big]{\limsup_{n\to \infty} A_n}=1.
+    \end{alignat}
+\end{theorem}
+\end{mdframed}
+
+
+\begin{proof}[Proof of Borel-Cantelli (Theorem \ref{thm: borel-cantelli})]
+Let \((A_n)_{n=1}^\infty\) be a sequence of events with
+\(\sum_{n=1}^\infty \prob*{A_n} < \infty\). Observe that
+a smaller and smaller union of events is a decreasing sequence and consequently
+\begin{align*}
+    \prob[\Big]{\limsup_{n\to \infty} A_n}
+    = \prob[\Big]{ \lim_{N\to\infty} \bigcup_{n \ge N} A_n }
+    &= \lim_{N\to\infty} \prob[\Big]{\bigcup_{n \ge N} A_n}
+    \\
+    &\le \lim_{N\to\infty} \sum_{n=N}^\infty \prob{A_n}
+    = 0.
+\end{align*}
+This proves the first Borel-Cantelli lemma \eqref{eq: borel cantelli 1}.
+For the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2}
+let $(A_n)_{n=1}^\infty$ be a sequence of independent events. By
+Lemma \ref{lem: liminf and limsup properties} we have
+\[\begin{aligned}
+    \prob[\Big]{\bigl(\limsup_{n\to\infty}A_n\bigr)^\complement}
+    &= \prob[\Big]{\bigcup_{N\in \nat} \bigcap_{n \ge N} A_n^\complement}
+    \\
+    \overset{\eqref{eq: continuity of probability}}&= \lim_{N\to\infty} \prob[\Big]{\bigcap_{n \ge N} A_n^\complement}
+    \\
+    \overset{\eqref{eq: continuity of probability}}&= \lim_{N\to\infty} \lim_{k\to \infty} \prob[\Big]{\bigcap_{n=N}^{k} A_n^\complement}
+    \\
+    \overset{\text{indep.}}&= \lim_{N\to\infty} \lim_{k\to \infty} \prod_{n=N}^{k} (1-\prob{A_n})
+    \\
+    \overset{1+x\le e^x}&\le \lim_{N\to\infty} \underbrace{\lim_{k\to \infty} \exp\Bigl(-\sum_{n=N}^{k} \prob{A_n}\Bigr)}_{=0} = 0.
+\end{aligned}
+\]
+Where we used that \(\sum_{n=1}^\infty \prob{A_n} = \infty\) and \(\exp(-x)\to 0\) for \(x\to \infty\).
+\end{proof}
+
+\begin{remark}[Pairwise independence]
+    \label{rem: pairwise independence}
+    With more effort it is possible to generalize the
+    Borel-Cantelli Lemma 2 \eqref{eq: borel cantelli 2} to require only
+    \underline{pairwise} independence \citep{doeringStochastik2022}.
+\end{remark}
+
+The Borel-Cantelli lemmas now lead to the following characterization of almost
+sure convergence.
+
+\begin{mdframed}[innertopmargin=0pt]
+\begin{corollary}[Characterization of almost sure convergence]
+    \label{cor: characterization of almost sure convergence}
+    Let \((X_n)_{n=1}^\infty\) be a sequence of random variables and \(X\) another random variable.
+    Then
+    \[
+        \forall \epsilon > 0: \quad
+        \sum_{n=1}^\infty \prob[\big]{\norm{X_n - X} \ge \epsilon} < \infty
+         \quad \implies \quad \underbrace{
+            \prob[\Big]{\lim_{n\to\infty} X_n = X} =1
+        }_{
+            \iff X_n\overset{\as}\to X
+        }.
+    \]
+    If the random variables \((X_n-X)_{n\in \nat}\) are (pairwise)\footnote{see Remark \ref{rem: pairwise independence}} independent, then
+    \[
+        \exists \epsilon > 0: \quad
+        \sum_{n=1}^\infty \prob[\big]{\norm{X_n - X} \ge \epsilon} = \infty
+        \quad \implies \quad \prob[\Big]{\lim_{n\to\infty} X_n = X} =0.
+    \]
+    In the independent case this implies a \(0\)-\(1\) law: If the probability of
+    convergence is greater zero it must be one!
+\end{corollary}
+\end{mdframed}
+
+This corollary shows that almost sure convergence simply means that we have
+``fast enough'' convergence in probability such that sequence of
+\(\prob[\big]{\norm{X_n - X} \ge \epsilon}\) does not only converge to zero but is also
+summable.
+
+\begin{proof}
+    We have by definition of convergence and continuity of measure (Remark \ref{rem: continuity of probability})
+    \begin{equation}
+    \label{eq: characterization of does not converge}    
+    \begin{aligned}[b]
+        \prob[\Big]{\lim_{n\to\infty} X_n \neq X}
+        &= \prob[\Big]{ \bigcup_{m \in \nat} \bigcap_{N\in \nat}\bigcup_{n \ge N} \set{\norm{X_n - X} \ge \tfrac1m} }
+        \\
+        &= \lim_{m\to \infty} \prob[\Big]{ \limsup_{n\to \infty} \{\norm{X_n - X} \ge \epsilon\} }.
+    \end{aligned}
+    \end{equation}
+    Now if for all \(\epsilon > 0\) we have that \(\sum_{n=1}^\infty \prob[\big]{\norm{X_n - X} \ge \epsilon} < \infty\),
+    then by the first Borel-Cantelli lemma \eqref{eq: borel cantelli 1}
+    we have that the probability in \eqref{eq: characterization of does not converge} is zero
+    and consequently we get almost sure convergence.
+
+    Now if the random variables \((X_n - X)_{n\in \nat}\) are independent, then
+    the sets \(\set{\norm{X_n - X} \ge \epsilon}\) are independent events. If there is an
+    \(\epsilon > 0\) such that \(\sum_{n=1}^\infty \prob[\big]{\norm{X_n - X} \ge \epsilon} = \infty\),
+    then the application of the second Borel-Cantelli lemma \eqref{eq: borel
+    cantelli 2} to this particular \(\epsilon\) shows that the probability
+    in \eqref{eq: characterization of does not converge} must be one.
+\end{proof}
+
+An application of this characterization of almost sure convergence is the
+insight that from every sequence that converges in probability we can extract
+a subsequence that converges almost surely.
+
+\begin{lemma}[Subsequences converge almost surely]
+    \label{lem: subsequences converge almost surely}
+    Let \((X_n)_{n\in \nat}\) be a sequence of random variables and \(X\)
+    another random variable such that \(X_n \overset{p}\to X\).
+    Then there exists a subsequence \((X_{n_k})_{k\in \nat}\)
+    such that \(X_{n_k} \overset{\as}\to X\).
+\end{lemma}
+
+The idea of the proof is that we can increase the speed of convergence
+of \(\prob[\big]{\norm{X_n - X} \ge \epsilon}\) by choosing a subsequence.
+For example in the case
+\[
+    \prob[\big]{\norm{X_n - X} \ge \epsilon} \le \frac{C_\epsilon}{n},
+\]
+we can choose \(n_k = k^2\) such that for every \(\epsilon > 0\)
+\begin{equation}
+    \label{eq: subsequence summable}    
+    \sum_{k=1}^\infty \prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}
+    \le \sum_{k=1}^\infty \frac{C_\epsilon}{k^2} < \infty.
+\end{equation}
+Corollary \ref{cor: characterization of almost sure convergence} then
+implies that \(X_{n_k} \overset{\as}\to X\).
+The actual proof is a little bit more complicated for two reasons: First, we do
+not have an explicit rate of convergence. And second, we do not want to select a
+subsequence that depends on \(\epsilon\) since it must work for all \(\epsilon >
+0\) simultaneously.
+
+
+\begin{proof}
+    By convergence in probability we have for every \(\epsilon >0\),
+    in particular \(\epsilon =\frac1k\), that
+    there exists \(N_k\) such that for all \(n \ge N_k\)
+    \[
+        \prob{\norm{X_n - X} \ge \tfrac1k} \le \tfrac1{2^k}.
+    \]
+    By choosing the subsequence \(n_k = N_k\) we thus get
+    for every \(\epsilon > 0\)
+    \[
+        \sum_{k=1}^\infty \prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}
+        = \underbrace{\sum_{k=1}^{\lceil \frac1\epsilon \rceil-1}
+        \prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}}_{< \infty}
+        +\sum_{k=\lceil \frac1\epsilon \rceil}^\infty
+        \prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}
+    \]
+    For the remaining summands we have \(\epsilon > \frac1k\) and therefore
+    \[
+       \sum_{k=\lceil \frac1\epsilon \rceil}^\infty
+        \prob[\big]{\norm{X_{n_k} - X} \ge \epsilon}
+        \le \sum_{k=\lceil \frac1\epsilon \rceil}^\infty
+        \prob[\big]{\norm{X_{n_k} - X} \ge \tfrac1k}
+        \le \sum_{k=1}^\infty \frac1{2^k} = 1 < \infty.
+    \]
+    Consequently, by Corollary \ref{cor: characterization of almost sure convergence}
+    we have that \(X_{n_k} \overset{\as}\to X\).
+\end{proof}
+
+\subsection*{Exercises}
+
+\begin{exercise}[Liminf and Limsup Properties \Coffeecup]
+    \label{ex: liminf and limsup properties}
+    Prove Lemma \ref{lem: liminf and limsup properties}. 
+
+    \begin{solution}
+        \begin{enumerate}[label=(\roman*)]
+            \item To show that  \(\liminf_n A_n \subseteq \limsup_n A_n\) let
+            \[
+                \omega \in \liminf_n A_n = \bigcup_{N\in \nat} \bigcap_{n\ge N} A_n.
+            \]
+            then there exists an \(N\) such that for all \(n \ge N\) we have
+            \(\omega \in A_n\). In particular, there are infinitely many \(n\)
+            such that \(\omega \in A_n\) and consequently for all \(N\in \nat\) there
+            exists \(n\ge N\) such that \(\omega \in A_n\), which implies
+            \[
+                \omega \in \bigcap_{N\in \nat} \bigcup_{n\ge N} A_n = \limsup_n A_n.
+            \]
+            
+            \item\label{it: de morgans on liminf/limsup} We have using De Morgan's laws that
+            \[
+            \begin{aligned}
+                (\limsup_n A_n)^\complement
+                &= \Bigl(\bigcap_{N\in \nat} \bigcup_{n\ge N} A_n\Bigr)^\complement
+                = \bigcup_{N\in \nat} \Bigl(\bigcup_{n\ge N} A_n\Bigr)^\complement
+                = \bigcup_{N\in\nat} \bigcap_{n\ge N} A_n^\complement
+                \\
+                &= \liminf_n A_n^\complement.
+            \end{aligned}
+            \]
+
+            \item\label{it: function limsup to set limsup} To prove \(\limsup_n \ind{A_n} = \ind*{\limsup_n A_n}\) 
+            observe that 
+            \[
+                \limsup_n \ind{A_n}(\omega)
+                = \lim_{N\to \infty} \sup_{n\ge N} \ind{A_n}(\omega)
+            \]
+            is in the set \(\set{0,1}\) for all \(\omega\) since
+            \(\ind{A_n}(\omega) \in \set{0,1}\) for all \(n\) and
+            the supremum is thereby either \(0\) or \(1\). We therefore only need to show
+            that \(\limsup_n \ind{A_n}(\omega) = 1\) if and only if
+            \begin{equation}
+                \label{eq: omega in limsup_n An} 
+                \omega \in \limsup_n A_n = \bigcap_{N\in \nat} \bigcup_{n\ge N} A_n.
+            \end{equation}
+            Assume \eqref{eq: omega in limsup_n An} holds, then for all \(N\in
+            \nat\) there exists an \(n \ge N\) such that \(\omega \in A_n\). In particular,
+            since for any \(N\in \nat\) we can find \(n\ge N\) such that \(\ind{A_n}(\omega) = 1\)
+            and therefore \(\sup_{n\ge N} \ind{A_n}(\omega) = 1\). Conversely, if
+            \(\limsup_n \ind{A_n}(\omega) = 1\), then for all \(N\in \nat\) we have
+            \(\sup_{n\ge N} \ind{A_n}(\omega) =1\) and consequently there must exist
+            \(n\ge N\) such that \(\ind{A_n}(\omega) = 1\) and therefore
+            \(\omega \in A_n\). This implies \eqref{eq: omega in limsup_n An}.
+
+            \item Observe that we can translate this to the previous results as follows:
+            \[\begin{aligned}[b]
+                \liminf_n \ind{A_n}
+                &= \liminf_n (1-\ind{A_n^\complement})
+                \\
+                &= 1 - \limsup_n \ind{A_n^\complement}
+                \\
+                \overset{\text{\ref{it: function limsup to set limsup}}}&= 1 - \ind*{\limsup_n A_n^\complement}
+                \overset{\text{\ref{it: de morgans on liminf/limsup}}}= \ind*{\liminf_n A_n}.
+            \end{aligned}
+            \qedhere
+            \]
+        \end{enumerate}        
+    \end{solution}
+\end{exercise}
+
+\begin{exercise}[Borel's \(0\)-\(1\) law \Coffeecup]
+    \label{ex: borel cantelli 0-1 law}
+    Let \((A_n)_{n=1}^\infty\) be a sequence of independent events. Prove that 
+    the probability of their liminf and limsup are either zero or one, that is
+    \[
+        \prob[\Big]{\limsup_{n\to \infty} A_n} \in \{0,1\}
+        \quad\text{and}\quad
+        \prob[\Big]{\liminf_{n\to \infty} A_n} \in \{0,1\}.
+    \]
+    Consequently, if the probability is greater zero it must be one!
+
+    \noindent\textbf{Hint:} Use the Borel-Cantelli Lemmas (Theorem \ref{thm: borel-cantelli})
+    and Lemma \ref{lem: liminf and limsup properties}. Without justification you
+    may use the measure theoretic fact that \((A_n^\complement)_{n\in \nat}\)
+    is indpendent if \((A_n)_{n\in \nat}\) is independent.
+    \begin{remark}[Kolmogorov's \(0\)-\(1\) law]
+        \label{rem: kolmogorov 0-1 law}
+        The Borel-Cantelli \(0\)-\(1\) law is a special case of Kolmogorov's \(0\)-\(1\) law
+        about ``tail events'' \citep[Thm.~2.37, Cor.~2.38]{klenkeProbabilityTheoryComprehensive2014},
+        as the liminf and limsup are such ``tail events''.
+    \end{remark}
+
+    \begin{solution}
+        Observe that there are only two possibilities, either
+        \[
+            \sum_{n=1}^\infty \prob{A_n} < \infty
+                \quad\text{or}\quad
+            \sum_{n=1}^\infty \prob{A_n} = \infty.
+        \]
+        In the first case we have by the first Borel-Cantelli lemma \eqref{eq: borel cantelli 1} that
+        \[
+            \prob[\Big]{\limsup_{n\to \infty} A_n} = 0.
+        \]
+        in the second case we have by the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2} that
+        \[
+            \prob[\Big]{\limsup_{n\to \infty} A_n} = 1.
+        \]
+        Consequently, we have the claim for \(\limsup_n A_n\). Due to
+        \[
+            \liminf_n A_n = \limsup_n A_n^\complement
+        \]
+        by Lemma \ref{lem: liminf and limsup properties} and the independence of
+        \(A_n^\complement\), the
+        same arguments apply to \(A_n^\complement\) so we also have the claim for
+        \(\liminf_n A_n\).
+        \qedhere
+    \end{solution}
+\end{exercise}
+
+\begin{exercise}[Almost sure but not \(L^p\) convergence \Coffeecup]
+    \label{ex: as but not Lp}
+    Let \(U\sim \uniform(0,1)\) and define
+    \[
+        X_n = 2^n \ind{[0, 2^{-n})}(U).
+    \]
+    Show that \(X_n \overset{\as}\to 0\) but \(X_n\) does not converge to \(0\)
+    in \(L^1\) and hence in no other \(L^p\) space with \(p \ge 1\).
+    \begin{solution}
+        First, we show that \(X_n \overset{\as}\to 0\). For any \(\epsilon > 0\)
+        we have
+        \[\begin{aligned}
+            \sum_{n=0}^\infty \prob{\abs{X_n - 0} \ge \epsilon}
+            &\le \sum_{n=0}^\infty \prob{X_n \ge \min\set{\epsilon, 1}}
+            \\
+            &= \sum_{n=0}^\infty\prob{U < 2^{-n}} = \sum_{n=0}^\infty 2^{-n} < \infty.
+        \end{aligned}
+        \]
+        Consequently, by Corollary \ref{cor: characterization of almost sure convergence} we have \(X_n \overset{\as}\to 0\).
+        To see that \(X_n\) does not converge to \(0\) in \(L^1\) we observe
+        \[
+            \E{\abs{X_n - 0}}
+            = \E{X_n}
+            = 2^n \prob{U < 2^{-n}} = 1
+            \not\to 0.
+            \qedhere
+        \]
+    \end{solution}
+\end{exercise}
+
+\begin{exercise}[Infinitely often or never successful \Coffeecup]
+    Let \(X_n \sim \bernoulli(n^{-r})\) be independent Bernoulli random variables,
+    whose success probability decreases in \(n\) at rate \(r > 0\). Note that we say
+    that \(X_n\) is a success if \(X_n = 1\). Show that
+    \begin{enumerate}[label=(\alph*)]
+        \item for \(r > 1\) there are finitely many successes with probability one.
+        That is after some random but finite time \(N\in \nat\) all \(X_n\) are zero.
+        \begin{solution}
+            Since we have
+            \[
+                \sum_{n=1}^\infty \prob{X_n = 1} = \sum_{n=1}^\infty n^{-r} < \infty,
+            \]
+            we have by the first Borel-Cantelli lemma \eqref{eq: borel cantelli 1} that
+            \[
+                \prob{X_n=1 \text{ for infinitely many } n} = \prob{\limsup_{n\to \infty} \set{X_n = 1}} = 0.
+                \qedhere
+            \]
+        \end{solution}
+
+        \item for \(r \le 1\) there are infinitely many successes with probability one.
+        \begin{solution}
+            Since we have
+            \[
+                \sum_{n=1}^\infty \prob{X_n = 1} = \sum_{n=1}^\infty n^{-r} = \infty,
+            \]
+            we have by the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2} that
+            \[
+                \prob{X_n=1 \text{ for infinitely many } n} = \prob{\limsup_{n\to \infty} \set{X_n = 1}} = 1.
+                \qedhere
+            \]
+        \end{solution}
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Further characterize almost sure convergence \Coffeecup]
+    Prove the following are equivalent
+    \begin{enumerate}[label=(\roman*), noitemsep]
+        \item\label{it: as convergence} \(X_n \overset{\as}\to X\), that is \(\prob{X_n \to X} =1\)
+        \item\label{it: limsup set convergence} \(\prob[\big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \epsilon}} = 0\) for all \(\epsilon > 0\)
+        \item\label{it: limsup convergence} \(\prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon} = 0\) for all \(\epsilon >0\)
+        \item\label{it: sup convergence} \(\lim_{N\to \infty} \prob[\big]{\sup_{n \ge N} |X_n - X| \ge \epsilon} = 0\) for all \(\epsilon > 0\).
+    \end{enumerate}
+    \begin{solution}
+        First we prove \ref{it: as convergence} \(\Rightarrow\) \ref{it: limsup set convergence}.
+        By definition of convergence we have
+        \[\begin{aligned}
+            0 = \prob{X_n \not\to X}
+            &= \prob[\Big]{\bigcup_{\epsilon >0} \bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| \ge \epsilon}}
+            \\
+            \overset{\text{fix } \epsilon}&\ge \prob[\Big]{\bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| \ge \epsilon}}
+            \\
+            \overset{\text{def.}}&= \prob[\big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \epsilon}}.
+        \end{aligned}
+        \]
+        For the converse direction \ref{it: limsup set convergence} \(\Rightarrow\) \ref{it: as convergence}, we use
+        \[\begin{aligned}
+            \prob{X_n \not\to X}
+            &= \prob[\Big]{\bigcup_{m\in \nat} \bigcap_{N\in \nat} \bigcup_{n\ge N} \set{|X_n - X| < \tfrac1m}}
+            \\
+            &= \lim_{m\to \infty} \prob[\Big]{\limsup_{n \to \infty} \set{|X_n - X| \ge \tfrac1m} = 0} = 0.
+        \end{aligned}
+        \]
+        The last equation follows from the assumption as \(\epsilon=\frac1m\) are just special cases.
+        Next we show \ref{it: limsup set convergence} \(\Leftrightarrow\) \ref{it: limsup convergence}.
+        Observe that by definition of the limsup of sets
+        \[\begin{aligned}
+            \prob[\big]{\limsup_{n \to \infty} \set{\abs{X_n - X} \ge \epsilon}}
+            &= \prob[\big]{\forall N \in \nat,\; \exists n\ge N: \abs{X_n - X} \ge \epsilon}.
+            \\
+            &= \prob[\Big]{\forall N \in \nat: \sup_{n\ge N} \abs{X_n - X} \ge \epsilon}.
+            \\
+            &= \prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon}.
+        \end{aligned}
+        \]
+        Consequently the two statements are equivalent. Next we show
+        \ref{it: limsup convergence} \(\Leftrightarrow\) \ref{it: sup
+        convergence}.  For this observe that the sets \(\set{\sup_{n \ge N} |X_n
+        - X| \ge \epsilon}\) are a decreasing sequence in \(N\) and therefore
+        \begin{align*}
+            \prob[\big]{\limsup_{n \to \infty} |X_n - X| \ge \epsilon}
+            &= \prob[\Big]{\bigcap_{N\in \nat} \set{\sup_{n \ge N} |X_n - X| \ge \epsilon}}
+            \\
+            &= \lim_{N\to \infty} \prob[\big]{\sup_{n \ge N} |X_n - X| \ge \epsilon}.
+            \qedhere
+        \end{align*}
+    \end{solution}
+\end{exercise}
+
+\begin{exercise}[Infinite Monkey Theorem \Coffeecup\Coffeecup]
+    The infinite monkey theorem states that an immortal monkey hitting keys at
+    random on a typewriter keyboard for an infinite amount of time will
+    eventually type any arbitrarily long text -- for example all the
+    works of William Shakespeare -- with probability one.  It is also known as
+    the ``law of truly large numbers''.
+    Prove it!
+    \begin{enumerate}[label={\emph{Level \arabic*:}},ref={Level \arabic*},leftmargin=4em,noitemsep]
+        \item Assume the hit keys are independent and uniformly distributed.
+        \item\label{it: level iid} Assume the hit keys are iid with a probability distribution that
+        assigns each of the (finite) keys a positive probability.
+        \item\label{it: level markov chain} Assume the hit keys are a stationary Markov chain whose transition
+        probabilities from key \(x\) to key \(y\) are positive for all pairs
+        \(x,y\) from the (finite) alphabet.
+    \end{enumerate}
+    \textbf{Hint:} \ref{it: level markov chain} is significantly harder than
+    the previous levels. For it you already need to know Markov chains
+    and modify the proof of the second Borel-Cantelli lemma for your purposes.
+    You may want to come back to this later.
+    \begin{solution}
+        Let \(\alphabet\) be a finite alphabet of keys and let \(X_n\in
+        \alphabet\) be the letter typed at time \(n\). Let \(y\in \alphabet^m\)
+        be the desired text of length \(m\). We essentially assume \(m=1\)
+        without loss of generality with the definition of
+        \[
+            Y_n = (X_{nm}, X_{nm+1}, \ldots, X_{m(n+1)-1}) \in \alphabet^m,
+        \]
+        which is still a sequence of iid random variables in \ref{it: level iid}
+        (or still a Markov chain in \ref{it: level markov chain}).  Let us consider \ref{it: level iid}
+        first. Since
+        \[\begin{aligned}
+            \delta \coloneq \prob{Y_n = y}
+            &= \prob{X_{nm} = y_1, X_{nm+1} = y_2, \ldots, X_{m(n+1)-1} = y_m}
+            \\
+            &= \prod_{i=1}^m \prob{X_{nm+i-1} = y_i} > 0,
+        \end{aligned}
+        \]
+        Due to \(\sum_{n=1}^\infty \prob{Y_n = y} = \sum_{n=1}^\infty \delta = \infty\)
+        we may apply the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2} to get
+        \[
+            \prob[\big]{Y_n = y \text{ for infinitely many } n}
+            = \prob[\big]{\limsup_{n\to\infty} \set{Y_n = y}}
+            \overset{\text{\eqref{eq: borel cantelli 2}}}= 1.
+        \]
+        Observe that we have proven more than the desired claim: The monkey will
+        not only type the desired text \(y\) at least once but infinitely many
+        times with probability one!
+
+        For the proof of \ref{it: level markov chain} we need to avoid independence.
+        Since any transition probability is positive, we have
+        \[
+            \delta \coloneq \prob{Y_n = y \mid Y_{n-1} \neq y}
+            = \sum_{\substack{x \in \alphabet^m \\ x \neq y}}\prob{Y_n = y \mid Y_{n-1} = x}
+            > 0.
+        \]
+        We will now modify the proof of the second Borel-Cantelli lemma 
+        in the place where independece was used. Specifically, we have
+        \begin{equation}
+            \label{eq: modified borel cantelli 2}
+            \prob[\big]{(\limsup_{n\to\infty} \set{Y_n = y})^\complement}
+            = \lim_{N\to \infty} \lim_{k\to \infty} \prob[\Big]{\bigcap_{n=N}^k \set{Y_n \neq y}}.
+        \end{equation}
+        with
+        \[\begin{aligned}
+            \prob[\Big]{\bigcap_{n=N}^k \set{Y_n \neq y}}
+            &= \prod_{n=N}^k \prob{Y_n \neq y \mid Y_{n-1} \neq y,\ldots, Y_{N} \neq y}
+            \\
+            \overset{\text{Markov}}&= \prob{Y_n\neq y}\prod_{n=N+1}^k \prob{Y_n \neq y \mid Y_{n-1} \neq y}
+            \\
+            &\le (1-\delta)^{k-N-1}.
+        \end{aligned}
+        \]
+        Thereby \eqref{eq: modified borel cantelli 2} is zero. Consequently,
+        the probability that \(Y_n = y\) happens infinitely often is one.
+    \end{solution}
+\end{exercise}
+
+% \begin{exercise}[Drunk Men and Drunk Birds]
+
+% There is a saying, attributed to  Japanese-American mathematician Shizuo
+% Kakutani: ``A drunk man will find his way home, but a drunk bird may get lost
+% forever." Let us try to understand this. A drunk birds can be modeled by three
+% dimensional random walk. Suppose the bird starts at the origin of the three
+% dimensional integer lattice $\integer^3$. It moves only at integer time points. For
+% $n=0,1,2,3,\ldots$ let $S_n=(S_n^x,S_n^y,S_n^z)\in\integer^3$ denote its location.
+% If at a certain time the bird is at location $(x,y,z)$, then at the next time
+% point it can be at one of the $8$ locations given by $(x\pm 1,y\pm 1,z\pm 1)$.
+% Thus we can say
+
+% \begin{align*}
+% S_n^x ={} & S_{n-1}^x + X_n\;,\\
+% S_n^y ={} & S_{n-1}^y + Y_n\;,\\
+% S_n^z ={} & S_{n-1}^z + Z_n\;,
+% \end{align*}
+% where
+% \[
+% X_n = \begin{cases}
+% 1 & \mbox{ with probability } 1/2\;,\\
+% -1 & \mbox{ with probability } 1/2\;,
+% \end{cases}
+% \]
+% \[
+% Y_n = \begin{cases}
+% 1 & \mbox{ with probability } 1/2\;,\\
+% -1 & \mbox{ with probability } 1/2\;,
+% \end{cases}
+% \]
+% \[
+% Z_n = \begin{cases}
+% 1 & \mbox{ with probability } 1/2\;,\\
+% -1 & \mbox{ with probability } 1/2\;,
+% \end{cases}
+% \]
+% and $(X_1,X_2,X_3,\ldots,Y_1,Y_2,Y_3,\ldots,Z_1,Z_2,Z_3,\ldots)$ are independent.
+% \[
+% \prob*{S_n=(0,0,0)} 
+% = \prob*{S_n^x=0}\prob*{S_n^y=0}\prob*{S_n^z=0}
+% \]
+% For $n$ odd, 
+% \[
+% \prob*{S_n^x=0}=
+% \prob*{S_n^y=0}=
+% \prob*{S_n^z=0}=0\;.
+% \]
+% For $n$ even, say $n=2N$
+% \[
+% \prob*{S_n^x=0}=
+% \prob*{S_n^y=0}=
+% \prob*{S_n^z=0}=\left(2^{-2N}\binom{2N}{N}\right)^3\;.
+% \]
+% By Stirling's approximation
+% \[
+% 2^{-2N}\binom{2N}{N} \approx \frac{C}{N^{1/2}} 
+% \approx \frac{C}{n^{1/2}}.
+% \]
+% Thus, for $n$ even
+% \[
+% \prob*{S_n=0} \approx C n^{-3/2}\;.
+% \]
+% Thus, the probability that $S_n=0$ happens infinitely often is $0$. Thus, a
+% drunk bird may get lost forever. But for two dimensional or one dimensional
+% random walk with probability $1$ $S_n=0$ happens infinitely often. Thus a drunk
+% man will find his way home. Note that, to prove this we cannot use the second
+% Borel-Cantelli Lemma. Because the second Borel-Cantelli Lemma requires the
+% events to be independent, but the events $\{S_n=0\}$ are not independent. But
+% the result is true and can be proved in different ways, generally you will learn
+% this in a course on Markov Chains.
+
+% \end{exercise}

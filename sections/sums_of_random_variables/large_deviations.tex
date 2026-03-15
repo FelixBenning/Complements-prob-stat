@@ -1,0 +1,1513 @@
+\section{Large deviations and concentration}
+\label{sec: concentration inequalities}
+
+In the previous section was concerned with the distribution of \emph{typical deviations} of
+the mean, which were of order \(\frac1{\sqrt{n}}\). The purpose of this section is two-fold. First, we want to understand
+how fast the probability of \emph{large deviations} of constant order \(1\) decay with \(n\).
+Second, we want more quantitative bounds on the deviation probability.
+Observe that the central limit theorem only gives an asymptotic statement:
+``If \(n\to\infty\), then...''. However in practice \(n\) is always finite.
+And we can never be sure that the normal distribution is really a good
+approximation of the distribution at finite \(n\).
+\begin{quotation}
+    ``In the long run we are all dead'' -- John Maynard Keynes 
+\end{quotation}
+It is a lucky coincidence that the tools to analyze large deviations are also
+better suited to provide quantitative bounds. Quantitative versions of the CLT
+also exist, but they come at the price of much greater difficulty.
+
+With a quantitative bound we mean that we want an explicit upper bound
+\[
+    \prob[\big]{\norm{X_n - X} \ge \epsilon} \le \delta
+\]
+for a fixed \(n\) instead of just the statement that this probability goes to zero as
+\(n\to\infty\). Such statements are also know as ``probably, approximately
+correct'' (PAC) statements, that is
+\begin{quote}
+``with probability at least \(1-\delta\) (probably), we have \(\norm{X_n - X} <
+\epsilon\) (approximately) for a specific \(n\in \nat\)''.
+\end{quote}
+
+\subsection{A real valued introduction}
+
+Recall that the only tool we have used so far to bound probabilities is the
+Markov inequality (Theorem \ref{thm: markov inequality})
+\[
+    \prob{X \ge x} \le \tfrac{\E{h(X)}}{h(x)}.
+\]
+The choice \(h(x) = e^{tx}\), with \(t\ge 0\) such that \(h\) is
+non-decreasing, results in the ``\textbf{Chernoff bound}''
+\[
+    \prob{X \ge x}
+    \le \frac{\E{e^{t  X}}}{e^{t x}}
+    = \frac{\MGF_X(t)}{e^{t x}}
+    = \exp\bigl(-\bigl(t x - \underbrace{\log \MGF_X(t)}_{=\CGF_X(t)}\bigr)\bigr).
+\]
+If the moment generating function of \(X\) is not finite, then this bound is
+of course useless. Note that we cannot use the characteristic function here,
+since the Markov inequality requires non-negative, and in particular
+real-valued, functions \(h\). The function \(\CGF_X\) is the ``\textbf{cumulant
+generating function}'' (CGF) or ``log-laplace transform'' that will be our main object
+of study in this section.
+
+The key feature of the Chernoff bound is that it provides us with a parameter \(t\)
+that is not inherent to the problem of bounding \(\prob{X \ge a}\). This allows for
+an optimization over \(t\), resulting in the \textbf{Legendre transform}
+\[
+    \CGF^+_X(x) \coloneq \sup_{t\ge 0} \bigl( t x - \CGF_X(t) \bigr).
+\]
+The optimized bound is then given by
+\begin{equation}
+    \label{eq: chernoff bound}    
+    \prob{X \ge x} \le \exp\bigl(-\CGF^+_X(x)\bigr).
+\end{equation}
+
+\begin{example}[The normal distribution]
+    \label{ex: chernoff bound for normal distribution}
+    Let \(X \sim \normal{\mu, \sigma^2}\). 
+    Recall that the MGF of the normal distribution was
+    \(\MGF_X(t) = \exp(\mu t + \frac12 \sigma^2 t^2)\) (Definition \ref{def:
+    univariate normal distribution}). Its CGF is then given by the quadratic
+    polynomial
+    \[
+        \CGF_X(t) = \mu t + \tfrac12 \sigma^2 t^2.
+    \]
+    Thus the Legendre transform is
+    \[\begin{aligned}
+        \CGF_X^+(x)
+        = \sup_{t\ge 0} \bigl(t x - \mu t - \tfrac12 \sigma^2 t^2\bigr)
+        &= \sup_{t\ge 0} \bigl(t (x - \mu) - \tfrac12 \sigma^2 t^2\bigr)
+        \\
+        &= \begin{cases}
+        \frac{(x - \mu)^2}{2\sigma^2}
+        \qquad &\text{for } x \ge \mu,
+        \\
+        0 &\text{for } x \le \mu.
+        \end{cases}
+    \end{aligned}\]
+    The last step follows from simple optimization. The first order condition
+    results in the maximizer \(t^\star = \frac{x - \mu}{\sigma^2}\), which is greater
+    zero if and only if \(x \ge \mu\).
+    Observe that if \(\CGF_X^+(x) = 0\), then the Chernoff bound \eqref{eq: chernoff bound}
+    is \(1\) which is not very helpful since probabilities are always bounded by \(1\).
+    The only useful case is thus \(x \ge \mu\), in which we get that
+    the tail of the normal distribution decays like a squared exponential in the
+    distance \((x-\mu)\) to the mean, that is
+    \[
+        \prob{X \ge x}
+        \le \exp\bigl(- \tfrac{(x - \mu)^2}{2\sigma^2}\bigr)
+        \qquad\text{for } x \ge \mu.
+    \]
+    Or equivalently, with \(\epsilon = x - \mu > 0\) we get a quickly decaying bound in \(\epsilon\)
+    \[
+        \prob{X - \mu \ge \epsilon}
+        \le \exp(-\tfrac{\epsilon^2}{2\sigma^2})
+        \qquad\text{for } \epsilon \ge 0.
+    \]
+\end{example}
+
+\paragraph*{Towards multivariate bounds}
+Since \(\CGF_X^+\) is defined as a supremum over all \(t\ge 0\), it does not
+translate well into multiple dimension where the ordering is lost.
+We have seen in the example above that the maximizer \(t^\star\) is positive
+whenever \(x\ge \mu\) or equivalently \(\epsilon = x - \mu \ge 0\).
+This implies that for \(x\ge \mu\) the function \(\CGF_X^+(x)\) coincides
+with the \textbf{convex conjugate}, also known as ``Fenchel-Legendre transform''
+of \(\CGF_X\) given by
+\[
+    \CGF_X^*(x) \coloneq \sup_{t\in \real} \bigl(t x - \CGF_X(t)\bigr)
+    \qquad \Bigl(\ge \CGF_X^+(x)= \sup_{t \ge 0} \bigl(t x - \CGF_X(t)\bigr)\Bigr).
+\]
+\begin{warning}
+    \label{warn: difference between CGF star and plus}
+    For \(x\le \mu\) the bound \(\prob{X \ge x} \le \exp(-\CGF_X^*(x))\) is
+    false! Here \(\CGF_X^*(x) > \CGF_X^+(x) = 0\).  However since
+   \(\CGF_X^+(x)=0\) is a useless bound anyway, we simply need to avoid this
+    case.
+\end{warning}
+
+% To understand the convex conjugate for \(a\le \mu\), observe that in this case
+% \(-a \ge -\mu = \E{-X}\). Consequently,
+% \[
+% \begin{aligned}
+%     \CGF_{-X}^+(-a)
+%     = \sup_{t\ge 0} \bigl(t (-a) - \CGF_{-X}(t)\bigr)
+%     &= \sup_{t\ge 0} \bigl(-ta - \CGF_{X}(-t)\bigr)
+%     \\
+%     &= \sup_{s\le 0} \bigl(sa - \CGF_{X}(s)\bigr)
+%     = \CGF_X^*(a),
+% \end{aligned}
+% \]
+% where we use \(\CGF_{-X}(t) = \log\E{e^{t(-X)}}= \CGF_X(-t)\).
+% So in essence
+% \begin{alignat}{3}
+%     \prob{X \ge a} &\le \exp\bigl(-\CGF_X^*(a)\bigr) &\text{for }a &\ge \mu,
+%     \\ 
+%     \prob{X \le a} = \prob{-X \ge -a} &\le \exp\bigl(-\CGF_{X}^*(a)\bigr)\qquad &\text{for } a &\le \mu.
+% \end{alignat}
+% Why is this useful? For \(a \le \mu \le b\) consider
+% \[
+%     \prob{X \in (a,b)^\complement}
+%     = \prob{X \le a} + \prob{X \ge b}
+% \]
+
+% For concentration bounds we will simply use
+% \[\begin{aligned}
+%     \prob{\abs{X} \ge a}
+%     &= \prob{X \ge a} + \prob{-X \ge a}
+%     \\
+%     &\le \exp\bigl(-\CGF^+_X(a)\bigr) + \exp\bigl(-\CGF^+_{-X}(a)\bigr)
+% \end{aligned}\]
+
+\subsection{Large deviations}
+\marginpar{\red{Lecture 6}}
+
+We proceed with a more formal introduction of the cumulant generating function
+and its properties in multiple dimensions.
+
+\begin{definition}[Cumulant generating function]
+    The \textbf{cumulant generating function} (CGF) of a random variable \(X\)
+    in a Hilbertspace \(\hilbert\) is defined as the logarithm of its moment generating
+    function
+    \[\tag{CGF}
+        \CGF_X(t) \coloneq \log \MGF_X(t)
+        = \log \E{e^{\scp{t, X}}}.
+    \]
+    Due to \(\exp(x) > 0\) the MGF \(\MGF_X\) is always defined with values in \((0,
+    \infty]\). Thus the CGF is defined for all \(t\in \hilbert\) with values in \((-\infty,
+    \infty]\). We denote its effective domain
+    by
+    \[
+        \tag{effective domain}
+        \cD_{\CGF_X} \coloneq \set{t \in \hilbert: \CGF_X(t) < \infty} = \cD_{\MGF_X} \supseteq \set{0}.
+    \]
+    We further define the functions for \(t,a\in \hilbert\)
+    \begin{align*}
+        \tag{concave-convex helper}
+        \Phi_X(t, a) &\coloneq \scp{t, a} - \CGF_X(t)
+        \\
+        \tag{convex conjugate of \(\CGF_X\)}
+        \CGF_X^*(a) &\coloneq \sup_{t\in \hilbert} \Phi(t, a)
+    \end{align*}
+\end{definition}
+
+\begin{lemma}[Properties of the CGF]
+    \label{lem: properties of CGF}
+    Let \(X\) be a random variable in a Hilbertspace \(\hilbert\). Then
+    \begin{enumerate}[label=\normalfont{(\arabic*)}, noitemsep]
+        \item\label{it: CGF(0)=0} \(\CGF_X(0) = 0\),
+        \item\label{it: CGF convex} \(\CGF_X\) is convex,
+        \item\label{it: CGF lower semicontinuous} \(\CGF_X\) is lower semicontinuous, i.e.\ \(\liminf\limits_{n\to\infty} \CGF_X(t_n) \ge \CGF_X(t)\) for any \(t_n\to t\),
+        in other words: the CGF takes the bottom value at jump points
+
+        \item\label{it: CGF effective domain is convex} \(\cD_{\CGF_X}\) is a convex set that contains the origin \(0\),
+    \end{enumerate} 
+    The CGF interacts nicely with sums (the key in the analysis of the mean)
+    \begin{enumerate}[label=\normalfont{(\arabic*)}, noitemsep, resume]
+        \item\label{it: CGF sum independent} \(\CGF_{X+Y}(t) = \CGF_X(t) + \CGF_Y(t)\) for \(X,Y\) independent and all \(t\in \hilbert\).
+        \item\label{it: CGF affine} \(\CGF_{aX + b}(t) = \scp{t, b} + \CGF_X(a t)\)
+        for any \(a\in \real\), \(b, t\in \hilbert\).
+    \end{enumerate}
+    Let \(\hilbert=\real^\dims\) and assume \(U \subseteq \cD_{\CGF_X}\) is an open
+    set with \(0\in U\), then
+    \begin{enumerate}[label=\normalfont{(\arabic*)}, noitemsep, resume]
+        \item\label{it: CGF analytic} \(\CGF_X\) is analytic (a power series) on \(U\), specifically for \(\dims=1\)
+        \[
+            \CGF_X(t)
+            = \sum_{k=1}^\infty \CGF_X^{(k)}(0)\frac{t^k}{k!}
+            \qquad \forall t\in O.
+        \]
+        The coefficient \(\cumulant_k(X) \coloneq \CGF_X^{(k)}(0)\) is called the \(k\)-th \textbf{cumulant} of \(X\).
+        For \(X,Y\) independent we have by \ref{it: CGF sum independent},
+        \[
+            \cumulant_k(X+Y) = \cumulant_k(X) + \cumulant_k(Y).
+        \]
+        \item\label{it: CGF gradient and Hessian} \(\nabla \CGF_X(0) = \E{X}\) and \(\nabla^2\CGF_X(0) = \Cov{X}\).
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    \ref{it: CGF(0)=0}, \ref{it: CGF sum independent} and \ref{it: CGF affine}
+    are easy to verify and also follow from the equivalent properties of the MGF
+    (Exercise \ref{ex: properties moment generating functions}). For \ref{it:
+    CGF analytic} recall that the MGF is analytic on the interior of its
+    effective domain (Lemma \ref{lem: moment generating function representation}
+    and Exercise \ref{ex: multivariate
+    moment generating function}) and the \(\log\) is analytic on \((0,
+    \infty)\), therefore the CGF is also analytic there. Then \ref{it: CGF
+    gradient and Hessian} follows from \(\log \MGF_X(t)\) and the chain rule.
+    
+    Convexity of \(\CGF_X\), \ref{it: CGF convex}, follows from Hölder's inequality (Exercise \ref{ex: hölder's inequality}).
+    Specifically, for any \(t, s\in \hilbert\) and any \(\alpha\in[0,1]\) we choose
+    \(p = \frac1\alpha\) and \(q = \frac1{1-\alpha}\) such that \(\frac1p
+    + \frac1q = 1\), then
+    \[\begin{aligned}[b]
+        \CGF_X(\alpha t + (1-\alpha) s)
+        &= \log \E{e^{\scp{\alpha t + (1-\alpha) s, X}}}
+        \\
+        \overset{\text{Hölder}}&\le \log \E{(e^{ \alpha\scp{t, X}})^{p}}^{\frac1p} \E{(e^{(1-\alpha)\scp{s, X}})^{q}}^{\frac1q}
+        \\
+        \overset{p=\frac1\alpha}&= \log \E{e^{\scp{t, X}}}^{\alpha} \E{e^{\scp{s, X}}}^{1-\alpha}
+        = \alpha \CGF_X(t) + (1-\alpha) \CGF_X(s).
+    \end{aligned}
+    \]
+    The convexity of the effective domain, \ref{it: CGF effective domain is convex}, follows directly.
+    Lower semicontinuity of \(\CGF_X\), \ref{it: CGF lower semicontinuous}, follows from Fatou's lemma (measure
+    theory):
+    \[\begin{aligned}[b]
+        \liminf_{n\to \infty} \CGF_X(t_n)
+        &= \log \liminf_{n\to \infty} \E{\exp(\scp{t_n, X})}
+        \\
+        \overset{\text{Fatou}}&\ge \log \E{\liminf_{n\to \infty} \exp(\scp{t_n, X})}
+        = \CGF_X(t).
+    \end{aligned}
+    \qedhere
+    \]
+\end{proof}
+
+\begin{remark}[Often the CGF is non-negative]
+    If \(\E{X} = 0\), then the slope of the CGF at \(0\) is zero, that is \(\nabla \CGF_X(0) = 0\).
+    Since the CGF is convex and the second derivative \(\Cov{X}\) is positive definite,
+    this implies it must be non-negative everywhere. For \(\E{X} \neq 0\)
+    this is obviously not the case.
+\end{remark}
+
+Observe that \(\Phi_X\) is thus a concave-convex function since \(\CGF_X\) is convex.
+This explains its name and this property is crucial for the following bound.
+
+\begin{mdframed}[innertopmargin=0pt]
+\begin{proposition}
+    \label{prop: general LDP upper}
+    Let \(A\subseteq \hilbert\) be a \underline{compact convex} set, then 
+    \[
+        \prob{X \in A} \le \exp\bigl(-\inf_{a\in A} \CGF_X^*(a)\bigr).
+    \]
+\end{proposition}
+\end{mdframed}
+
+\begin{proof}
+    Then
+    \(
+        \scp{t, x} - \inf_{a\in A} \scp{t, a} \ge 0
+    \)
+    for all \(x\in A\) and any \(t\in \hilbert\). Since \(e^\lambda \ge 1\)
+    for all \(\lambda \ge 0\) we have
+    \[\begin{aligned}
+        \prob{X \in A} = \E{\ind{X \in A}}
+        &\le \E[\Big]{\exp\bigl(\scp{t, X} - \inf_{a\in A} \scp{t, a}\bigr)}
+        \\
+        &= \MGF_X(t)\exp\bigl(- \inf_{a\in A} \scp{t, a}\bigr) 
+        \\
+        &= \exp\Bigl(- \bigl(\inf_{a\in A} \scp{t, a}-\CGF_X(t)\bigr)\Bigr) 
+        = \exp(- \inf_{a\in A} \Phi_X(t, a)).
+    \end{aligned}
+    \]
+    Since this bound holds for any \(t\in \hilbert\) we have by Sion's
+    minimax theorem (Fact \ref{fact: sion's minimax theorem}) and Lemma
+    \ref{lem: check sion's conditions}
+    \[\begin{aligned}[b]
+        \prob{X \in A}
+        &\le \exp\Bigl(- \sup_{t \in \hilbert} \inf_{a\in A} \Phi_X(t, a)\Bigr)
+        \\
+        \overset{\text{Sion}}&=
+        \exp\Bigl(- \inf_{a\in A} \sup_{t \in \hilbert} \Phi_X(t, a)\Bigr)
+        = \exp\bigl(- \inf_{a\in A} \CGF_X^*(a)\bigr).
+    \end{aligned}
+    \qedhere
+    \]
+\end{proof}
+
+\begin{fact}[Sion's minimax theorem {\citep[e.g.][]{komiyaElementaryProofSions1988}}]
+    \label{fact: sion's minimax theorem}
+    Let \(\cX\) be a \underline{compact convex} subset of a topological vectorspace and
+    \(\cY\) a convex subset of a topological vectorspace. Let
+    \(f \colon \cX \times \cY \to \real\) be a function such that
+    \begin{enumerate}[label=(\roman*), noitemsep]
+        \item for each \(y \in \cY\), \(f(\cdot, y)\) is upper semicontinuous and quasi-concave on \(\cX\),
+        \item for each \(x \in \cX\), \(f(x, \cdot)\) is lower semicontinuous and quasi-convex on \(\cY\).
+    \end{enumerate}
+    Then
+    \[
+        \sup_{x \in \cX} \inf_{y \in \cY} f(x, y)
+        = \inf_{y \in \cY} \sup_{x \in \cX} f(x, y);
+    \]
+\end{fact}
+
+\begin{lemma}[Check Sion's conditions]
+    \label{lem: check sion's conditions}
+    \(\Phi(t, a) = \scp{t, a} - \CGF_X(t)\) satisfies the conditions of Sion's minimax theorem.
+\end{lemma}
+\begin{proof}
+    The function \(\Phi_X\) is trivially continuous and convex in \(a\) since
+    the inner product is continuous and linear in \(a\).
+    Since \(\CGF_X\) is lower semicontinuous and convex (Lemma \ref{lem:
+    properties of CGF}) it follows that
+    the function \(\Phi_X\) is upper semicontinuous and concave in \(t\).
+\end{proof}
+
+In finite dimensions we can extend Proposition \ref{prop: general LDP upper} to
+\emph{closed} convex sets.
+
+\begin{mdframed}[innertopmargin=0pt]
+\begin{theorem}[General Chernoff bound]
+    \label{thm: chernoff bound in R^d}
+    Let \(A\subseteq \real^\dims\) be a \underline{closed}, \underline{convex} set, then 
+    \[
+        \prob{X \in A} \le \exp\bigl(-\inf_{a\in A} \CGF_X^*(a)\bigr).
+    \]
+\end{theorem}
+\end{mdframed}
+\begin{proof}
+    Let \((K_n)_{n\in \nat}\) be an increasing sequence of convex compact sets
+    with \(K_n \uparrow \real^\dims\) (this does not necessarily exist in infinite
+    dimension!). Then by continuity of probability measures
+    (Remark \ref{rem: continuity of probability})
+    \[\begin{aligned}[b]
+        \prob{X \in A}
+        &\le \lim_{n\to \infty} \prob{X \in A \cap K_n} + \underbrace{\prob{X \notin K_n}}_{\to 0}
+        \\
+        &\le \lim_{n\to \infty} \exp\bigl(- \inf_{a\in A \cap K_n} \CGF_X^*(a)\bigr)
+        \le \exp\bigl(- \inf_{a\in A} \CGF_X^*(a)\bigr).
+    \end{aligned}
+    \qedhere
+    \]
+\end{proof}
+
+\paragraph*{Comparison with the one-dimensional motivation}
+Let us compare the generalized Chernoff bound with the Chernoff bound
+we obtained in the one-dimensional case. The one dimensional bound \eqref{eq: chernoff bound}
+was
+\[
+    \prob{X \ge x} \le \exp\bigl(-\CGF_X^+(x)\bigr)
+    \Bigl(= \exp\bigl(-\CGF_X^*(x)\bigr) \qquad \text{for } x \ge \E{X}\Bigr).
+\]
+Using the closed, convex set \(A=[x, \infty)\) in the generalized Chernoff bound we get
+\[
+    \prob{X \ge x} \le \exp\bigl(-\inf_{a\ge x} \CGF_X^*(a)\bigr).
+\]
+Since \(\CGF_X^*(x) \ge \inf_{a\ge x} \CGF_X^*(a)\) it may appear
+that we obtained a worse bound. However the key to understand here is that the
+function \(\CGF_X^*(a)\) is monotonically increasing after \(\E{X}\) (Lemma \ref{lem: properties of cgf*}) 
+and therefore
+\[
+    \CGF_X^*(x) = \inf_{a\ge x} \CGF_X^*(a) \quad \text{for all } x \ge \E{X}.
+\]
+More specifically, we will see in the following that the expected value \(\E{X}\)
+is the minimizer of \(\CGF_X^*(a)\) and that \(\CGF_X^*(a)\) is also convex and therefore
+monotonically increasing for \(a \ge \E{X}\). Observe that for \(x< \E{X}\)
+the minimizer is the expected value and we do not have the problem to ensure \(x
+\ge \E{X}\) anymore (cf.~Warning \ref{warn: difference between CGF star and
+plus}).
+
+\paragraph*{Understanding the convex conjugate} Recall that a convex function
+\(\Lambda\) has the property that it lies above its supporting hyperplanes. That is 
+\[
+    \Lambda(t) \ge \scp[\big]{t-s, \nabla \Lambda(s)} + \Lambda(s)
+    = \underbrace{\scp[\big]{t, \nabla \Lambda(s)}}_{\text{hyperplane}}
+    - \underbrace{\bigl(\scp[\big]{s, \nabla \Lambda(s)} - \Lambda(s)\bigr)}_{\eqcolon c(s) \quad\text{(intercept)}}.
+\]
+The convex conjugate \(\Lambda^*\) is essentially the map from the gradient to
+the intercept, \(\nabla \Lambda(s) \mapsto c(s)\). That is
+\[
+    \Bigl(\Lambda(t) \ge \scp{t, a} - c\qquad \forall t \in \hilbert\Bigr)
+    \iff c \ge \bigl(\sup_{t \in \hilbert} \scp{t, a} - \Lambda(t)\bigr) = \Lambda^*(a).
+\]
+So the smallest intercept that ensures the hyperplane is below the function is
+exactly the convex conjugate. Being the smallest intercept it ensure the hyperplane
+is touching the function at some point (cf.~\(t=s\) above). In particular,
+if \(\Lambda\) is differentiable, then
+\begin{equation}
+    \label{eq: gradient of cgf star}    
+    \Lambda^*\bigl(\nabla\Lambda(t)\bigr)
+    = c(t)
+    = \scp[\big]{t, \nabla \Lambda(t)} - \Lambda(t).
+\end{equation}
+Recall that if the essential domain of \(\CGF_X\) contains an open
+neighborhood of \(0\), then \(\nabla \CGF_X(0) = \E{X}\) and consequently
+\begin{equation}
+    \label{eq: cgf star at expected value}    
+    \CGF_X^*\bigl(\E{X}\bigr) = \CGF_X^*\bigl(\nabla \CGF_X(0)\bigr) = \scp{0, \nabla \CGF_X(0)} - \CGF_X(0) = 0.
+\end{equation}
+So up to the issue with the domain it is sufficient to prove that \(\CGF_X\)
+is non-negative and convex to get that \(\E{X}\) is its minimizer.
+
+
+\begin{lemma}[Properties of the convex conjugate]
+    \label{lem: properties of cgf*}
+    The convex conjugate \(\Lambda^*\) of an arbitrary function \(\Lambda\)
+    satisfies
+    \begin{enumerate}[label=\normalfont{(\arabic*)}, noitemsep]
+        \item\label{it: cgf* convex} \(\Lambda^*\) is convex,
+        \item\label{it: cgf* lower semicontinuous} \(\Lambda^*\) is lower semicontinuous,
+        \item\label{it: cgf* duality} \(\Lambda^{**} = \Lambda\) if \(\Lambda\) is convex and lower semicontinuous (Fenchel-Moreau Thm.),
+        \item\label{it: cgf* gradient} If \(\Lambda\) is
+        differentiable in \(t\in \hilbert\), then \(\Lambda^*(\nabla \Lambda(t)) = \scp{t, \nabla \Lambda(t)} - \Lambda(t)\)
+        \item\label{it: cgf* minimum at expected value} If \(\Lambda(0) = 0\), then \(\Lambda^*(a) \ge 0\) for all \(a\in \hilbert\).
+    \end{enumerate}
+    Moreover for \(\Lambda = \CGF_X\) we have
+    \begin{enumerate}[label=\normalfont{(\arabic*)}, noitemsep, resume]
+        \item\label{it: cgf* trivial essential domain} If \(\cD_{\CGF_X} = \set{0}\), then \(\CGF_X \equiv 0\).
+        \item\label{it: cgf* open essential domain} If \(U \subseteq \cD_{\CGF_X}\) is an open set with \(0\in U\), then
+        \(\CGF_X^*(\E{X})=0\).
+        In particular, the expectation \(\E{X}\) is a minimizer of \(\CGF_X^*\).
+    \end{enumerate}
+\end{lemma}
+
+\begin{remark}
+    Between \ref{it: cgf* trivial essential domain} and \ref{it: cgf* open
+    essential domain} there is a gap that is very annoying to treat formally,
+    but offers little insight.
+    See \fxwarning{reference or exercise?}
+\end{remark}
+
+\begin{proof}
+    For \ref{it: cgf* convex} choose \(\lambda\in [0,1]\) and \(a, b\in \hilbert\). Then
+    \[\begin{aligned}
+        \Lambda^*(\lambda a + (1-\lambda) b)
+        &= \sup_{t\in \hilbert} \bigl(\lambda \scp[\big]{t, a} + (1-\lambda) \scp[\big]{t, b} - \Lambda(t)\bigr)
+        \\
+        &\le \lambda \sup_{t\in \hilbert} \bigl(\scp{t, a} - \Lambda(t)\bigr)
+        + (1-\lambda) \sup_{t\in \hilbert} \bigl(\scp{t, b} - \Lambda(t)\bigr)
+        \\
+        &= \lambda \Lambda^*(a) + (1-\lambda) \Lambda^*(b).
+    \end{aligned}
+    \]
+    For \ref{it: cgf* lower semicontinuous} let \(a_n \to a\). For any fixed \(t\in \hilbert\) we have
+    \[
+        \liminf_{n\to \infty} \Lambda^*(a_n)
+        \overset{\text{Def.~}\Lambda^*}\ge \liminf_{n\to \infty}\; \scp{t, a_n} - \Lambda(t)
+        = \scp{t, a} - \Lambda(t).
+    \]
+    Since this holds for any \(t\in \hilbert\), it also holds for the supremum
+    \[
+        \liminf_{n\to \infty} \Lambda^*(a_n) \ge \sup_{t\in \hilbert} \bigl(\scp{t, a} - \Lambda(t)\bigr) = \Lambda^*(a).
+    \]
+    We will not prove \ref{it: cgf* duality}. See \fxwarning{reference!}. We have already proven
+    \ref{it: cgf* gradient} in \eqref{eq: gradient of cgf star}. For \ref{it: cgf* minimum at expected value} observe that
+    \[
+        \Lambda^*(a) = \sup_{t\in \hilbert} \bigl(\scp{t, a} - \Lambda(t)\bigr)
+        \ge \scp{0, a} - \Lambda(0) = 0.
+    \]
+    \ref{it: cgf* trivial essential domain} follows directly from the definition
+    as \(\scp{t, a} - \CGF_X(t) = -\infty\) for all \(t \neq 0\). Consequently
+    the supremum chooses \(t=0\).  \ref{it: cgf* open essential domain} was already
+    shown in \eqref{eq: cgf star at expected value}.
+\end{proof}
+
+\paragraph*{Large deviation principle for the mean}
+
+Since they are closely related to the MGF, the CGF also interacts very well with
+independent sums.
+
+\begin{lemma}
+    Let \(X_1, \ldots, X_n\) be independent copies of the random variable \(X\)
+    and \(\mean{X}_n\) their mean, then
+    \begin{equation}
+        \label{eq: cumulant generating function of the mean}
+        \CGF_{\mean{X}_n}(t) = n \CGF_X\bigl(\tfrac{t}n\bigr)
+        \qquad\text{and}\qquad
+        \CGF_{\mean{X}_n}^*(t) = n \CGF_X^*(t).
+    \end{equation}
+\end{lemma}
+\begin{proof}
+    The first claim follows by simple calculation and the nice interaction of
+    the exponential with independent sums
+    \[\begin{aligned}
+        \CGF_{\mean{X}_n}(t)
+        &= \log \E[\Big]{\exp\Bigl(\scp[\Big]{t, \frac1n \sum_{i=1}^n X_i}\Bigr)}
+        \\
+        &= \log \E[\Big]{\prod_{i=1}^n e^{\scp{\frac{t}n, X_i}}}
+        \overset{\iid}= \log \MGF_X\bigl(\tfrac{t}n\bigr)^n
+        = n \CGF_X\bigl(\tfrac{t}n\bigr).
+    \end{aligned}
+    \]
+    The second claim follows from the first by a change of variable
+    \[
+        \CGF_{\mean{X}_n}^*(a)
+        = \sup_{t\in \hilbert} \bigl(n \scp{\tfrac{t}n, a} - n \CGF_X\bigl(\tfrac{t}n\bigr)\bigr)
+        \overset{s=\frac{t}n}= n \sup_{s\in \hilbert} \bigl(\scp{s, a} - \CGF_X(s)\bigr)
+        = n \CGF_X^*(a).
+        \qedhere
+    \]
+\end{proof}
+
+The Lemma above immediately implies exponential convergence to the mean
+\begin{mdframed}[innertopmargin=0pt]
+\begin{corollary}
+    Let \(A\subseteq \real^\dims\) be a closed convex set, then
+    \[
+        \prob[\big]{\mean{X}_n \in A} \le \exp\bigl(-n \inf_{a\in A} \CGF_X^*(a)\bigr).
+    \]
+\end{corollary}
+\end{mdframed}
+In the one-dimensional case we get concentration bounds from this:
+\begin{mdframed}[innertopmargin=0pt]
+\begin{theorem}[Concentration bound for the mean]
+    Let \(X_1, \ldots, X_n\) be independent copies of the random variable \(X\)
+    with expectation \(\mu=\E{X}\) in \(\real\) and \(\mean{X}_n\) their mean,
+    then for any \(t > 0\)
+    \[
+        \prob[\Big]{\abs[\big]{\mean{X}_n - \mu} \ge t} \le 2 \exp\Bigl(-n \inf_{\abs{a-\mu}\ge t} \CGF_X^*(a)\Bigr).
+    \]
+\end{theorem}
+\end{mdframed}
+
+\begin{proof}
+    Since the sets \((-\infty, \mu - t]\) and \([\mu + t, \infty)\) are closed
+    and convex we have
+    \[\begin{aligned}[b]
+        \prob[\big]{\abs{\mean{X}_n - \mu} \ge t}
+        &= \prob{\mean{X}_n \ge t + \mu} + \prob{\mean{X}_n \le \mu - t}
+        \\
+        &\le \exp\bigl(-n \inf_{a \ge t+\mu}\CGF_X^*(a)\bigr) + \exp\bigl(-n \inf_{a \le \mu - t}\CGF_{X}^*(a)\bigr)
+        \\
+        &\le 2 \exp\Bigl(-n \min\set[\Big]{\inf_{a-\mu \ge t}\CGF_X^*(a), \inf_{a-\mu \le -t}\CGF_X^*(a)}\Bigr)
+        \\
+        &= 2 \exp\Bigl(-n \inf_{\abs{a-\mu}\ge t} \CGF_X^*(a)\Bigr).
+    \end{aligned}
+    \qedhere
+    \]
+\end{proof}
+
+Observe that the factor \(2\) appears since the set \((-\infty, \mu - t]
+\cup [\mu + t, \infty)\) is not convex and we had to split it into two convex
+parts. This has however no bearing on the exponential rate of convergence:
+\[
+    \frac1n \log \prob[\big]{\abs{\mean{X}_n - \mu} \ge t}
+    \le \underbrace{\frac{\log{2}}n}_{\to 0} - \inf_{\abs{a-\mu}\ge t} \CGF_X^*(a)
+\]
+With this less `sharp' view, we can thereby remove the convexity assumption on the set.
+In particular this exponential rate is tight.
+
+\begin{mdframed}[innertopmargin=0pt]
+\begin{fact}[Cramér]
+    Let \(X_1, \ldots, X_n\) be independent copies of the random variable \(X\) 
+    in \(\real^\dims\) and \(\mean{X}_n\) their mean. Let \(A\) be a closed (but
+    not necessarily convex) set, then
+    \[
+        \limsup_{n\to\infty} \frac1n \log \prob[\big]{\mean{X}_n \in A} \le -\inf_{a\in A} \CGF_X^*(a).
+    \]
+    Moreover for any open set \(U\)
+    \[
+        \liminf_{n\to\infty} \frac1n \log \prob[\big]{\mean{X}_n \in U} \ge -\inf_{a\in U} \CGF_X^*(a).
+    \]
+    In particular, for any set \(B\) that does not have isolated points, i.e.~\(\closure{\interior{B}} = \closure{B}\),
+    \[
+        \lim_{n\to\infty} \frac1n \log \prob[\big]{\mean{X}_n \in B} = -\inf_{a\in B} \CGF_X^*(a).
+    \]
+\end{fact}
+\end{mdframed}
+
+The lower bound shows that the exponential rate is tight. Since \(U\)
+is open it is proven by taking a small ball around the point \(a\in U\) that minimizes \(\CGF_X^*(a)\) and
+lower bounding the probability of this ball.
+The upper bound is obtained for
+arbitrary closed sets by covering the set with convex sets and using the fact
+that the factor (like the \(2\) we got) goes to zero when the logarithm and
+\(\frac1n\) is applied.
+However this covering argument does incur a subexponential cost at finite \(n\) that cannot be
+avoided! \fxwarning{exercise!}
+
+\subsection{Subgaussian random variables}
+\marginpar{\red{Lecture 7}}
+
+Subgaussian random variables have tails that decay at least as fast as the
+Gaussian distribution. That is
+\[
+    \prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{2\sigma^2}\bigr).
+\]
+Recall that we obtained this bound on the tails of the normal distribution using
+a Chernoff bound and the CGF of the normal distribution in \eqref{ex: chernoff
+bound for normal distribution}.
+An important example of subgaussian random variables
+are bounded random variables, since the probability 
+that \(\abs{X} \ge t\) eventually drops to zero.
+Unfortunately tail bounds like this do not interact
+well with summation of random variables. We would therefore prefer bounds on the
+CGF instead to get tight bounds on the convergence rate of the mean. We will
+start with such bounds and find out later (Theorem \ref{thm: subgaussian
+equivalences}) that this is actually equivalent to the tail bound above.
+
+\begin{definition}[Variance proxy]
+    Let \(X\) be a \underline{centered} random variable, then
+    the \emph{variance proxy} of \(X\) is defined as
+    \[
+        \varProx{X} \coloneq \min\set{\lambda \ge 0 : \CGF_X(t) \le \tfrac{\lambda t^2}2 \quad \forall t}
+    \]
+\end{definition}
+
+The cumulant generating function of a centered normal distribution with variance
+\(\sigma^2\) is
+\[
+    \CGF_X(t) = \log \MGF_X(t) = \tfrac{\sigma^2t^2}{2}.
+\]
+The variance proxy \(\varProx{X}\) therefore coincides with the variance \(\sigma^2\) in
+this case.
+
+
+\begin{lemma}[Basic properties of variance proxy]
+    Let \(X\) and \(Y\) be \underline{centered} random variables with variance proxies \(\varProx{X}\) and \(\varProx{Y}\), then
+    \begin{enumerate}[label=(\roman*), noitemsep]
+        \item\label{it: var proxy scaling} \(\varProx{a X} = a^2 \varProx{X}\) for any \(a\in \real\), in particular \(\varProx{-X} = \varProx{X}\),
+        \item\label{it: variance proxy independent sums} Let \(Y\) be \underline{independent} from \(X\), then
+        \[
+            \varProx{X+Y} \le \varProx{X} + \varProx{Y}.
+        \]
+    \end{enumerate}
+    In particular for the mean \(\mean{X}_n\) of independent centered \(X_i\),
+    we have
+    \begin{equation}
+        \label{eq: variance proxy of the mean}
+        \varProx{\mean{X}_n} \le \frac1{n^2} \sum_{i=1}^n \varProx{X_i}
+        \overset{\substack{\text{identical}\\\text{distributed}}}= \frac{\varProx{X_1}}n.
+    \end{equation}
+\end{lemma}
+\begin{proof}
+    The first property follows from the scaling property of the CGF, that is
+    \[
+        \CGF_{a X}(t) = \CGF_X(a t) \le \tfrac{\varProx{X} (a t)^2}2 = \tfrac{(a^2 \varProx{X}) t^2}2.
+    \]
+    of course by definition of the variance proxy as a minimum we only obtain
+    \(\varProx{aX} \le a^2 \varProx{X}\). To get the lower bound use the same
+    argument with \(a^{-1}\) to obtain \(\varProx{X} \le a^{-2} \varProx{aX}\).
+    The sum property follows from the identical
+    sum property of the CGF for independent random variables, that is
+    \[
+        \CGF_{X+Y}(t) = \CGF_X(t) + \CGF_Y(t) \le \tfrac{\varProx{X} t^2}2 + \tfrac{\varProx{Y} t^2}2 = \tfrac{(\varProx{X} + \varProx{Y}) t^2}2.
+        \qedhere
+    \]
+
+\end{proof}
+
+The variance proxy can then be used for the following tail bound:
+
+\begin{mdframed}[innertopmargin=0pt]
+\begin{theorem}[General Hoeffding inequality]
+    \label{thm: general hoeffding inequality}
+    Let \(X_1, \ldots, X_n\) be independent random variables in \(\real\) with
+    variance proxies \(\varProx{X_i}\), then for all \(\epsilon > 0\)
+    \[
+        \prob[\Big]{\mean{X}_n - \E{\mean{X}_n} \ge \epsilon}
+        \le \exp\Bigl(-\frac{n \epsilon^2}{2\frac1n\sum_{i=1}^n \varProx{X_i}}\Bigr).
+    \]
+\end{theorem}
+\end{mdframed}
+\begin{proof}
+    It is sufficient to prove for a centered random variable \(X\) with variance
+    proxy \(\varProx{X}\) that
+    \begin{equation}
+        \label{eq: var prox tail bound}    
+        \prob{X \ge \epsilon} \le \exp\bigl(-\tfrac{\epsilon^2}{2\varProx{X}}\bigr),
+    \end{equation}
+    because an application to \(X = \mean{X}_n - \E{\mean{X}_n}\) with
+    \eqref{eq: variance proxy of the mean} would then give the desired result.
+    For \eqref{eq: var prox tail bound} we simply use a Chernoff bound. 
+    Specifically, by definition of the variance proxy \(\CGF_X(t) \le \frac{\varProx{X} t^2}2\) for all \(t\in \real\).
+    We therefore obtain the following bound for the convex conjugate
+    \begin{equation}
+        \label{eq: bound on cgf star by variance proxy}    
+        \CGF_X^*(a)
+        = \sup_{t\in \real} \bigl(t a - \CGF_X(t)\bigr)
+        \ge \sup_{t\in \real} \bigl(t a - \tfrac{\varProx{X} t^2}2\bigr)
+        = \tfrac{a^2}{2\varProx{X}}.
+    \end{equation}
+    The last equation follows by the same optimization step of the quadratic
+    polynomial in \(t\) as we performed when we calculated this bound for the
+    normal distribution in Example \ref{ex: chernoff bound for normal
+    distribution}. Then clearly by Chernoff's bound (Thm.~\ref{thm: chernoff bound in R^d})
+    \[
+        \prob{X\ge \epsilon} = \prob{X \in [\epsilon , \infty)}
+        \overset{\text{Thm.~\ref{thm: chernoff bound in R^d}}}\le \exp\bigl(-\inf_{a \ge \epsilon}\CGF_X^*(a)\bigr)
+        \overset{\text{\eqref{eq: bound on cgf star by variance proxy}}}\le \exp\bigl(-\tfrac{\epsilon^2}{2\varProx{X}}\bigr).
+        \qedhere
+    \]
+\end{proof}
+
+Of course the variance proxy is only useful if we can actually calculate it for
+interesting random variables. The following lemma shows that for bounded random
+variables the variance proxy may be bounded.
+
+\begin{mdframed}[innertopmargin=0pt]
+\begin{lemma}[Hoeffding's Lemma]
+    \label{lem: hoeffding's lemma}
+    Let \(X\) be a centered, bounded random variable, that is 
+    \(\E{X}=0\) and \(X\in [a,b]\) with probability one. Then
+    \[
+        \varProx{X} \le \tfrac{(b-a)^2}4.
+    \]
+\end{lemma}
+\end{mdframed}
+\begin{proof}
+    The first step of the proof is to show that the variance proxy is largest
+    for the distribution that only takes the boundary values \(a\) and \(b\).
+    For this we use the convexity of the exponential function. 
+    Choosing \(p_x=\frac{x-b}{b-a}\in [0,1]\) for \(x\in [a,b]\) implies
+    \[
+        \exp(t x) \le p_x \exp(t b) + (1-p_x) \exp(t a).
+    \]
+    Plugging in \(X\) and taking the expectation this implies
+    \[\begin{aligned}
+        \E{\exp(t X)}
+        &\le \E{p_X} \exp(t b) + \E{1-p_X} \exp(t a)
+        \\
+        &= \E{\tfrac{X-a}{b-a}} \exp(t b) + \E{\tfrac{b-X}{b-a}} \exp(t a)
+        \\
+        &= \tfrac{-a}{b-a}\exp(t b) + \tfrac{b}{b-a}\exp(t a)
+        &&= \E{\exp(t Y)}
+    \end{aligned}
+    \]
+    Observe that the last line is exactly the MGF of a random variable \(Y\)
+    with
+    \[
+        \prob{Y=b} = p,
+        \qquad
+        \prob{Y=a} = 1-p,
+        \qquad p \coloneq \tfrac{-a}{b-a}.
+    \]
+    Note that \(a\le 0=\E{X} \le b\) and thus \(p\in [0,1]\).
+    Taking the logarithm on both sides we obtain
+    \begin{equation}
+        \label{eq: rademacher are worst offender}
+        \CGF_X(t) \le \CGF_Y(t) \overset{!}\le \tfrac{\lambda^2 t^2}{2}
+        \qquad \forall t\ge 0.
+    \end{equation}
+    The smallest such \(\lambda\) is the variance proxy of \(Y\).
+    If we prove it is bounded by \(\frac{(b-a)^2}{4}\) we finish the proof.
+    We begin by calculating the cumulant generating function of \(Y\) 
+    \[\begin{aligned}
+        \CGF_Y(t)
+        = \log(p e^{t b} + (1-p) e^{t a})
+        &= \log\bigl(e^{ta}(p e^{t (b-a)} + 1-p)\bigr)
+        \\
+        &= ta + \log(pe^{t(b-a)}+1-p).
+    \end{aligned}
+    \]
+    Taylor's theorem with mean value reminder implies for some \(\xi\)
+    \[
+        \CGF_Y(t) = \CGF_Y(0) + \CGF_Y'(0)t + \CGF_Y''(\xi)\tfrac{t^2}{2}.
+    \]
+    So \(\CGF_Y(0) = \CGF_Y'(0)=0\) and \(\abs{\CGF_Y''(\xi)} \le \lambda\)
+    would do the job to get \eqref{eq: rademacher are worst offender}. To
+    make the calculations easier we would like to assume \((b-a)=1\).
+    We can do so without loss of generality by the change of variables
+    \(h=t(b-a)\), where \(p= \frac{-a}{b-a}\) implies \(-ph= ta\)
+    and thus
+    \[
+        \CGF_Y(t)
+        = -ph +  \log\bigl(p e^{h} + 1-p\bigr) \eqcolon \phi(h).
+    \]
+    Since \(\CGF_Y'(t) = \phi'(h) \frac{dh}{dt}\) with \(\frac{dh}{dt} =
+    (b-a)\) it is sufficient to calculate the derivatives of \(\phi\) given by 
+    \begin{align*}
+        \phi'(h) &= \frac{pe^h}{pe^h +1-p} -p,
+        \\
+        \phi''(h) &= \frac{pe^h}{pe^h +1-p} - \frac{(pe^h)^2}{(pe^h +1-p)^2} = q(h)(1-q(h))
+    \end{align*}
+    with \(q(h) \coloneqq \frac{pe^h}{pe^h +1-p}\in [0,1]\) for all \(h\in \real\). Since \(q(1-q)\) is maximized at
+    \(q=\frac12\) by the value \(\frac14\) we have \(\abs{\phi''(h)} \le \frac14\) for all \(h\in \real\).
+    This implies
+    \begin{alignat*}{2}
+        \CGF_Y(0) &= \phi(0) &&= 0
+        \\
+        \CGF_Y'(0) &= \phi'(0)(b-a) &&= 0
+        \\
+        \abs{\CGF_Y''(\xi)} &= \abs{\phi''(\xi)}(b-a)^2 &&\le \tfrac{(b-a)^2}4
+    \end{alignat*}
+    In the last equation we used the chain rule again to obtain \(\CGF_Y''(\xi) = \phi''(\xi)(b-a)^2\). 
+    A comparison of the the Taylor expansion with \eqref{eq: rademacher are worst
+    offender} finishes the proof.
+\end{proof}
+
+\begin{mdframed}[innertopmargin=0pt]
+\begin{corollary}[Hoeffding inequality for bounded random variables]
+    \label{cor: hoeffding inequality for bounded random variables}
+    Let \(X_1, \ldots, X_n\) be independent random variables contained in
+    \([a,b]\), then we have
+    \[
+        \prob[\Big]{\abs[\big]{\mean{X}_n - \E{\mean{X}_n}} \ge \epsilon}
+        \le 2 \exp\Bigl(-\frac{2n\epsilon^2}{(b-a)^2}\Bigr)
+    \]
+\end{corollary}
+\end{mdframed}
+\begin{proof}
+    Observe that \(\varProx{X_i} \le \frac{(b-a)^2}4\) for all \(i\) by Hoeffding's Lemma and thus
+    \[
+        \prob[\Big]{\mean{X}_n - \E{\mean{X}_n} \ge \epsilon}
+        \le \exp\Bigl(-\frac{n \epsilon^2}{2\frac1n\sum_{i=1}^n \varProx{X_i}}\Bigr)
+        \le \exp\Bigl(-\frac{2n\epsilon^2}{(b-a)^2}\Bigr).
+    \]
+    Since \(-X_i\) is contained in \([-b, -a]\) we also have \(\varProx{-X_i} \le \frac{(b-a)^2}4\)
+    and obtain the same bound for \(-(\mean{X}_n - \E{\mean{X}_n})\). This leads
+    to the factor \(2\) by a union bound.
+\end{proof}
+
+Recall that we have promised that this variance proxy is actually equivalent
+the tail bound
+\[
+    \prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{2\sigma^2}\bigr)
+\]
+for some \(\sigma^2\).  Observe that taking \(n=1\) in the general Hoeffding
+inequality (Theorem \ref{thm: general hoeffding inequality}), we already get
+this bound with \(\sigma^2 = \varProx{X}\) and consequently every distribution that satisfies a Hoeffding's
+inequality must have such a tail. In the following we will see that
+this tail decay and a finite variance proxy are actually equivalent among other
+equivalent characterizations of subgaussian random variables.
+
+\begin{mdframed}[innertopmargin=0pt]
+\begin{theorem}[Subgaussian characterization]
+    \label{thm: subgaussian equivalences}
+    Let \(X\) be a random variable. The following are equivalent:
+    \begin{enumerate}[label=(\roman*), noitemsep]
+        \item\label{it: subgaussian tail decay}
+        \textbf{Tail decay:} There exists \(K_1 > 0\) such that the tails of \(X\) satisfy
+        \[
+            \prob{\abs{X} \ge t} \le 2 \exp\bigl(-\tfrac{t^2}{K_1^2}\bigr)
+            \qquad\text{for all } t > 0.
+        \]
+        \item\label{it: subgaussian moment decay}
+        \textbf{Moment decay:} There exists \(K_2 > 0\) such that the moments of \(X\) satisfy
+        \[
+            \E{\abs{X}^p} \le K_2^p p \Gamma(\tfrac{p}2)
+            \qquad\text{for all } p\ge 1.
+        \]
+        or equivalently,
+        \[
+            \norm{X}_{L^p} = \bigl(\E{\abs{X}^p}\bigr)^{1/p} \le K_2' \sqrt{p}
+            \qquad\text{for all } p\ge 1.
+        \]
+        \item\label{it: subgaussian X^2 sub-exponential}
+        \textbf{\(X^2\) sub-exponential:} There exists \(K_3 >0\) such that the MGF of \(X^2\) satisfies
+        \[
+            \MGF_{X^2}(t^2) = \E{\exp(t^2 X^2)} \le \exp(K_3^2 t^2)
+            \qquad\text{for all } t \text{ with } \abs{t} < \tfrac1{K_3}.
+        \]
+        \item\label{it: subgaussian orlicz norm}
+        \textbf{Orlicz norm:} There exists \(K_4 > 0\) such that
+        \[
+            \E{\exp\bigl(\tfrac{X^2}{K_4^2}\bigr)} \le 2.
+        \]
+        In other words: The Orlicz norm (Definition \ref{def: orlicz norm})
+        corresponding to the convex function \(\psi_2(x) \coloneq \exp(x^2) - 1\) is finite
+        \[
+            \norm{X}_{\psi_2} \coloneq \inf\set{t > 0 :
+            \E{\psi_2(\tfrac{\abs{X}}t)} \le 1}
+            \le K_4 < \infty.
+        \]
+    \end{enumerate}
+    If \(\E{X} = 0\), then these are also equivalent to
+    \begin{enumerate}[label=(\roman*), resume, noitemsep]
+        \item\label{it: subgaussian variance proxy}
+        \textbf{Variance proxy:} There exists \(K_5 > 0\) such that the MGF of \(X\) satisfies
+        \[
+            \CGF_X(t) \le K_5^2 t^2
+            \qquad\text{for all } t\in \real.
+        \]
+        That is \(\varProx{X} \le 2K_5^2 < \infty\).
+    \end{enumerate} 
+    The parameters \(K_i>0\) appearing in these statements differ from
+    each other by at most a constant factor that is independent from the
+    specific \(X\).
+    \begin{center}
+        \hspace{-1em}
+        \scalebox{0.9}{
+        \def\arraystretch{1.4}
+        \begin{tabular}{r r | c c c c c c}
+            & \multicolumn{1}{c}{} & \multicolumn{6}{c}{\normalfont have}
+            \\
+            & &\(K_1\) & \(K_2\) & \(K_2'\) & \(K_3\) & \(K_4\) & \(K_5\)
+            \\
+            \cline{2-8}
+            \multirow{6}{*}{\rotatebox{90}{\normalfont want}}
+            & \(K_1\)
+            & \(\textcolor{gray}1\)
+            & \textcolor{gray}{\(\sqrt{3}\)}
+            & \textcolor{gray}{\(\frac{2\sqrt{e}}{\sqrt{\ln 2}}\)}
+            & \textcolor{gray}{\(\frac1{\sqrt{\ln 2}}\)}
+            & \textcolor{magenta}{\(1\)}
+            & \textcolor{blue}{\(2\)}
+            \\
+            & \(K_2\)
+            & \textcolor{magenta}{\(1\)}
+            & \(\textcolor{gray}1\)
+            & \textcolor{gray}{\(\frac{2\sqrt{e}}{\sqrt{\ln 2}}\)}
+            & \textcolor{gray}{\(\frac1{\sqrt{\ln 2}}\)}
+            & \textcolor{gray}{\(1\)} & \textcolor{gray}{\(2\)}
+            \\ 
+            & \(K_2'\)
+            & \textcolor{gray}{\(\frac{3}{\sqrt{2}}\)}
+            & \textcolor{magenta}{\(\frac{3}{\sqrt{2}}\)}
+            & \(\textcolor{gray}1\)
+            & \textcolor{gray}{\(\frac3{\sqrt{2\ln 2}}\)}
+            & \textcolor{gray}{\(\frac{3}{\sqrt{2}}\)}
+            & \textcolor{gray}{\(3\sqrt{2}\)}
+            \\
+            & \(K_3\)
+            & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
+            & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
+            & \textcolor{magenta}{\(2\sqrt{e}\)}
+            & \(\textcolor{gray}1\)
+            & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
+            & \textcolor{gray}{\(\frac{12\sqrt{e}}{\sqrt{2}}\)}
+            \\
+            & \(\mathllap{\norm{X}_{\psi_2}\! \le}K_4\)
+            & \textcolor{gray}{\(\sqrt{3}\)}
+            &\(\sqrt{3}\)
+            & \textcolor{gray}{\(\frac{2\sqrt{e}}{\sqrt{\ln 2}}\)}
+            & \textcolor{magenta}{\(\frac1{\sqrt{\ln 2}}\)}
+            & \(\textcolor{gray}1\)
+            & \textcolor{gray}{\(2\sqrt{3}\)}
+            \\
+            & \(\mathllap{\sqrt{\frac{\varProx{X}}2} \le} K_5\)
+            & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
+            & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
+            & \textcolor{gray}{\(2\sqrt{e}\)}
+            & \textcolor{blue}{\(1\)}
+            & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
+            & \(\textcolor{gray}1\)
+        \end{tabular}
+        \hspace{0.1em}
+        \begin{minipage}{0.32\textwidth}
+        If you \underline{want} \(K_i\) and \underline{have}
+        \(K_j\), then the table lists a \(c_{ij}\) such that
+        \[
+            K_i \le c_{ij} K_j.
+        \]
+        The \textcolor{gray}{gray} entries follow from the other entries. The \textcolor{magenta}{magenta}
+        entries prove equivalence of \(K_1\) to \(K_4\) and the
+        \textcolor{blue}{blue} entries tie in \(K_5\).
+        \end{minipage}
+        }
+    \end{center}
+\end{theorem}
+\end{mdframed}
+
+\begin{proof}[Proof {\citep[Prop.~2.5.2]{vershyninHighDimensionalProbabilityIntroduction2018}}]
+    The equivalence clearly follows if we bound the \(c_{ij}\) for sufficient
+    combinations of \(i\) and \(j\) such that loops may be formed.
+
+    ``\ref{it: subgaussian tail decay} \(\Rightarrow\) \ref{it: subgaussian moment decay}''
+    Let us start with \(K_1\)
+    \[\begin{aligned}
+        \E{\abs{X}^p}
+        &= \int_0^\infty \prob{\abs{X}^p \ge u} du
+        \mathrlap{= \int_0^\infty \prob{\abs{X} \ge u^{1/p}} du}
+        \\
+        &= \int_0^\infty \prob{\abs{X} \ge t} p t^{p-1} dt
+        & (u=t^p)
+        \\
+        &\le p \int_0^\infty 2\exp(-\tfrac{t^2}{K_1^2}) t^{p-1} dt
+        \\
+        &= K_1^p p \int_0^\infty e^{-s} s^{\frac{p}2 - 1} ds
+        & \Bigl(s = (\tfrac{t}{K_1})^2, dt = \tfrac{K_1}{2} s^{-\frac12} ds\Bigr)
+        \\
+        \overset{\text{def.}}&= K_1^p p \Gamma(\tfrac{p}2).
+    \end{aligned}
+    \]
+    So clearly \(K_2 \le K_1\) (i.e. \(c_{21} = 1\)). Observe that
+    we could have assumed \(K_1=1\) without loss of generality by bounding the
+    scaled random variable \(X/K_1\). We will do so from now on.
+    
+    To get \(K_2'\) from \(K_2\) we use a bound on the Gamma function,
+    \(\Gamma(x)\le 3x^x\) for
+    \(x\ge \tfrac12\) \citep{vershyninHighDimensionalProbabilityIntroduction2018}. Then we have
+    \[
+        \bigl(p\Gamma(\tfrac{p}2)\bigr)^{\frac1p}
+        \le \bigl(3p(\tfrac{p}2)^{\frac{p}2}\bigr)^{\frac1p}
+        = \sqrt{\frac{p}2} (3p)^{\frac1p}
+        \le \frac{\max_{p\ge 1} f(p)}{\sqrt{2}} \sqrt{p}
+    \]
+    with \(f(x) = (3x)^{\frac1x} = \exp(\frac1x\ln(3x))\). Its derivative is given by
+    \[
+        f'(x) = f(x) \tfrac1{x^2}(1- \ln(3x)) \le 0 \qquad \text{for } x \ge 1.
+    \]
+    Consequently the maximizer is \(f(1) = 3\) and thus
+    \(K_2' \le K_2 \frac{3}{\sqrt{2}}\).
+
+    ``\ref{it: subgaussian moment decay} \(\Rightarrow\) \ref{it: subgaussian X^2 sub-exponential}''
+    To get \(K_3\) from \(K_2'\) observe that by the series expansion of the exponential
+    function
+    \[
+        \E{\exp(t^2 X^2)}
+        = \E[\Big]{1+\sum_{k=1}^\infty \frac{(t^2 X^2)^k}{k!}}
+        =1+ \sum_{k=1}^\infty \frac{t^{2k} \E{X^{2k}}}{k!}
+    \]
+    using the assumption \(\E{X^{2k}} \le (2k)^{\frac{2k}2}\) with \(K_2'=1\) and
+    Stirling's approximation \(k! \ge (\tfrac{k}e)^k\) this results in
+    \[
+        \E{\exp(t^2 X^2)}
+        \le 1+ \sum_{k=1}^\infty \frac{t^{2k} (2k)^k}{(k/e)^k}
+        = 1 + \sum_{k=1}^\infty (2e t^2)^k
+        = \frac1{1-2e t^2},
+    \]
+    assuming \(2e t^2 < 1\). Further assuming \(2e t^2 \le \frac12\) and using
+    the inequality \(\frac1{1-x} \le e^{2x}\) for \(x\in [0, \frac12]\) we have
+    \[
+        \E{\exp(t^2 X^2)} \le \exp(4e t^2) \qquad \text{for } t < \tfrac1{2\sqrt{e}}.
+    \]
+    Consequently \(K_3 \le 2\sqrt{e} K_2'\).
+
+    ``\ref{it: subgaussian X^2 sub-exponential} \(\Rightarrow\) \ref{it: subgaussian orlicz norm}''
+    Let \(c=K_3/\sqrt{\ln 2}\) such that \(\frac1c \le \frac1{K_3}\)
+    and therefore
+    \[
+        \E{\exp{X^2/c^2}} \le \exp(K_3^2/c^2) = \exp(\ln 2) = 2.
+    \]
+    Consequently \(K_4 \le c= \frac{K_3}{\sqrt{\ln 2}}\).
+    
+    ``\ref{it: subgaussian orlicz norm} \(\Rightarrow\) \ref{it: subgaussian
+    tail decay}'' Using Markov's inequality (Theorem \ref{thm: markov
+    inequality}) on \(h(x) = e^{x^2}\) we have for \(t > 0\)
+    \[
+        \prob{\abs{X} \ge t} \le \tfrac{\E{\exp(X^2)}}{\exp(t^2)}
+        \le 2 \exp(-t^2) \qquad \text{assuming } K_4 = 1.
+    \]
+    Consequently, \(K_1 \le K_4\).
+
+    ``\ref{it: subgaussian X^2 sub-exponential}'' \(\Rightarrow\) ``\ref{it: subgaussian variance proxy}''
+    We assume \(K_3=1\) again
+    and use the inequality \(e^x \le x + e^{x^2}\) for \(x\in \real\) to get
+    \[
+        \E{\exp(t X)}
+        \le \E{t X + \exp(t^2 X^2)}
+        \overset{\E{X}=0}= \E{\exp(t^2 X^2)}
+        \le \exp(t^2).
+    \]
+    The last inequality only holds for \(\abs{t} < \frac1{K_3} = 1\). Now assume
+    \(\abs{t} \ge \frac1{K_3}\). Using the inequality \(2tx \le t^2 + x^2\), we get
+    \[
+        \E{\exp(t X)}
+        \le e^{\frac{t^2}2}\E{e^{\tfrac{X^2}2}}
+        \le e^{\frac{t^2}2} e^{\tfrac12} \overset{\abs{t}\ge 1}\le e^{t^2}
+    \]
+    The penultimate inequality follows from \(\frac12 \le \frac1{K_3} =1\).
+    As we have covered both case we get \(K_5 \le K_3\).
+
+    ``\ref{it: subgaussian variance proxy} \(\Rightarrow\) \ref{it: subgaussian tail decay}''
+    Since \(\varProx{X} \le 2K_5^2\) we have by the general Hoeffding inequality for \(n=1\), that is \eqref{eq: var prox tail bound}
+    \[
+        \prob{X \ge t} \le \exp\bigl(-\tfrac{t^2}{4K_5^2}\bigr).
+    \]
+    Taking the same bound for \(-X\) we get \(K_1^2 \le 4K_5^2\) and thus \(K_1 \le 2 K_5\).
+\end{proof}
+
+\begin{remark}[Sums of (in)dependent subgaussian random variables]
+    Since the Orcliz norm is a norm
+    (Theorem \ref{thm: orlicz seminorm}), it holds for all (possibly dependent)
+    random variables \(X\) and \(Y\)
+    \[
+        \norm{X+Y}_{\psi_2} \le \norm{X}_{\psi_2} + \norm{Y}_{\psi_2}.
+    \]
+    In comparison the sum stability of the variance proxy only holds for
+    independent random variables, that is
+    \[
+        \varProx{X+Y} \le \varProx{X} + \varProx{Y}
+        \qquad \text{for } X, Y \text{ independent}.
+    \]
+    This may look like an advantage of the Orcliz norm but note that \(\varProx{X}\)
+    is something like a squared norm, as \(\varProx{aX} = a^2 \varProx{X}\),
+    while \(\norm{aX}_{\psi_2} = \abs{a} \norm{X}_{\psi_2}\).
+    Put another way, since \(\norm{X}_{\psi_2}\) is the smallest \(K_4\),
+    and \(\sqrt{\varProx{X}}\) is the smallest \(K_5\) up to the constant
+    \(\sqrt{2}\) due to \(\sqrt{\varProx{X}}\le 2K_5^2\), we have by
+    the equivalence of constants
+    \[
+        \norm{X}_{\psi_2} \le c_0 \sqrt{\varProx{X}} \le c_1 \norm{X}_{\psi_2}
+    \]
+    and thus for independent \(X\) and \(Y\)
+    \[
+        \norm{X + Y}_{\psi_2}^2 \le c_0^2 \varProx{X+Y} \le c_0^2 (\varProx{X} + \varProx{Y})
+        \le c_1^2 (\norm{X}_{\psi_2}^2 + \norm{Y}_{\psi_2}^2).
+    \]
+    This bound is generally better than if we applied the triangle inequality inside
+    the square due to the removal of the cross term
+    \(2\norm{X}_{\psi_2}\norm{Y}_{\psi_2}\), that is
+    \[
+        \norm{X}_{\psi_2}^2 + \norm{Y}_{\psi_2}^2 \le (\norm{X}_{\psi_2} + \norm{Y}_{\psi_2})^2.
+    \]
+    In other words: the sum stability of the squared norm is better than the sum
+    stability of the norm itself. This is particularly visible for the mean in
+    the case of iid \(X_i\)
+    \[
+        \norm{\mean{X}_n}_{\psi_2} \le c_0 \sqrt{\varProx{\mean{X}_n}}
+        = c_0 \sqrt{\red{\frac1{n^2}} \sum_{i=1}^n \varProx{X_i}}
+        =  \frac{c_0}{\sqrt{n}} \underbrace{\sqrt{\frac1n \sum_{i=1}^n \varProx{X_i}}}_{= \varProx{X_i}}
+        \in \bigO(\tfrac1{\sqrt{n}}),
+    \]
+    which is a much better bound asymptotically than the general triangle inequality
+    \[
+        \norm{\mean{X}_n}_{\psi_2} \le \frac1n \sum_{i=1}^n \norm{X_i}_{\psi_2} = \norm{X_i}_{\psi_2} \in \bigO(1).
+    \]
+    \textbf{Rule of thumb}: work with the variance proxy if the variables are independent
+    and with the Orlicz norm if they are not. The translation between
+    these view points may however introduce constants, which can in certain
+    circumstances be larger than the gains from this change of view.
+\end{remark}
+
+
+\subsection{Subexponential random variables}
+
+\begin{theorem}[Subexponential characterization]
+    
+\end{theorem}
+
+\begin{theorem}[Bernstein inequality]
+    
+\end{theorem}
+
+
+\subsection*{Exercises}
+
+\begin{exercise}[Properties of the cumulant generating function]
+    \label{ex: properties cumulant generating function}
+    Let \(X\) be a random variable. Then the cumulant generating function
+    \(\CGF_X(t) = \log \MGF_X(t)\) has the following properties:
+    \begin{enumerate}[label=(\roman*), noitemsep]
+        \item\label{it: cgf 0=0} \(\CGF_X(0) = 0\).
+        \item\label{it: cgf linear} \(\CGF_{aX + b}(t) = \scp{b, t} + \CGF_X(\scp{a, t})\) for any \(a \in \real\), \(b,t\in \hilbert\).
+        \item\label{it: cumulant independent sums} Let \(Y\) be \underline{independent} from \(X\), then
+        \[
+            \CGF_{X+Y}(t) = \CGF_X(t) + \CGF_Y(t)
+        \]
+    \end{enumerate}
+    If the moment generating function is finite in a neighborhood of zero,
+    then \(\CGF_X\) is infinitely often differentiable and
+    \begin{enumerate}[label=(\roman*), resume, noitemsep]
+        \item \(\CGF_X'(0) = \E{X}\),
+        \item \(\CGF_X''(0) = \var{X}\)
+    \end{enumerate}
+
+    \begin{solution}
+        For \ref{it: cgf 0=0}-\ref{it: cumulant independent sums} follow from the
+        corresponding properties of the MGF (Exercise \ref{ex: properties moment
+        generating functions}) by application of the logarithm.  For example,
+        \(\CGF_X(0)=0\) follows directly from \(\MGF_X(0)=1\). For convexity
+        let \(t, s\in \hilbert\) and \(\lambda \in [0,1]\). 
+
+        The derivatives are straightforward calculations using the derivatives of the MGF
+        and the chain rule due to \(\CGF_X(t) = \log \MGF_X(t)\). That is
+        \begin{alignat*}{3}
+            \CGF_X'(t)
+            &= \frac{\MGF_X'(t)}{\MGF_X(t)}
+            \qquad &\implies &\CGF_X'(0) = \E{X},
+            \\
+            \CGF_X''(t)
+            &= \frac{\MGF_X''(t)}{\MGF_X(t)} - \frac{(\MGF_X'(t))^2}{(\MGF_X(t))^2}
+            \qquad &\implies &\CGF_X''(0)
+            \begin{aligned}[t]
+            &= \E{X^2} - (\E{X})^2
+            \\
+            &= \var{X}.
+            \end{aligned}
+        \end{alignat*}
+        This proves the claims.
+    \end{solution}
+\end{exercise}
+
+\begin{definition}[Cumulants]
+    If they exist, the ``cumulants'' \(\cumulant_n^X\) are the coefficients of the Taylor
+    series of the cumulant generating function
+    \[
+        \CGF_X(t)
+        = \sum_{n=1}^\infty \cumulant_n^X \frac{t^n}{n!}
+        = \sum_{n=1}^\infty \CGF_X^{(n)}(0) \frac{t^n}{n!}.
+    \]
+\end{definition}
+
+Due to property \ref{it: cumulant independent sums} in Exercise \ref{ex:
+properties cumulant generating function} of the cumulant generating function,
+cumulants have the nice property that they ``accumulate'' when indpendent
+random variables are added, that is for \(X\) and \(Y\) independent
+\[
+    \cumulant_n^{X+Y} = \cumulant_n^X + \cumulant_n^Y.
+\]
+This property is the origin of their name and what makes them ``nicer'' compared
+to the moments that make up the coefficients of the moment generating function.
+Bienaymé (Lemma \ref{lem: Bienaymé}) represents this property for the second
+order cumulants, since \(\cumulant_2^X = \var{X}\).
+
+\begin{remark}[Cumulants of normal distribution]
+    Recall that the cumulant generating function of the 
+    normal distribution is a quadratic polynomial
+    \[
+        \CGF_X(t) = \mu t + \frac12 \sigma^2 t^2.
+    \]
+    Thus all cumulants of order three and higher are zero! It is the only
+    distribution with this property. One can show that the cumulants of order
+    three and higher vanish for \(\sqrt{n}\, \mean{X}_n\) as \(n\to\infty\)
+    (Exercise \ref{ex: cumulant CLT}) and thereby proof a weak form of the
+    central limit theorem.
+\end{remark}
+\begin{exercise}[Cumulant CLT]
+    \label{ex: cumulant CLT}
+    Let \(X_1, X_2, \ldots\) be independent copies of a random variable
+    \(X\) with mean \(\mu\), variance \(\sigma^2\) and finite moments of all orders.
+    Let \(\mean{X}_n = \frac1n \sum_{i=1}^n X_i\) be the empirical mean.
+    Show that the cumulants \(\cumulant_k^{\sqrt{n}(\mean{X}_n - \mu)}\)
+    of the random variable \(\sqrt{n}(\mean{X}_n - \mu)\) satisfy
+    \[
+        \cumulant_1^{\sqrt{n}(\mean{X}_n - \mu)} = 0,
+        \qquad
+        \cumulant_2^{\sqrt{n}(\mean{X}_n - \mu)} = \sigma^2,
+        \qquad
+        \cumulant_k^{\sqrt{n}(\mean{X}_n - \mu)} \to 0
+        \quad\text{for } k \ge 3.
+    \]
+    Conclude that the cumulant generating function of
+    \(\sqrt{n}(\mean{X}_n - \mu)\) converges to the cumulant generating function
+    of the normal distribution \(\normal{0, \sigma^2}\).
+\end{exercise}
+
+\begin{exercise}[Convex conjugate]
+    \label{ex: convex conjugate}
+    
+\end{exercise}
+
+\paragraph*{Randomized algorithms} The theme of the
+next two exercises is that algorithms can sometimes benefit from randomization.
+
+\begin{exercise}[Monte Carlo \Coffeecup]
+    \label{ex: monte carlo}
+    In this exercise we will devise a way to compute the integral
+    \[
+        I \coloneq \int_{[0,1]^\dims} f(x) dx
+    \]
+    of a continuous function \(f\colon [0,1]^\dims \to \real\).  Let
+    \((U_n)_{n\in \nat}\) be independent and uniformly distributed on
+    \([0,1]^\dims\).
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item Prove that \(\hat I_n \coloneq \frac1n\sum_{i=1}^n f(U_i) \overset\as\to I\).
+        \begin{solution}
+            Since \(I= \E{f(U)}\) this is the strong law of large numbers,
+        \end{solution}
+
+        \item Using \(\norm{f}_\infty = \sup_{x\in [0,1]^\dims} \abs{f(x)}\) Prove that
+        \[
+            \prob[\big]{\abs{\hat I_n - I} > \epsilon} \le 2\exp\Bigl(-\frac{n \epsilon^2}{2\norm{f}_\infty^2}\Bigr)
+        \]
+        \begin{solution}
+            Since \(f\) is continuous, it is bounded on the compact set \([0,1]^\dims\)
+            and thereby \(f(U) \in [-\norm{f}_\infty, \norm{f}_\infty]\).
+            By Hoeffding's inequality (Corollary \ref{cor: hoeffding inequality for bounded random variables})
+            for bounded random variables we therefore have the claim.
+        \end{solution}
+
+        \item Let \(n = n(\epsilon, \delta)\) be the smallest \(n\) such that the following
+        PAC bound holds
+        \[
+            \prob[\big]{\abs{\hat I_n - I} > \epsilon} \le \delta
+        \]
+        Prove that
+        \[
+            n(\epsilon, \delta)
+            \le \ceil[\Big]{2\norm{f}_\infty^2\frac{\ln(\tfrac2\delta)}{\epsilon^2}}
+            \in \bigO\Bigl(\norm{f}_\infty^2\frac{\log(\frac1\delta)}{\epsilon^2}\Bigr)
+        \]
+        \begin{remark}[Accuracy vs confidence]
+            \label{rem: accuracy vs confidence}
+            The accuracy \(\epsilon\) is expensive and grows like
+            \(\frac1{\epsilon^2}\) while the confidence \(1-\delta\) is cheap and grows only
+            like \(\log(\frac1\delta)\). Note that deterministic numerical quadrature
+            formulas suffer from the curse of dimensionality causing a numerical
+            complexity of order \(\epsilon^{-\frac{\dims}k}\) \citep[Sec.~1.3.12, Prop.~1]{novakDeterministicStochasticError1988}, where \(k\) is the
+            number of continuous derivatives of \(f\). In comparison, the 
+            computational complexity of the Monte Carlo method is independent of
+            the dimension \(\dims\). This means that Monte Carlo methods become
+            interesting for high-dimensional integration problems -- specifically,
+            when \(\frac{\dims}k \ge 2\).
+        \end{remark}
+        \begin{solution}
+            By the previous exercise it is sufficient to have
+            \begin{align*}
+                2\exp\Bigl(-\frac{n\epsilon^2}{2\norm{f}_\infty^2}\Bigr) \le \delta
+                &\iff -\frac{n\epsilon^2}{2\norm{f}_\infty^2} \le \ln(\tfrac{\delta}2)
+                \\
+                &\iff \ln(\tfrac{2}\delta) \le \frac{n \epsilon^2}{2\norm{f}_\infty^2}
+                \\
+                &\iff 2\norm{f}_\infty^2 \frac{\ln(\tfrac2\delta)}{\epsilon^2} \le n
+            \end{align*}
+            Since this is a sufficient condition, the smallest \(n(\delta, \epsilon)\)
+            is smaller than the first natural number that satisfies it, leading
+            to the claim.
+        \end{solution}
+    \end{enumerate}
+\end{exercise}
+
+
+In the following exercise we will show how to speed-up the computation of the
+scalar product in high dimension using a randomized approach.
+Since matrix multiplication is made up of many scalar products it should be
+clear that this is only a tiny glimps into the field of randomized
+linear algebra \citep[e.g.][]{murrayRandomizedNumericalLinear2023}.
+
+\begin{exercise}[Randomized linear algebra \Coffeecup]
+    Let \(x,y \in \real^\dims\), where the dimension \(\dims\) is really large.
+    The computation of \(\scp{x,y}\) clearly costs \(\dims\) multiplications and
+    additions. We will try to speed it up using a random sample.
+    Specifically, let \(Z_1, \ldots Z_n\) be independently drawn from
+    \(\frac1\dims\sum_{i=1}^\dims \delta_{x_iy_i}\), that is
+    \(\prob{Z_1 = x_iy_i} = \frac1\dims\) for \(i=1, \ldots, \dims\).
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item Prove that \(\dims \E{Z_1} = \scp{x,y}\),
+        \begin{solution}
+            By definition we have
+            \[
+                \E{Z_1} = \frac1\dims\sum_{i=1}^\dims  x_i y_i = \frac1\dims \scp{x,y}.
+                \qedhere
+            \]            
+        \end{solution}
+
+        \item Assuming \(\scp{x,y} \neq 0\), prove the following estimator
+        \[
+            \hat S_n \coloneq \frac\dims{n} \sum_{i=1}^n Z_i,
+        \]
+        converges against the scalar product in relative terms, that is
+        \[
+            \frac{\hat S_n}{\scp{x,y}} \overset\as\to 1 \qquad (n \to \infty).
+        \]
+        \begin{solution}
+            We have \(\frac{\hat S_n}{\scp{x,y}} = \frac1n \sum_{i=1}^n Z_i /
+            \E{Z_1}\) and thus the claim by the strong law of large numbers.
+        \end{solution}
+
+        \item For \(\hat S_n\) to be an effective speedup of the
+        computation of the scalar product it is necessary that \(n\le \dims\). So
+        clearly \(n\to \infty\) is not an interesting statement.
+        Let \(m = \max_i \abs{x_i y_i}\) and show that
+        \[
+            \prob[\Big]{\abs[\Big]{\frac{\hat S_n}{\scp{x,y}} - 1} > \epsilon}
+            \le 2\exp\Bigl(-n \epsilon^2 \frac{\E{Z_1}^2}{8 m^2}\Bigr).
+        \]
+        \textbf{Hint:} Corollary \ref{cor: hoeffding inequality for bounded random variables}.
+        \begin{solution}
+            Since \(Z_i \in [-m,m]\) for \(i=1, \ldots, n\) we can apply
+            Hoeffding's inequality for bounded random variables (Corollary \ref{cor:
+            hoeffding inequality for bounded random variables}) to get
+            \begin{align*}
+                \prob[\Big]{\abs[\Big]{\frac{\hat S_n}{\scp{x,y}} - 1} > \epsilon}
+                &=\prob[\Big]{\abs[\Big]{\frac1n\sum_{i=1}^n Z_i - \E{Z_1}} > \epsilon \abs{\E{Z_1}}}
+                \\
+                &\le 2\exp\Bigl(-n \epsilon^2 \frac{\E{Z_1}^2}{2(2m)^2}\Bigr).
+                \qedhere
+            \end{align*}
+        \end{solution}
+        \begin{remark}[Many significant values]
+            If most \(x_iy_i\) are very small except for a few \(i=\set{1,\dots, \dims}\),
+            then the inner product \(\scp{x,y}\) is dominated by these values.
+            This means that a random sample can be very far off if it does not
+            contain these significant indices. This case is captured
+            by the ratio \(\frac{\E{Z_1}}{m}\): If the average product
+            \(\E{Z_1}\) is much smaller, than largest product \(m\), the sum is
+            dominated by a few large entries and convergence is slow.
+        \end{remark}
+
+        \item Assume \(\frac{\E{Z_1}}{m} \ge 0.1\), that a precision of \(\epsilon
+        = 10^{-4}\) is required and a \(99\%\) confidence. How big must
+        \(\dims\) be such that this approach reduces the computational cost?
+        How big to get a \(99.999\%\) confidence?
+        \begin{solution}
+            We need \(n\) to satisfy
+            \[
+                2\exp\Bigl(-n \epsilon^2 \frac{\E{X_1 Y_1}^2}{8 m^2}\Bigr) \le \delta 
+                \iff n \ge \frac{8\ln(\frac1{2\delta})}{\epsilon^2 \frac{\E{X_1 Y_1}^2}{m^2}}.
+            \]
+            Since \(\E{X_1 Y_1}^2 \ge 0.1\) we have that
+            \[
+                n \ge \frac{80\ln(\frac1{2\delta})}{\epsilon^2}
+            \]
+            is sufficient to get the required confidence. We now simply
+            plug in the numbers. For \(\delta = 0.01 = 1\%\) we have
+            \[
+                n \ge \frac{80\ln(\frac1{0.02})}{10^{-8}} \approx 3.12 \cdot 10^{10}.
+            \]
+            For \(\delta = 0.00001 = 0.001\%\) we have
+            \[
+                n \ge \frac{80\ln(\frac1{0.00002})}{10^{-8}} \approx 8.66 \cdot 10^{10}.
+            \]
+            If \(n\le \dims\) then this approach reduces the computational cost.
+            So for \(\dims \ge 3.12 \cdot 10^{10}\) (or \(\dims \ge 8.66 \cdot 10^{10}\) respectively)
+            this approach reduces the computational cost. As in Remark \ref{rem:
+            accuracy vs confidence} the confidence has almost no effect on the
+            required dimension. In contrast the precision \(\epsilon\)
+            dominates the required dimension.
+        \end{solution}
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Single issue polling \Coffeecup]
+    \label{ex: single issue polling} 
+    Let \(x_1,\ldots, x_N \in \set{\text{no}, \text{yes}} \simeq \set{0,1}\) be the
+    opinions of \(N\) people on a certain decision. In the following we will
+    assume \(x_i \in \set{0,1}\). Let
+    \[
+        p = \frac1N\sum_{i=1}^N x_i
+    \]
+    be the share of people that agree with the decision.
+
+    Assume that you can randomly sample \(n\) people from the population and
+    and that they truthfully tell you their opinions \(X_1, \dots, X_n\).  That
+    is \(\prob{X_i = x_j} = \frac1N\) for \(j=1, \ldots, N\) and the \(X_i\) are
+    independent.
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item Prove the \(X_i\) are Bernoulli distributed, specifically \(X_i \sim \bernoulli(p)\). 
+        \begin{solution}
+            We have
+            \begin{align*}
+                \prob{X_i = 1}
+                &= \sum_{j=1}^N \prob{X_i = 1, X_i = x_j}
+                \\
+                &= \sum_{j=1}^N \prob{X_i = 1 | X_i = x_j} \prob{X_i = x_j}
+                = \sum_{j=1}^N x_j \frac1N = p.
+                \qedhere
+            \end{align*}
+        \end{solution}
+        \item 
+        Prove that
+        \[
+            \prob[\Big]{\abs[\Big]{\frac1n \sum_{i=1}^n X_i - p} > \epsilon}
+            \le 2\exp(-2n \epsilon^2).
+        \]
+        \begin{solution}
+            Since \(X_i \in \set{0,1}\) we can apply Hoeffding's inequality for
+            bounded random variables (Corollary \ref{cor: hoeffding inequality for
+            bounded random variables}) to get the claim.
+        \end{solution}
+
+        \item Let \(\abs{p - 0.5} \ge 0.1\), how many people \(n\) do you need to sample to
+        be \(99\%\) confident on the majority opinion? How many, if the opinion is more
+        controversial and \(\abs{p - 0.5} \ge 0.01\)?
+
+        \textbf{Hint:} Assume \(p \le 0.4\) without loss of generality.
+        \begin{solution}
+            If \(p \le 0.5 - \epsilon\) for \(\epsilon >0\) the majority opinion
+            is ``no'' and we need to be \(1-\delta\) confident that \(\frac1n
+            \mean{X}_n \coloneq \sum_{i=1}^n X_i < 0.5\). This requires
+            \begin{align*}
+                \delta \overset{!}\ge \prob[\Big]{\mean{X}_n \ge 0.5}
+                &= \prob[\Big]{\mean{X}_n - p \ge 0.5 - p}
+                \\
+                &\le \prob[\Big]{\mean{X}_n - p \ge \epsilon}
+                \\
+                &\le \exp(-2n \epsilon^2)
+            \end{align*}
+            In the last equation we used the General Hoeffding's inequality
+            Theorem \ref{thm: general hoeffding inequality} and Hoeffding's
+            lemma (Lemma \ref{lem: hoeffding's lemma}) applied to \(X_i \in
+            \set{0,1}\).
+            Consequently, \(\exp(-2n \epsilon^2) \le \delta\) is sufficient, and therefore
+            \[
+                n \ge \frac{\ln(\frac1\delta)}{2\epsilon^2}
+            \]
+            is sufficient.  Similar arguments apply if \(p \ge 0.5 + \epsilon\).
+            In our case we
+            have \(\delta = 1\% = 0.01\) and \(\epsilon = 0.1\) or \(\epsilon =
+            0.01\) respectively, which implies
+            \[
+                n \ge \begin{cases}
+                    \ceil{\frac{\ln(100)}{2 \cdot 0.1^2}} = 231 & \text{if } \epsilon = 0.1 \iff \abs{p-0.5} \ge 0.1,
+                    \\
+                    \ceil{\frac{\ln(100)}{2 \cdot 0.01^2}} = 23026 & \text{if } \epsilon = 0.01 \iff \abs{p-0.5} \ge 0.01.
+                \end{cases}
+            \]
+            is sufficient for \(99\%\) confidence.
+        \end{solution}
+    \end{enumerate}
+\end{exercise}

@@ -1,0 +1,405 @@
+\section[Continuous mapping]{Continuous mapping \marginpar{\red{Lecture 3}}}
+\label{sec: continuous mapping}
+
+An incredibly useful tool in analysis was the concept of continuous functions
+that allows the transfer of limits through functions. In this section
+we study how the stochastic convergence concepts interact with continuous
+functions. In essence we would like that \(f(X_n)\) converges to \(f(X)\)
+whenever \(X_n\) converges to \(X\) and \(f\) is continuous.
+Our next result shows that this is mostly the case.
+
+\begin{mdframed}[innertopmargin=0pt]
+\begin{theorem}[Continuous mapping]
+    \label{thm: continuous mapping}
+    Let \((\domain, \norm{\cdot})\) and \((\range, \norm{\cdot})\) be normed
+    vectorspaces.  Let \((X_n)_{n\in \nat}\) and \(X\) be random variables in
+    \(\domain\). Let \(f\colon \domain \to \range\) be almost
+    surely continuous in \(X\), that is \(\prob{f \text{ is continuous at } X} =
+    1\). Then
+    \begin{enumerate}[label=(\roman*)]
+        \item\label{it: cont. mapping as} \(X_n \overset{\as}\to X\) implies \(f(X_n) \overset{\as}\to f(X)\).
+        \item\label{it: cont. mapping p} \(X_n \overset{p}\to X\) implies \(f(X_n) \overset{p}\to f(X)\).
+        \item\label{it: cont. mapping d} \(X_n \overset{d}\to X\) implies \(f(X_n) \overset{d}\to f(X)\).
+        \item\label{it: cont. mapping Lp} If \(f\) is \underline{Lipschitz} continuous and \(X_n \overset{L^p}\to X\),
+        then \(f(X_n) \overset{L^p}\to f(X)\).
+    \end{enumerate}
+\end{theorem}
+\end{mdframed}
+
+\begin{remark}[Generalization]
+    The normed vectorspace is only necessary for \(L^p\) convergence. The other
+    implications also hold in metric spaces.
+\end{remark}
+
+This continuous mapping result can be very misleading, as one may expect that
+\(X_n \overset{d} \to X\) and \(Y_n \overset{d} \to Y\) implies that \(X_n + Y_n
+\overset{d} \to X + Y\) since the sum is continuous. This is however
+false in general (Exercise \ref{ex: counterexample joint convergence}).
+The trap is that the function \((x,y) \mapsto x+y\) may be continuous
+but the vector \((X_n, Y_n)\) does not necessarily converge to \((X,Y)\)
+if its components do. The second important result of this section
+is therefore the following theorem that shows that for most convergence
+concepts the convergence of the components is sufficient.
+
+\begin{mdframed}[innertopmargin=0pt]
+\begin{theorem}[Joint convergence]
+    \label{thm: joint convergence} Let \((X_n)_{n\in \nat}\) and \(X\) be
+    random variables in \(\real^\dims\) and  \((Y_n)_{n\in
+    \nat}\) and \(Y\) be random variables in \(\real^{\dims'}\). Then
+    \begin{enumerate}[label=(\roman*)]
+        \item \label{it: joint conv as}
+        if \(X_n \overset{\as}\to X\) and \(Y_n \overset{\as}\to Y\),
+        then \((X_n, Y_n) \overset{\as}\to (X,Y)\),
+
+        \item \label{it: joint conv Lp}
+        if \(X_n \overset{L^p}\to X\) and \(Y_n \overset{L^p}\to Y\),
+        then \((X_n, Y_n) \overset{L^p}\to (X,Y)\),
+
+        \item \label{it: joint conv in prob}
+        if \(X_n \overset{p}\to X\) and \(Y_n \overset{p}\to Y\),
+        then \((X_n, Y_n) \overset{p}\to (X,Y)\),
+        \item\label{it: joint conv law slutsky}
+        (\textbf{Slutsky})
+        if \(X_n \overset{d}\to X\) and \(Y_n \overset{d}\to c\) \underline{for \(c\in \real^{\dims'}\)},
+        then \((X_n, Y_n) \overset{d}\to (X,c)\),
+
+        \item\label{it: joint conv law cramer wold}
+        (\textbf{Cramér-Wold})
+        if \(\scp{t, X_n} \overset{d}\to \scp{t,X}\) for all \(t\in \real^\dims\),
+        then \(X_n \overset{d}\to X\).
+    \end{enumerate}
+\end{theorem}
+\end{mdframed}
+
+The statements for convergence in distribution \ref{it: joint conv law slutsky}
+and \ref{it: joint conv law cramer wold} are weaker on purpose as the general
+statement is false (Exercise \ref{ex: counterexample
+joint convergence}).
+
+\begin{remark}[Generalization]
+    Except for Cramér-Wold \ref{it: joint conv law cramer wold} these statements
+    do not necessarily need to be restricted to \(\real^\dims\). However for
+    convergence of the components to imply convergence of the tuple it is
+    necessary that the metric on the product space is ``compatible'' with the
+    metrics on the components. This is already necessary in the deterministic
+    setting (see Exercise~\ref{ex: incompatible metric}). To avoid these
+    technicalities we restrict ourselves to this important special case. The
+    property we use is
+    \[
+        \|(x, 0)\| = \|x\|
+        \quad\text{and}\quad
+        \|(0,y)\| = \|y\|,
+    \]
+    which is true for \(\real^{\dims + \dims'}\) with the standard Euclidean norms.
+    \fxnote{
+        Our proofs would probably work directly in Hilbertspaces. Exericise?
+    }
+\end{remark}
+
+In the rest of this section we prove the Theorems \ref{thm: continuous mapping}
+and \ref{thm: joint convergence}.
+
+\begin{proof}[Proof of Theorem \ref{thm: continuous mapping}]
+    Let \(D_f\) be the set of discontinuity points of \(f\).
+    Then
+    \(\prob{X \in D_f} = 0\) by assumption. We have \ref{it: cont. mapping as}
+    by
+    \[
+        \set{X_n \to X} \subseteq \set{f(X_n) \to f(X)} \cup \set{X \in D_f}
+    \]
+    and consequently
+    \[
+        \prob[\Big]{f(X_n) \to f(X)}
+        \ge \prob[\big]{X_n \to X} - \prob{X \in D_f} = 1.
+    \]
+    For \ref{it: cont. mapping d} we use Portemanteau's theorem.
+    Specifically, for \(f(X_n) \overset{d}\to f(X_n)\) we need
+    \begin{equation}
+        \label{eq: cont. mapping d}    
+        \E{g(f(X_n))} \to \E{g(f(X))}
+    \end{equation}
+    for all bounded and continuous functions \(g\) \ref{it: b.cont}. To prove
+    \eqref{eq: cont. mapping d} we use \ref{it: b.a.s. cont} on \(X_n
+    \overset{d}\to X\) and the function \(h=g\circ f\). Observe that \(h\) is
+    bounded (as \(g\) is bounded) and almost surely continuous in \(X\) as \(g\)
+    is continuous and \(f\) is almost surely continuous in \(X\), thus \ref{it:
+    b.a.s. cont} is applicable.
+    
+    \noindent For \ref{it: cont. mapping Lp} we simply apply Lipschitz continuity of \(f\).
+    Let \(K\) be the Lipschitz constant of \(f\), then
+    \[\begin{aligned}
+        \norm{f(X_n) - f(X)}_{L^p}^p
+        &= \E{\norm{f(X_n) - f(X)}^p}
+        \\
+        \overset{\text{Lip.}}&\le \E{(K \norm{X_n - X})^p}
+        = K^p \norm{X_n - X}_{L^p}^p \to 0.
+    \end{aligned}
+    \]
+    Finally, \ref{it: cont. mapping p} is the most involved. For a fixed \(\epsilon\) we define
+    \[
+        A_\delta \coloneq \set{x \in \domain: \underbrace{x \notin D_f}_{\text{cont. point}}, \underbrace{\exists y \in \domain : \|x-y\|\le \delta, \|f(x) - f(y)\| > \epsilon}_{\delta\text{ not small enough for }\epsilon}}
+    \]
+    Observe that since \(A_\delta\) only includes continuity points of \(f\) we have \(A_\delta \downarrow \emptyset\) for \(\delta \to 0\).
+    By definition of \(A_\delta\) we have the following inclusion of events
+    \[
+        \set[\big]{\norm{f(X_n) - f(X)} > \epsilon}
+        \subseteq \set[\big]{\norm{X_n - X} > \delta} \cup \set{X \in A_\delta} \cup \set{X\in D_f}.
+    \]
+    Taking the limit superior in \(n\) we thus get
+    \[\begin{aligned}
+        &\limsup_{n\to \infty} \prob[\big]{\norm{f(X_n) - f(X)} > \epsilon}
+        \\
+        &\le \underbrace{\lim_{n\to \infty} \prob[\big]{\norm{X_n - X} > \delta}}_{=0}
+        + \prob{X \in A_\delta} + \underbrace{\prob{X \in D_f}}_{=0}.
+    \end{aligned}
+    \]
+    Since this is true for all \(\delta > 0\) we have
+    \[
+        \limsup_{n\to \infty} \prob[\big]{\norm{f(X_n) - f(X)} > \epsilon}
+        \le \lim_{\delta \to 0} \prob{X \in A_\delta}
+        = \prob[\Big]{ X \in \bigcap_{\delta >0} A_\delta }
+        = 0,
+    \]
+    where we used that \(A_\delta \downarrow \emptyset\). This proves the claim.
+\end{proof}
+
+
+\begin{proof}[Proof of Theorem \ref{thm: joint convergence}]
+    For \ref{it: joint conv as} we simply observe
+    \[
+        \prob[\Big]{\lim_{n\to \infty} (X_n, Y_n) \neq (X,Y)}
+        \le \prob[\Big]{\lim_{n\to \infty} X_n \neq X} + \prob[\Big]{\lim_{n\to \infty} Y_n \neq Y} = 0.
+    \]
+    For \ref{it: joint conv Lp} we use Minkowski's inequality
+    \[\begin{aligned}
+        \norm{(X_n, Y_n) - (X,Y)}_{L^p}
+        &\le \norm{(X_n, Y_n) - (X,Y_n)}_{L^p} + \norm{(X,Y_n) - (X,Y)}_{L^p}
+        \\
+        &= \norm{X_n - X}_{L^p} + \norm{Y_n - Y}_{L^p} \to 0,
+    \end{aligned}\]
+    where the last equality uses \(\norm{(x, 0)} = \norm{x}\) in \(\real^{\dims\times \dims'}\) to get
+    \[
+        \|(X,0)\|_{L^p}^p = \E{\|(X,0)\|^p} \overset{\text{in }\real^{\dims\times \dims'}}= \E{\|X\|^p} = \|X\|_{L^p}^p.
+    \]
+    For \ref{it: joint conv in prob} we use the stochastic triangle inequality (Exercise \ref{ex: stochastic triangle})
+    and again \(\norm{(x, 0)} = \norm{x}\) in \(\real^{\dims\times \dims'}\)
+    to obtain
+    \[\begin{aligned}
+        &\prob[\Big]{\norm{(X_n, Y_n) - (X,Y)} > \epsilon}
+        \\
+        &\le \prob[\Big]{\norm{(X_n, Y_n) - (X,Y_n)} > \tfrac\epsilon2}
+        + \prob[\Big]{\norm{(X,Y_n) - (X,Y)} > \tfrac\epsilon2}
+        \\
+        &= \prob[\Big]{\norm{X_n - X} > \tfrac\epsilon2}
+        + \prob[\Big]{\norm{Y_n - Y} > \tfrac\epsilon2} \to 0.
+    \end{aligned}\]
+    For \ref{it: joint conv law slutsky} we use that \(Y_n \overset{d}\to c\)
+    for some constant \(c\in \real^{\dims'}\) implies \(Y_n \overset{p}\to c\)
+    by Theorem \ref{thm: convergence implications}~\ref{it: d to p}. To prove
+    \((X_n, Y_n) \overset{d}\to (X,c)\) we show \ref{it: b.cont} from the Portemanteau
+    theorem. Thus let \(f\colon \real^{\dims + \dims'} \to \real\) be bounded
+    and continuous function. Then \(g(x) \coloneq f(x,c)\) is a bounded
+    and continuous function. Since \(X_n \overset{d}\to X\) we therefore have
+    \[
+        \E{f(X_n, c)} = \E{g(X_n)} \to \E{g(X)} = \E{f(X,c)}.
+    \]
+    This implies \((X_n, c) \overset{d}\to (X,c)\). With 
+    \(\|(X_n, Y_n) - (X_n, c)\| = \|Y_n - c\| \overset{p}\to 0\)
+    due to \(Y_n \overset{p}\to c\), we can apply the
+    pull-along lemma (Lemma \ref{lem: pull along}) to conclude that \((X_n, Y_n)
+    \overset{d}\to (X,c)\).
+
+    We will delay the proof of \ref{it: joint conv law cramer wold} to Section \ref{sec: moment generating functions}
+    (Corollary \ref{cor: cramer wold}).
+\end{proof}
+
+\begin{lemma}[Pull along]
+    \label{lem: pull along}
+    \(X_n \overset{d}\to X\) and \(\norm{Y_n - X_n} \overset{p}\to 0\) implies \(Y_n \overset{d}\to X\).
+\end{lemma}
+\begin{proof}
+    We prove \ref{it: b.lip} from the Portemanteau theorem.
+    Let \(f\colon \domain \to \real\) be bounded and Lipschitz continuous, then
+    \[
+        \abs[\big]{\E{f(Y_n)} - \E{f(X)}}
+        \overset{\Delta}\le \abs[\big]{\E{f(Y_n)} - \E{f(X_n)}} + \abs[\big]{\E{f(X_n)} - \E{f(X)}}
+    \]
+    converges to zero as the first term converges to zero by Lemma \ref{lem:
+    moving target p to d} and the second term converges to zero by \(X_n
+    \overset{d}\to X\).
+\end{proof}
+
+
+\subsection*{Exercises}
+
+\begin{exercise}[Counterexample joint convergence \Coffeecup]
+    \label{ex: counterexample joint convergence}
+    Let \(X\) be a random variable with \(\prob{X=-1} = \prob{X=1} = \frac12\)
+    and define \(X_n \coloneq X\) and \(Y_n \coloneq -X\). Show that \(X_n
+    \overset{d}\to X\) and
+    \(Y_n \overset{d}\to X\) but 
+    \[
+        X_n + Y_n \overset{d}{\not\to} X + X = 2X.
+    \]
+    Conclude that \((X_n, Y_n)\) does not converge to \((X,X)\) in distribution.
+    \begin{remark}
+        Observe that \(X_n \overset{p}\to X\). It is therefore not sufficient
+        that one of the sequences converges in probability as Slutzky (Theorem
+        \ref{thm: joint convergence}~\ref{it: joint conv law slutsky}) may
+        suggest.
+    \end{remark}
+    \begin{solution}
+        Clearly, \(X_n + Y_n = 0\) for all \(n\). In particular we have
+        \[
+            \prob{X_n + Y_n \in A} = \ind{A}(0)
+            \neq \frac12\ind{A}(2) + \frac12 \ind{A}(-2)
+            = \prob{2X \in A}.
+        \]
+        for \(A= \{0\}\) for example. Since \(\prob{2X = 0} = 0\) this is
+        however a requirement for \(X_n + Y_n \overset{d}\to 2X\) by \ref{it:
+        s.zero boundary}. Thus \(X_n + Y_n \overset{d}{\not\to} 2X\).  This also
+        implies that \((X_n, Y_n)\) does not converge to \((X,X)\) in
+        distribution as otherwise we would have \(X_n + Y_n \overset{d}\to X +
+        X\) by the continuous mapping theorem.
+    \end{solution}
+\end{exercise}
+
+\begin{exercise}[Hölder continuos functions \Coffeecup]
+    Let \(f\) be a Hölder continuous function. That is
+    \[
+        \norm{f(x) - f(y)} \le L \norm{x-y}^\alpha
+    \]
+    Show that \(X_n \overset{L^p}\to X\) implies \(f(X_n) \overset{L^q}\to f(X)\) for \(q = \frac{p}{\alpha}\).
+    \begin{solution}
+        We have by Hölder continuity of \(f\) that
+        \begin{align*}
+            \norm{f(X_n)- f(X)}_{L^q}^q
+            &= \E{\norm{f(X_n) - f(X)}^q}
+            \\
+            &\le \E{L^q \norm{X_n - X}^{\alpha q}}
+            = L^q \norm{f(X_n) - f(X)}_{L^p}^p \to 0.
+            \qedhere
+        \end{align*}
+    \end{solution}
+\end{exercise}
+
+\begin{exercise}[Counterexample \(L^p\) continuous mapping \Coffeecup]
+    Let \(f(x) = x^\gamma\) with \(\gamma >1\), let \(U\sim \uniform(0,1)\) and define
+    \[
+        X_n = n^{\frac1q} \ind{[0, \frac1n)}(U).
+    \]
+    Show for \(p\in [\frac{q}\gamma, q)\) we have that \(X_n \overset{L^p}\to 0\)
+    but not \(f(X_n) \overset{L^p}\to 0\).
+    \begin{solution}
+        We have
+        \[
+            \norm{X_n-0}_{L^p}^p = \norm{X_n}_{L^p}^p = n^{\frac{p}{q}} \prob{U < \tfrac1n} = n^{\frac{p}{q}-1} \to 0
+        \]
+        for \(p < q\). However, we have
+        \[
+            \norm{f(X_n)- f(0)}_{L^p}^p = \norm{f(X_n)}_{L^p}^p = n^{\frac{\gamma p}{q}} \prob{U < \tfrac1n} = n^{\frac{\gamma p}{q}-1} \to \infty
+        \]
+        for \(p > \frac{q}\gamma\).    
+    \end{solution}
+\end{exercise}
+
+\begin{exercise}[Basic application of continuous mapping theorem \Coffeecup]
+    Let \((X_n)_{n\in \nat}\) and \(X\) be real-valued random variables
+    with \(X_n \overset{d}\to X\). Show that
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item \(X_n^2 \overset{d}\to X^2\),
+        \begin{solution}
+            This is a direct application of the continuous mapping theorem with the function \(f(x) = x^2\) that is continuous everywhere.            
+        \end{solution}
+
+        \item \(\sgn(X_n) \overset{d}\to \sgn(X)\) if \(\prob{X=0} = 0\).
+
+        Construct a counterexample for the case \(\prob{X=0} > 0\).
+        \begin{solution}
+            For the first part we again apply the continuous mapping theorem with the function \(f(x) = \sgn(x)\) that is continuous at all points except zero. Since \(\prob{X=0} = 0\) we have that \(f\) is almost surely continuous in \(X\) and thus the continuous mapping theorem applies.
+
+            For the counterexample we can take any deterministic sequence \(x_n\to 0\)
+            such that \(\sgn(x_n)\) does not converge to \(\sgn(0)\). This does depend a bit on the definition
+            of \(\sgn(0)\) but exists in all cases. Then \(X_n = x_n\) has the same problem.
+            Specifically, for the Lipschitz function \(g(x) = \min\set{\abs{x},
+            1}\) we have
+            \[
+                \E{g(X_n)} = x_n \not\to 0 = \E{g(0)}
+            \]
+            and thus \(X_n \overset{d}{\not\to} 0\) by \ref{it: b.lip}.
+        \end{solution}
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Slutsky's theorem \Coffeecup]
+    Let \((X_n)_{n\in \nat}\) and \(X\) be random variables in \(\real\)
+    such that \(X_n \overset{d}\to X\). And let \((Y_n)_{n\in \nat}\) be random
+    variables in \(\real\) such that \(Y_n \overset{d}\to c\) for some
+    constant \(c\in \real\). Prove
+    \begin{enumerate}[label=(\alph*)]
+        \item \(X_n + Y_n \overset{d}\to X + c\),
+        \item \(X_n Y_n \overset{d}\to X c\),
+        \item if \(c \neq 0\) then \(X_n/Y_n \overset{d}\to X/c\).
+    \end{enumerate}
+    \begin{solution}
+        Since \(X_n \overset{d}\to X\) and \(Y_n \overset{d}\to c\) implies
+        \((X_n, Y_n) \overset{d}\to (X,c)\) by Theorem \ref{thm: joint
+        convergence}~\ref{it: joint conv law slutsky}, we have all the claims by
+        the continuous mapping theorem, since the sum and product are continuous
+        and \(\frac1x\) is continuous in \(c \neq 0\).
+    \end{solution}
+\end{exercise}
+
+\begin{exercise}[Find the mistake \Coffeecup]
+    Let \((X_n)_{n\in \nat}\) and \(X\) be random variables in \(\real^\dims\).
+    Which step in the following chain of implications is \textbf{wrong}?
+    \[
+        X_n \overset{d}\to X
+        \overset{?}\implies X_n - X \overset{d}\to 0
+        \overset{?}\implies X_n - X \overset{p}\to 0
+        \overset{?}\implies X_n \overset{p}\to X.
+    \]
+    Justify all other steps and find a counterexample for the wrong step.
+    \begin{solution}
+        The first step is wrong. Consider \(X_n = -X\) with
+        \(\prob{X=-1}=\prob{X=1}=\frac12\). Then
+        as in  Exercise \ref{ex: convergence in distribution but not in
+        probability} \(X_n \to X\), but \(X_n - X = -2X\) does not converge to
+        zero in distribution.
+
+        All the other steps are correct. The second step is the special case
+        that convergence in distribution to a constant implies convergence in
+        probability to that constant (Theorem \ref{thm: convergence
+        implications}~\ref{it: d to p}). The third step follows from 
+        \[
+            \prob{\norm{X_n - X} > \epsilon}
+            =\prob[\big]{\norm{(X_n - X) - 0} > \epsilon}
+            \to 0.
+            \qedhere
+        \]
+    \end{solution}
+\end{exercise}
+
+\begin{exercise}[Incompatible metric \Coffeecup]
+    \label{ex: incompatible metric}
+    Let \((x_n)_{n\in \nat}\) and \((y_n)_{n\in \nat}\) be sequences in
+    \(\real\). Assume that \(x_n \to x\) and \(y_n \to y\) in the usual
+    Euclidean metric.
+    Show that this does not necessarily imply \((x_n, y_n) \to (x,y)\)
+    in \((\real^2, \metric_\infty)\) with
+    \[
+        \metric_\infty((x,y), (x',y'))
+        = \begin{cases}
+            0 & x=y\\
+            1 & x\neq y.
+        \end{cases}
+    \]
+    \begin{solution}
+        With the counterexample \(x_n = \frac1n\) and \(y_n = \frac1n\) we have
+        that \(x_n \to 0\) and \(y_n \to 0\) but \((x_n, y_n)\) does not
+        converge to \((0,0)\) in \((\real^2, \metric_\infty)\) since
+        \[
+            \metric_\infty((x_n, y_n), (0,0)) = 1
+        \] for all \(n\).
+    \end{solution}
+\end{exercise}

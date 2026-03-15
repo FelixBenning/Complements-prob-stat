@@ -1,0 +1,906 @@
+\section{Convergence: Law of Large Numbers}
+\label{sec: law of large numbers}
+
+The difference between a ``weak law'' and ``strong law'' is the convergence type.
+A ``weak law'' only requires convergence in probability, while a ``strong law''
+requires almost sure convergence. The typical strategy to obtain strong laws is
+to obtain quantitative convergence results in expectation (e.g. in \(L^p\)), translate them
+to quantitative convergence result in probability using the Markov inequality
+and deduce almost sure convergence using the Borel-Cantelli lemmas from
+the rate of convergence, that is
+\[\begin{aligned}
+    \substack{\text{Qunatitative}\\ X_n \overset{L^p}\to X } \quad
+    \overset{\text{Markov ineq.}}\implies \quad \substack{\text{Quantitative}\\ X_n \overset{p}\to X}\quad
+    \overset{\text{Borel-Cantelli}}\implies \quad X_n \overset{\as}\to X.
+\end{aligned}
+\]
+The reason for this strategy is that it is often easiest to calculate
+expectations.  For example \(\norm{X - \E{X}}_{L^2} = \sqrt{\var{X}}\). 
+In this section we illustrate this strategy by implementing it for the
+law of large numbers. It turns out that the natural domain to work in
+is a Hilbert space \((\hilbert, \scp{\cdot, \cdot})\) as it allows
+the definition of the covariance and variance in a natural way.
+
+\begin{remark}[Expectation in multiple dimensions]
+    \label{rem: expectation in multiple dimensions}
+    In the discrete case, the expectation is
+    \[
+        \E{X} = \sum_{x} x \prob{X = x}
+    \]
+    Observe the key for this to work is that the \(x\) are summable and scalable
+    by a scalar probability. This only requires a vector space structure.  
+    In general the expectation is defined via integrals -- specifically the
+    ``Bochner integral'' in infinite dimension. We will not go into the measure
+    theoretical details here. Simply understand that the expectation is a linear
+    and therefore an ``entrywise'' operation acting on the basis due to
+    \[
+        \E{X}
+        = \E[\Big]{\begin{pmatrix}
+            X^{(1)} \\
+            \vdots \\
+            X^{(\dims)}
+        \end{pmatrix}}
+        = \E[\Big]{\sum_{i=1}^\dims X^{(i)} e_i}
+        \overset{\text{linear}}= \sum_{i=1}^\dims \E{X^{(i)}} e_i
+        = \begin{pmatrix}
+            \E{X^{(1)}} \\
+            \vdots \\
+            \E{X^{(\dims)}}
+        \end{pmatrix}.
+    \]
+\end{remark}
+
+\begin{definition}[Covariance]
+    \label{def: covariance and variance definition}
+    Let \(X, Y \in \cL^2(\hilbert)\), then their \textbf{covariance}
+    and \textbf{variance} are defined as
+    \[
+        \cov{X}{Y} \coloneq \E[\Big]{\scp[\big]{X-\E{X}, Y-\E{Y}}}
+        \quad \text{and} \quad
+        \var{X} \coloneq \cov{X}{X}.
+    \]
+\end{definition}
+
+\begin{remark}
+Note that \(\covSym\) is an inner product and we will later define
+a covariance operator \(\CovSym\) that is an outer product such that \(\covSym\)
+becomes the trace of \(\CovSym\).
+\end{remark}
+The variance of sums or random variables is straightforward to calculate:
+
+\begin{mdframed}[innertopmargin=0pt]
+\begin{lemma}[Bienaymé]
+    \label{lem: Bienaymé}
+    Let \(X_1, \dots, X_n\) be random variables in \(\cL^2(\hilbert)\). Then
+    \[
+        \var[\Big]{\sum_{i=1}^n X_i} = \sum_{i=1}^n \var{X_i} + \sum_{\substack{i,j=1\\i \neq j}}^n \cov{X_i}{X_j}.
+    \]
+    If the random variables are uncorrelated (i.e.\ \(\cov{X_i}{X_j} = 0\) for \(i\neq j\)), then
+    % for the mean \(\mean{X}_n \coloneq \frac1n \sum_{i=1}^n X_i\) we have
+    \[
+        % \var[\Big]{\sum_{i=1}^n X_i} = \sum_{i=1}^n \var{X_i}
+        % \quad \text{and} \quad
+        \var[\Big]{\frac1n \sum_{i=1}^n X_i} = \frac1{n^2} \sum_{i=1}^n \var{X_i}.
+    \]
+\end{lemma}
+\end{mdframed}
+
+\begin{proof}
+    Let \(Y_i \coloneq X_i - \E{X_i}\). Then by definition of variance and covariance
+    \[
+        \var[\Big]{\sum_{i=1}^n X_i}
+        % = \E[\Big]{\norm[\Big]{\sum_{i=1}^n Y_i}^2}
+        = \sum_{i,j=1}^n \E[\big]{\scp{Y_i, Y_j}}
+        = \sum_{i,j=1}^n \cov{X_i}{X_j}.
+    \]
+    With \(\var{X_i} = \cov{X_i}{X_i}\) the first result follows from a split of the sum.
+    The second result follows directly from the first and
+    \(
+        \var{aX} = a^2 \var{X}
+    \) for any \(a\in \real\).
+\end{proof}
+
+If we do not care about the speed of convergence, then an immediate corollary of
+Bienaymé is the following weak law of large numbers.
+
+\begin{corollary}[Khinchin's weak law of large numbers]
+    \label{cor: weak law of large numbers}
+    Let \((X_n)_{n\in \nat}\) be a sequence of uncorrelated random variables
+    with identical mean \(\mu= \E{X_n}\) and \(\frac1{n^2} \sum_{i=1}^n \var{X_i} \to 0\).
+    Then
+    \[
+        \mean{X}_n\coloneq \frac1n \sum_{i=1}^n X_i \overset{p}\to \mu.
+    \]
+\end{corollary}
+\begin{proof}
+    By the Chebyshev inequality (Corollary \ref{cor: markov inequality Lp})
+    we get
+    \begin{equation*}
+        \begin{aligned}
+        \prob[\big]{\norm{\mean{X}_n - \mu} > \epsilon}
+        &\le \tfrac1{\epsilon^2}\|\mean{X}_n - \mu\|_{L^2}^2
+        \\
+        &= \frac1{\epsilon^2} \var[\big]{\mean{X}_n}
+        \overset{\text{Bienaymé}}= \frac1{\epsilon^2}\Bigl(\frac1{n^2} \sum_{i=1}^n \var{X_i}\Bigr).
+        \end{aligned}
+    \end{equation*}
+    The assumption \(\frac1{n^2} \sum_{i=1}^n \var{X_i} \to 0\) therefore
+    yields the claim.
+\end{proof}
+
+From the proof it is clear that the speed of convergence is determined by the
+speed of convergence of \(\frac1{n^2} \sum_{i=1}^n \var{X_i}\).
+If the variances are bounded, that is
+\(\sup_{i}\var{X_i} \le \sigma^2 < \infty\),
+then
+\begin{equation}
+    \label{eq: rate of convergence for bounded variance}    
+    \prob[\big]{\norm{\mean{X}_n - \mu} > \epsilon}
+    \le \frac1{\epsilon^2}\frac{\sigma^2}{n} \in \bigO(\tfrac1n).
+\end{equation}
+If the variances \(\var{X_i}\) are increasing in \(i\), then one
+may still obtain (slower) convergence. But even the convergence speed for the
+bounded case is too slow to deduce almost sure convergence directly as 
+as the harmonic series diverges (cf.\ Corollary \ref{cor: characterization of
+almost sure convergence}). The problem is essentially that Markov's inequality
+is too lose. To prove almost sure convergence -- that is a strong
+law of large numbers, a different approach is needed. There are
+two common approaches:
+\begin{enumerate}
+    \item (Shortcut): \textbf{Bound the \(L^4\) norm} and use the Chebyshev inequality
+    for \(p=4\). This results in a convergence speed on the order of
+    \(\bigO(\frac1{n^2})\) which is summable and therefore sufficient for almost
+    sure convergence by Corollary \ref{cor: characterization of almost sure
+    convergence}.  However to bound the \(L^4\) norm it is necessary to assume
+    the variables \(X_n\) have finite fourth moments \(\E{X_n^4} < \infty\) and
+    assume independence such that \(\E{X_i X_j X_k X_l}\) factorizes when the
+    indices are different (see Exercise \ref{ex: strong law of large numbers in
+    L4}).
+
+    \item The most general forms of the strong law of large numbers, is
+    obtained by the observation that we get almost sure convergence
+    on a \textbf{subsequence} (cf.\ Lemma \ref{lem: subsequences converge almost
+    surely}). The second step is to control the elements between the
+    converging subsequence.
+\end{enumerate}
+
+\begin{mdframed}[innertopmargin=0pt]%
+\begin{theorem}[Strong law of large numbers]
+    \label{thm: strong law of large numbers}
+    Let \(\hilbert\) be a Hilbertspace and \((X_n)_{n\in \nat}\) a sequence
+    of \underline{uncorrelated} random variables in \(\cL^2(\hilbert)\), with identical mean
+    \(\mu = \E{X_n}\) and bounded variances \(\var{X_n} \le \sigma^2 < \infty\).
+    Then
+    \[
+        \mean{X}_n \coloneq \frac1n \sum_{i=1}^n X_i \overset{\as}\to \mu.
+    \]
+\end{theorem}
+\end{mdframed}
+
+\begin{proof}[Proof (by Michael J Neely \citep{neelyInfinitelyOftenProbability2021})]
+    Since the variance is bounded, we have seen in \eqref{eq: rate of convergence for bounded variance}
+    that  \(\prob[\big]{\norm{\mean{X}_n - \mu} > \epsilon} \le
+    \frac{\sigma^2}{n\epsilon^2}\). This implies \(\mean{X}_{n^2}
+    \overset{\as}\to \mu\) by Corollary \ref{cor: characterization of almost sure
+    convergence}
+    since 
+    \[
+        \sum_{n=1}^\infty \prob[\big]{\norm{\mean{X}_{n^2}-\mu} \ge \epsilon}
+        \le \frac{\sigma^2}{\epsilon^2}\sum_{n=1}^\infty \frac1{n^2} < \infty.
+    \]
+    That is we choose the  subsequence indexed by \(n^2\). What is left to prove
+    is that \(X_n \overset{\as}\to 0\) for any \(n\in \nat\) that is not a
+    perfect square. 
+    Observe that by defining \(\tilde{X}_n \coloneq X_n - \mu\) we can
+    assume without loss of generality that \(\mu=0\), which we will do from now on.
+    With \(k_n \coloneq \lfloor \sqrt{n} \rfloor\) the closest 
+    squares surrounding \(n\) are
+    \begin{equation}
+        \label{eq: k definition}    
+        k_n^2 \le n < (k_n+1)^2.
+    \end{equation}
+    then we have
+    \[
+        \mean{X}_n = \underbrace{\frac1n \sum_{i=1}^{k_n^2} X_i}_{S_n}
+        + \underbrace{\frac1n \sum_{i=k_n^2+1}^{n} X_i}_{\Delta_n}.
+    \]
+    We will show that \(S_n \overset{\as}\to 0\) and \(\Delta_n \overset{\as}\to
+    0\) separately and conclude by continuous mapping that \(\mean{X}_n \overset{\as}\to
+    0\). For the first term observe that by \eqref{eq: k definition} we have
+    \[
+        1 \ge
+        \frac{k_n^2}{n}
+        \ge \frac{k_n^2}{(k_n+1)^2} = \Bigl(\frac{1}{1 + \frac{1}{k_n}}\Bigr)^2
+        \to 1.
+    \]
+    This implies \(\frac{k_n^2}{n} \to 1\). Since \(\mean{X}_{n^2} \overset{\as}\to 0\)
+    implies \(\mean{X}_{k_n^2} \overset{\as}\to 0\)
+    we have by continuous mapping
+    \[
+        S_n = \frac{k_n^2}{n} \mean{X}_{k_n^2} \overset{\as}\to 0.
+    \]
+    To show that the remaining term \(\Delta_n\) converges almost surely to zero we
+    use the Chebyshev inequality with \(p=2\) again. To this end
+    we bound the \(L^2\) norm of \(\Delta_n\). Observe that since the \(X_i\) are
+    uncorrelated we have
+    \[\begin{aligned}
+        \var{\Delta_n}
+        = \frac1{n^2} \sum_{i=k_n^2+1}^{n} \var{X_i}
+        &\le \sigma^2 \frac{n - k_n^2}{n^2}
+        \\
+        \overset{\eqref{eq: k definition}}&\le \sigma^2 \frac{(k_n+1)^2 - k_n^2}{k_n^4}
+        = \sigma^2 \frac{2k_n + 1}{k_n^4}
+        \\
+        \overset{k_n \ge 1}&\le \frac{3\sigma^2}{k_n^3}.
+    \end{aligned}
+    \]
+    Consequently, by the Chebyshev inequality we have for every \(\epsilon > 0\)
+    \[
+        \sum_{n=1}^\infty \prob[\big]{|\Delta_n| \ge \epsilon}
+        \le \sum_{n=1}^\infty \frac{\var{\Delta_n}}{\epsilon^2}
+        \le \frac{3\sigma^2}{\epsilon^2}\sum_{n=1}^\infty \frac1{k_n^3}.
+    \]
+    Now we are finished by the characterization of almost sure convergence
+    (Corollary \ref{cor: characterization of almost sure convergence}) if can
+    show that this series converges. To this end observe that by definition
+    of \(k_n\) we have \(k_n > \sqrt{n} -1\) and therefore
+    \begin{align*}
+        \sum_{n=3}^\infty \frac1{k_n^3}
+        &\le \sum_{n=3}^\infty \frac1{(\sqrt{n} -1)^3}
+        \\
+        &\le \sum_{n=3}^\infty \int_{n-1}^n \frac1{(\sqrt{x} -1)^3} dx
+        \\
+        &= \int_2^\infty \frac1{(\sqrt{x} -1)^3} dx
+        \\
+        \overset{y=\sqrt{x}-1}&= \int_{\sqrt{2}-1}^\infty \frac{2(y+1)}{y^3} dy
+        \le C \int_{\sqrt{2}-1}^\infty \frac1{y^2} dy 
+        < \infty.
+        \qedhere
+    \end{align*}
+\end{proof}
+
+In Theorem \ref{thm: strong law of large numbers} we still assumed that the
+random variables are in \(L^2\). And if you want to work with
+``uncorrelated'' random variables this cannot be avoided as the covariance
+is otherwise undefined. However, if you are willing to assume pairwise
+independence, then the strong law of large numbers also holds under the weaker
+assumption that the random variables are in \(L^1\).
+
+\begin{theorem}[Etemadi's Strong law of large numbers]
+    Let \((X_n)_{n\in \nat}\) be a sequence of identically distributed,
+    \underline{pairwise} independent random variables
+    in \(\cL^1\). Then \(\mean{X}_n \overset{\as}\to \E{X_1}\).
+\end{theorem}
+\begin{proof}[Proofsketch]
+    Define the truncated random variables \(Y_n \coloneq \ind{|X_n| \le n}
+    X_n\). Then the variance of every \(Y_n\) is
+    finite although the variance is increasing in \(n\).
+    Using Borel-Cantelli it is possible to show that eventually all \(Y_n\) are
+    equal to \(X_n\). Then one proves the strong law of large numbers for the
+    \(Y_n\). For this it is used that functions of pairwise independent random
+    variables are also pairwise independent and consequently the \(Y_n\) are
+    uncorrelated. We can unfortunately not
+    apply Theorem \ref{thm: strong law of
+    large numbers} since it requires a uniform bound on the variances and
+    the variances are increasing here. For details see e.g.\
+    \citep[Thm.~5.17]{klenkeProbabilityTheoryComprehensive2014}.
+\end{proof}
+
+\subsection*{Exercises}
+
+\begin{exercise}[Uncorrelated vs independent \Coffeecup\Coffeecup]
+   Let \(X\) and \(Y\) be two random variables in \(\real\). Prove that
+   the following statements are equivalent:
+   \begin{enumerate}[label=(\roman*),noitemsep]
+        \item\label{it: independent} \(X\) and \(Y\) are independent, that is
+        \[
+            \prob{X \in A, Y \in B} = \prob{X \in A}\prob{Y \in B} \qquad \forall A, B
+        \]
+        \item\label{it: measurable functions} For all measurable functions \(f\) and \(g\) such that \(f(X)\)
+        and \(g(X)\) are integrable we have
+        \[
+            \E{f(X)g(Y)} = \E{f(X)}\E{g(Y)}.
+        \]
+        \item\label{it: bounded measurable functions} For all \underline{bounded}, measurable functions \(f\) and \(g\)
+        \[
+            \E{f(X)g(Y)} = \E{f(X)}\E{g(Y)}.
+        \]
+   \end{enumerate}
+   \textbf{Hint: } Use Theorem 102 from Ivan's lecture notes.
+   \begin{solution}
+        We have \ref{it: independent} \(\Rightarrow\) \ref{it: measurable functions} by Theorem 102 from Ivan's lecture.
+        The implication \ref{it: measurable functions} \(\Rightarrow\) \ref{it: bounded measurable functions} is trivial.
+        For the implication \ref{it: bounded measurable functions} \(\Rightarrow\) \ref{it: independent} observe that for any \(A, B\) we have
+        that \(\ind{A}\) and \(\ind{B}\) are bounded measurable functions.
+   \end{solution}
+    
+   \noindent Further prove the following statements
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item If \(X\) and \(Y\) are independent, they are uncorrelated, that is
+        \[
+            \cov{X}{Y} = 0.
+        \]
+        \begin{solution}
+            We have that
+            \begin{align*}
+                \cov{X}{Y}
+                &= \E{(X-\E{X})(Y-\E{Y})}
+                \\
+                &= \E{XY} - \E{X}\E{Y}
+                \overset{\text{indep.}}=
+                \E{X}\E{Y} - \E{X}\E{Y} = 0.
+                \qedhere
+            \end{align*}
+        \end{solution}
+
+        \item Let \(\prob{X=-1} = \prob{X=0} = \prob{X=1} = \frac13\) and \(Y =
+        X^2\). Prove that \(X\) and \(Y\) are uncorrelated but not independent.
+        \begin{solution}
+            Since \(\E{X} = 0\) we have that
+            \begin{align*}
+                \cov{X}{Y}
+                &= \E{XY} - \E{X}\E{Y}
+                \\
+                &= \E{X^3} - \E{X}\E{X^2}
+                = \E{X} - \E{X}\E{X^2}
+                = 0.
+            \end{align*}
+            However, 
+            \[
+                \prob{X=0, Y=1} =0 \neq \tfrac13 \tfrac23 = \prob{X=0}\prob{Y=1}.
+                \qedhere
+            \]
+        \end{solution}
+
+        \item If \(X\) and \(Y\) are independent, then \(h_1(X)\) and \(h_2(Y)\) are independent
+        for all measurable functions \(h_1\colon \real \to \real\) and \(h_2\colon \real \to \real\).
+        \begin{solution}
+            Since \(f\circ h_1\) and \(g \circ h_2\) are measurable for all
+            measurable \(f\colon \real \to \real\) and \(g\colon \real \to \real\), we have by \ref{it: measurable
+            functions} that
+            \begin{align*}
+                \E{f(h_1(X))g(h_2(Y))}
+                &= \E{(f\circ h_1)(X)(g\circ h_2)(Y)}
+                \\
+                &= \E{f(h_1(X))}\E{g(h_2(Y))}.
+            \end{align*}
+            This proves independence by \ref{it: measurable functions}. 
+        \end{solution}
+
+        \item\label{it: all transformations uncorrelated implies independence}
+        If \(f(X)\) and \(g(Y)\) are uncorrelated for all bounded
+        measurable functions \(f\) and \(g\), then \(X\) and \(Y\) are
+        independent.
+        \begin{solution}
+            We have
+            \[
+                0 = \cov{f(X)}{g(Y)} = \E{f(X),g(Y)} - \E{f(X)}\E{g(Y)}
+            \]
+            and consequently \(\E{f(X)g(Y)} = \E{f(X)}\E{g(Y)}\) for all
+            bounded measurable functions \(f\) and \(g\).  This implies
+            independence by \ref{it: bounded measurable functions}.
+        \end{solution}
+    \end{enumerate}
+
+    \begin{remark}[Interpretation]
+        What this essentially means is the following:
+        \begin{enumerate}
+            \item Uncorrelated is weaker than independence.
+            \item \(f(X)\) and \(f(Y)\) are independent if \(X\) and \(Y\)
+            are independent, that is independence is \emph{stable under transformation}.
+
+            \item In contrast, \(X\) and \(Y\) being uncorrelated is \emph{not} stable under transformation.
+            In fact, if it were true that \(f(X)\) and \(g(Y)\) is uncorrelated
+            for all bounded measurable functions \(f\) and \(g\), then \(X\) and
+            \(Y\) would be independent by \ref{it: all transformations
+            uncorrelated implies independence}. Independence therefore gains the
+            interpretation of ``all transformations are uncorrelated''.
+        \end{enumerate}
+
+    \end{remark}
+\end{exercise}
+
+\begin{exercise}[Mean of indicators \Coffeecup]
+    \label{ex: mean of indicators}
+    Let \((X_n)_{n\in \nat}\) be a sequence of independent and identically
+    distributed random variables in \(\real\) with distribution function \(F\).
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item Let \(A\) be a measurable set and \(Y_i \coloneq \ind{X_i \in A}\).
+        Prove that
+        \[
+            \frac1n \sum_{i=1}^n Y_i \overset{\as}\to \prob{X_1 \in A}
+            \qquad (n \to \infty).
+        \]
+        \begin{solution}
+            This is the strong law of large numbers for the independent (and
+            thereby uncorrelated), identically distributed \(Y_i\), since
+            \[
+                \E{Y_i} = \E{\ind{X_i \in A}} = \prob{X_1 \in A}.
+                \qedhere
+            \]
+        \end{solution}
+
+        \item Define the empirical distribution function
+        \[
+            F_n(x) \coloneq \frac1n \sum_{i=1}^n \ind{X_i \le x}.
+        \]
+        Prove that for any \(x_1, \dots, x_k \in \real\)
+        \[
+            (F_n(x_1), \dots, F_n(x_k)) \overset{\as}\to (F(x_1), \dots, F(x_k))
+            \qquad (n \to \infty).
+        \]
+        \begin{solution}
+            Since \(Y_n\coloneq (Y_n^{(1)}, \dots, Y_n^{(k)}) \coloneq (\ind{X_n
+            \le x_1}, \dots, \ind{X_n \le x_k})\) are independent and
+            identically distributed with expectation \((F(x_1), \dots,
+            F(x_k))\), we have by the strong law of large numbers that
+            \[
+                (F_n(x_1), \dots, F_n(x_k)) = \frac1n \sum_{i=1}^n Y_i
+                \overset{\as}\to (F(x_1), \dots, F(x_k)).
+                \qedhere
+            \]
+        \end{solution}
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Strong law of large numbers in \(L^4\) \Coffeecup\Coffeecup]
+    \label{ex: strong law of large numbers in L4}
+    Let \((X_n)_{n\in \nat}\) be a sequence of independent and identically
+    distributed random variables in \(\cL^4(\real)\). Bound the centered fourth moment
+    \(\|\mean{X}_n - \E{X_1}\|_{L^4}^4\) to prove the strong law of large numbers.
+
+    \noindent\textbf{Hint:} Assume \(\E{X_1} = 0\) without loss of generality.
+
+    \begin{solution}
+        Assume that the random variables are centered without loss of generality.
+        For indices \(i,j,k,l\), where \(i\) is not equal to any of the others
+        we have by independence
+        \[
+            \E{X_i X_j X_k X_l} = \E{X_i}\E{X_jX_k X_l} = 0.
+        \]
+        So clearly, if there is an index that does not appear twice the expectation is zero.
+        This implies
+        \[\begin{aligned}
+            \norm{\mean{X}_n}_{L^4}^4
+            &= \E[\Big]{\abs[\Big]{\frac1n \sum_{i=1}^n X_i}^4}
+            \\
+            &= \frac1{n^4} \sum_{i,j,k,l=1}^n \E{X_i X_j X_k X_l}.
+            & (\abs{x}^4=x^4)
+            \\
+            &= \frac1{n^4} \Bigl(
+                \sum_{i=1}^n \E{X_i^4}
+                + \sum_{\substack{i,j=1\\i\neq j}}^n \E{X_i^2}\E{X_j^2}
+            \Bigr)
+            & (\text{no single index})
+            \\
+            &=
+            \frac1{n^4}\Bigl(n\E{X_1^4} + \frac{n(n-1)}{2} (\E{X_1^2})^2\Bigr)
+            &(\text{identical distributed})
+            \\
+            &\le \frac{C}{n^2}.
+        \end{aligned}
+        \]
+        With \(C = \E{X_1^4} + \frac12 (\E{X_1^2})^2 < \infty\). Consequently, we have
+        by Chebyshev's inequality for \(p=4\) (Corollary \ref{cor: markov inequality Lp})
+        \[
+            \prob{\norm{\mean{X}_n} > \epsilon} \le \frac{\norm{\mean{X}_n}_{L^4}^4}{\epsilon^4} \le \frac{C}{\epsilon^4 n^2}.
+        \]
+        Since this is summable in \(n\) we have by Corollary \ref{cor:
+        characterization of almost sure convergence} that \(\mean{X}_n
+        \overset{\as}\to 0\).
+    \end{solution}
+\end{exercise}
+
+\begin{exercise}[Variance estimation \Coffeecup]
+    \label{ex: variance estimation}
+    Let \((X_n)_{n\in \nat}\) be a sequence of \(\iid\) random variables in \(\real\)
+    with expectation \(\mu\) and variance \(\sigma^2\). Prove that
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item 
+        \(
+            \hat\sigma^2_n \coloneq \frac1n\sum_{i=1}^n (X_i-\mu)^2
+            \overset{\as}\to \sigma^2,
+        \)
+        \begin{solution}
+            Since \(\E{(X_i-\mu)^2} = \var{X_i} = \sigma^2\), this is
+            simply the strong law of large numbers for the independent and identically
+            distributed random variables \((X_i-\mu)^2\).
+        \end{solution}
+
+        \item Without knowing the expectation, a reasonable variance estimator
+        uses the sample mean \(\mean{X}_n\) instead of \(\mu\), that is
+        \[
+            \hhat\sigma_n^2 \coloneq \frac1n\sum_{i=1}^n (X_i-\mean{X}_n)^2
+        \]
+        Prove that it converges almost surely to \(\sigma^2\).
+        
+        \textbf{Hint:} First prove \(\hhat\sigma_n^2 = \hat\sigma_n^2 - (\mean{X}_n - \mu)^2\).
+        \begin{solution}
+            We have that
+            \begin{align}
+                \nonumber
+                \hhat\sigma_n^2
+                &= \frac1n\sum_{i=1}^n (X_i-\mean{X}_n)^2
+                \\
+                \nonumber
+                &= \frac1n\sum_{i=1}^n ((X_i-\mu) - (\mean{X}_n - \mu))^2
+                \\
+                \nonumber
+                &= \frac1n\sum_{i=1}^n (X_i-\mu)^2 - 2(X_i-\mu)(\mean{X}_n - \mu) + (\mean{X}_n - \mu)^2
+                \\
+                \nonumber
+                &= \frac1n\sum_{i=1}^n (X_i-\mu)^2 - 2(\mean{X}_n - \mu)^2 + (\mean{X}_n - \mu)^2
+                \\
+                \label{eq: variance estimator decomposition}
+                &= \hat\sigma_n^2 - (\mean{X}_n - \mu)^2.
+            \end{align}
+            By \(\mean{X}_n \overset{\as}\to \mu\) and continuous mapping
+            we have \((\mean{X}_n - \mu)^2 \overset{\as}\to 0\). Consequently,
+            by \(\hat\sigma_n^2 \overset{\as}\to \sigma^2\), joint convergence
+            (Theorem \ref{thm: joint convergence}) and continuous mapping we have
+            \(\hhat\sigma_n^2 \overset{\as}\to \sigma^2\).
+        \end{solution}
+
+        \item Prove that \(\hhat\sigma_n^2\) is biased. Specifically, prove
+        \[
+            \E{\hhat\sigma_n^2} = \tfrac{n-1}{n}\sigma^2.
+        \]
+        Prove the consistency of the unbiased estimator \(\tilde\sigma_n^2 \coloneq \tfrac{n}{n-1}\hhat\sigma_n^2\),
+        that is \(\tilde\sigma_n^2 \overset{\as}\to \sigma^2\).
+        \begin{solution}
+            Bienaymé (Lemma \ref{lem: Bienaymé}) implies \(\var{\mean{X}_n} =
+            \frac1n \var{X_1}\) and therefore using \eqref{eq: variance estimator decomposition}
+            and the linearity of expectation we have
+            \begin{align*}
+                \E{\hhat\sigma_n^2}
+                &= \E{\hat\sigma_n^2} - \E{(\mean{X}_n - \mu)^2}
+                \\
+                &= \sigma^2 - \var{\mean{X}_n}
+                = \sigma^2 - \tfrac1n\var{X_1} = \tfrac{n-1}{n}\sigma^2.
+            \end{align*}
+            Consequently, \(\hhat\sigma_n^2\) is a biased estimator of
+            \(\sigma^2\) and \(\tilde\sigma_n^2\) is an unbiased estimator of
+            \(\sigma^2\) by linearity of the expectation.
+            Since \(\frac{n}{n-1} \to 1\) and \(\hhat\sigma_n^2 \overset{\as}\to
+            \sigma^2\) we have by joint convergence and continuous mapping that
+            \(\tilde\sigma_n^2 \overset{\as}\to \sigma^2\).
+        \end{solution}
+
+        \item For every \(\sigma_n^2 \in \{\hat\sigma_n^2, \hhat\sigma_n^2,
+        \tilde\sigma_n^2\}\) prove that \(\sqrt{\sigma_n^2}\) is a consistent
+        estimator of the standard deviation \(\sigma\), that is 
+        \(\sqrt{\sigma_n^2} \overset{\as}\to \sigma\).
+        \begin{solution}
+            Since \(\sqrt{x}\) is continuous for \(x \ge 0\) and \(\sigma_n^2,
+            \sigma^2 \ge 0\) the claim follows from continuous mapping.
+        \end{solution}
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Random vectors in high dimension \Coffeecup]
+    In this exercise we will see that high-dimensional spaces have some counter-intuitive
+    properties. Let \((X^n)_{n\in \nat}\) and \((Y^n)_{n\in \nat}\) be two
+    sequence of independent identically distributed random variables with mean
+    zero and finite variance. Let \(X_\dims \coloneq (X^1, \ldots, X^\dims)\)
+    and \(Y_\dims \coloneq (Y^1, \ldots, Y^\dims)\) be the corresponding random vectors in
+    \(\real^\dims\).
+    Prove that
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item asymptotically and in relative terms both vectors have the same
+        length in high dimension, that is
+        \[
+            \frac{\norm{X_\dims}^2}{\norm{Y_\dims}^2} \overset\as\to 1 \qquad (\dims \to \infty).
+        \]
+        \item their cosine angle is zero asymptotically, that is
+        \[
+            \frac{\scp{X_\dims, Y_\dims}}{\norm{X_\dims}\norm{Y_\dims}} \overset\as\to 0 \qquad (\dims \to \infty).
+        \]
+        In other words: random vectors are asymptotically orthogonal in high dimension.
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Products of random variables \Coffeecup]
+    This entire chapter is about sums of random variables. In this exercise we want
+    to demonstrate that these results can be easily translated to products of
+    random variables with the help of the logarithm. For
+    \((X_n)_{n\in \nat}\) independent and identically distributed random variables
+    with \(X_n > 0\) and \(\E{|\ln(X_1)|} < \infty\) prove that the
+    `geometric mean' converges almost surely to the `geometric expectation',
+    that is'
+    \[
+        \Bigl(\prod_{i=1}^n X_i \Bigr)^\frac1n
+        \overset{\as}\to \exp\bigl(\E[\big]{\ln(X_1)}\bigr).
+    \]
+
+    \begin{solution}
+        Observe that the logarithm of the geometric mean converges by the law of
+        large numbers to the expectation of the logarithm, that is
+        \[
+            \ln\Bigl(\Bigl(\prod_{i=1}^n X_i \Bigr)^\frac1n\Bigr)
+            = \frac1n \sum_{i=1}^n \ln(X_i)
+            \overset{\as}\to \E[\big]{\ln(X_1)}.
+        \]
+        Since \(\exp(x)\) is continuous the claim follows from continuous mapping.
+    \end{solution}
+
+\end{exercise}
+
+\paragraph*{Finance application}
+
+In the following two exercises we want to model a financial market with \(n\)
+assets. Each asset \(i\) has returns
+\begin{equation}
+    \label{eq: return definition}    
+    R_t^i = \tfrac{P_{t+1}^i}{P_t^i},
+\end{equation}
+where \(P_t^i\) is the price of the asset \(i\) at time \(t\) and
+\(P_{t+1}^i\) is the price of the asset at time \(t+1\).
+
+\begin{exercise}[Long term investment returns \Coffeecup]
+    In this exercise we restrict ourselves to a single asset.
+    That is \(n=1\) and we write \(R_t = R_t^1\) for the return of the asset at
+    time \(t\), cf.~\eqref{eq: return definition}.
+    Assume that the returns \(R_0, R_1, \dots\) are independent and identically
+    distributed with \(\E{|\ln(R_1)|} < \infty\). Compare the
+    geometric mean with the arithmetic mean, that is
+    \[
+        \Bigl(\prod_{t=0}^{n-1} R_t\Bigr)^\frac1n
+        \quad \text{vs.} \quad
+        \frac1n\sum_{t=0}^{n-1} R_t.
+    \]
+    Which one captures the long term growth of the investment better?
+    \begin{solution}
+        The geometric mean of the returns \(\mean{R}^g_n \coloneq \Bigl(\prod_{t=0}^{n-1} R_t\Bigr)^\frac1n\)
+        repeated for \(n\) periods gives the same return as the actual return over \(n\) periods:
+        \[
+            (\mean{R}^g_n)^n = \prod_{t=0}^{n-1} R_t = \frac{P_n}{P_0}.
+        \]
+        Consequently, \(r^g \coloneq \exp(\E{\ln(R_1)})\) is the long term
+        growth rate that stems from the law of large numbers
+        \[
+            \mean{R}^g_n  = \exp\Bigl(\frac1n \sum_{t=0}^{n-1} \ln(R_t)\Bigr) \overset{\as}\to r^g.
+        \]
+        In contrast, \(\E{R_1}\) may be arbitrarily far from \(r^g\) and
+        \(\E{R_1}^n\) is thereby not a good approximation of the return over \(n\) periods.
+        The arithmetic mean approximates \(\E{R_1}\) and is thereby not a good
+        approximation of the long term growth of the investment.
+    \end{solution}
+\end{exercise}
+
+\begin{exercise}[Diversification and systemic risk \Coffeecup\Coffeecup]
+    In this exercise we will only model a single time step from \(t=0\) to
+    \(t=1\) and write \(R^i = R_0^i\), cf.~\eqref{eq: return definition}. Moreover we assume for \(\alpha^i,
+    \beta^i \in \real\)
+    \[
+        R^i = 1
+        + \underbrace{\alpha^i}_{\substack{\text{expected}\\ \text{return}}}
+        + \underbrace{\beta^i M}_{\substack{\text{systemic}\\\text{risk}}}
+        + \underbrace{\epsilon^i}_{\substack{\text{specific}\\\text{risk}}},
+    \]
+    where \(M\) is a random variable modelling the ``market risk'' or ``systemic
+    risk'' and \(\epsilon^i\) is a random variable modelling the ``specific
+    risk'' of the asset \(i\). We assume that the random variables \(M\) and
+    \(\epsilon^1, \dots, \epsilon^n\) are uncorrelated with zero mean. Without
+    loss of generality we assume that the variance of \(M\) is one -- simply move
+    the variance into \(\beta^i\). We also assume that the variance of
+    \(\epsilon^i\) is bounded by \(\sigma_\epsilon^2\). For simplicity we
+    further assume \(\alpha^i = \alpha\) and \(\beta^i = \beta\) for all \(i\).
+
+    We consider the portfolio \(P\) that invests equally in all assets such that
+    the portfolio return is given by
+    \[
+        R^P = \frac1n \sum_{i=1}^n R^i.
+    \]
+    Prove that
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item The expected return of the portfolio is given by \(\E{R^P} = 1 + \alpha\).
+        \begin{solution}
+            By linearity of the expectation and the assumptions on the random variables we have 
+            \[
+                \E{R^P}
+                = \frac1n \sum_{i=1}^n \E{R^i}
+                = \frac1n \sum_{i=1}^n (1 + \alpha + \beta \E{M} + \E{\epsilon^i})
+                = 1 + \alpha.
+                \qedhere
+            \]
+        \end{solution}
+        
+        \item The variance of the portfolio approaches \(\beta^2\) from above as the
+        diversification grows, that is \(n\to \infty\). 
+        \textbf{Hint:} Lemma \ref{lem: Bienaymé}.
+        \begin{solution}
+            To use Bienaymé (Lemma \ref{lem: Bienaymé}) we calculate the
+            variance and covariance. The covariance is given by
+            \begin{align*}
+                \cov{R^i}{R^j}
+                &= \E{(R^i - \E{R^i})(R^j - \E{R^j})}
+                \\
+                &= \E{(\beta M + \epsilon^i)(\beta M + \epsilon^j)}
+                \\
+                &= \beta^2 \underbrace{\E{M^2}}_{=1} + \beta \underbrace{\E{M\epsilon^i}}_{=0} +
+                \beta \underbrace{\E{M\epsilon^j}}_{=0} +
+                \E{\epsilon^i\epsilon^j}
+                = \beta^2 + \E{\epsilon^i\epsilon^j}.
+            \end{align*}
+            Consequently, if \(i \neq j\) we have \(\cov{R^i}{R^j} = \beta^2\) and if \(i=j\) we have
+            \[
+                \var{R^i} = \beta^2 + \var{\epsilon^i} \le \beta^2 + \sigma_\epsilon^2
+            \]
+            Using Bienaymé we have consequently have
+            \begin{align*}
+                \abs{\var{R^P} - \beta^2}
+                &= \abs[\Big]{\frac1{n^2}\sum_{i=1}^n \var{R^i} + \frac1{n^2}\sum_{i\neq j} \cov{R^i}{R^j} - \beta^2}
+                \\
+                &\le \tfrac1{n}(\beta^2 + \sigma_\epsilon^2) + \abs{(1-\tfrac1{n})\beta^2 - \beta^2}
+                \\
+                &= \frac{\beta^2 + \sigma_\epsilon^2 + \beta^2}{n}
+                \to 0.
+                \qedhere
+            \end{align*}
+        \end{solution}
+
+    \end{enumerate}
+\end{exercise}
+
+\begin{remark}
+    Diversification over companies is additive, while the long term view
+    is multiplicative. This makes it somewhat delicate to combine both views
+    into one. Nevertheless both views reduce the variance and thereby the risk
+    of the investment by the law of large numbers.
+\end{remark}
+
+
+\begin{exercise}[Glivenko-Cantelli theorem \Coffeecup\Coffeecup\Coffeecup]
+    This exercise is an extension of Exercise \ref{ex: mean of indicators} where
+    we want to prove the Glivenko-Cantelli theorem, which says that the
+    empirical distribution function \(F_n\) converges uniformly to the
+    distribution function and not just at finitely many points.
+    \begin{mdframed}[innertopmargin=0pt]
+    \begin{theorem}[Glivenko-Cantelli]
+        \label{thm: glivenko cantelli}
+        Let \((X_n)_{n\in \nat}\) be a sequence of iid random
+        variables in \(\real\) with distribution function \(F\) and empirical 
+        distribution function \(F_n\). Then
+        \[
+            \sup_{x\in \real}\abs{F_n(x) - F(x)} \overset{\as}\to 0.
+        \]
+    \end{theorem}
+    \end{mdframed}
+    You will prove this theorem in three steps:
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item Define the functions \(G(x) \coloneq \prob{X_1 < x}\) and \(G_n(x) \coloneq \frac1n \sum_{i=1}^n \ind{X_i < x}\)
+        and prove for any \(x_1, \dots, x_k \in \real\)
+        \[\begin{aligned}
+            &(F_n(x_1), \dots, F_n(x_k), G_n(x_1), \dots, G_n(x_k))
+            \\
+            &\overset{\as}\to (F(x_1), \dots, F(x_k), G(x_1), \dots, G(x_k)).
+        \end{aligned}
+        \]
+        Deduce
+        \begin{equation}
+            \label{eq: discretization max to zero}            
+            R_n \coloneq \max_{i\in \set{1,\dots, k}} \max\set[\big]{\abs{F_n(x_i) - F(x_i)}, \abs{G_n(x_i) - G(x_i)}} \overset{\as}\to 0.
+        \end{equation}
+        \begin{solution}
+            The first claim follows from the law of large numbers as in Exercise \ref{ex: mean of indicators}.
+            The claim \eqref{eq: discretization max to zero} then follows from the norm equivalence
+            in \(\real^{2k}\), that is there exists a constant \(C\) such that
+            \[
+                \norm{x}_\infty \le C \norm{x}_2
+            \]
+            As we have convergence in \(\norm{\cdot}_2\) we thereby also have
+            convergence in \(\norm{\cdot}_\infty\) and consequently \(R_n
+            \overset{\as}\to 0\).
+        \end{solution}
+
+        \item\label{eq: glivenko cantelli limsup bound} Recall the properties of the quantile function \(F^\leftarrow\) (Exercise \ref{ex: stochastic simulation})
+        and choose \(x_1, \dots, x_k\) as \(x_i \coloneq F^\leftarrow\bigl(\frac{i}k\bigr)\).
+        Prove
+        \begin{equation}
+            \label{eq: discretization properties}    
+            G(x_i) \le \tfrac{i}k \le F(x_i).
+        \end{equation}
+        Then use this and \eqref{eq: discretization max to zero} to prove that
+        \[
+            \limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} \le \tfrac1k + \limsup_{n\to \infty}R_n \le \tfrac1k.
+        \]
+        \begin{solution}
+            The upper bound in \eqref{eq: discretization properties} follows from Exercise \ref{ex: stochastic simulation}
+            \ref{it: F(F-(p)) > p} and the lower bound follows from the fact that
+            \(G(x) \le F(x) \le \frac{i}k\) for all \(x < x_i\) due to
+            \[
+                x_i = F^\leftarrow\bigl(\tfrac{i}k\bigr)
+                = \inf\set[\big]{x\in \real: F(x) \ge \tfrac{i}k}.
+            \]
+            and left continuity of \(G(x)\) by
+            \begin{align*}
+                G(x) = \prob{X_1 < x}
+                &= \prob[\Big]{\bigcup_{n\in \nat} \set{X_1 < y- \tfrac1n}}
+                \\
+                &= \lim_{n\to \infty} \prob{X_1 < y} = \lim_{n\to\infty} G(y - \tfrac1n).
+            \end{align*}
+            On to the second claim: For any \(x\in (x_i, x_{i+1})\) we have
+            \begin{align*}
+                F_n(x)
+                \overset{x< x_{i+1}}&\le G_n(x_{i+1})
+                \\
+                \overset{\eqref{eq: discretization max to zero}}&\le G(x_{i+1}) + R_n
+                \\
+                \overset{\eqref{eq: discretization properties}}&\le F(x_i) + \frac1k + R_n
+                \overset{x_i < x}\le F(x) + \frac1k + R_n
+            \end{align*}
+            Similarly, we have for any \(x\in (x_i, x_{i+1})\) that
+            \begin{align*}
+                F_n(x)
+                \overset{x>x_i}&\ge F_n(x_i)
+                \\
+                \overset{\eqref{eq: discretization max to zero}}&\ge F(x_i) - R_n
+                \\
+                \overset{\eqref{eq: discretization properties}}&\ge G(x_{i+1}) - \tfrac1k - R_n
+                \\
+                \overset{x_{i+1} > x}&\ge F(x) - \tfrac1k - R_n.
+            \end{align*}
+            Put together, we have for any \(x\in (x_i, x_{i+1})\) and any \(i \in \set{1,\dots, k-1}\)
+            \begin{equation}
+                \label{eq: glivenko cantelli bound}    
+                \abs{F_n(x) - F(x)} \le \frac1k + R_n
+            \end{equation}
+            Since we clearly also have this for for \(x = x_i\) by definition of
+            \(R_n\). What is therefore left are only the cases \(x< x_1\) and \(x>x_k\). For
+            \(x< x_1\) we have
+            \[
+                F_n(x) \overset{x < x_1}\le G_n(x_1)
+                \overset{\eqref{eq: discretization max to zero}}\le G(x_1) + R_n
+                \overset{\eqref{eq: discretization properties}}\le \tfrac1k + R_n
+                \overset{F(x) \ge 0}\le F(x) + \tfrac1k + R_n,
+            \]
+            and
+            \[
+                F_n(x) \overset{x < x_1}\ge 0 
+                \overset{\eqref{eq: discretization properties}}\ge G(x_1) - \tfrac1k
+                \overset{x< x_1}\ge F(x) - \tfrac1k.
+            \]
+            Together these result in \eqref{eq: glivenko cantelli bound} for \(x < x_1\). For \(x > x_k\) we have
+            \[
+                F_n(x) \overset{x > x_k}\le 1
+                \overset{\eqref{eq: discretization properties}}\le F(x_k) \le F(x)
+            \]
+            and
+            \[
+                F_n(x) \overset{x > x_k}\ge F_n(x_k)
+                \overset{\eqref{eq: discretization max to zero}}\ge F(x_k) - R_n
+                \overset{\eqref{eq: discretization properties}}\ge 1 - R_n
+                \overset{F(x) \le 1}\ge F(x) - R_n.
+            \]
+            Together they result in \eqref{eq: glivenko cantelli bound} for \(x > x_k\). In summary, we have \eqref{eq: glivenko cantelli bound} 
+            for all \(x\in \real\) and therefore almost surely
+            \[
+                \limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} \le \tfrac1k + \limsup_{n\to \infty}R_n \overset{\eqref{eq: discretization max to zero}}= \tfrac1k.
+                \qedhere
+            \]
+        \end{solution}
+
+        \item Deduce the ``Glivenko-Cantelli theorem'' with a union bound over \(k\).
+        \begin{solution}
+            We have
+            \begin{align*}
+                &\prob[\Big]{\limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} > 0}
+                \\
+                &= \prob[\Big]{\bigcup_{k\in \nat}\limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} > \tfrac1k}
+                \\
+                &= \lim_{k\to\infty}\prob[\Big]{\limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} > \tfrac1k}
+                \\
+                \overset{\ref{eq: glivenko cantelli limsup bound}}&= \lim_{k\to \infty} 0 =0.
+            \end{align*}
+            and thereby
+            \begin{align*}
+                &\prob[\Big]{\lim_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} = 0}
+                \\
+                &= 1- \prob[\Big]{\limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} > 0}
+                \\
+                &= 1.
+                \qedhere
+            \end{align*}
+        \end{solution}
+    \end{enumerate}
+\end{exercise}
