@@ -1,0 +1,43 @@
+
+\begin{exercise}[Mean of indicators \Coffeecup]
+    \label{ex: mean of indicators}
+    Let \((X_n)_{n\in \nat}\) be a sequence of independent and identically
+    distributed random variables in \(\real\) with distribution function \(F\).
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item Let \(A\) be a measurable set and \(Y_i \coloneq \ind{X_i \in A}\).
+        Prove that
+        \[
+            \frac1n \sum_{i=1}^n Y_i \overset{\as}\to \prob{X_1 \in A}
+            \qquad (n \to \infty).
+        \]
+        \begin{solution}
+            This is the strong law of large numbers for the independent (and
+            thereby uncorrelated), identically distributed \(Y_i\), since
+            \[
+                \E{Y_i} = \E{\ind{X_i \in A}} = \prob{X_1 \in A}.
+                \qedhere
+            \]
+        \end{solution}
+
+        \item Define the empirical distribution function
+        \[
+            F_n(x) \coloneq \frac1n \sum_{i=1}^n \ind{X_i \le x}.
+        \]
+        Prove that for any \(x_1, \dots, x_k \in \real\)
+        \[
+            (F_n(x_1), \dots, F_n(x_k)) \overset{\as}\to (F(x_1), \dots, F(x_k))
+            \qquad (n \to \infty).
+        \]
+        \begin{solution}
+            Since \(Y_n\coloneq (Y_n^{(1)}, \dots, Y_n^{(k)}) \coloneq (\ind{X_n
+            \le x_1}, \dots, \ind{X_n \le x_k})\) are independent and
+            identically distributed with expectation \((F(x_1), \dots,
+            F(x_k))\), we have by the strong law of large numbers that
+            \[
+                (F_n(x_1), \dots, F_n(x_k)) = \frac1n \sum_{i=1}^n Y_i
+                \overset{\as}\to (F(x_1), \dots, F(x_k)).
+                \qedhere
+            \]
+        \end{solution}
+    \end{enumerate}
+\end{exercise}

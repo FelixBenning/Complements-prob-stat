@@ -1,0 +1,75 @@
+
+\begin{exercise}[Diversification and systemic risk \Coffeecup\Coffeecup]
+    In this exercise we will only model a single time step from \(t=0\) to
+    \(t=1\) and write \(R^i = R_0^i\), cf.~\eqref{eq: return definition}. Moreover we assume for \(\alpha^i,
+    \beta^i \in \real\)
+    \[
+        R^i = 1
+        + \underbrace{\alpha^i}_{\substack{\text{expected}\\ \text{return}}}
+        + \underbrace{\beta^i M}_{\substack{\text{systemic}\\\text{risk}}}
+        + \underbrace{\epsilon^i}_{\substack{\text{specific}\\\text{risk}}},
+    \]
+    where \(M\) is a random variable modelling the ``market risk'' or ``systemic
+    risk'' and \(\epsilon^i\) is a random variable modelling the ``specific
+    risk'' of the asset \(i\). We assume that the random variables \(M\) and
+    \(\epsilon^1, \dots, \epsilon^n\) are uncorrelated with zero mean. Without
+    loss of generality we assume that the variance of \(M\) is one -- simply move
+    the variance into \(\beta^i\). We also assume that the variance of
+    \(\epsilon^i\) is bounded by \(\sigma_\epsilon^2\). For simplicity we
+    further assume \(\alpha^i = \alpha\) and \(\beta^i = \beta\) for all \(i\).
+
+    We consider the portfolio \(P\) that invests equally in all assets such that
+    the portfolio return is given by
+    \[
+        R^P = \frac1n \sum_{i=1}^n R^i.
+    \]
+    Prove that
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item The expected return of the portfolio is given by \(\E{R^P} = 1 + \alpha\).
+        \begin{solution}
+            By linearity of the expectation and the assumptions on the random variables we have 
+            \[
+                \E{R^P}
+                = \frac1n \sum_{i=1}^n \E{R^i}
+                = \frac1n \sum_{i=1}^n (1 + \alpha + \beta \E{M} + \E{\epsilon^i})
+                = 1 + \alpha.
+                \qedhere
+            \]
+        \end{solution}
+        
+        \item The variance of the portfolio approaches \(\beta^2\) from above as the
+        diversification grows, that is \(n\to \infty\). 
+        \textbf{Hint:} Lemma \ref{lem: Bienaymé}.
+        \begin{solution}
+            To use Bienaymé (Lemma \ref{lem: Bienaymé}) we calculate the
+            variance and covariance. The covariance is given by
+            \begin{align*}
+                \cov{R^i}{R^j}
+                &= \E{(R^i - \E{R^i})(R^j - \E{R^j})}
+                \\
+                &= \E{(\beta M + \epsilon^i)(\beta M + \epsilon^j)}
+                \\
+                &= \beta^2 \underbrace{\E{M^2}}_{=1} + \beta \underbrace{\E{M\epsilon^i}}_{=0} +
+                \beta \underbrace{\E{M\epsilon^j}}_{=0} +
+                \E{\epsilon^i\epsilon^j}
+                = \beta^2 + \E{\epsilon^i\epsilon^j}.
+            \end{align*}
+            Consequently, if \(i \neq j\) we have \(\cov{R^i}{R^j} = \beta^2\) and if \(i=j\) we have
+            \[
+                \var{R^i} = \beta^2 + \var{\epsilon^i} \le \beta^2 + \sigma_\epsilon^2
+            \]
+            Using Bienaymé we have consequently have
+            \begin{align*}
+                \abs{\var{R^P} - \beta^2}
+                &= \abs[\Big]{\frac1{n^2}\sum_{i=1}^n \var{R^i} + \frac1{n^2}\sum_{i\neq j} \cov{R^i}{R^j} - \beta^2}
+                \\
+                &\le \tfrac1{n}(\beta^2 + \sigma_\epsilon^2) + \abs{(1-\tfrac1{n})\beta^2 - \beta^2}
+                \\
+                &= \frac{\beta^2 + \sigma_\epsilon^2 + \beta^2}{n}
+                \to 0.
+                \qedhere
+            \end{align*}
+        \end{solution}
+
+    \end{enumerate}
+\end{exercise}

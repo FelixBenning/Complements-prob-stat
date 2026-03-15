@@ -1,0 +1,112 @@
+
+\begin{exercise}[Uncorrelated vs independent \Coffeecup\Coffeecup]
+   Let \(X\) and \(Y\) be two random variables in \(\real\). Prove that
+   the following statements are equivalent:
+   \begin{enumerate}[label=(\roman*),noitemsep]
+        \item\label{it: independent} \(X\) and \(Y\) are independent, that is
+        \[
+            \prob{X \in A, Y \in B} = \prob{X \in A}\prob{Y \in B} \qquad \forall A, B
+        \]
+        \item\label{it: measurable functions} For all measurable functions \(f\) and \(g\) such that \(f(X)\)
+        and \(g(X)\) are integrable we have
+        \[
+            \E{f(X)g(Y)} = \E{f(X)}\E{g(Y)}.
+        \]
+        \item\label{it: bounded measurable functions} For all \underline{bounded}, measurable functions \(f\) and \(g\)
+        \[
+            \E{f(X)g(Y)} = \E{f(X)}\E{g(Y)}.
+        \]
+   \end{enumerate}
+   \textbf{Hint: } Use Theorem 102 from Ivan's lecture notes.
+   \begin{solution}
+        We have \ref{it: independent} \(\Rightarrow\) \ref{it: measurable functions} by Theorem 102 from Ivan's lecture.
+        The implication \ref{it: measurable functions} \(\Rightarrow\) \ref{it: bounded measurable functions} is trivial.
+        For the implication \ref{it: bounded measurable functions} \(\Rightarrow\) \ref{it: independent} observe that for any \(A, B\) we have
+        that \(\ind{A}\) and \(\ind{B}\) are bounded measurable functions.
+   \end{solution}
+    
+   \noindent Further prove the following statements
+    \begin{enumerate}[label=(\alph*),noitemsep]
+        \item If \(X\) and \(Y\) are independent, they are uncorrelated, that is
+        \[
+            \cov{X}{Y} = 0.
+        \]
+        \begin{solution}
+            We have that
+            \begin{align*}
+                \cov{X}{Y}
+                &= \E{(X-\E{X})(Y-\E{Y})}
+                \\
+                &= \E{XY} - \E{X}\E{Y}
+                \overset{\text{indep.}}=
+                \E{X}\E{Y} - \E{X}\E{Y} = 0.
+                \qedhere
+            \end{align*}
+        \end{solution}
+
+        \item Let \(\prob{X=-1} = \prob{X=0} = \prob{X=1} = \frac13\) and \(Y =
+        X^2\). Prove that \(X\) and \(Y\) are uncorrelated but not independent.
+        \begin{solution}
+            Since \(\E{X} = 0\) we have that
+            \begin{align*}
+                \cov{X}{Y}
+                &= \E{XY} - \E{X}\E{Y}
+                \\
+                &= \E{X^3} - \E{X}\E{X^2}
+                = \E{X} - \E{X}\E{X^2}
+                = 0.
+            \end{align*}
+            However, 
+            \[
+                \prob{X=0, Y=1} =0 \neq \tfrac13 \tfrac23 = \prob{X=0}\prob{Y=1}.
+                \qedhere
+            \]
+        \end{solution}
+
+        \item If \(X\) and \(Y\) are independent, then \(h_1(X)\) and \(h_2(Y)\) are independent
+        for all measurable functions \(h_1\colon \real \to \real\) and \(h_2\colon \real \to \real\).
+        \begin{solution}
+            Since \(f\circ h_1\) and \(g \circ h_2\) are measurable for all
+            measurable \(f\colon \real \to \real\) and \(g\colon \real \to \real\), we have by \ref{it: measurable
+            functions} that
+            \begin{align*}
+                \E{f(h_1(X))g(h_2(Y))}
+                &= \E{(f\circ h_1)(X)(g\circ h_2)(Y)}
+                \\
+                &= \E{f(h_1(X))}\E{g(h_2(Y))}.
+            \end{align*}
+            This proves independence by \ref{it: measurable functions}. 
+        \end{solution}
+
+        \item\label{it: all transformations uncorrelated implies independence}
+        If \(f(X)\) and \(g(Y)\) are uncorrelated for all bounded
+        measurable functions \(f\) and \(g\), then \(X\) and \(Y\) are
+        independent.
+        \begin{solution}
+            We have
+            \[
+                0 = \cov{f(X)}{g(Y)} = \E{f(X),g(Y)} - \E{f(X)}\E{g(Y)}
+            \]
+            and consequently \(\E{f(X)g(Y)} = \E{f(X)}\E{g(Y)}\) for all
+            bounded measurable functions \(f\) and \(g\).  This implies
+            independence by \ref{it: bounded measurable functions}.
+        \end{solution}
+    \end{enumerate}
+
+    \begin{remark}[Interpretation]
+        What this essentially means is the following:
+        \begin{enumerate}
+            \item Uncorrelated is weaker than independence.
+            \item \(f(X)\) and \(f(Y)\) are independent if \(X\) and \(Y\)
+            are independent, that is independence is \emph{stable under transformation}.
+
+            \item In contrast, \(X\) and \(Y\) being uncorrelated is \emph{not} stable under transformation.
+            In fact, if it were true that \(f(X)\) and \(g(Y)\) is uncorrelated
+            for all bounded measurable functions \(f\) and \(g\), then \(X\) and
+            \(Y\) would be independent by \ref{it: all transformations
+            uncorrelated implies independence}. Independence therefore gains the
+            interpretation of ``all transformations are uncorrelated''.
+        \end{enumerate}
+
+    \end{remark}
+\end{exercise}
