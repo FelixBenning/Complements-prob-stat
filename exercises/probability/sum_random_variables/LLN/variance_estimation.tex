@@ -4,18 +4,14 @@
     Let \((X_n)_{n\in \nat}\) be a sequence of \(\iid\) random variables in \(\real\)
     with expectation \(\mu\) and variance \(\sigma^2\). Prove that
     \begin{enumerate}[label=(\alph*),noitemsep]
-        \item 
+        \item\label{it: (var estimation) theoretical}
         \(
             \hat\sigma^2_n \coloneq \frac1n\sum_{i=1}^n (X_i-\mu)^2
             \overset{\as}\to \sigma^2,
         \)
-        \begin{solution}
-            Since \(\E{(X_i-\mu)^2} = \var{X_i} = \sigma^2\), this is
-            simply the strong law of large numbers for the independent and identically
-            distributed random variables \((X_i-\mu)^2\).
-        \end{solution}
 
-        \item Without knowing the expectation, a reasonable variance estimator
+        \item\label{it: (var estimation) sample mean}
+        Without knowing the expectation, a reasonable variance estimator
         uses the sample mean \(\mean{X}_n\) instead of \(\mu\), that is
         \[
             \hhat\sigma_n^2 \coloneq \frac1n\sum_{i=1}^n (X_i-\mean{X}_n)^2
@@ -23,64 +19,77 @@
         Prove that it converges almost surely to \(\sigma^2\).
         
         \textbf{Hint:} First prove \(\hhat\sigma_n^2 = \hat\sigma_n^2 - (\mean{X}_n - \mu)^2\).
-        \begin{solution}
-            We have that
-            \begin{align}
-                \nonumber
-                \hhat\sigma_n^2
-                &= \frac1n\sum_{i=1}^n (X_i-\mean{X}_n)^2
-                \\
-                \nonumber
-                &= \frac1n\sum_{i=1}^n ((X_i-\mu) - (\mean{X}_n - \mu))^2
-                \\
-                \nonumber
-                &= \frac1n\sum_{i=1}^n (X_i-\mu)^2 - 2(X_i-\mu)(\mean{X}_n - \mu) + (\mean{X}_n - \mu)^2
-                \\
-                \nonumber
-                &= \frac1n\sum_{i=1}^n (X_i-\mu)^2 - 2(\mean{X}_n - \mu)^2 + (\mean{X}_n - \mu)^2
-                \\
-                \label{eq: variance estimator decomposition}
-                &= \hat\sigma_n^2 - (\mean{X}_n - \mu)^2.
-            \end{align}
-            By \(\mean{X}_n \overset{\as}\to \mu\) and continuous mapping
-            we have \((\mean{X}_n - \mu)^2 \overset{\as}\to 0\). Consequently,
-            by \(\hat\sigma_n^2 \overset{\as}\to \sigma^2\), joint convergence
-            (Theorem \ref{thm: joint convergence}) and continuous mapping we have
-            \(\hhat\sigma_n^2 \overset{\as}\to \sigma^2\).
-        \end{solution}
 
-        \item Prove that \(\hhat\sigma_n^2\) is biased. Specifically, prove
+        \item\label{it: (var estimation) bias and consistency}
+        Prove that \(\hhat\sigma_n^2\) is biased. Specifically, prove
         \[
             \E{\hhat\sigma_n^2} = \tfrac{n-1}{n}\sigma^2.
         \]
         Prove the consistency of the unbiased estimator \(\tilde\sigma_n^2 \coloneq \tfrac{n}{n-1}\hhat\sigma_n^2\),
         that is \(\tilde\sigma_n^2 \overset{\as}\to \sigma^2\).
-        \begin{solution}
-            Bienaymé (Lemma \ref{lem: Bienaymé}) implies \(\var{\mean{X}_n} =
-            \frac1n \var{X_1}\) and therefore using \eqref{eq: variance estimator decomposition}
-            and the linearity of expectation we have
-            \begin{align*}
-                \E{\hhat\sigma_n^2}
-                &= \E{\hat\sigma_n^2} - \E{(\mean{X}_n - \mu)^2}
-                \\
-                &= \sigma^2 - \var{\mean{X}_n}
-                = \sigma^2 - \tfrac1n\var{X_1} = \tfrac{n-1}{n}\sigma^2.
-            \end{align*}
-            Consequently, \(\hhat\sigma_n^2\) is a biased estimator of
-            \(\sigma^2\) and \(\tilde\sigma_n^2\) is an unbiased estimator of
-            \(\sigma^2\) by linearity of the expectation.
-            Since \(\frac{n}{n-1} \to 1\) and \(\hhat\sigma_n^2 \overset{\as}\to
-            \sigma^2\) we have by joint convergence and continuous mapping that
-            \(\tilde\sigma_n^2 \overset{\as}\to \sigma^2\).
-        \end{solution}
 
-        \item For every \(\sigma_n^2 \in \{\hat\sigma_n^2, \hhat\sigma_n^2,
+        \item\label{it: (var estimation) standard deviation}
+        For every \(\sigma_n^2 \in \{\hat\sigma_n^2, \hhat\sigma_n^2,
         \tilde\sigma_n^2\}\) prove that \(\sqrt{\sigma_n^2}\) is a consistent
         estimator of the standard deviation \(\sigma\), that is 
         \(\sqrt{\sigma_n^2} \overset{\as}\to \sigma\).
-        \begin{solution}
-            Since \(\sqrt{x}\) is continuous for \(x \ge 0\) and \(\sigma_n^2,
-            \sigma^2 \ge 0\) the claim follows from continuous mapping.
-        \end{solution}
     \end{enumerate}
 \end{exercise}
+
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: (var estimation) theoretical}]
+    Since \(\E{(X_i-\mu)^2} = \var{X_i} = \sigma^2\), this is
+    simply the strong law of large numbers for the independent and identically
+    distributed random variables \((X_i-\mu)^2\).
+
+    \item[\ref{it: (var estimation) sample mean}]
+    We have that
+    \begin{align}
+        \nonumber
+        \hhat\sigma_n^2
+        &= \frac1n\sum_{i=1}^n (X_i-\mean{X}_n)^2
+        \\
+        \nonumber
+        &= \frac1n\sum_{i=1}^n ((X_i-\mu) - (\mean{X}_n - \mu))^2
+        \\
+        \nonumber
+        &= \frac1n\sum_{i=1}^n (X_i-\mu)^2 - 2(X_i-\mu)(\mean{X}_n - \mu) + (\mean{X}_n - \mu)^2
+        \\
+        \nonumber
+        &= \frac1n\sum_{i=1}^n (X_i-\mu)^2 - 2(\mean{X}_n - \mu)^2 + (\mean{X}_n - \mu)^2
+        \\
+        \label{eq: variance estimator decomposition}
+        &= \hat\sigma_n^2 - (\mean{X}_n - \mu)^2.
+    \end{align}
+    By \(\mean{X}_n \overset{\as}\to \mu\) and continuous mapping
+    we have \((\mean{X}_n - \mu)^2 \overset{\as}\to 0\). Consequently,
+    by \(\hat\sigma_n^2 \overset{\as}\to \sigma^2\), joint convergence
+    (Theorem \ref{thm: joint convergence}) and continuous mapping we have
+    \(\hhat\sigma_n^2 \overset{\as}\to \sigma^2\).
+
+    \item[\ref{it: (var estimation) bias and consistency}]
+    Bienaymé (Lemma \ref{lem: Bienaymé}) implies \(\var{\mean{X}_n} =
+    \frac1n \var{X_1}\) and therefore using \eqref{eq: variance estimator decomposition}
+    and the linearity of expectation we have
+    \begin{align*}
+        \E{\hhat\sigma_n^2}
+        &= \E{\hat\sigma_n^2} - \E{(\mean{X}_n - \mu)^2}
+        \\
+        &= \sigma^2 - \var{\mean{X}_n}
+        = \sigma^2 - \tfrac1n\var{X_1} = \tfrac{n-1}{n}\sigma^2.
+    \end{align*}
+    Consequently, \(\hhat\sigma_n^2\) is a biased estimator of
+    \(\sigma^2\) and \(\tilde\sigma_n^2\) is an unbiased estimator of
+    \(\sigma^2\) by linearity of the expectation.
+    Since \(\frac{n}{n-1} \to 1\) and \(\hhat\sigma_n^2 \overset{\as}\to
+    \sigma^2\) we have by joint convergence and continuous mapping that
+    \(\tilde\sigma_n^2 \overset{\as}\to \sigma^2\).
+
+    \item[\ref{it: (var estimation) standard deviation}]
+    Since \(\sqrt{x}\) is continuous for \(x \ge 0\) and \(\sigma_n^2,
+    \sigma^2 \ge 0\) the claim follows from continuous mapping.
+    \qedhere
+\end{enumerate}
+\end{solution}
+

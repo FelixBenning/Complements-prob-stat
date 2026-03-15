@@ -17,7 +17,8 @@
     \end{mdframed}
     You will prove this theorem in three steps:
     \begin{enumerate}[label=(\alph*),noitemsep]
-        \item Define the functions \(G(x) \coloneq \prob{X_1 < x}\) and \(G_n(x) \coloneq \frac1n \sum_{i=1}^n \ind{X_i < x}\)
+        \item\label{it: glivenko cantelli discretization}
+        Define the functions \(G(x) \coloneq \prob{X_1 < x}\) and \(G_n(x) \coloneq \frac1n \sum_{i=1}^n \ind{X_i < x}\)
         and prove for any \(x_1, \dots, x_k \in \real\)
         \[\begin{aligned}
             &(F_n(x_1), \dots, F_n(x_k), G_n(x_1), \dots, G_n(x_k))
@@ -30,19 +31,8 @@
             \label{eq: discretization max to zero}            
             R_n \coloneq \max_{i\in \set{1,\dots, k}} \max\set[\big]{\abs{F_n(x_i) - F(x_i)}, \abs{G_n(x_i) - G(x_i)}} \overset{\as}\to 0.
         \end{equation}
-        \begin{solution}
-            The first claim follows from the law of large numbers as in Exercise \ref{ex: mean of indicators}.
-            The claim \eqref{eq: discretization max to zero} then follows from the norm equivalence
-            in \(\real^{2k}\), that is there exists a constant \(C\) such that
-            \[
-                \norm{x}_\infty \le C \norm{x}_2
-            \]
-            As we have convergence in \(\norm{\cdot}_2\) we thereby also have
-            convergence in \(\norm{\cdot}_\infty\) and consequently \(R_n
-            \overset{\as}\to 0\).
-        \end{solution}
 
-        \item\label{eq: glivenko cantelli limsup bound} Recall the properties of the quantile function \(F^\leftarrow\) (Exercise \ref{ex: stochastic simulation})
+        \item\label{it: glivenko cantelli limsup bound} Recall the properties of the quantile function \(F^\leftarrow\) (Exercise \ref{ex: stochastic simulation})
         and choose \(x_1, \dots, x_k\) as \(x_i \coloneq F^\leftarrow\bigl(\frac{i}k\bigr)\).
         Prove
         \begin{equation}
@@ -53,103 +43,118 @@
         \[
             \limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} \le \tfrac1k + \limsup_{n\to \infty}R_n \le \tfrac1k.
         \]
-        \begin{solution}
-            The upper bound in \eqref{eq: discretization properties} follows from Exercise \ref{ex: stochastic simulation}
-            \ref{it: F(F-(p)) > p} and the lower bound follows from the fact that
-            \(G(x) \le F(x) \le \frac{i}k\) for all \(x < x_i\) due to
-            \[
-                x_i = F^\leftarrow\bigl(\tfrac{i}k\bigr)
-                = \inf\set[\big]{x\in \real: F(x) \ge \tfrac{i}k}.
-            \]
-            and left continuity of \(G(x)\) by
-            \begin{align*}
-                G(x) = \prob{X_1 < x}
-                &= \prob[\Big]{\bigcup_{n\in \nat} \set{X_1 < y- \tfrac1n}}
-                \\
-                &= \lim_{n\to \infty} \prob{X_1 < y} = \lim_{n\to\infty} G(y - \tfrac1n).
-            \end{align*}
-            On to the second claim: For any \(x\in (x_i, x_{i+1})\) we have
-            \begin{align*}
-                F_n(x)
-                \overset{x< x_{i+1}}&\le G_n(x_{i+1})
-                \\
-                \overset{\eqref{eq: discretization max to zero}}&\le G(x_{i+1}) + R_n
-                \\
-                \overset{\eqref{eq: discretization properties}}&\le F(x_i) + \frac1k + R_n
-                \overset{x_i < x}\le F(x) + \frac1k + R_n
-            \end{align*}
-            Similarly, we have for any \(x\in (x_i, x_{i+1})\) that
-            \begin{align*}
-                F_n(x)
-                \overset{x>x_i}&\ge F_n(x_i)
-                \\
-                \overset{\eqref{eq: discretization max to zero}}&\ge F(x_i) - R_n
-                \\
-                \overset{\eqref{eq: discretization properties}}&\ge G(x_{i+1}) - \tfrac1k - R_n
-                \\
-                \overset{x_{i+1} > x}&\ge F(x) - \tfrac1k - R_n.
-            \end{align*}
-            Put together, we have for any \(x\in (x_i, x_{i+1})\) and any \(i \in \set{1,\dots, k-1}\)
-            \begin{equation}
-                \label{eq: glivenko cantelli bound}    
-                \abs{F_n(x) - F(x)} \le \frac1k + R_n
-            \end{equation}
-            Since we clearly also have this for for \(x = x_i\) by definition of
-            \(R_n\). What is therefore left are only the cases \(x< x_1\) and \(x>x_k\). For
-            \(x< x_1\) we have
-            \[
-                F_n(x) \overset{x < x_1}\le G_n(x_1)
-                \overset{\eqref{eq: discretization max to zero}}\le G(x_1) + R_n
-                \overset{\eqref{eq: discretization properties}}\le \tfrac1k + R_n
-                \overset{F(x) \ge 0}\le F(x) + \tfrac1k + R_n,
-            \]
-            and
-            \[
-                F_n(x) \overset{x < x_1}\ge 0 
-                \overset{\eqref{eq: discretization properties}}\ge G(x_1) - \tfrac1k
-                \overset{x< x_1}\ge F(x) - \tfrac1k.
-            \]
-            Together these result in \eqref{eq: glivenko cantelli bound} for \(x < x_1\). For \(x > x_k\) we have
-            \[
-                F_n(x) \overset{x > x_k}\le 1
-                \overset{\eqref{eq: discretization properties}}\le F(x_k) \le F(x)
-            \]
-            and
-            \[
-                F_n(x) \overset{x > x_k}\ge F_n(x_k)
-                \overset{\eqref{eq: discretization max to zero}}\ge F(x_k) - R_n
-                \overset{\eqref{eq: discretization properties}}\ge 1 - R_n
-                \overset{F(x) \le 1}\ge F(x) - R_n.
-            \]
-            Together they result in \eqref{eq: glivenko cantelli bound} for \(x > x_k\). In summary, we have \eqref{eq: glivenko cantelli bound} 
-            for all \(x\in \real\) and therefore almost surely
-            \[
-                \limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} \le \tfrac1k + \limsup_{n\to \infty}R_n \overset{\eqref{eq: discretization max to zero}}= \tfrac1k.
-                \qedhere
-            \]
-        \end{solution}
 
-        \item Deduce the ``Glivenko-Cantelli theorem'' with a union bound over \(k\).
-        \begin{solution}
-            We have
-            \begin{align*}
-                &\prob[\Big]{\limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} > 0}
-                \\
-                &= \prob[\Big]{\bigcup_{k\in \nat}\limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} > \tfrac1k}
-                \\
-                &= \lim_{k\to\infty}\prob[\Big]{\limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} > \tfrac1k}
-                \\
-                \overset{\ref{eq: glivenko cantelli limsup bound}}&= \lim_{k\to \infty} 0 =0.
-            \end{align*}
-            and thereby
-            \begin{align*}
-                &\prob[\Big]{\lim_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} = 0}
-                \\
-                &= 1- \prob[\Big]{\limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} > 0}
-                \\
-                &= 1.
-                \qedhere
-            \end{align*}
-        \end{solution}
+        \item\label{it: glivenko cantelli proof}
+        Deduce the ``Glivenko-Cantelli theorem'' with a union bound over \(k\).
     \end{enumerate}
 \end{exercise}
+
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: glivenko cantelli discretization}]
+    The first claim follows from the law of large numbers as in Exercise \ref{ex: mean of indicators}.
+    The claim \eqref{eq: discretization max to zero} then follows from the norm equivalence
+    in \(\real^{2k}\), that is there exists a constant \(C\) such that
+    \[
+        \norm{x}_\infty \le C \norm{x}_2
+    \]
+    As we have convergence in \(\norm{\cdot}_2\) we thereby also have
+    convergence in \(\norm{\cdot}_\infty\) and consequently \(R_n
+    \overset{\as}\to 0\).
+
+    \item[\ref{it: glivenko cantelli limsup bound}]
+    The upper bound in \eqref{eq: discretization properties} follows from Exercise \ref{ex: stochastic simulation}
+    \ref{it: F(F-(p)) > p} and the lower bound follows from the fact that
+    \(G(x) \le F(x) \le \frac{i}k\) for all \(x < x_i\) due to
+    \[
+        x_i = F^\leftarrow\bigl(\tfrac{i}k\bigr)
+        = \inf\set[\big]{x\in \real: F(x) \ge \tfrac{i}k}.
+    \]
+    and left continuity of \(G(x)\) by
+    \begin{align*}
+        G(x) = \prob{X_1 < x}
+        &= \prob[\Big]{\bigcup_{n\in \nat} \set{X_1 < y- \tfrac1n}}
+        \\
+        &= \lim_{n\to \infty} \prob{X_1 < y} = \lim_{n\to\infty} G(y - \tfrac1n).
+    \end{align*}
+    On to the second claim: For any \(x\in (x_i, x_{i+1})\) we have
+    \begin{align*}
+        F_n(x)
+        \overset{x< x_{i+1}}&\le G_n(x_{i+1})
+        \\
+        \overset{\eqref{eq: discretization max to zero}}&\le G(x_{i+1}) + R_n
+        \\
+        \overset{\eqref{eq: discretization properties}}&\le F(x_i) + \frac1k + R_n
+        \overset{x_i < x}\le F(x) + \frac1k + R_n
+    \end{align*}
+    Similarly, we have for any \(x\in (x_i, x_{i+1})\) that
+    \begin{align*}
+        F_n(x)
+        \overset{x>x_i}&\ge F_n(x_i)
+        \\
+        \overset{\eqref{eq: discretization max to zero}}&\ge F(x_i) - R_n
+        \\
+        \overset{\eqref{eq: discretization properties}}&\ge G(x_{i+1}) - \tfrac1k - R_n
+        \\
+        \overset{x_{i+1} > x}&\ge F(x) - \tfrac1k - R_n.
+    \end{align*}
+    Put together, we have for any \(x\in (x_i, x_{i+1})\) and any \(i \in \set{1,\dots, k-1}\)
+    \begin{equation}
+        \label{eq: glivenko cantelli bound}    
+        \abs{F_n(x) - F(x)} \le \frac1k + R_n
+    \end{equation}
+    Since we clearly also have this for for \(x = x_i\) by definition of
+    \(R_n\). What is therefore left are only the cases \(x< x_1\) and \(x>x_k\). For
+    \(x< x_1\) we have
+    \[
+        F_n(x) \overset{x < x_1}\le G_n(x_1)
+        \overset{\eqref{eq: discretization max to zero}}\le G(x_1) + R_n
+        \overset{\eqref{eq: discretization properties}}\le \tfrac1k + R_n
+        \overset{F(x) \ge 0}\le F(x) + \tfrac1k + R_n,
+    \]
+    and
+    \[
+        F_n(x) \overset{x < x_1}\ge 0 
+        \overset{\eqref{eq: discretization properties}}\ge G(x_1) - \tfrac1k
+        \overset{x< x_1}\ge F(x) - \tfrac1k.
+    \]
+    Together these result in \eqref{eq: glivenko cantelli bound} for \(x < x_1\). For \(x > x_k\) we have
+    \[
+        F_n(x) \overset{x > x_k}\le 1
+        \overset{\eqref{eq: discretization properties}}\le F(x_k) \le F(x)
+    \]
+    and
+    \[
+        F_n(x) \overset{x > x_k}\ge F_n(x_k)
+        \overset{\eqref{eq: discretization max to zero}}\ge F(x_k) - R_n
+        \overset{\eqref{eq: discretization properties}}\ge 1 - R_n
+        \overset{F(x) \le 1}\ge F(x) - R_n.
+    \]
+    Together they result in \eqref{eq: glivenko cantelli bound} for \(x > x_k\). In summary, we have \eqref{eq: glivenko cantelli bound} 
+    for all \(x\in \real\) and therefore almost surely
+    \[
+        \limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} \le \tfrac1k + \limsup_{n\to \infty}R_n \overset{\eqref{eq: discretization max to zero}}= \tfrac1k.
+    \]
+
+    \item[\ref{it: glivenko cantelli proof}]
+    We have
+    \begin{align*}
+        &\prob[\Big]{\limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} > 0}
+        \\
+        &= \prob[\Big]{\bigcup_{k\in \nat}\limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} > \tfrac1k}
+        \\
+        &= \lim_{k\to\infty}\prob[\Big]{\limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} > \tfrac1k}
+        \\
+        \overset{\ref{it: glivenko cantelli limsup bound}}&= \lim_{k\to \infty} 0 =0.
+    \end{align*}
+    and thereby
+    \begin{align*}
+        &\prob[\Big]{\lim_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} = 0}
+        \\
+        &= 1- \prob[\Big]{\limsup_{n\to \infty} \sup_{x\in \real}\abs{F_n(x) - F(x)} > 0}
+        \\
+        &= 1.
+        \qedhere
+    \end{align*}
+\end{enumerate}
+\end{solution}

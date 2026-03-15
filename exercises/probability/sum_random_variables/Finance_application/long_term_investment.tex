@@ -12,20 +12,21 @@
         \frac1n\sum_{t=0}^{n-1} R_t.
     \]
     Which one captures the long term growth of the investment better?
-    \begin{solution}
-        The geometric mean of the returns \(\mean{R}^g_n \coloneq \Bigl(\prod_{t=0}^{n-1} R_t\Bigr)^\frac1n\)
-        repeated for \(n\) periods gives the same return as the actual return over \(n\) periods:
-        \[
-            (\mean{R}^g_n)^n = \prod_{t=0}^{n-1} R_t = \frac{P_n}{P_0}.
-        \]
-        Consequently, \(r^g \coloneq \exp(\E{\ln(R_1)})\) is the long term
-        growth rate that stems from the law of large numbers
-        \[
-            \mean{R}^g_n  = \exp\Bigl(\frac1n \sum_{t=0}^{n-1} \ln(R_t)\Bigr) \overset{\as}\to r^g.
-        \]
-        In contrast, \(\E{R_1}\) may be arbitrarily far from \(r^g\) and
-        \(\E{R_1}^n\) is thereby not a good approximation of the return over \(n\) periods.
-        The arithmetic mean approximates \(\E{R_1}\) and is thereby not a good
-        approximation of the long term growth of the investment.
-    \end{solution}
 \end{exercise}
+
+\begin{solution}
+    The geometric mean of the returns \(\mean{R}^g_n \coloneq \Bigl(\prod_{t=0}^{n-1} R_t\Bigr)^\frac1n\)
+    repeated for \(n\) periods gives the same return as the actual return over \(n\) periods:
+    \[
+        (\mean{R}^g_n)^n = \prod_{t=0}^{n-1} R_t = \frac{P_n}{P_0}.
+    \]
+    Consequently, \(r^g \coloneq \exp(\E{\ln(R_1)})\) is the long term
+    growth rate that stems from the law of large numbers
+    \[
+        \mean{R}^g_n  = \exp\Bigl(\frac1n \sum_{t=0}^{n-1} \ln(R_t)\Bigr) \overset{\as}\to r^g.
+    \]
+    In contrast, \(\E{R_1}\) may be arbitrarily far from \(r^g\) and
+    \(\E{R_1}^n\) is thereby not a good approximation of the return over \(n\) periods.
+    The arithmetic mean approximates \(\E{R_1}\) and is thereby not a good
+    approximation of the long term growth of the investment.
+\end{solution}

@@ -6,43 +6,43 @@
     \(\|\mean{X}_n - \E{X_1}\|_{L^4}^4\) to prove the strong law of large numbers.
 
     \noindent\textbf{Hint:} Assume \(\E{X_1} = 0\) without loss of generality.
-
-    \begin{solution}
-        Assume that the random variables are centered without loss of generality.
-        For indices \(i,j,k,l\), where \(i\) is not equal to any of the others
-        we have by independence
-        \[
-            \E{X_i X_j X_k X_l} = \E{X_i}\E{X_jX_k X_l} = 0.
-        \]
-        So clearly, if there is an index that does not appear twice the expectation is zero.
-        This implies
-        \[\begin{aligned}
-            \norm{\mean{X}_n}_{L^4}^4
-            &= \E[\Big]{\abs[\Big]{\frac1n \sum_{i=1}^n X_i}^4}
-            \\
-            &= \frac1{n^4} \sum_{i,j,k,l=1}^n \E{X_i X_j X_k X_l}.
-            & (\abs{x}^4=x^4)
-            \\
-            &= \frac1{n^4} \Bigl(
-                \sum_{i=1}^n \E{X_i^4}
-                + \sum_{\substack{i,j=1\\i\neq j}}^n \E{X_i^2}\E{X_j^2}
-            \Bigr)
-            & (\text{no single index})
-            \\
-            &=
-            \frac1{n^4}\Bigl(n\E{X_1^4} + \frac{n(n-1)}{2} (\E{X_1^2})^2\Bigr)
-            &(\text{identical distributed})
-            \\
-            &\le \frac{C}{n^2}.
-        \end{aligned}
-        \]
-        With \(C = \E{X_1^4} + \frac12 (\E{X_1^2})^2 < \infty\). Consequently, we have
-        by Chebyshev's inequality for \(p=4\) (Corollary \ref{cor: markov inequality Lp})
-        \[
-            \prob{\norm{\mean{X}_n} > \epsilon} \le \frac{\norm{\mean{X}_n}_{L^4}^4}{\epsilon^4} \le \frac{C}{\epsilon^4 n^2}.
-        \]
-        Since this is summable in \(n\) we have by Corollary \ref{cor:
-        characterization of almost sure convergence} that \(\mean{X}_n
-        \overset{\as}\to 0\).
-    \end{solution}
 \end{exercise}
+
+\begin{solution}
+    Assume that the random variables are centered without loss of generality.
+    For indices \(i,j,k,l\), where \(i\) is not equal to any of the others
+    we have by independence
+    \[
+        \E{X_i X_j X_k X_l} = \E{X_i}\E{X_jX_k X_l} = 0.
+    \]
+    So clearly, if there is an index that does not appear twice the expectation is zero.
+    This implies
+    \[\begin{aligned}
+        \norm{\mean{X}_n}_{L^4}^4
+        &= \E[\Big]{\abs[\Big]{\frac1n \sum_{i=1}^n X_i}^4}
+        \\
+        &= \frac1{n^4} \sum_{i,j,k,l=1}^n \E{X_i X_j X_k X_l}.
+        & (\abs{x}^4=x^4)
+        \\
+        &= \frac1{n^4} \Bigl(
+            \sum_{i=1}^n \E{X_i^4}
+            + \sum_{\substack{i,j=1\\i\neq j}}^n \E{X_i^2}\E{X_j^2}
+        \Bigr)
+        & (\text{no single index})
+        \\
+        &=
+        \frac1{n^4}\Bigl(n\E{X_1^4} + \frac{n(n-1)}{2} (\E{X_1^2})^2\Bigr)
+        &(\text{identical distributed})
+        \\
+        &\le \frac{C}{n^2}.
+    \end{aligned}
+    \]
+    With \(C = \E{X_1^4} + \frac12 (\E{X_1^2})^2 < \infty\). Consequently, we have
+    by Chebyshev's inequality for \(p=4\) (Corollary \ref{cor: markov inequality Lp})
+    \[
+        \prob{\norm{\mean{X}_n} > \epsilon} \le \frac{\norm{\mean{X}_n}_{L^4}^4}{\epsilon^4} \le \frac{C}{\epsilon^4 n^2}.
+    \]
+    Since this is summable in \(n\) we have by Corollary \ref{cor:
+    characterization of almost sure convergence} that \(\mean{X}_n
+    \overset{\as}\to 0\).
+\end{solution}

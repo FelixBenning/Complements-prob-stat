@@ -11,16 +11,15 @@
         \Bigl(\prod_{i=1}^n X_i \Bigr)^\frac1n
         \overset{\as}\to \exp\bigl(\E[\big]{\ln(X_1)}\bigr).
     \]
-
-    \begin{solution}
-        Observe that the logarithm of the geometric mean converges by the law of
-        large numbers to the expectation of the logarithm, that is
-        \[
-            \ln\Bigl(\Bigl(\prod_{i=1}^n X_i \Bigr)^\frac1n\Bigr)
-            = \frac1n \sum_{i=1}^n \ln(X_i)
-            \overset{\as}\to \E[\big]{\ln(X_1)}.
-        \]
-        Since \(\exp(x)\) is continuous the claim follows from continuous mapping.
-    \end{solution}
-
 \end{exercise}
+
+\begin{solution}
+    Observe that the logarithm of the geometric mean converges by the law of
+    large numbers to the expectation of the logarithm, that is
+    \[
+        \ln\Bigl(\Bigl(\prod_{i=1}^n X_i \Bigr)^\frac1n\Bigr)
+        = \frac1n \sum_{i=1}^n \ln(X_i)
+        \overset{\as}\to \E[\big]{\ln(X_1)}.
+    \]
+    Since \(\exp(x)\) is continuous the claim follows from continuous mapping.
+\end{solution}
