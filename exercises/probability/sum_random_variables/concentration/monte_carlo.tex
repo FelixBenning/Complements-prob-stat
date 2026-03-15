@@ -1,0 +1,67 @@
+
+\begin{exercise}[Monte Carlo \Coffeecup]
+    \label{ex: monte carlo}
+    In this exercise we will devise a way to compute the integral
+    \[
+        I \coloneq \int_{[0,1]^\dims} f(x) dx
+    \]
+    of a continuous function \(f\colon [0,1]^\dims \to \real\).  Let
+    \((U_n)_{n\in \nat}\) be independent and uniformly distributed on
+    \([0,1]^\dims\).
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item Prove that \(\hat I_n \coloneq \frac1n\sum_{i=1}^n f(U_i) \overset\as\to I\).
+        \begin{solution}
+            Since \(I= \E{f(U)}\) this is the strong law of large numbers,
+        \end{solution}
+
+        \item Using \(\norm{f}_\infty = \sup_{x\in [0,1]^\dims} \abs{f(x)}\) Prove that
+        \[
+            \prob[\big]{\abs{\hat I_n - I} > \epsilon} \le 2\exp\Bigl(-\frac{n \epsilon^2}{2\norm{f}_\infty^2}\Bigr)
+        \]
+        \begin{solution}
+            Since \(f\) is continuous, it is bounded on the compact set \([0,1]^\dims\)
+            and thereby \(f(U) \in [-\norm{f}_\infty, \norm{f}_\infty]\).
+            By Hoeffding's inequality (Corollary \ref{cor: hoeffding inequality for bounded random variables})
+            for bounded random variables we therefore have the claim.
+        \end{solution}
+
+        \item Let \(n = n(\epsilon, \delta)\) be the smallest \(n\) such that the following
+        PAC bound holds
+        \[
+            \prob[\big]{\abs{\hat I_n - I} > \epsilon} \le \delta
+        \]
+        Prove that
+        \[
+            n(\epsilon, \delta)
+            \le \ceil[\Big]{2\norm{f}_\infty^2\frac{\ln(\tfrac2\delta)}{\epsilon^2}}
+            \in \bigO\Bigl(\norm{f}_\infty^2\frac{\log(\frac1\delta)}{\epsilon^2}\Bigr)
+        \]
+        \begin{remark}[Accuracy vs confidence]
+            \label{rem: accuracy vs confidence}
+            The accuracy \(\epsilon\) is expensive and grows like
+            \(\frac1{\epsilon^2}\) while the confidence \(1-\delta\) is cheap and grows only
+            like \(\log(\frac1\delta)\). Note that deterministic numerical quadrature
+            formulas suffer from the curse of dimensionality causing a numerical
+            complexity of order \(\epsilon^{-\frac{\dims}k}\) \citep[Sec.~1.3.12, Prop.~1]{novakDeterministicStochasticError1988}, where \(k\) is the
+            number of continuous derivatives of \(f\). In comparison, the 
+            computational complexity of the Monte Carlo method is independent of
+            the dimension \(\dims\). This means that Monte Carlo methods become
+            interesting for high-dimensional integration problems -- specifically,
+            when \(\frac{\dims}k \ge 2\).
+        \end{remark}
+        \begin{solution}
+            By the previous exercise it is sufficient to have
+            \begin{align*}
+                2\exp\Bigl(-\frac{n\epsilon^2}{2\norm{f}_\infty^2}\Bigr) \le \delta
+                &\iff -\frac{n\epsilon^2}{2\norm{f}_\infty^2} \le \ln(\tfrac{\delta}2)
+                \\
+                &\iff \ln(\tfrac{2}\delta) \le \frac{n \epsilon^2}{2\norm{f}_\infty^2}
+                \\
+                &\iff 2\norm{f}_\infty^2 \frac{\ln(\tfrac2\delta)}{\epsilon^2} \le n
+            \end{align*}
+            Since this is a sufficient condition, the smallest \(n(\delta, \epsilon)\)
+            is smaller than the first natural number that satisfies it, leading
+            to the claim.
+        \end{solution}
+    \end{enumerate}
+\end{exercise}

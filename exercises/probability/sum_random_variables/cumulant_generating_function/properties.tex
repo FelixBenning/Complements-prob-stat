@@ -1,0 +1,46 @@
+
+\begin{exercise}[Properties of the cumulant generating function]
+    \label{ex: properties cumulant generating function}
+    Let \(X\) be a random variable. Then the cumulant generating function
+    \(\CGF_X(t) = \log \MGF_X(t)\) has the following properties:
+    \begin{enumerate}[label=(\roman*), noitemsep]
+        \item\label{it: cgf 0=0} \(\CGF_X(0) = 0\).
+        \item\label{it: cgf linear} \(\CGF_{aX + b}(t) = \scp{b, t} + \CGF_X(\scp{a, t})\) for any \(a \in \real\), \(b,t\in \hilbert\).
+        \item\label{it: cumulant independent sums} Let \(Y\) be \underline{independent} from \(X\), then
+        \[
+            \CGF_{X+Y}(t) = \CGF_X(t) + \CGF_Y(t)
+        \]
+    \end{enumerate}
+    If the moment generating function is finite in a neighborhood of zero,
+    then \(\CGF_X\) is infinitely often differentiable and
+    \begin{enumerate}[label=(\roman*), resume, noitemsep]
+        \item \(\CGF_X'(0) = \E{X}\),
+        \item \(\CGF_X''(0) = \var{X}\)
+    \end{enumerate}
+
+    \begin{solution}
+        For \ref{it: cgf 0=0}-\ref{it: cumulant independent sums} follow from the
+        corresponding properties of the MGF (Exercise \ref{ex: properties moment
+        generating functions}) by application of the logarithm.  For example,
+        \(\CGF_X(0)=0\) follows directly from \(\MGF_X(0)=1\). For convexity
+        let \(t, s\in \hilbert\) and \(\lambda \in [0,1]\). 
+
+        The derivatives are straightforward calculations using the derivatives of the MGF
+        and the chain rule due to \(\CGF_X(t) = \log \MGF_X(t)\). That is
+        \begin{alignat*}{3}
+            \CGF_X'(t)
+            &= \frac{\MGF_X'(t)}{\MGF_X(t)}
+            \qquad &\implies &\CGF_X'(0) = \E{X},
+            \\
+            \CGF_X''(t)
+            &= \frac{\MGF_X''(t)}{\MGF_X(t)} - \frac{(\MGF_X'(t))^2}{(\MGF_X(t))^2}
+            \qquad &\implies &\CGF_X''(0)
+            \begin{aligned}[t]
+            &= \E{X^2} - (\E{X})^2
+            \\
+            &= \var{X}.
+            \end{aligned}
+        \end{alignat*}
+        This proves the claims.
+    \end{solution}
+\end{exercise}

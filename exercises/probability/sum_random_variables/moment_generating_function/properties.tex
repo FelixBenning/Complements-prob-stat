@@ -1,0 +1,62 @@
+
+\begin{exercise}[Properties of moment generating functions \Coffeecup]
+    \label{ex: properties moment generating functions}
+    Let \(X, Y\) be random variables in a Hilbert space \(\hilbert\).
+    Then
+    \begin{enumerate}[label=(\alph*)]
+        \item\label{it: (mgf) zero} \(\MGF_X(0) = 1\).
+        \item\label{it: (mgf) linear transformation} \(\MGF_{aX + b}(h) = e^{\scp{h,b}} \MGF_X(a h)\)
+        for any \(a\in \real\), \(b, h\in \hilbert\),
+        \item\label{it: (mgf) idependent sum} \(\MGF_{X+Y}(h) = \MGF_X(h) \MGF_Y(h)\) for \(X,Y\) independent and all \(h\in \hilbert\).
+    \end{enumerate}
+    Similarly we have for the characteristic function
+    \begin{enumerate}[label=(\alph*), resume]
+        \item\label{it: (charfct) bounded} \(\abs{\charFct_X(t)}\le 1\) and \(\charFct_X(0) = 1\).
+        \item\label{it: (charfct) linear transformation} \(\charFct_{aX + b}(t) = e^{i\scp{t,b}} \charFct_X(a t)\)
+        for any \(a\in \real\), \(b, t\in \hilbert\).
+        \item\label{it: (charfct) independent sum} \(\charFct_{X+Y}(t) = \charFct_X(t) \charFct_Y(t)\) for \(X,Y\) independent and all \(t\in \hilbert\).
+    \end{enumerate}
+\end{exercise}
+\begin{solution}
+    \begin{enumerate}[wide=0pt, noitemsep]
+    \item[\ref{it: (mgf) zero}] We have
+    \(\MGF_X(0) = \E{e^{\scp{0, X}}} = \E{e^0} = 1\).
+    \item[\ref{it: (mgf) linear transformation}] We have
+    \[
+        \MGF_{aX + b}(h) = \E{e^{\scp{h, aX + b}}}
+        = e^{\scp{h, b}} \E{e^{\scp{a h, X}}}
+        = e^{\scp{h,b}} \MGF_X(a h).
+    \]
+    \item[\ref{it: (mgf) idependent sum}] We have
+    \[
+    \begin{aligned}
+        \MGF_{X+Y}(h) = \E{e^{\scp{h, X+Y}}}
+        &= \E{e^{\scp{h, X}} e^{\scp{h, Y}}}
+        \\
+        &= \E{e^{\scp{h, X}}} \E{e^{\scp{h, Y}}}
+        = \MGF_X(h) \MGF_Y(h).
+    \end{aligned}
+    \]
+
+    \item[\ref{it: (charfct) bounded}] We have \(\abs{e^{i\scp{t, X}}} = 1\) and thus
+    by Jensen's inequality
+    \[
+        \abs{\charFct_X(t)} = \abs{\E{e^{i\scp{t, X}}}} \overset{\text{Jensen}}\le \E{\abs{e^{i\scp{t, X}}}} = 1.
+    \]
+    \item[\ref{it: (charfct) linear transformation}] We have
+    \[
+        \charFct_{aX + b}(t) = \E{e^{i\scp{t, aX + b}}}
+        = e^{i\scp{t, b}} \E{e^{i\scp{a t, X}}}
+        = e^{i\scp{t,b}} \charFct_X(a t).
+    \]
+    \item[\ref{it: (charfct) independent sum}] We have
+    \begin{align*}
+        \charFct_{X+Y}(t) = \E{e^{i\scp{t, X+Y}}}
+        &= \E{e^{i\scp{t, X}} e^{i\scp{t, Y}}}
+        \\
+        &= \E{e^{i\scp{t, X}}} \E{e^{i\scp{t, Y}}}
+        = \charFct_X(t) \charFct_Y(t).
+        \qedhere
+    \end{align*}
+    \end{enumerate}
+\end{solution}

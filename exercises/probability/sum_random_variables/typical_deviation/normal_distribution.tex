@@ -1,0 +1,111 @@
+
+\begin{exercise}[The normal distribution \Coffeecup\Coffeecup\Coffeecup]
+    \label{ex: density of normal distribution}
+    Let \(X \sim \normal{\mu, \sigma^2}\).
+    \begin{enumerate}[label=(\alph*)]
+        \item \label{it: (normal distribution) density}
+        Show that if \(\sigma^2 > 0\), then \(X\) has density
+        \[
+            f_X(x) = \frac1{\sqrt{2\pi \sigma^2}}
+            \exp\bigl(-\tfrac{(x-\mu)^2}{2\sigma^2}\bigr).
+        \]
+
+        \item\label{it: (normal distribution) moments}
+        Prove that the centered moments are given by
+        \[
+            \E{(X-\mu)^n}
+            = \begin{cases}
+                \sigma^n (n-1)!! & n \text{ even}
+                \\
+                0 & n \text{ odd}
+            \end{cases}
+        \]
+        \textbf{Hint:} Use the series expansion of \(\exp\) and compare coefficients
+        with the Taylor expansion of the moment generating function.
+
+        \item\label{it: (normal distribution) mean and variance}
+        Show that \(\E{X} = \mu\) and \(\var{X} = \sigma^2\).
+    \end{enumerate}
+    Let \(X \sim \normal{\mu, \Sigma}\) be a multivariate normal random variable.
+    \begin{enumerate}[label=(\alph*), resume]
+        \item\label{it: (multivariate normal distribution) density}
+        Show that if \(\Sigma\) is strictly positive definite, then \(X\) has density
+        \[
+            f_X(x)
+            = \frac1{\sqrt{(2\pi)^\dims \det(\Sigma)}}
+            \exp\Bigl(-\tfrac12 \scp[\big]{x - \mu, \Sigma^{-1}(x - \mu)}\Bigr).
+        \]
+        \textbf{Hint:} What is the density of \(Y\) in the representation \(X
+        \overset{d}= \mu + A Y\) from Definition \ref{def: multivariate normal
+        distribution} \ref{it: multivariate standard normal}?
+        
+        \item\label{it: (multivariate normal distribution) mean and covariance}
+        Prove that \(\E{X} = \mu\) and \(\Cov{X} = \Sigma\).
+
+        \item\label{it: (multivariate normal distribution) non-positive semidefinite}
+        Assume that \(\Sigma\) is not positive semidefinite, that is
+        \(v \Sigma v < 0\) for some vector \(v\) prove that there is no random
+        variable \(X\) with characteristic function
+        \[
+            \charFct_X(t)
+            = \exp\bigl(i \scp{\mu, t} - \tfrac12 \scp{t, \Sigma t}\bigr).
+        \]
+        \textbf{Hint:} \eqref{eq: bound on characteristic function}.
+    \end{enumerate}
+\end{exercise}
+\begin{solution}
+\begin{enumerate}[wide=0pt, noitemsep]
+    \item[\ref{it: (normal distribution) density}]
+    We show that the distribution of \(Z = \mu + \sigma Y\) is equal to a random variable \(X\)
+    with density \(f_X\). Let \(g\) be a bounded continuous function, then we
+    have
+    \[\begin{aligned}
+        \E{g(Z)}
+        &= \E{g(\mu + \sigma Y)}
+        \\
+        &= \int_\real g(\mu + \sigma y) \frac1{\sqrt{2\pi}} \exp\bigl(-\tfrac{y^2}2\bigr) dy
+        \\
+        \overset{x=\mu + \sigma y}&=
+        \int_\real g(x) \frac1{\sqrt{2\pi \sigma^2}} \exp\bigl(-\tfrac{(x-\mu)^2}{2\sigma^2}\bigr) dx
+        \qquad\quad ``\tfrac{1}{\sigma} dx =  dy''
+        \\
+        &= \E{g(X)}.
+    \end{aligned}
+    \]
+    Since this is true for all bounded continuous functions \(g\) we have \(X \overset{d}= Z\).
+    Consequently the density of \(Z\) is given by \(f_X\).
+
+    \item[\ref{it: (normal distribution) moments}]
+    Since \(X-\mu \sim \normal{0, \sigma^2}\) we may assume without
+    loss of generality that \(\mu=0\).
+    Using the series representation of \(\exp\) in the
+    the moment generating function of the normal distribution we have
+    \[
+        \MGF_X(t)
+        = e^{\frac12 \sigma^2 t^2}
+        = \sum_{k=0}^\infty \frac{(\frac12 \sigma^2 t^2)^k}{k!}
+        = \sum_{k=0}^\infty \frac{\sigma^{2k} t^{2k}}{2^k k!}
+        = \sum_{\substack{n=0 \\ n \text{ even}}}^\infty \frac{\sigma^{n} t^{n}}{2^{\frac{n}{2}} (\frac{n}{2})!}.
+    \]
+    By comparing the coefficients with the Taylor expansion of the moment
+    generating function
+    \[
+        \MGF_X(t) = \sum_{n=0}^\infty \frac{\MGF_X^{(n)}(0)}{n!} t^n
+        = \sum_{n=0}^\infty \frac{\E{X^n}}{n!} t^n,
+    \]
+    we get for odd \(n\), \(\E{X^n} = \MGF_X^{(n)}(0) = 0\) and for even \(n\)
+    \[
+        \E{X^n} = \MGF_X^{(n)}(0) = \frac{n!}{2^{\frac{n}{2}} (\frac{n}{2})!} \sigma^n = (n-1)!! \sigma^n.
+    \]
+
+    \item[\ref{it: (normal distribution) mean and variance}]
+    By \ref{it: (normal distribution) moments} we have
+    \[
+        \E{X} = \E{X - \mu} + \mu = \mu,
+        \quad\text{and}\quad
+        \var{X} = \E{(X-\mu)^2} = \sigma^2.
+    \]
+
+    \item[\ref{it: (multivariate normal distribution) density}]
+\end{enumerate}
+\end{solution}

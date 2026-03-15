@@ -1,0 +1,29 @@
+\begin{exercise}[Covariance matrices]
+    \label{ex: covariance matrix}
+    For \(X \in \cL^2(\real^\dims)\) and \(Y \in \cL^2(\real^{\dims'})\) Show
+    that
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item for \(\dims = \dims'=1\) we have \(\Cov{X;Y} = \Cov{Y;X} = \cov{X}{Y}\).
+        \item the covariance matrix \(\Cov{X}\) is symmetric and may be written as
+        \[
+            \Cov{X} 
+            = \begin{pmatrix}
+                \Cov{X_1;X_1} & \cdots & \Cov{X_1;X_d} \\
+                \vdots & \ddots & \vdots \\
+                \Cov{X_d;X_1} & \cdots & \Cov{X_d;X_d}
+            \end{pmatrix}
+        \]
+
+        \item \(\cov{X}{Y} = \tr\Cov{X;Y}\).
+
+        \item the mixed covariance matrix is the corner of the concatenated
+        covariance matrix, that is
+        \[
+            \Cov{X,Y} \coloneq \Cov{(X,Y)} = \begin{pmatrix}
+                \Cov{X} & \Cov{X;Y} \\
+                \Cov{Y;X} & \Cov{Y}
+            \end{pmatrix}.
+        \]
+
+    \end{enumerate}
+\end{exercise}

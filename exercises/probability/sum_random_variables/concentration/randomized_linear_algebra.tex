@@ -1,0 +1,94 @@
+
+\begin{exercise}[Randomized linear algebra \Coffeecup]
+    Let \(x,y \in \real^\dims\), where the dimension \(\dims\) is really large.
+    The computation of \(\scp{x,y}\) clearly costs \(\dims\) multiplications and
+    additions. We will try to speed it up using a random sample.
+    Specifically, let \(Z_1, \ldots Z_n\) be independently drawn from
+    \(\frac1\dims\sum_{i=1}^\dims \delta_{x_iy_i}\), that is
+    \(\prob{Z_1 = x_iy_i} = \frac1\dims\) for \(i=1, \ldots, \dims\).
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item Prove that \(\dims \E{Z_1} = \scp{x,y}\),
+        \begin{solution}
+            By definition we have
+            \[
+                \E{Z_1} = \frac1\dims\sum_{i=1}^\dims  x_i y_i = \frac1\dims \scp{x,y}.
+                \qedhere
+            \]            
+        \end{solution}
+
+        \item Assuming \(\scp{x,y} \neq 0\), prove the following estimator
+        \[
+            \hat S_n \coloneq \frac\dims{n} \sum_{i=1}^n Z_i,
+        \]
+        converges against the scalar product in relative terms, that is
+        \[
+            \frac{\hat S_n}{\scp{x,y}} \overset\as\to 1 \qquad (n \to \infty).
+        \]
+        \begin{solution}
+            We have \(\frac{\hat S_n}{\scp{x,y}} = \frac1n \sum_{i=1}^n Z_i /
+            \E{Z_1}\) and thus the claim by the strong law of large numbers.
+        \end{solution}
+
+        \item For \(\hat S_n\) to be an effective speedup of the
+        computation of the scalar product it is necessary that \(n\le \dims\). So
+        clearly \(n\to \infty\) is not an interesting statement.
+        Let \(m = \max_i \abs{x_i y_i}\) and show that
+        \[
+            \prob[\Big]{\abs[\Big]{\frac{\hat S_n}{\scp{x,y}} - 1} > \epsilon}
+            \le 2\exp\Bigl(-n \epsilon^2 \frac{\E{Z_1}^2}{8 m^2}\Bigr).
+        \]
+        \textbf{Hint:} Corollary \ref{cor: hoeffding inequality for bounded random variables}.
+        \begin{solution}
+            Since \(Z_i \in [-m,m]\) for \(i=1, \ldots, n\) we can apply
+            Hoeffding's inequality for bounded random variables (Corollary \ref{cor:
+            hoeffding inequality for bounded random variables}) to get
+            \begin{align*}
+                \prob[\Big]{\abs[\Big]{\frac{\hat S_n}{\scp{x,y}} - 1} > \epsilon}
+                &=\prob[\Big]{\abs[\Big]{\frac1n\sum_{i=1}^n Z_i - \E{Z_1}} > \epsilon \abs{\E{Z_1}}}
+                \\
+                &\le 2\exp\Bigl(-n \epsilon^2 \frac{\E{Z_1}^2}{2(2m)^2}\Bigr).
+                \qedhere
+            \end{align*}
+        \end{solution}
+        \begin{remark}[Many significant values]
+            If most \(x_iy_i\) are very small except for a few \(i=\set{1,\dots, \dims}\),
+            then the inner product \(\scp{x,y}\) is dominated by these values.
+            This means that a random sample can be very far off if it does not
+            contain these significant indices. This case is captured
+            by the ratio \(\frac{\E{Z_1}}{m}\): If the average product
+            \(\E{Z_1}\) is much smaller, than largest product \(m\), the sum is
+            dominated by a few large entries and convergence is slow.
+        \end{remark}
+
+        \item Assume \(\frac{\E{Z_1}}{m} \ge 0.1\), that a precision of \(\epsilon
+        = 10^{-4}\) is required and a \(99\%\) confidence. How big must
+        \(\dims\) be such that this approach reduces the computational cost?
+        How big to get a \(99.999\%\) confidence?
+        \begin{solution}
+            We need \(n\) to satisfy
+            \[
+                2\exp\Bigl(-n \epsilon^2 \frac{\E{X_1 Y_1}^2}{8 m^2}\Bigr) \le \delta 
+                \iff n \ge \frac{8\ln(\frac1{2\delta})}{\epsilon^2 \frac{\E{X_1 Y_1}^2}{m^2}}.
+            \]
+            Since \(\E{X_1 Y_1}^2 \ge 0.1\) we have that
+            \[
+                n \ge \frac{80\ln(\frac1{2\delta})}{\epsilon^2}
+            \]
+            is sufficient to get the required confidence. We now simply
+            plug in the numbers. For \(\delta = 0.01 = 1\%\) we have
+            \[
+                n \ge \frac{80\ln(\frac1{0.02})}{10^{-8}} \approx 3.12 \cdot 10^{10}.
+            \]
+            For \(\delta = 0.00001 = 0.001\%\) we have
+            \[
+                n \ge \frac{80\ln(\frac1{0.00002})}{10^{-8}} \approx 8.66 \cdot 10^{10}.
+            \]
+            If \(n\le \dims\) then this approach reduces the computational cost.
+            So for \(\dims \ge 3.12 \cdot 10^{10}\) (or \(\dims \ge 8.66 \cdot 10^{10}\) respectively)
+            this approach reduces the computational cost. As in Remark \ref{rem:
+            accuracy vs confidence} the confidence has almost no effect on the
+            required dimension. In contrast the precision \(\epsilon\)
+            dominates the required dimension.
+        \end{solution}
+    \end{enumerate}
+\end{exercise}

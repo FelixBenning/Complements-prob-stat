@@ -1,0 +1,79 @@
+\begin{exercise}[Single issue polling \Coffeecup]
+    \label{ex: single issue polling} 
+    Let \(x_1,\ldots, x_N \in \set{\text{no}, \text{yes}} \simeq \set{0,1}\) be the
+    opinions of \(N\) people on a certain decision. In the following we will
+    assume \(x_i \in \set{0,1}\). Let
+    \[
+        p = \frac1N\sum_{i=1}^N x_i
+    \]
+    be the share of people that agree with the decision.
+
+    Assume that you can randomly sample \(n\) people from the population and
+    and that they truthfully tell you their opinions \(X_1, \dots, X_n\).  That
+    is \(\prob{X_i = x_j} = \frac1N\) for \(j=1, \ldots, N\) and the \(X_i\) are
+    independent.
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item Prove the \(X_i\) are Bernoulli distributed, specifically \(X_i \sim \bernoulli(p)\). 
+        \begin{solution}
+            We have
+            \begin{align*}
+                \prob{X_i = 1}
+                &= \sum_{j=1}^N \prob{X_i = 1, X_i = x_j}
+                \\
+                &= \sum_{j=1}^N \prob{X_i = 1 | X_i = x_j} \prob{X_i = x_j}
+                = \sum_{j=1}^N x_j \frac1N = p.
+                \qedhere
+            \end{align*}
+        \end{solution}
+        \item 
+        Prove that
+        \[
+            \prob[\Big]{\abs[\Big]{\frac1n \sum_{i=1}^n X_i - p} > \epsilon}
+            \le 2\exp(-2n \epsilon^2).
+        \]
+        \begin{solution}
+            Since \(X_i \in \set{0,1}\) we can apply Hoeffding's inequality for
+            bounded random variables (Corollary \ref{cor: hoeffding inequality for
+            bounded random variables}) to get the claim.
+        \end{solution}
+
+        \item Let \(\abs{p - 0.5} \ge 0.1\), how many people \(n\) do you need to sample to
+        be \(99\%\) confident on the majority opinion? How many, if the opinion is more
+        controversial and \(\abs{p - 0.5} \ge 0.01\)?
+
+        \textbf{Hint:} Assume \(p \le 0.4\) without loss of generality.
+        \begin{solution}
+            If \(p \le 0.5 - \epsilon\) for \(\epsilon >0\) the majority opinion
+            is ``no'' and we need to be \(1-\delta\) confident that \(\frac1n
+            \mean{X}_n \coloneq \sum_{i=1}^n X_i < 0.5\). This requires
+            \begin{align*}
+                \delta \overset{!}\ge \prob[\Big]{\mean{X}_n \ge 0.5}
+                &= \prob[\Big]{\mean{X}_n - p \ge 0.5 - p}
+                \\
+                &\le \prob[\Big]{\mean{X}_n - p \ge \epsilon}
+                \\
+                &\le \exp(-2n \epsilon^2)
+            \end{align*}
+            In the last equation we used the General Hoeffding's inequality
+            Theorem \ref{thm: general hoeffding inequality} and Hoeffding's
+            lemma (Lemma \ref{lem: hoeffding's lemma}) applied to \(X_i \in
+            \set{0,1}\).
+            Consequently, \(\exp(-2n \epsilon^2) \le \delta\) is sufficient, and therefore
+            \[
+                n \ge \frac{\ln(\frac1\delta)}{2\epsilon^2}
+            \]
+            is sufficient.  Similar arguments apply if \(p \ge 0.5 + \epsilon\).
+            In our case we
+            have \(\delta = 1\% = 0.01\) and \(\epsilon = 0.1\) or \(\epsilon =
+            0.01\) respectively, which implies
+            \[
+                n \ge \begin{cases}
+                    \ceil{\frac{\ln(100)}{2 \cdot 0.1^2}} = 231 & \text{if } \epsilon = 0.1 \iff \abs{p-0.5} \ge 0.1,
+                    \\
+                    \ceil{\frac{\ln(100)}{2 \cdot 0.01^2}} = 23026 & \text{if } \epsilon = 0.01 \iff \abs{p-0.5} \ge 0.01.
+                \end{cases}
+            \]
+            is sufficient for \(99\%\) confidence.
+        \end{solution}
+    \end{enumerate}
+\end{exercise}

@@ -1,0 +1,67 @@
+\begin{exercise}[Delta method \Coffeecup]
+    \label{ex: delta method}
+    Let \(X_n\) be a sequence of random variables in \(\real\) such that
+    \[
+        \sqrt{n}(X_n - \mu) \overset{d}\to \normal{0, \sigma^2}
+    \]
+    for some \(\mu\in \real\) and \(\sigma^2 > 0\). Let \(g\colon\real\to\real\)
+    be a function that is continuously differentiable at \(\mu\) with \(g'(\mu)\neq 0\).
+    We will prove the \textbf{delta method} together, which states
+    \begin{equation}
+        \label{eq: delta method}    
+        \sqrt{n}(g(X_n) - g(\mu)) \overset{d}\to \normal[\big]{0, (g'(\mu))^2\sigma^2}.
+    \end{equation}
+    The following steps will guide you through the proof:
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item\label{it: (delta-method) X_n to mu} Prove that \(X_n \overset{p}\to \mu\).
+        \item\label{it: (delta-method) taylor expansion} For the mean value Taylor expansion at \(\mu\)
+        \[
+            g(X_n) = g(\mu) + g'(\xi_n)(X_n - \mu)
+        \]
+        with \(\xi_n \in \set{\lambda X_n + (1-\lambda)\mu : \lambda \in [0,1]}\)
+        prove that \(\xi_n \overset{p}\to \mu\) and deduce that \(g'(\xi_n) \overset{p}\to g'(\mu)\).
+        \item\label{it: (delta-method) proof} Prove the delta method \eqref{eq: delta method}.
+    \end{enumerate}
+\end{exercise}
+\begin{solution}
+    \begin{enumerate}[wide=0pt]
+        \item[\ref{it: (delta-method) X_n to mu}] For \(N\sim \normal{0,\sigma^2}\) we have 
+        by Slutzky (Theorem \ref{thm: joint convergence}, \ref{it: joint conv law slutsky})
+        and continuous mapping (Theorem \ref{thm: continuous mapping}) that
+        \[
+            X_n -\mu
+            = \underbrace{\tfrac1{\sqrt{n}}}_{\overset{p}\to 0}
+            \underbrace{\sqrt{n}(X_n - \mu)}_{\overset{d}\to N}
+            \overset{d}\to 0 \cdot N = 0,
+        \]
+        Since convergence in distribution to a constant implies convergence in probability
+        we have \(X_n - \mu\overset{p}\to 0\) and consequently \(\X_n \overset{p}\to \mu\).
+
+        \item[\ref{it: (delta-method) taylor expansion}] For any \(n\in \nat\) we
+        have
+        \[
+            \xi_n = \lambda_n X_n + (1-\lambda_n)\mu
+        \]
+        for a (random) \(\lambda_n \in [0,1]\). Since \(X_n \overset{p}\to
+        \mu\) this implies 
+        \[
+            \norm{\xi_n - \mu}
+            = \abs{\lambda_n} \norm{X_n - \mu}
+            \le \norm{X_n - \mu}
+            \overset{p}\to 0.
+        \]
+        Since \(g'\) is continuous at \(\mu\) we have the claim \(g'(\xi_n)
+        \overset{p}\to g'(\mu)\) by the continuous mapping.
+        
+        \item[\ref{it: (delta-method) proof}] Using the mean value Taylor
+        expansion we have for \(N\sim \normal{0, \sigma^2}\)
+        by Slutzky (Theorem \ref{thm: joint convergence}, \ref{it: joint conv law slutsky})
+        and continuous mapping (Theorem \ref{thm: continuous mapping}) that
+        \[
+            \sqrt{n}(g(X_n) - g(\mu))
+            = \underbrace{g'(\xi_n)}_{\overset{p}\to g'(\mu)} \underbrace{\sqrt{n}(X_n - \mu)}_{\overset{d}\to N}
+            \overset{d}\to g'(\mu) N \sim \normal[\big]{0, (g'(\mu))^2\sigma^2}. 
+            \qedhere
+        \]
+    \end{enumerate}
+\end{solution}

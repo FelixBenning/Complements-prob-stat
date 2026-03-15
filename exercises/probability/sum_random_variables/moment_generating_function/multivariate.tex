@@ -1,0 +1,13 @@
+
+\begin{exercise}[Multivariate moment generating function]
+    \label{ex: multivariate moment generating function}
+    Let \(X\) be a random vector in \(\real^d\) with \(\MGF_X(t) < \infty\)
+    for all \(h\in \ball{0}{r}\) for some radius \(r > 0\). Show that all mixed moments
+    \(\E{\abs{X_1^{k_1} \cdots X_d^{k_d}}}\) exist and
+    \[
+        \MGF_X(h) = \sum_{k=0}^\infty \frac{\E{\scp{h, X}^k}}{k!}
+        = \sum_{k_1, \dots, k_d = 0}^\infty
+        \E{X_1^{k_1} \cdots X_d^{k_d}}
+        \frac{h_1^{k_1} \cdots h_d^{k_d}}{k_1! \cdots k_d!}.
+    \]
+\end{exercise}

@@ -1,0 +1,17 @@
+
+\begin{exercise}[Lévy's continuity theorem in infinite dimensions]
+    \label{ex: counterexample levy's continuity in infinite dim}
+    To show that Lévy's continuity theorem does not hold in infinite dimensions
+    consider the deterministic sequence \(X_n = e^n\), where \(e^n=(0,\dots,0, 1, 0, \dots)\) is the
+    \(n\)-th unit vector in the Hilbertspace of square summable sequences 
+    \[
+        \ell^2 = \set[\Big]{(x_n)_{n\in \nat} \mid \sum_{n=1}^\infty x_n^2 < \infty}
+        \qquad\text{with}\qquad
+        \scp{x, y} = \sum_{n=1}^\infty x_n y_n.
+    \]
+    Let \(X=0\in \ell^2\) be the deterministic zero vector. Show that
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item \(\charFct_{X_n}(h) \to \charFct_{X}(h)\) for all \(h\in \ell^2\),
+        \item \(X_n \not\overset{d}\to X\).
+    \end{enumerate}
+\end{exercise}

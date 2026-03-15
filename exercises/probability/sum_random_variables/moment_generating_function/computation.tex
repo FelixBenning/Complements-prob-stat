@@ -1,0 +1,94 @@
+
+\begin{exercise}[Moment generating functions \Coffeecup\Coffeecup]
+    Prove the formulas for the moment generating functions in the following
+    table
+    \begin{center}
+    \def\arraystretch{1.5}
+    \begin{tabular}{l l l}
+        \(\Pr_X\)
+        &  \(\MGF_X(t)\) & \(\charFct_X(t)\)
+        \\
+        \hline
+        \(\delta_a\) & \(e^{t a}\) & \(e^{i t a}\)
+        \\
+        \(\bernoulli(p)\) & \(1 - p + p e^{t}\)
+        & \(1 - p + p e^{i t}\)
+        \\
+        \(\Binomial(n, p)\) & \((1 - p + p e^{t})^n\)
+        & \((1 - p + p e^{i t})^n\)
+        \\
+        \(\exponential(\lambda)\) & \(\frac{\lambda}{\lambda - t}\) for \(t < \lambda\)
+        & \(\frac{\lambda}{\lambda - i t}\)
+        \\
+        \(\Poisson(\lambda)\) & \(e^{\lambda (e^{t} - 1)}\)
+        & \(e^{\lambda (e^{i t} - 1)}\) 
+        \\
+        \(\uniform(a, b)\)
+        & \(\begin{cases}
+            \frac{e^{t b} - e^{t a}}{t (b - a)} & t \neq 0
+            \\
+            1 & t = 0
+        \end{cases}\)
+        &
+        \(\begin{cases}
+            \frac{e^{i t b} - e^{i t a}}{i t (b - a)} & t \neq 0
+            \\
+            1 & t = 0
+        \end{cases}\)
+    \end{tabular}
+    \end{center}
+\end{exercise}
+\begin{solution}
+    Since the moment generating functions are all real analytic functions
+    they have a unique analytic continuation to \(\complex\)
+    and the characteristic function follows from the moment generating functions
+    by plugging in \(i t\). We therefore only
+    calculate the moment generating functions.
+
+    Let us start with \(X\sim \delta_a\), which is the deterministic case \(X\overset\as=a\).
+    Consequently, we have
+    \[
+        \MGF_X(t) = \E{e^{t X}} = e^{t a}.
+    \]
+    For \(X\sim \bernoulli(p)\) we have
+    \[
+        \MGF_X(t) = \E{e^{t X}} = (1-p) e^0 + p e^t = 1 - p + p e^t.
+    \]
+    For \(X\sim \Binomial(n, p)\) we have \(X = X_1 + \dots + X_n\) with
+    \(X_i \sim \bernoulli(p)\) independent, the claim then follows from Exercise
+    \ref{ex: properties moment generating functions} \ref{it: (mgf) idependent
+    sum}
+    \[
+        \MGF_X(t) = \prod_{i=1}^n \MGF_{X_i}(t) = (1 - p + p e^t)^n.
+    \]
+    For \(X \sim \exponential(\lambda)\) we have
+    for all \(t < \lambda\)
+    \[
+        \MGF_X(t) = \E{e^{t X}} = \int_0^\infty e^{t x} \lambda e^{-\lambda x} dx
+        = \lambda \int_0^\infty e^{-(\lambda - t) x} dx
+        = \frac{\lambda}{\lambda - t}
+    \]
+    In the last equation we have used \(\lambda -t > 0\) and if that is not the
+    case the integral diverges.
+    For \(X \sim \Poisson(\lambda)\) we have
+    \[
+        \MGF_X(t) = \E{e^{t X}} = \sum_{k=0}^\infty e^{t k} e^{-\lambda} \frac{\lambda^k}{k!}
+        = e^{-\lambda} \sum_{k=0}^\infty \frac{(\lambda e^t)^k}{k!}
+        = e^{-\lambda} e^{\lambda e^t}
+        = e^{\lambda (e^t - 1)}.
+    \]
+    For \(X \sim \uniform(a, b)\) we have for \(t\neq 0\)
+    \[
+        \MGF_X(t) = \E{e^{t X}} = \int_a^b e^{t x} \frac{1}{b - a} dx
+        = \frac{e^{t b} - e^{t a}}{t (b - a)}.
+    \]
+    For \(\complex\setminus\{0\}\) this function is analytic.
+    The value at \(t=0\) follows from Exercise \ref{ex: properties moment generating functions}.
+    Observe that it is continuous due to L'Hôpital's rule
+    \[
+        \lim_{t\to 0} \frac{e^{t b} - e^{t a}}{t (b - a)}
+        = \lim_{t\to 0} \frac{b e^{t b} - a e^{t a}}{b - a}
+        = \frac{b - a}{b - a} = 1.
+        \qedhere
+    \]
+\end{solution}
