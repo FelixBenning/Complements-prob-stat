@@ -11,9 +11,6 @@
 \newtheorem{example}[proposition]{Example}
 \newtheorem{assumption}[proposition]{Assumption}
 \newtheorem{warning}[proposition]{Warning}
-% \newtheorem{exercise}{Exercise}[section]
-
-\theoremstyle{remark}
 \newtheorem{remark}[proposition]{Remark}
 %%
 
@@ -27,8 +24,8 @@
 
 %%% Solution
 %%% Prepare if solution
-% \newif\ifsolution
-% \NewDocumentEnvironment{solution}{O{Solution} +b}{\ifsolution \begin{proof}[#1] #2\end{proof}\fi}{}
+\newif\ifeditmode
+
 
 %%%
 \makeatletter

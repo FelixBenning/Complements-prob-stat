@@ -17,6 +17,6 @@
     \addplot[thick] {
         exp(-x^2/2)/(sqrt(2*pi))
     };
-    \addlegendentry{$f_X$}
+    \addlegendentry{$\density_X$}
     \end{axis}
 \end{tikzpicture}

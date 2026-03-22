@@ -3,56 +3,10 @@
 \input{packages.tex}
 \input{macros.tex}
 
-\DeclareExerciseEnvironmentTemplate{theorem}{%
-  \par\noindent
-  \textbf{%
-    \XSIMmixedcase{\GetExerciseName}~\GetExerciseProperty{counter}%
-  }{\normalfont%
-    \GetExercisePropertyT{subtitle}{ (\PropertyValue)}}\textbf{. }
-  \IfInsideSolutionF{%
-    \GetExercisePropertyT{points}{%
-      \marginpar{%
-        \printgoal{\PropertyValue}%
-        \GetExercisePropertyT{bonus-points}{+\printgoal{\PropertyValue}}%
-        \,\IfExerciseGoalSingularTF{points}
-          {\XSIMtranslate{point}}
-          {\XSIMtranslate{points}}%
-      }%
-    }%
-  }%
-}{\par\addvspace{\baselineskip}}
+\editmodetrue
 
-\renewcommand\printsolutions{%
-  \def\currentchapter{}%
-  \def\currentsection{}%
-  \def\lastchapter{}%
-  \def\lastsection{}%
-  \addcontentsline{toc}{chapter}{Solutions}%
-  \chapter*{Solutions}%
-  \ForEachUsedExerciseByType{%
-    \let\lastchapter\currentchapter
-    \let\lastsection\currentsection
-    \edef\currentchapter{\ExercisePropertyGet{##1}{##2}{chapter-value}}%
-    \edef\currentsection{\ExercisePropertyGet{##1}{##2}{section-value}}%
-    % \ifx\lastchapter\currentchapter\else
-    %   \addcontentsline{toc}{chapter}{Solutions Chapter \ExercisePropertyGet{##1}{##2}{chapter}}
-    %   \chapter*{Solutions Chapter \ExercisePropertyGet{##1}{##2}{chapter}}
-    % \fi
-    \ifx\lastsection\currentsection\else
-      \addcontentsline{toc}{section}{Exercises \ExercisePropertyGet{##1}{##2}{section}}
-      \section*{Exercises \ExercisePropertyGet{##1}{##2}{section}}
-    \fi
-    \XSIMprint{solution}{##1}{##2}%
-  }%
-}
+\input{exercise_setup.tex}
 
-\xsimsetup{
-    exercise/template=theorem,
-    solution/template=theorem,
-    exercise/the-counter = \thesection.\arabic{exercise},
-    exercise/within=section,
-    % solution/print=true,
-}
 
 \title{
     Compl\'ements de probabilit\'es et statistiques
@@ -81,7 +35,10 @@
 
 % \input{sections/appendix.tex}
 
+\ifeditmode
+\else
 \printsolutions
+\fi
 
 \end{document}
 

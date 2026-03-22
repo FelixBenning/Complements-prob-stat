@@ -238,7 +238,7 @@ theorem.
     the following are equivalent:
     \begin{enumerate}[label=(\roman*),noitemsep]
         \item\label{it: Lévy's cont d} \(X_n \overset{d}\to X\),
-        \item\label{it: Lévy's cont char} \(\charFct_{X_n}(t) \to \charFct(t)\) for all \(t\in \real^\dims\).
+        \item\label{it: Lévy's cont char} \(\charFct_{X_n}(t) \to \charFct_X(t)\) for all \(t\in \real^\dims\).
     \end{enumerate}
     Moreover, \(\charFct_{X_n}(t) \to f(t)\) for all \(t\in \real^\dims\) and \(f\) continuous at
     \(0\) implies the existence of a random variable \(X\) with
@@ -659,7 +659,7 @@ normal distribution. To do so we require the concept of covariance matrices.
     \end{enumerate}
     then by Exercise \ref{ex: density of normal distribution} \(X\sim \normal{\mu, \Sigma}\) has density
     \[
-        f_X(x)
+        \density_X(x)
         = \frac1{\sqrt{(2\pi)^\dims \det(\Sigma)}}
         \exp\Bigl(-\tfrac12 \scp[\big]{x - \mu, \Sigma^{-1}(x - \mu)}\Bigr).
     \]

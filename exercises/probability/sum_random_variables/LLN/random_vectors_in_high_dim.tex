@@ -1,22 +1,52 @@
 
 \begin{exercise}[subtitle={Random vectors in high dimension \Coffeecup}]
     In this exercise we will see that high-dimensional spaces have some counter-intuitive
-    properties. Let \((X^n)_{n\in \nat}\) and \((Y^n)_{n\in \nat}\) be two
-    sequence of independent identically distributed random variables with mean
-    zero and finite variance. Let \(X_\dims \coloneq (X^1, \ldots, X^\dims)\)
+    properties. Let \((X^n)_{n\in \nat}\) and \((Y^n)_{n\in \nat}\) be two independent
+    sequences of independent identically distributed random variables with mean
+    zero and finite variance \(\sigma_X^2\) and \(\sigma_Y^2\) respectively. Let \(X_\dims \coloneq (X^1, \ldots, X^\dims)\)
     and \(Y_\dims \coloneq (Y^1, \ldots, Y^\dims)\) be the corresponding random vectors in
     \(\real^\dims\).
     Prove that
     \begin{enumerate}[label=(\alph*), noitemsep]
-        \item asymptotically and in relative terms both vectors have the same
+        \item\label{it: (random vectors in high dim) norms}
+        asymptotically and in relative terms both vectors have the same
         length in high dimension, that is
         \[
-            \frac{\norm{X_\dims}^2}{\norm{Y_\dims}^2} \overset\as\to 1 \qquad (\dims \to \infty).
+            \frac{\norm{X_\dims}^2}{\norm{Y_\dims}^2} \overset\as\to \frac{\sigma_X^2}{\sigma_Y^2} \qquad (\dims \to \infty).
         \]
-        \item their cosine angle is zero asymptotically, that is
+        \item\label{it: (random vectors in high dim) angle} their cosine angle is zero asymptotically, that is
         \[
-            \frac{\scp{X_\dims, Y_\dims}}{\norm{X_\dims}\norm{Y_\dims}} \overset\as\to 0 \qquad (\dims \to \infty).
+            \scp[\Big]{\frac{X_\dims}{\norm{X_\dims}}, \frac{Y_\dims}{\norm{Y_\dims}}} \overset\as\to 0 \qquad (\dims \to \infty).
         \]
         In other words: random vectors are asymptotically orthogonal in high dimension.
     \end{enumerate}
 \end{exercise}
+
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: (random vectors in high dim) norms}]
+    By definition we have
+    \[
+        \frac1\dims\norm{X_\dims}^2
+        = \frac1\dims \sum_{i=1}^\dims (X^i)^2
+        \overset{\as}\to \E{(X^i)^2}
+        = \sigma_X^2
+    \]
+    By a similar argument we have \(\frac1\dims\norm{Y_\dims}^2\overset{\as}\to \sigma_Y^2\)
+    and therefore by continuous mapping and joint convergence
+    \[
+        \frac{\norm{X_\dims}^2}{\norm{Y_\dims}^2}
+        = \frac{\frac1\dims\norm{X_\dims}^2}{\frac1\dims\norm{Y_\dims}^2}
+        \overset{\as}\to \frac{\sigma_X^2}{\sigma_Y^2}.
+    \]
+    \item[\ref{it: (random vectors in high dim) angle}]
+    By continuous mapping we have \(\sqrt{\frac1\dims \norm{X_\dims}^2} \to \sigma_X\)
+    and consequently
+    \[
+        \frac{\scp{X_\dims, Y_\dims}}{\norm{X_\dims} \norm{Y_\dims}}
+        = \frac{\frac1\dims \sum_{i=1}^\dims X^i Y^i}{\sqrt{\frac1\dims \norm{X_\dims}^2} \sqrt{\frac1\dims \norm{Y_\dims}^2}}
+        \overset{\as}\to \frac{\E{X^i Y^i}}{\sigma_X\sigma_Y}
+        = 0.
+    \]
+\end{enumerate}
+\end{solution}

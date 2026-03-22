@@ -37,7 +37,9 @@
         \]
         \textbf{Hint:} What is the density of \(Y\) in the representation \(X
         \overset{d}= \mu + A Y\) from Definition \ref{def: multivariate normal
-        distribution} \ref{it: multivariate standard normal}?
+        distribution} \ref{it: multivariate standard normal}? It may
+        be helpful to prove \(\abs{\det(A^{-1})} = \smash{\frac1{\sqrt{\det(\Sigma)}}}\)
+        using the multiplicativity of the determinant.
         
         \item\label{it: (multivariate normal distribution) mean and covariance}
         Prove that \(\E{X} = \mu\) and \(\Cov{X} = \Sigma\).
@@ -50,7 +52,7 @@
             \charFct_X(t)
             = \exp\bigl(i \scp{\mu, t} - \tfrac12 \scp{t, \Sigma t}\bigr).
         \]
-        \textbf{Hint:} \eqref{eq: bound on characteristic function}.
+        \textbf{Hint:} Exercise \ref{ex: properties moment generating functions} \ref{it: (charfct) bounded}.
     \end{enumerate}
 \end{exercise}
 \begin{solution}
@@ -107,5 +109,88 @@
     \]
 
     \item[\ref{it: (multivariate normal distribution) density}]
+    The density of \(Y\) is the product of the densities of the independent
+    standard normal components \((Y_1, \ldots, Y_\dims)\) and therefore given by
+    \begin{equation}
+        \label{eq: density of Y in multivariate normal distribution}
+        \density_Y(y) = \prod_{i=1}^\dims \frac1{\sqrt{2\pi}} \exp\bigl(-\tfrac{y_i^2}2\bigr)
+        = \frac1{\sqrt{(2\pi)^\dims}} \exp\bigl(-\tfrac{\norm{y}^2}2\bigr).
+    \end{equation}
+    To calculate the density of \(X = A Y + \mu\) we use a change of variables with
+    the linear map \(\phi(y) = A y + \mu\).  Since \(\Sigma = A A^\transpose\)
+    is invertible, we have that \(A\) is invertible and
+    by multiplicativity of the determinant
+    \[
+        1 = \det(\identity) = \det(A A^{-1}) = \det(A) \det(A^{-1}).
+    \]
+    As this implies \(\det(A^{-1}) = \frac1{\det(A)}\) we thus get
+    by multiplicativity of the determinant
+    \begin{align*}
+        \det(\Sigma) = \det(A A^\transpose) = \det(A)^2
+        &\implies \abs{\det(A)} = \sqrt{\det(\Sigma)}
+        \\
+        &\implies \abs{\det(A^{-1})} = \frac1{\sqrt{\det(\Sigma)}}.
+    \end{align*}
+    The absolute determinant of the Jacobian of \(\phi^{-1}(x) = A^{-1}(x-\mu)\) is therefore given by
+    \begin{equation}
+        \label{eq: determinant of Jacobian of phi^-1}    
+        \abs{\det(D\phi^{-1}(x))} = \abs{\det(A^{-1})} = \frac1{\sqrt{\det(\Sigma)}}.
+    \end{equation}
+    We therefore get for any bounded continuous functions \(f\)
+    \begin{align*}
+        \E{f(X)}
+        &= \E{f(A Y + \mu)}
+        \\
+        \overset{\phi(y) = A y + \mu}&=
+        \int_{\real^\dims} f\bigl(\phi(y)\bigr) \density_Y\bigl(y\bigr) dy
+        \\
+        \overset{\phi^{-1}\text{-subst.}}&= \int_{\real^\dims} f(x) \density_Y\bigl(\phi^{-1}(x)\bigr) \abs[\big]{\det(D\phi^{-1}(x))} dx
+        \\
+        \overset{\eqref{eq: density of Y in multivariate normal distribution}, \eqref{eq: determinant of Jacobian of phi^-1}}&=
+        \int_{\real^\dims} f(x) \underbrace{\frac1{\sqrt{(2\pi)^\dims \det(\Sigma)}} \exp\Bigl(-\tfrac12 \norm[\big]{A^{-1}(x-\mu)}\Bigr)}_{=\density_X(x)} dx
+    \end{align*}
+    we thereby have identified the density \(\density_X\) of \(X\) as the formula above
+    holds for all bounded continuous functions \(f\). This density has the desired form since
+    \[
+        \norm{A^{-1}(x-\mu)}^2
+        = (x-\mu)^\transpose \underbrace{(A^{-1})^\transpose A^{-1}}_{=(AA^\transpose)^{-1} \mathrlap{= \Sigma^{-1}}} (x-\mu)
+        = \scp[\big]{x-\mu, \Sigma^{-1}(x-\mu)}.
+    \]
+
+    \item[\ref{it: (multivariate normal distribution) mean and covariance}]
+    By definition we have \(X \overset{d}= \mu + A Y\) and therefore
+    \[
+        \E{X} = \mu + A \E{Y} = \mu.
+    \]
+    Since \(X-\E{X} \overset{d} AY\) we moreover have
+    \begin{align*}
+        \Cov{X} = \E{(X-\E{X})(X-\E{X})^\transpose}
+        &= \E{(A Y)(A Y)^\transpose}
+        \\
+        &= A \E{Y Y^\transpose} A^\transpose
+        = A A^\transpose
+        = \Sigma,
+    \end{align*}
+    since \(\E{Y_i Y_j} = 0\) for \(i \neq j\) and \(\E{Y_i^2} = 1\)
+    such that \(\E{Y Y^\transpose} = \identity\).
+    
+    \item[\ref{it: (multivariate normal distribution) non-positive semidefinite}]
+    Assume that \(\Sigma\) is not positive semidefinite and that there
+    does exist a random vector \(X\) with the desired characteristic function.
+    Since \(\Sigma\) is not positive semidefinite there exists    a vector \(v\)
+    such that \(v^\transpose \Sigma v < 0\). Choosing \(t = \lambda v\) for some
+    \(\lambda \gg 1\) we get
+    \begin{align*}
+        \abs{\charFct_X(t)}
+        &= \underbrace{\abs[\big]{\exp\bigl(i\scp{\mu, t}\bigr)}}_{=1}\abs[\big]{\exp\bigl(-\tfrac12 \scp{t, \Sigma t}\bigr)}
+        \\
+        &= \exp\bigl(-\tfrac12 \scp{t, \Sigma t}\bigr)
+        = \exp\bigl(-\tfrac{\lambda^2}2 v^\transpose \Sigma v\bigr)
+        \overset{\lambda \to \infty}\to \infty,
+    \end{align*}
+    which contradicts Exercise \ref{ex: properties moment generating functions} \ref{it: (charfct) bounded}.
+    Consequently there cannot exist such a random vector \(X\)
+    with this characteristic function.
+    \qedhere
 \end{enumerate}
 \end{solution}
