@@ -1,5 +1,5 @@
 
-\begin{exercise}[subtitle={Uncorrelated but not independent normal}]
+\begin{exercise}[subtitle={Uncorrelated but not independent normal \Coffeecup}]
     \label{ex: uncorrelated but not independent normal}
     Let \(Z \sim \normal{0,1}\) and \(\epsilon \sim \uniform(\set{-1,1})\), that is \(\prob{\epsilon = 1} = \prob{\epsilon = -1} = \frac{1}{2}\), be independent
     random variables and define
@@ -8,3 +8,31 @@
     \]
     Show that \(X\) and \(Y\) are both normal distributed and uncorrelated but not independent.
 \end{exercise}
+
+\begin{solution}
+    We have \(X \sim \normal{0,1}\) by definition and \(Y\) is normal distributed since it is a product of the independent random variables \(\epsilon\) and \(Z\) where \(Z\) is normal distributed and \(\epsilon\) is symmetric around zero. More formally, for any bounded continuous function \(g\) we have
+    \[\begin{aligned}
+        \E{g(Y)}
+        &= \E{g(\epsilon Z)}
+        \\
+        &= \frac{1}{2} \E{g(Z)} + \frac{1}{2} \E{g(-Z)}
+        \\
+        &= \E{g(Z)}
+    \end{aligned}\]
+    where we used the symmetry of \(Z\) in the last step. Since this is true for all bounded continuous functions \(g\) we have \(Y \overset{d}= Z\).
+    We have
+    \[
+        \cov{X}{Y}
+        = \E{XY} - \E{X}\E{Y}
+        = \E{\epsilon}{Y^2} - \E{\epsilon}\E{Y}^2
+        = 0 - 0 = 0,
+    \]
+    so \(X\) and \(Y\) are uncorrelated.
+    However, they are not independent since
+    \[
+        \prob{\abs{X} > 1, \abs{Y} < 1}
+        = \prob{\abs{Y} >1, \abs{Y} < 1} = 0
+        < \prob{\abs{X} > 1}\prob{\abs{Y} < 1}.
+        \qedhere
+    \]
+\end{solution}

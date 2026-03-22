@@ -1,13 +1,84 @@
 
-\begin{exercise}[subtitle={Multivariate moment generating function}]
+\begin{exercise}[subtitle={Multivariate moment generating function \Coffeecup\Coffeecup}]
     \label{ex: multivariate moment generating function}
     Let \(X\) be a random vector in \(\real^d\) with \(\MGF_X(t) < \infty\)
-    for all \(h\in \ball{0}{r}\) for some radius \(r > 0\). Show that all mixed moments
-    \(\E{\abs{X_1^{k_1} \cdots X_d^{k_d}}}\) exist and
+    for all \(h\in \ball{0}{r}\) for some radius \(r > 0\). Show that for all
+    \(h \in \ball{0}{r}\) we have \(\E{\abs{\scp{h, X}}^k} < \infty\) for all \(k\),
+    and prove that all mixed moments exist, that is \(\E{\abs{X_1^{k_1} \cdots
+    X_d^{k_d}}}< \infty\). Finally prove the expansions
     \[
         \MGF_X(h) = \sum_{k=0}^\infty \frac{\E{\scp{h, X}^k}}{k!}
         = \sum_{k_1, \dots, k_d = 0}^\infty
         \E{X_1^{k_1} \cdots X_d^{k_d}}
         \frac{h_1^{k_1} \cdots h_d^{k_d}}{k_1! \cdots k_d!}.
     \]
+    \textbf{Hint:} For the proof that all mixed moments exist it
+    may be helpful to prove that for any multiindex \(\alpha = (k_1, \dots, k_d)\) 
+    and any \(\delta >0\) we have for some \(C_\alpha > 0\)
+    \[
+        \abs{x^\alpha}
+        \le C_\alpha \exp(\delta \norm{x}_\infty)
+        \le C_\alpha \sum_{i=1}^\dims \exp(\delta \abs{x_i}).
+    \]
+    For the second expansion it may be helpful to recall the multinomial formula
+    \[
+        (x_1 + \cdots + x_d)^k
+        = \sum_{k_1+ \dots+ k_d = k}
+        \binom{k}{k_1, \dots, k_d} x_1^{k_1} \cdots x_d^{k_d}.
+    \]
 \end{exercise}
+
+\begin{solution}
+    Since \(\MGF_X(h) < \infty\) for all \(h\in \ball{0}{r}\) we have
+    for the random variable \(Y= \scp{h, X}\) that for all \(\abs{t} \le 1\)
+    \[
+        \MGF_Y(t)
+        = \E{e^{t\scp{h, X}}}
+        = \MGF_X(th)
+        < \infty, \qquad \text{since } th \in \ball{0}{r}.
+    \]
+    By the equivalent result for the univariate moment generating function
+    (Lemma \ref{lem: moment generating function representation})
+    we consequently have for all \(\abs{t} \le 1\)
+    \[
+        \MGF_Y(t)
+        = \sum_{k=0}^\infty \frac{\E{Y^k}}{k!} t^k
+        = \sum_{k=0}^\infty \frac{\E{\scp{h, X}^k}}{k!} t^k.
+    \]
+    In particular \(t=1\) implies the first expansion with \(\MGF_Y(1) = \MGF_X(h)\).
+    
+    For any multiindex \(\alpha = (k_1, \dots, k_d)\) and any \(\delta > 0\) we have
+    \[
+        \abs{x^\alpha}
+        = \abs{x_1^{k_1} \cdots x_d^{k_d}}
+        \le \norm{x}_\infty^{k_1 + \cdots + k_d}
+        \le C_\alpha \exp(\delta \norm{x}_\infty)
+    \]
+    for some constant \(C_\alpha >0\) since \(\exp\) grows faster than any
+    polynomial. Consequently,
+    \[
+        \abs{x^\alpha}
+        \le C_\alpha \exp(\delta \sup_{i=1}^\dims \abs{x_i})
+        = C_\alpha \sup_{i=1}^\dims \exp(\delta \abs{x_i})
+        \le C_\alpha \sum_{i=1}^\dims \exp(\delta \abs{x_i}),
+    \]
+    which in turn implies
+    \[
+        \E{\abs{X^\alpha}}
+        \le C_\alpha \sum_{i=1}^\dims \underbrace{\E{\exp(\delta X_i)}}_{=\MGF_X(\delta e_i)} + \underbrace{\E{\exp{-\delta X_i}}}_{=\MGF_X(-\delta e_i)}
+        < \infty
+    \]
+    by the choice of \(\delta < r\). This proves that all the mixed moments exist.
+    Now by the multinomial formula we have
+    \[
+        \scp{h, X}^k
+        = \Bigl(\sum_{i=1}^\dims h_i X_i\Bigr)^k
+        = \sum_{k_1 + \cdots + k_d = k} \binom{k}{k_1, \dots, k_d} h_1^{k_1} \cdots h_d^{k_d} X_1^{k_1} \cdots X_d^{k_d}.
+    \]
+    Since the multinomial coefficients are given by \(\binom{k}{k_1, \dots, k_d} = \frac{k!}{k_1! \cdots k_d!}\) we thus have
+    \[
+        \frac{\E{\scp{h, X}^k}}{k!}
+        = \sum_{k_1 + \cdots + k_d = k} \frac{h_1^{k_1} \cdots h_d^{k_d}}{k_1! \cdots k_d!} \E{X_1^{k_1} \cdots X_d^{k_d}}.
+    \]
+    Summing this over \(k\) and using the first expansion results in the claim.
+\end{solution}

@@ -1,10 +1,12 @@
-\begin{exercise}[subtitle={Covariance matrices}]
+\begin{exercise}[subtitle={Covariance matrices \Coffeecup}]
     \label{ex: covariance matrix}
     For \(X \in \cL^2(\real^\dims)\) and \(Y \in \cL^2(\real^{\dims'})\) Show
     that
     \begin{enumerate}[label=(\alph*), noitemsep]
-        \item for \(\dims = \dims'=1\) we have \(\Cov{X;Y} = \Cov{Y;X} = \cov{X}{Y}\).
-        \item the covariance matrix \(\Cov{X}\) is symmetric and may be written as
+        \item\label{it: (covariance matrix) in one dimension}
+        for \(\dims = \dims'=1\) we have \(\Cov{X;Y} = \Cov{Y;X} = \cov{X}{Y}\).
+        \item\label{it: (covariance matrix) representation}
+        the covariance matrix \(\Cov{X}\) is symmetric and may be written as
         \[
             \Cov{X} 
             = \begin{pmatrix}
@@ -14,9 +16,9 @@
             \end{pmatrix}
         \]
 
-        \item \(\cov{X}{Y} = \tr\Cov{X;Y}\).
+        \item\label{it: (covariance matrix) vs covariance} if \(\dims = \dims'\) we have \(\cov{X}{Y} = \tr\Cov{X;Y}\).
 
-        \item the mixed covariance matrix is the corner of the concatenated
+        \item\label{it: (covariance matrix) mixed} the mixed covariance matrix is the corner of the concatenated
         covariance matrix, that is
         \[
             \Cov{X,Y} \coloneq \Cov{(X,Y)} = \begin{pmatrix}
@@ -24,6 +26,64 @@
                 \Cov{Y;X} & \Cov{Y}
             \end{pmatrix}.
         \]
-
     \end{enumerate}
 \end{exercise}
+
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: (covariance matrix) in one dimension}]
+    By definition we have
+    \begin{align*}
+        \Cov{X;Y}
+        &= \E{(X-\E{X})(Y-\E{Y})}
+        = \E{(Y-\E{Y})(X-\E{X})}
+        = \Cov{Y;X}
+        \\
+        &= \E{\scp{X-\E{X}, Y-\E{Y}}}
+        = \cov{X}{Y}.
+    \end{align*}
+
+    \item[\ref{it: (covariance matrix) representation}]
+    Recall that the expectation acts entry-wise. Consequently,
+    \begin{align*}
+        \Cov{X}_{ij}
+        &= \E{(X - \E{X})(X - \E{X})^\transpose}_{ij}
+        \\
+        &= \E{(X_i - \E{X_i})(X_j - \E{X_j})}
+        = \Cov{X_i; X_j}.
+    \end{align*}
+
+    \item[\ref{it: (covariance matrix) vs covariance}]
+    By the the same arguments as in the previous exercise we have
+    \begin{align*}
+        \tr \Cov{X;Y}
+        &= \sum_{i=1}^\dims \Cov{X_i, Y_i}
+        \\
+        &= \E[\Big]{\sum_{i=1}^\dims(X_i-\E{X_i})(Y_i - \E{Y_i})}
+        \\
+        &= \E[\big]{\scp[\big]{X_i - \E{X_i}, Y_i - \E{Y_i}}}
+        = \cov{X}{Y}
+    \end{align*}
+
+    \item[\ref{it: (covariance matrix) mixed}]
+    By definition we have
+    \begin{align*}
+        \Cov{(X,Y)}
+        &= \E[\Big]{\Bigl(\begin{pmatrix}X\\ Y\end{pmatrix}
+        - \E[\Big]{\begin{pmatrix}X\\ Y\end{pmatrix}}\Bigr)
+        \Bigl(\begin{pmatrix}X^\transpose & Y^\transpose \end{pmatrix}
+        - \E[\Big]{\begin{pmatrix}X^\transpose & Y^\transpose \end{pmatrix}}\Bigr)}
+        \\
+        &= \E[\Big]{\begin{pmatrix}
+            (X-\E{X})(X-\E{X})^\transpose & (X-\E{X})(Y-\E{Y})^\transpose \\
+            (Y-\E{Y})(X-\E{X})^\transpose & (Y-\E{Y})(Y-\E{Y})^\transpose
+        \end{pmatrix}}
+        \\
+        &= \begin{pmatrix}
+            \Cov{X} & \Cov{X;Y} \\
+            \Cov{Y;X} & \Cov{Y}
+        \end{pmatrix}.
+        \qedhere
+    \end{align*}
+\end{enumerate}
+\end{solution}

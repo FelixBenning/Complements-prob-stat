@@ -1,5 +1,5 @@
 
-\begin{exercise}[subtitle={Lévy's continuity theorem in infinite dimensions}]
+\begin{exercise}[subtitle={Lévy's continuity theorem in infinite dimensions \Coffeecup}]
     \label{ex: counterexample levy's continuity in infinite dim}
     To show that Lévy's continuity theorem does not hold in infinite dimensions
     consider the deterministic sequence \(X_n = e^n\), where \(e^n=(0,\dots,0, 1, 0, \dots)\) is the
@@ -11,7 +11,42 @@
     \]
     Let \(X=0\in \ell^2\) be the deterministic zero vector. Show that
     \begin{enumerate}[label=(\alph*), noitemsep]
-        \item \(\charFct_{X_n}(h) \to \charFct_{X}(h)\) for all \(h\in \ell^2\),
-        \item \(X_n \not\overset{d}\to X\).
+        \item\label{it: (counterexample levy's continuity in infinite dim) charfct}
+        \(\charFct_{X_n}(h) \to \charFct_{X}(h)\) for all \(h\in \ell^2\),
+        \item\label{it: (counterexample levy's continuity in infinite dim) convergence in distribution}
+        \(X_n \not\overset{d}\to X\).
     \end{enumerate}
 \end{exercise}
+
+\begin{solution}
+\begin{enumerate}[wide=0pt, noitemsep]
+    \item[\ref{it: (counterexample levy's continuity in infinite dim) charfct}]
+    For any \(h\in \ell^2\) we have \(h_n \to 0\) and consequently
+    \[
+        \scp{h, e^n} = h_n \to 0.
+    \]
+    By definition of the characteristic function we thus have
+    \[
+        \charFct_{X_n}(h)
+        = \E{e^{i\scp{h, X_n}}}
+        = e^{i\scp{h, e^n}}
+        = e^{i h_n}
+        \overset{n\to\infty}\to 1
+        = e^{i\scp{h, 0}}
+        = \charFct_X(h).
+    \]
+    \item[\ref{it: (counterexample levy's continuity in infinite dim) convergence in distribution}]
+    Since \(X\) is deterministic, \(X_n \overset{d}\to X\) would imply \(X_n
+    \overset{p}\to X\) (Theorem \ref{thm: convergence implications}).
+    And since \(\norm{X_n} = 1\) for all \(n\) the \(X_n, X\) are bounded
+    which would imply by Exercise \ref{ex: p to Lp when bounded}
+    convergence in \(L^2\). But
+    \[
+        \E{\norm{X_n - X}^2}
+        = \norm{e^n}^2
+        = 1
+        \not\to 0.
+        \qedhere
+    \]
+\end{enumerate}    
+\end{solution}
