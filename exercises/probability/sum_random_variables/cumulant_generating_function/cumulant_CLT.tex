@@ -1,24 +1,89 @@
 \begin{definition}[Cumulants]
-    If they exist, the ``cumulants'' \(\cumulant_n^X\) are the coefficients of the Taylor
+    If they exist, the ``cumulants'' \(\cumulant_n[X]\) are the coefficients of the Taylor
     series of the cumulant generating function
     \[
         \CGF_X(t)
-        = \sum_{n=1}^\infty \cumulant_n^X \frac{t^n}{n!}
+        = \sum_{n=1}^\infty \cumulant_n[X]\frac{t^n}{n!}
         = \sum_{n=1}^\infty \CGF_X^{(n)}(0) \frac{t^n}{n!}.
     \]
 \end{definition}
 
-Due to property \ref{it: cumulant independent sums} in Exercise \ref{ex:
-properties cumulant generating function} of the cumulant generating function,
-cumulants have the nice property that they ``accumulate'' when indpendent
-random variables are added, that is for \(X\) and \(Y\) independent
-\[
-    \cumulant_n^{X+Y} = \cumulant_n^X + \cumulant_n^Y.
-\]
-This property is the origin of their name and what makes them ``nicer'' compared
-to the moments that make up the coefficients of the moment generating function.
-Bienaymé (Lemma \ref{lem: Bienaymé}) represents this property for the second
-order cumulants, since \(\cumulant_2^X = \var{X}\).
+\begin{exercise}[subtitle={Properties of cumulants \Coffeecup}]
+    Prove that cumulants have the following properties: 
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item\label{it: (cumulants) accumulate} \textbf{Accumulation.}
+        If \(X\) and \(Y\) are independent, then
+        the cumulants ``accumulate''\footnote{
+            This is where the name ``cumulant'' comes from. Since
+            \(\cumulant_2[X] = \var{X}\) by Exercise \ref{ex: properties cumulant
+            generating function} Bienaymé's identity (Lemma \ref{lem: Bienaymé})
+            is a special case of this property for the second order cumulants.
+        }
+        \[
+            \cumulant_n[X+Y] = \cumulant_n[X] + \cumulant_n[Y].
+        \]
+
+        \item\label{it: (cumulants) homogeneity}\textbf{Homogeneity.} For any \(a \in \real\) we have
+        \[
+            \cumulant_n[aX] = a^n \cumulant_n[X].
+        \]
+
+        \item\label{it: (cumulants) constant} Prove that the cumulant generating function of a constant random variable \(Y=\mu\)
+        is given by
+        \[
+            \CGF_Y(t) = \mu t.
+        \]
+        For a random variable \(X\) with \(\E{X} = \mu\) deduce that
+        \(\cumulant_k[X-\mu] = \cumulant_k[X]\) for all \(k \ge 2\) and
+        \(\cumulant_1[X-\mu]=0\).
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: (cumulants) accumulate}]
+    We have by Exercise \ref{ex: properties cumulant generating function} \ref{it: cumulant independent sums}
+    \begin{align*}
+        \sum_{n=1}^\infty \cumulant_n[X+Y] \frac{t^n}{n!}
+        &= \CGF_{X+Y}(t)
+        \\
+        &= \CGF_X(t) + \CGF_Y(t)
+        = \sum_{n=1}^\infty \cumulant_n[X] \frac{t^n}{n!} + \sum_{n=1}^\infty \cumulant_n[Y] \frac{t^n}{n!}.
+        \\
+        &= \sum_{n=1}^\infty \bigl(\cumulant_n[X] + \cumulant_n[Y]\bigr) \frac{t^n}{n!}.
+    \end{align*}
+    A comparison of the coefficients proves the claim.
+
+    \item[\ref{it: (cumulants) homogeneity}]
+    We have by Exercise \ref{ex: properties cumulant generating function} \ref{it: cgf linear}
+    \[
+        \sum_{n=1}^\infty \cumulant_n[aX] \frac{t^n}{n!}
+        = \CGF_{aX}(t)
+        = \CGF_X(at)
+        = \sum_{n=1}^\infty \cumulant_n[X] \frac{(at)^n}{n!}
+        = \sum_{n=1}^\infty a^n \cumulant_n[X] \frac{t^n}{n!}
+    \]
+    and the claim follows again by comparing the coefficients.
+
+    \item[\ref{it: (cumulants) constant}] By Exercise \ref{ex: compute mgf} we have
+    for a constant random variable \(Y=\mu\) that
+    \[
+        \MGF_Y(t) = e^{t \mu} \implies \CGF_Y(t) = t \mu.
+    \]
+    Comparing coefficients with the series expansion we consequently have
+    \(\cumulant_1[Y] = \mu\) and \(\cumulant_k[Y] = 0\) for \(k \ge 2\).
+    Since a constant random variable is independent of every other random variable,
+    we have by the accumulation property that
+    \[
+        \cumulant_k[X-\mu]
+        = \cumulant_k[X] + \cumulant_k[-\mu]
+        = \cumulant_k[X]
+        \quad\text{for } k \ge 2,
+    \]
+    and \(\cumulant_1[X-\mu] = \cumulant_1[X] + \cumulant_1[-\mu] = 0\).
+    \qedhere
+    \end{enumerate}
+\end{solution}
 
 \begin{remark}[Cumulants of normal distribution]
     Recall that the cumulant generating function of the 
@@ -29,8 +94,9 @@ order cumulants, since \(\cumulant_2^X = \var{X}\).
     Thus all cumulants of order three and higher are zero! It is the only
     distribution with this property. One can show that the cumulants of order
     three and higher vanish for \(\sqrt{n}\, \mean{X}_n\) as \(n\to\infty\)
-    (Exercise \ref{ex: cumulant CLT}) and thereby proof a weak form of the
-    central limit theorem.
+    (Exercise \ref{ex: cumulant CLT}). This can be turned into a weak
+    form of the central limit theorem, which requires that the moment generating
+    function (and therefore all moments) are finite.
 \end{remark}
 
 \begin{exercise}[subtitle={Cumulant CLT}]
@@ -38,17 +104,45 @@ order cumulants, since \(\cumulant_2^X = \var{X}\).
     Let \(X_1, X_2, \ldots\) be independent copies of a random variable
     \(X\) with mean \(\mu\), variance \(\sigma^2\) and finite moments of all orders.
     Let \(\mean{X}_n = \frac1n \sum_{i=1}^n X_i\) be the empirical mean.
-    Show that the cumulants \(\cumulant_k^{\sqrt{n}(\mean{X}_n - \mu)}\)
+    Show that the cumulants \(\cumulant_k[\sqrt{n}(\mean{X}_n - \mu)]\)
     of the random variable \(\sqrt{n}(\mean{X}_n - \mu)\) satisfy
-    \[
-        \cumulant_1^{\sqrt{n}(\mean{X}_n - \mu)} = 0,
-        \qquad
-        \cumulant_2^{\sqrt{n}(\mean{X}_n - \mu)} = \sigma^2,
-        \qquad
-        \cumulant_k^{\sqrt{n}(\mean{X}_n - \mu)} \to 0
+    \begin{align*}
+        \cumulant_1[\sqrt{n}(\mean{X}_n - \mu)] &= 0,
+        \\
+        \cumulant_2[\sqrt{n}(\mean{X}_n - \mu)] &= \sigma^2,
+        \\
+        \cumulant_k[\sqrt{n}(\mean{X}_n - \mu)] &\to 0
         \quad\text{for } k \ge 3.
-    \]
+    \end{align*}
     Conclude that the cumulant generating function of
     \(\sqrt{n}(\mean{X}_n - \mu)\) converges to the cumulant generating function
     of the normal distribution \(\normal{0, \sigma^2}\).
 \end{exercise}
+
+\begin{solution}
+    By Exercise \ref{ex: properties cumulant generating function}
+    the first and second cumulant are the expectation and variance
+    respectively and therefore
+    \begin{align*}
+        \cumulant_1[\sqrt{n}(\mean{X}_n - \mu)]
+        &= \E{\sqrt{n}(\mean{X}_n - \mu)} = 0,
+        \\
+        \cumulant_2[\sqrt{n}(\mean{X}_n - \mu)]
+        &= \var{\sqrt{n}(\mean{X}_n - \mu)}
+        = n \var{\mean{X}_n}
+        = n \tfrac{\sigma^2}{n} = \sigma^2.
+    \end{align*}
+    For the higher order cumulants we have we use the accumulation property
+    and homogeneity of Exercise \ref{ex: properties cumulant generating function} to get
+    \begin{align*}
+        \cumulant_k[\sqrt{n}(\mean{X}_n - \mu)]
+        &= \cumulant_k\Bigl[\frac1{\sqrt{n}} \sum_{i=1}^n (X_i - \mu)\Bigr]
+        \\
+        \overset{\text{accum.}}&= n\, \cumulant_k[\tfrac1{\sqrt{n}} (X_1 - \mu)]
+        \\
+        \overset{\text{hom.}}&= n^{1-\frac{k}{2}} \cumulant_k[X_1 - \mu].
+        \\
+        &= n^{1-\frac{k}{2}} \cumulant_k[X_1] \qquad \forall k \ge 2.
+    \end{align*}
+    Clearly for \(k\ge 3\) the cumulants decay to zero.
+\end{solution}
