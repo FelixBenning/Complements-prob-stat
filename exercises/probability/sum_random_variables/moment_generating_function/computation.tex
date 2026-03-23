@@ -38,13 +38,18 @@
         \end{cases}\)
     \end{tabular}
     \end{center}
+    \textbf{Hint:} Use the ``identity theorem'' (e.g. \citep[Satz 12, Section 3.5]{janichFunktionentheorie2004} or \citep[Corollary 1.2.7]{krantzPrimerRealAnalytic2002}) from complex analysis to obtain the the characteristic functions.
 \end{exercise}
 \begin{solution}
-    Since the moment generating functions are all real analytic functions
-    they have a unique analytic continuation to \(\complex\)
-    and the characteristic function follows from the moment generating functions
-    by plugging in \(i t\). We therefore only
-    calculate the moment generating functions.
+    The ``identity theorem'' (e.g. \citep[Satz 12, Section 3.5]{janichFunktionentheorie2004} or \citep[Corollary 1.2.7]{krantzPrimerRealAnalytic2002}) for analytic function states that if two analytic functions
+    coincide on a set with an accumulation point, then they coincide everywhere.
+    Since an interval \((a,b)\subseteq \real\) has an accumulation point, the
+    fact that the proposed formulas for the moment generating functions are analytic functions
+    together with the fact that the MGF are analytic functions by Lemma
+    \ref{lem: moment generating function representation} implies that the formulas
+    coincide with the MGF on their entire complex domain even though we only verify
+    them on the real line. This yields the formulas for the characteristic functions
+    by plugging in \(i t\) instead of \(t\).
 
     Let us start with \(X\sim \delta_a\), which is the deterministic case \(X\overset\as=a\).
     Consequently, we have

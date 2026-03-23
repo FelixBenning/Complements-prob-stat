@@ -4,8 +4,8 @@
 \else
   \usepackage{xsim}
   \DeclareExerciseEnvironmentTemplate{theorem}{%
-    \par\noindent
-    \textbf{%
+    \par\addvspace{10pt}
+    \noindent\textbf{%
       \XSIMmixedcase{\GetExerciseName}~\GetExerciseProperty{counter}%
     }{\normalfont%
       \GetExercisePropertyT{subtitle}{ (\PropertyValue)}}\textbf{. }
