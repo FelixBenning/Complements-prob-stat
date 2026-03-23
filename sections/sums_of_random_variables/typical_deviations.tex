@@ -393,10 +393,15 @@ with its definition and the calculation of its characteristic function.
         \exp\bigl(-\tfrac1{2}(x - t)^2\bigr) dx
         = \exp\bigl(\tfrac12 t^2\bigr),
     \]
-    and consequently by \eqref{eq: mgf normal calculation} \(\MGF_X(t) = e^{\mu t} e^{\frac12 \sigma^2 t^2}\).
-    For the characteristic function observe that \(t\mapsto e^{\mu t + \frac12
-    \sigma^2 t^2}\) is an entire analytic function on \(\complex\), it is the
-    unique analytic continuation of \(\MGF_X\) to \(\complex\) and thus
+    and consequently by \eqref{eq: mgf normal calculation} \(\MGF_X(t) = e^{\mu t} e^{\frac12 \sigma^2 t^2}\)
+    for all \(t\in \real\). For the characteristic function observe that
+    \(t\mapsto e^{\mu t + \frac12 \sigma^2 t^2}\) is an entire analytic function
+    on \(\complex\).  Since \(\MGF_X\) is also analytic by Lemma \ref{lem:
+    moment generating function representation} that coincides with \(e^{\mu t +
+    \frac12 \sigma^2 t^2}\) on the real line, the ``identity theorem'' for
+    analytic functions (e.g. \citep[Satz 12, Section
+    3.5]{janichFunktionentheorie2004} or \citep[Corollary
+    1.2.7]{krantzPrimerRealAnalytic2002}) implies that the formula holds on \(\complex\) and thus
     \(\charFct_X(t) = \MGF_X(it) = e^{i \mu t - \frac12 \sigma^2 t^2}\).
 \end{proof}
 
