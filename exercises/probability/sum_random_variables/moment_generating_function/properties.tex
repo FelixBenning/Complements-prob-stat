@@ -1,20 +1,20 @@
 
 \begin{exercise}[subtitle={Properties of moment generating functions \Coffeecup}]
     \label{ex: properties moment generating functions}
-    Let \(X, Y\) be random variables in a Hilbert space \(\hilbert\).
+    Let \(X, Y\) be random variables in \(\real^\dims\).
     Then
     \begin{enumerate}[label=(\alph*)]
         \item\label{it: (mgf) zero} \(\MGF_X(0) = 1\).
         \item\label{it: (mgf) linear transformation} \(\MGF_{aX + b}(h) = e^{\scp{h,b}} \MGF_X(a h)\)
-        for any \(a\in \real\), \(b, h\in \hilbert\),
-        \item\label{it: (mgf) idependent sum} \(\MGF_{X+Y}(h) = \MGF_X(h) \MGF_Y(h)\) for \(X,Y\) independent and all \(h\in \hilbert\).
+        for any \(a\in \real\), \(b, h\in \real^\dims\),
+        \item\label{it: (mgf) idependent sum} \(\MGF_{X+Y}(h) = \MGF_X(h) \MGF_Y(h)\) for \(X,Y\) independent and all \(h\in \real^\dims\).
     \end{enumerate}
     Similarly we have for the characteristic function
     \begin{enumerate}[label=(\alph*), resume]
         \item\label{it: (charfct) bounded} \(\abs{\charFct_X(t)}\le 1\) and \(\charFct_X(0) = 1\).
         \item\label{it: (charfct) linear transformation} \(\charFct_{aX + b}(t) = e^{i\scp{t,b}} \charFct_X(a t)\)
-        for any \(a\in \real\), \(b, t\in \hilbert\).
-        \item\label{it: (charfct) independent sum} \(\charFct_{X+Y}(t) = \charFct_X(t) \charFct_Y(t)\) for \(X,Y\) independent and all \(t\in \hilbert\).
+        for any \(a\in \real\), \(b, t\in \real^\dims\).
+        \item\label{it: (charfct) independent sum} \(\charFct_{X+Y}(t) = \charFct_X(t) \charFct_Y(t)\) for \(X,Y\) independent and all \(t\in \real^\dims\).
     \end{enumerate}
 \end{exercise}
 \begin{solution}
