@@ -45,11 +45,12 @@
       \XSIMprint{solution}{##1}{##2}%
     }%
   }
-    \xsimsetup{
-        exercise/template=theorem,
-        solution/template=theorem,
-        exercise/the-counter = \thesection.\arabic{exercise},
-        exercise/within=section,
-        % solution/print=true,
-    }
+  \xsimsetup{
+      exercise/template=theorem,
+      solution/template=theorem,
+      exercise/the-counter = \thesection.\arabic{exercise},
+      exercise/within=section,
+      % solution/print=true,
+  }
+  % \SetExerciseParameters{exercise}{counter=theorem}
 \fi
