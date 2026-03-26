@@ -158,17 +158,21 @@ implies
     \abs{\charFct_X(t)} \le \E{\abs{e^{itX}}} = 1
     \qquad \forall t\in \real^\dims.
 \end{equation}
-However, if moments do exist, the characteristic function has a similar
-representation.
+Since \(e^{itX}\) is complex valued, the inequality above has to be justified.
+But since \(\varphi(z) = \abs{z}\) is a convex function, this is just Jensen's
+inequality. The characteristic function therefore does not need moments to
+exist. However if they do exist, the characteristic function has a similar
+representation as the moment generating function.
 
 \begin{lemma}[Characteristic function representation]
     \label{lem: characteristic function representation}
     Let \(X\) be real valued with \(\E{\abs{X}^n} < \infty\) for some
     \(n\), then \(\charFct_X\) is \(n\)-times continuously differentiable
     with
-    \[
+    \begin{equation}
+        \label{eq: taylor expansion characteristic function}    
         \charFct_X(t) = \sum_{k=0}^n \E{X^k}\frac{(it)^k}{k!} + o(t^n).
-    \]
+    \end{equation}
     If all the moments are finite and \(\lim_{n\to \infty}
     \frac{t^n}{n!}\E{\abs{X}^n} =0\) for some \(t>0\), then
     \(\charFct_X\) is a power series with convergence radius at least \(t\).
@@ -179,30 +183,49 @@ representation.
     \[
         \frac{d^n}{dt^n} \exp(i t x) = (ix)^n \exp(i t x).
     \]
-    Consequently, we have \(\abs{\frac{d^n}{dt^n} \exp(i t x)} \le \abs{x}^n\) such that
-    \(\abs{X}^n\) is an integrable dominating function of the derivative
-    by assumption that \(\E{\abs{X}^n} < \infty\). Since the
-    finite-difference quotients are bounded by the derivative using the mean value
-    theorem we may thus apply the Dominated Convergence Theorem (DCT) to
-    interchange differentiation and expectation to obtain
+    Observe that the finite-difference quotients equal to the derivative at some
+    point in the interval, by the mean value theorem, that is for some \(\xi \in
+    [0, \epsilon]\) we have
+    \[
+        \abs[\Big]{\frac{\exp(i (t+\epsilon) X) - \exp(i t X)}{\epsilon}}
+        = \abs{i X \exp(i \xi X)} \le \abs{X}.
+    \]
+    Since this bound is uniform in \(\epsilon\) and \(\E{X} < \infty\) due to
+    \(\E{\abs{X}^n} < \infty\)
+    we have by the dominated convergence theorem (DCT)
+    \begin{align*}
+        \charFct_X'(t)
+        &=  \lim_{\epsilon\to 0} \E[\Big]{\frac{\exp(i (t+\epsilon) X) - \exp(i t X)}{\epsilon}}
+        \\
+        \overset{\text{DCT}}&=
+        \E[\Big]{\lim_{\epsilon\to 0} \frac{\exp(i (t+\epsilon) X) - \exp(i t X)}{\epsilon}}
+        = \E{ i X \exp(i t X)}.
+    \end{align*}
+    Since \(\abs{\frac{d^k}{dt^k} \exp(i t X)} \le \abs{X}^k\) and \(\E{\abs{X}^k} < \infty\) for all \(k \le n\)
+    we can iterate on this argument to move all the derivatives into the expectation
+    and obtain
     \[
         \frac{d^n}{dt^n} \charFct_X(t)
         = \E[\Big]{\frac{d^n}{dt^n} \exp(i t X)}
-        = \E{(iX)^n \exp(i t X)}.
+        = \E[\big]{\frac{d^n}{dt^n} \exp(i t X)}.
     \]
     We thus have that the characteristic function is \(n\)-times differentiable
-    and the representation is the Taylor expansion around zero.
-    Last assume that all moments are finite. Since the derivatives are bounded
+    and the representation is the Taylor expansion around zero \eqref{eq: taylor
+    expansion characteristic function}. Observe that \eqref{eq: taylor expansion characteristic function}
+    converges for \(t\to 0\). However, to get that the characteristic function is a power series,
+    we need that the remainder term converges to zero in \(n\to \infty\).
+    For this assume that all moments are
+    finite. Since the derivatives are bounded
     by the moments
     \[
         \abs{\charFct_X^{(n)}(t)} \le \E{\abs{iX}^n \abs{\exp(i t X)}} = \E{\abs{X}^n},
     \]
-    the mean value remainder with \(\xi \in (0,t)\) is bounded by
+    the mean value remainder of the taylor expansion with \(\xi \in (0,t)\) is bounded by
     \[
         \abs{R_{n-1}(t)} = \abs[\Big]{\frac{t^{n}}{n!} \charFct_X^{(n)}(\xi)}
         \le \frac{\abs{t}^{n}}{n!} \E{\abs{X}^{n}}.
     \]
-    Its convergence to zero therefore follows directly from the assumption.
+    Its convergence to zero in \(n\to \infty\) then follows directly from the assumption.
 \end{proof}
 
 As we outlined in the beginning of this section the moment generating function
@@ -421,8 +444,8 @@ We are finally ready to prove the univariate central limit theorem.
 \end{mdframed}
 
 \begin{proof}
-    Without loss of generality we may assume that \(m=0\) since we can
-    consider the centered random variables \(\tilde{X}_n = X_n - m\).
+    Without loss of generality we may assume that \(\mu=0\) since we can
+    consider the centered random variables \(\tilde{X}_n = X_n - \mu\).
     We then have
     \[
         \charFct_{\sqrt{n} \mean{X}_n}(t)
