@@ -217,10 +217,10 @@ and its properties in multiple dimensions.
             = \sum_{k=1}^\infty \CGF_X^{(k)}(0)\frac{t^k}{k!}
             \qquad \forall t\in U.
         \]
-        The coefficient \(\cumulant_k(X) \coloneq \CGF_X^{(k)}(0)\) is called the \(k\)-th \textbf{cumulant} of \(X\).
+        The coefficient \(\cumulant_k[X] \coloneq \CGF_X^{(k)}(0)\) is called the \(k\)-th \textbf{cumulant} of \(X\).
         For \(X,Y\) independent we have by \ref{it: CGF sum independent},
         \[
-            \cumulant_k(X+Y) = \cumulant_k(X) + \cumulant_k(Y).
+            \cumulant_k[X+Y] = \cumulant_k[X] + \cumulant_k[Y].
         \]
         \item\label{it: CGF gradient and Hessian} \(\nabla \CGF_X(0) = \E{X}\) and \(\nabla^2\CGF_X(0) = \Cov{X}\).
     \end{enumerate}
@@ -427,7 +427,7 @@ neighborhood of \(0\), then \(\nabla \CGF_X(0) = \E{X}\) and consequently
     \label{eq: cgf star at expected value}    
     \CGF_X^*\bigl(\E{X}\bigr) = \CGF_X^*\bigl(\nabla \CGF_X(0)\bigr) = \scp{0, \nabla \CGF_X(0)} - \CGF_X(0) = 0.
 \end{equation}
-So up to the issue with the domain it is sufficient to prove that \(\CGF_X\)
+So up to the issue with the domain it is sufficient to prove that \(\CGF_X^*\)
 is non-negative and convex to get that \(\E{X}\) is its minimizer.
 
 
@@ -445,7 +445,7 @@ is non-negative and convex to get that \(\E{X}\) is its minimizer.
     \end{enumerate}
     Moreover for \(\Lambda = \CGF_X\) we have
     \begin{enumerate}[label=\normalfont{(\arabic*)}, noitemsep, resume]
-        \item\label{it: cgf* trivial essential domain} If \(\cD_{\CGF_X} = \set{0}\), then \(\CGF_X \equiv 0\).
+        \item\label{it: cgf* trivial essential domain} If \(\cD_{\CGF_X} = \set{0}\), then \(\CGF_X^* \equiv 0\), in particular \(\E{X}\) is a minimizer of \(\CGF_X^*\) just like any other point.
         \item\label{it: cgf* open essential domain} If \(U \subseteq \cD_{\CGF_X}\) is an open set with \(0\in U\), then
         \(\CGF_X^*(\E{X})=0\).
         In particular, the expectation \(\E{X}\) is a minimizer of \(\CGF_X^*\).
@@ -455,8 +455,9 @@ is non-negative and convex to get that \(\E{X}\) is its minimizer.
 \begin{remark}
     Between \ref{it: cgf* trivial essential domain} and \ref{it: cgf* open
     essential domain} there is a gap that is very annoying to treat formally,
-    but offers little insight.
-    See \fxwarning{reference or exercise?}
+    as the domain \(\cD_{\CGF_X}\) may be any convex set that contains \(0\). See
+    \citep[Lemma~2.2.5]{demboLargeDeviationsTechniques2009} for the case
+    \(\hilbert=\real\). In general,
 \end{remark}
 
 \begin{proof}
@@ -481,7 +482,7 @@ is non-negative and convex to get that \(\E{X}\) is its minimizer.
     \[
         \liminf_{n\to \infty} \Lambda^*(a_n) \ge \sup_{t\in \hilbert} \bigl(\scp{t, a} - \Lambda(t)\bigr) = \Lambda^*(a).
     \]
-    We will not prove \ref{it: cgf* duality}. See \fxwarning{reference!}. We have already proven
+    We will not prove \ref{it: cgf* duality}, see \citep[Lemma 4.5.8]{demboLargeDeviationsTechniques2009}. We have already proven
     \ref{it: cgf* gradient} in \eqref{eq: gradient of cgf star}. For \ref{it: cgf* minimum at expected value} observe that
     \[
         \Lambda^*(a) = \sup_{t\in \hilbert} \bigl(\scp{t, a} - \Lambda(t)\bigr)
@@ -1158,7 +1159,7 @@ equivalent characterizations of subgaussian random variables.
 
 \input{exercises/probability/sum_random_variables/cumulant_generating_function/properties.tex}
 \input{exercises/probability/sum_random_variables/cumulant_generating_function/cumulant_CLT.tex}
-\input{exercises/analysis/convex_conjugate.tex}
+% \input{exercises/analysis/convex_conjugate.tex}
 
 \paragraph*{Randomized algorithms} The theme of the
 next two exercises is that algorithms can sometimes benefit from randomization.

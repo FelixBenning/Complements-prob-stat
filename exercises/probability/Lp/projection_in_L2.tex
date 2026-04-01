@@ -56,11 +56,12 @@
     \[
         X = \underbrace{\E{X}}_{\in \real} + \underbrace{(X-\E{X})}_{\in \real^\perp}.
     \]
+    \vspace{-1ex}
     Thus \(L^2 = \real \oplus \real^\perp\).
 
     \item[\ref{it: (L2 projection) expectation is projection}]
     Since \(\E{\E{X}} = \E{X}\) we have \(\eSym^2 = \eSym\)
-    and therefore the expectation is a projection as it is also a
+    and therefore the expectation is a linear projection as it is also a
     linear operator. It is an orthogonal projection since
     \[
         \scp{\E{X}, [Y]}_{L^2} = \E{\E{X}Y} = \E{X}\E{Y} = \scp{[X], \E{Y}}_{L^2}.
@@ -86,7 +87,9 @@
     \]
 
     \item[\ref{it: (L2 projection) expectation is argmin}]
-    This is a property of the orthogonal projection. Specifically,
+    This property is also called a ``metric projection'' and all orthogonal
+    projections in hilbert spaces are metric projections. Nevertheless here
+    is the argument. We have
     \[
         \norm{X - c}_{L^2}^2
         = \norm{\pi[X] + \E{X} - c}_{L^2}^2
