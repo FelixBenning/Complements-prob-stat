@@ -10,14 +10,19 @@
 \end{exercise}
 
 \begin{solution}
-    We have \(X \sim \normal{0,1}\) by definition and \(Y\) is normal distributed since it is a product of the independent random variables \(\epsilon\) and \(Z\) where \(Z\) is normal distributed and \(\epsilon\) is symmetric around zero. More formally, for any bounded continuous function \(g\) we have
+    We have \(X \sim \normal{0,1}\) by definition and \(Y\) is normal
+    distributed since it is a product of the independent random variables
+    \(\epsilon\) and \(Z\) where \(Z\) is normal distributed and \(\epsilon\) is
+    symmetric around zero. More formally
     \[\begin{aligned}
-        \E{g(Y)}
-        &= \E{g(\epsilon Z)}
+        \prob{Y \le y}
+        &= \prob{\epsilon Z \le y}
         \\
-        &= \frac{1}{2} \E{g(Z)} + \frac{1}{2} \E{g(-Z)}
+        &= \prob{Z \le y \mid \epsilon = 1} \prob{\epsilon = 1} + \prob{-Z \le y \mid \epsilon = -1} \prob{\epsilon = -1}
         \\
-        &= \E{g(Z)}
+        &= \frac{1}{2} \prob{Z \le y} + \frac{1}{2} \prob{-Z \le y} 
+        \\
+        &= \prob{Z \le y}.
     \end{aligned}\]
     where we used the symmetry of \(Z\) in the last step. Since this is true for all bounded continuous functions \(g\) we have \(Y \overset{d}= Z\).
     We have

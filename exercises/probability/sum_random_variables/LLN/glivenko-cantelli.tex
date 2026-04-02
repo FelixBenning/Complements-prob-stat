@@ -70,12 +70,12 @@
         x_i = F^\leftarrow\bigl(\tfrac{i}k\bigr)
         = \inf\set[\big]{x\in \real: F(x) \ge \tfrac{i}k}.
     \]
-    and left continuity of \(G(x)\) by
+    and left continuity of \(G(x)\) by choosing any \(y_n \uparrow x\) and
     \begin{align*}
         G(x) = \prob{X_1 < x}
-        &= \prob[\Big]{\bigcup_{n\in \nat} \set{X_1 < y- \tfrac1n}}
+        &= \prob[\Big]{\bigcup_{n\in \nat} \set{X_1 < y_n}}
         \\
-        &= \lim_{n\to \infty} \prob{X_1 < y} = \lim_{n\to\infty} G(y - \tfrac1n).
+        &= \lim_{n\to \infty} \prob{X_1 < y_n} = \lim_{n\to\infty} G(y_n).
     \end{align*}
     On to the second claim: For any \(x\in (x_i, x_{i+1})\) we have
     \begin{align*}
@@ -84,8 +84,8 @@
         \\
         \overset{\eqref{eq: discretization max to zero}}&\le G(x_{i+1}) + R_n
         \\
-        \overset{\eqref{eq: discretization properties}}&\le F(x_i) + \frac1k + R_n
-        \overset{x_i < x}\le F(x) + \frac1k + R_n
+        \overset{\eqref{eq: discretization properties}}&\le F(x_i) + \tfrac1k + R_n
+        \overset{x_i < x}\le F(x) + \tfrac1k + R_n
     \end{align*}
     Similarly, we have for any \(x\in (x_i, x_{i+1})\) that
     \begin{align*}
