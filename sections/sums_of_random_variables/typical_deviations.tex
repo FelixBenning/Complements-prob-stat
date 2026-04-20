@@ -809,20 +809,26 @@ of the CLT, the so called Berry-Esseen theorem.
     \(\normal{0, \identity}\set{A} \coloneq \prob{Z \in A}\) for \(Z\sim \normal{0, \identity}\).
 \end{fact}
 
-How does one use this result? For example, if \(X_1, \dots, X_n\) are iid random vectors
-with mean \(\mu\) and invertible covariance \(\Sigma\) define 
-\[
-    I \coloneq \set{1, \dots, n}, \qquad
-    \tilde{X}_i \coloneq \tfrac1{\sqrt{n}}\Sigma^{-\frac12}(X_i - \mu), \quad i\in I.
-\]
-Then it is straightforward to verify \(\sum_{i\in I} \Cov{\tilde{X}_i}=
-\identity\), and since \(\Sigma^{\frac12}A\) is a convex set 
-if and only if \(A\) is convex, we have by the multivariate Berry-Esseen theorem
-\[
-    \sup_{A \in \cC} \abs[\Big]{\prob[\Big]{\frac1{\sqrt{n}}\sum_{i=1}^n(X_i - \mu) \in A} - \normal{0, \Sigma}\set{A}}
-    \le \frac{C}{\sqrt{n}}\E[\big]{\|\Sigma^{-\frac12}(X_i-\mu)\|_2^3}.
-\]
-Observe that the Berry-Esseen theorem implicitly assumes third moments as the bound
+\begin{corollary}[User friendly Berry-Esseen]
+    Let \(X_1, \dots, X_n\) be iid random vectors in \(\real^\dims\)
+    with mean \(\mu\) and invertible covariance \(\Sigma\). Then
+    \[
+        \sup_{A \in \cC} \abs[\Big]{\prob[\Big]{\frac1{\sqrt{n}}\sum_{i=1}^n(X_i - \mu) \in A} - \normal{0, \Sigma}\set{A}}
+        \le \frac{C}{\sqrt{n}}\E[\big]{\|\Sigma^{-\frac12}(X_i-\mu)\|_2^3},
+    \]
+    where \(C\) and \(\cC\) are as above and \(\normal{0, \Sigma}\set{A}\)
+    is defined analogously.
+\end{corollary}
+\begin{proof}
+    Define \(I \coloneq \set{1, \dots, n}\) and
+    \(\tilde{X}_i \coloneq \tfrac1{\sqrt{n}}\Sigma^{-\frac12}(X_i - \mu)\)
+    for \(i\in I\).
+    It is straightforward to verify \(\sum_{i\in I} \Cov{\tilde{X}_i}=
+    \identity\) and apply the multivariate Berry-Esseen theorem to the \(\tilde{X}_i\).
+    Then resubstitute the definition of the \(\tilde{X}_i\) and observe that
+    \(\Sigma^{\frac12}A = \set{\Sigma^{\frac12}x : x \in A}\) is a convex set if and only if \(A\) is convex.
+\end{proof}
+The Berry-Esseen theorem implicitly assumes third moments as the bound
 is infinite otherwise and we obtain a convergence rate of order \(O(n^{-\frac12})\).
 
 
