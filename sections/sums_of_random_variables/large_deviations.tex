@@ -51,7 +51,7 @@ generating function}'' (CGF) or ``log-laplace transform'' that will be our main 
 of study in this section.
 
 The key feature of the Chernoff bound is that it provides us with a parameter \(t\)
-that is not inherent to the problem of bounding \(\prob{X \ge a}\). This allows for
+that is not inherent to the problem of bounding \(\prob{X \ge x}\). This allows for
 an optimization over \(t\), resulting in the \textbf{Legendre transform}
 \[
     \CGF^+_X(x) \coloneq \sup_{t\ge 0} \bigl( t x - \CGF_X(t) \bigr).
@@ -580,7 +580,7 @@ With this less `sharp' view, we can thereby remove the convexity assumption on t
 In particular this exponential rate is tight.
 
 \begin{mdframed}[innertopmargin=0pt]
-\begin{fact}[Cramér]
+\begin{fact}[Cramér {\citep[e.g.][Thm.~2.2.30]{demboLargeDeviationsTechniques2009}}]
     Let \(X_1, \ldots, X_n\) be independent copies of the random variable \(X\) 
     in \(\real^\dims\) and \(\mean{X}_n\) their mean. Let \(A\) be a closed (but
     not necessarily convex) set, then
