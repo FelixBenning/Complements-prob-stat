@@ -183,8 +183,8 @@ and its properties in multiple dimensions.
     \]
     We further define the functions for \(t,a\in \hilbert\)
     \begin{align*}
-        \tag{concave-convex helper}
-        \Phi_X(t, a) &\coloneq \scp{t, a} - \CGF_X(t)
+        \tag{convex-concave helper}
+        \Phi_X(a, t) &\coloneq \scp{t, a} - \CGF_X(t)
         \\
         \tag{convex conjugate of \(\CGF_X\)}
         \CGF_X^*(a) &\coloneq \sup_{t\in \hilbert} \Phi(t, a)
@@ -271,7 +271,7 @@ and its properties in multiple dimensions.
     this is obviously not the case.
 \end{remark}
 
-Observe that \(\Phi_X\) is thus a concave-convex function since \(\CGF_X\) is convex.
+Observe that \(\Phi_X(a, t)\) is a convex in \(a\) and concave in \(t\) since \(\CGF_X(t)\) is convex.
 This explains its name and this property is crucial for the following bound.
 
 \begin{mdframed}[innertopmargin=0pt]
@@ -298,7 +298,7 @@ This explains its name and this property is crucial for the following bound.
         &= \MGF_X(t)\exp\bigl(- \inf_{a\in A} \scp{t, a}\bigr) 
         \\
         &= \exp\Bigl(- \bigl(\inf_{a\in A} \scp{t, a}-\CGF_X(t)\bigr)\Bigr) 
-        = \exp(- \inf_{a\in A} \Phi_X(t, a)).
+        = \exp(- \inf_{a\in A} \Phi_X(a, t)).
     \end{aligned}
     \]
     Since this bound holds for any \(t\in \hilbert\) we have by Sion's
@@ -306,10 +306,10 @@ This explains its name and this property is crucial for the following bound.
     \ref{lem: check sion's conditions}
     \[\begin{aligned}[b]
         \prob{X \in A}
-        &\le \exp\Bigl(- \sup_{t \in \hilbert} \inf_{a\in A} \Phi_X(t, a)\Bigr)
+        &\le \exp\Bigl(- \sup_{t \in \hilbert} \inf_{a\in A} \Phi_X(a, t)\Bigr)
         \\
         \overset{\text{Sion}}&=
-        \exp\Bigl(- \inf_{a\in A} \sup_{t \in \hilbert} \Phi_X(t, a)\Bigr)
+        \exp\Bigl(- \inf_{a\in A} \sup_{t \in \hilbert} \Phi_X(a, t)\Bigr)
         = \exp\bigl(- \inf_{a\in A} \CGF_X^*(a)\bigr).
     \end{aligned}
     \qedhere
@@ -322,26 +322,31 @@ This explains its name and this property is crucial for the following bound.
     \(\cY\) a convex subset of a topological vectorspace. Let
     \(f \colon \cX \times \cY \to \real\) be a function such that
     \begin{enumerate}[label=(\roman*), noitemsep]
-        \item for each \(y \in \cY\), \(f(\cdot, y)\) is upper semicontinuous and quasi-concave on \(\cX\),
-        \item for each \(x \in \cX\), \(f(x, \cdot)\) is lower semicontinuous and quasi-convex on \(\cY\).
+        \item for each \(x \in \cX\), \(f(x, \cdot)\) is upper semicontinuous and quasi-concave on \(\cY\),
+        \item for each \(y \in \cY\), \(f(\cdot, y)\) is lower semicontinuous and quasi-convex on \(\cX\).
     \end{enumerate}
     Then
     \[
-        \sup_{x \in \cX} \inf_{y \in \cY} f(x, y)
-        = \inf_{y \in \cY} \sup_{x \in \cX} f(x, y);
+        \inf_{x \in \cX} \sup_{y \in \cY} f(x, y)
+        = \sup_{y \in \cY} \inf_{x \in \cX} f(x, y);
     \]
 \end{fact}
 
 \begin{lemma}[Check Sion's conditions]
     \label{lem: check sion's conditions}
-    \(\Phi(t, a) = \scp{t, a} - \CGF_X(t)\) satisfies the conditions of Sion's minimax theorem.
+    \(\Phi(a, t) = \scp{t, a} - \CGF_X(t)\) satisfies the conditions of Sion's minimax theorem.
 \end{lemma}
 \begin{proof}
-    The function \(\Phi_X\) is trivially continuous and convex in \(a\) since
-    the inner product is continuous and linear in \(a\).
-    Since \(\CGF_X\) is lower semicontinuous and convex (Lemma \ref{lem:
-    properties of CGF}) it follows that
-    the function \(\Phi_X\) is upper semicontinuous and concave in \(t\).
+    \(A\) is a compact and convex and \(\hilbert\) is
+    convex as a vector space. 
+    \begin{enumerate}[label=(\roman*),nosep]
+        \item \(\Phi_X(a, \cdot) = \scp{\cdot, a} - \CGF_X(\cdot)\) is is upper
+        semicontinuous and concave, since \(\CGF_X\) is lower semicontinuous and
+        convex (Lemma \ref{lem: properties of CGF}).
+        \item \(\Phi(\cdot, t)\) is trivially continuous and convex in \(a\) since
+        the inner product is continuous and linear in \(a\).
+        \qedhere
+    \end{enumerate}
 \end{proof}
 
 In finite dimensions we can extend Proposition \ref{prop: general LDP upper} to
