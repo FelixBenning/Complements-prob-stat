@@ -1,7 +1,7 @@
 
 \begin{exercise}[subtitle={Properties of the cumulant generating function \Coffeecup}]
     \label{ex: properties cumulant generating function}
-    Let \(X\) be a random variable. Then the cumulant generating function
+    Let \(X\) be a random variable. Show that the cumulant generating function
     \(\CGF_X(t) = \log \MGF_X(t)\) has the following properties:
     \begin{enumerate}[label=(\roman*), noitemsep]
         \item\label{it: cgf 0=0} \(\CGF_X(0) = 0\).
@@ -11,8 +11,9 @@
             \CGF_{X+Y}(t) = \CGF_X(t) + \CGF_Y(t)
         \]
     \end{enumerate}
-    If the moment generating function is finite in a neighborhood of zero,
-    then \(\CGF_X\) is infinitely often differentiable and
+    Assume \(X\) is a real valued random variable. Show that, if the moment generating
+    function is finite in a neighborhood of zero, then \(\CGF_X\) is infinitely
+    often differentiable and
     \begin{enumerate}[label=(\roman*), resume, noitemsep]
         \item \(\CGF_X'(0) = \E{X}\),
         \item \(\CGF_X''(0) = \var{X}\)

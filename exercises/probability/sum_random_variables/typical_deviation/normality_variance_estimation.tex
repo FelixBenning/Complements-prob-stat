@@ -34,7 +34,7 @@
         is
         \[
             \sqrt{n}(\sigma_n - \sigma)
-            \to \normal{0, \tfrac{K}{2\sigma}}.
+            \to \normal{0, \tfrac{K}{4\sigma^2}}.
         \]
         \textbf{Hint:} Exercise \ref{ex: delta method}.
     \end{enumerate}
@@ -74,7 +74,8 @@
         \[
             \sqrt{n}(\sigma_n - \sigma)
             = \sqrt{n}(g(\sigma_n^2) - g(\sigma^2))
-            \overset{d}\to \normal[\big]{0, (g'(\sigma^2))^2 K} = \normal{0, \tfrac{K}{2\sigma}}.
+            \overset{d}\to \normal[\big]{0, (g'(\sigma^2))^2 K}
+            = \normal{0, \tfrac{K}{4\sigma^2}}.
             \qedhere
         \]
         \end{enumerate} 
