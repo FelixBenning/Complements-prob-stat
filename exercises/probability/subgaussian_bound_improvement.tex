@@ -1,0 +1,46 @@
+\begin{exercise}[subtitle={Improvement of the subgaussian bound \Coffeecup\Coffeecup}]
+    \label{ex: subgaussian bound improvement}
+    In the table of Theorem \ref{thm: subgaussian equivalences} prove
+    \(c_{42} \le \sqrt{3}\). That is
+    \[
+        K_4 \le \sqrt{3}K_2.
+    \]
+    \textbf{Hint:} Skip the bounds on the Gamma function  that lead from \(K_2\)
+    to \(K_2'\) in the proof of Theorem \ref{thm: subgaussian equivalences} 
+    and directly move to ``\ref{it: subgaussian moment decay} \(\Rightarrow\)
+    \ref{it: subgaussian X^2 sub-exponential}'', where the Stirling
+    approximation step becomes unnecessary to get
+    \[
+        \E{\exp(t^2 X^2)} \le \frac{1+(t K_2)^2}{1-(t K_2)^2}.
+    \]
+    Then consider the definition of \(K_4\).
+\end{exercise}
+
+\begin{solution}
+    By definition we have \(\E{\abs{X}^p} \le K_2^p p \Gamma(\frac{p}2)\) and 
+    therefore  
+    \[
+        \E{\abs{X}^{2p}} \le K_2^{2p} (2p) \Gamma(p) = 2K_2^{2p} p!
+    \]
+    consequently
+    \begin{align*}
+        \E{\exp(t^2 X^2)}
+        &= \sum_{p=0}^\infty \frac{t^{2p} \E{\abs{X}^{2p}}}{p!}
+        \\
+        &\le 1+ \sum_{p=1}^\infty \frac{2(t K_2)^{2p} p!}{p!}
+        \overset{\substack{\text{geom.}\\\text{series}}}= 1 + 2\frac{(t K_2)^2}{1-(t K_2)^2}
+        = \frac{1+(t K_2)^2}{1-(t K_2)^2}.
+    \end{align*}
+    Observe that
+    \[
+        \frac{1+\lambda^2}{1-\lambda^2} \overset{!}\le 2
+    \]
+    is satisfied for \(\lambda^2 \le \frac13\) or equivalently \(t^2 \le \frac{1}{3K_2^2}\) for the choice of \(\lambda = tK_2\).
+    Choosing \(t=\frac1{c}\) we get consequently get for \(\frac1{c^2} \le \frac{1}{3K_2^2}\)
+    \[
+        \E{\exp(\tfrac{X^2}{c^2})} \le 2.
+    \]
+    Since this is guaranteed to hold for all \(c \ge \sqrt{3}K_2\) and \(K_4\)
+    may be chosen as the smallest constant where this holds, we have \(K_4 \le
+    \sqrt{3}K_2\).
+\end{solution}
