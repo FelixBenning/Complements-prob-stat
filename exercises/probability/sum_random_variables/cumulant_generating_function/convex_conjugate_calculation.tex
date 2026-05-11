@@ -11,13 +11,16 @@
         &  \(\CGF_X(t)\) & \(\CGF_X^*(a)\)
         \\
         \midrule
-        \(\Poisson(\lambda)\) & \(\lambda (e^{t} - 1)\)
+        \(\Poisson(\lambda)\)
+        & \(\lambda (e^{t} - 1)\)
         & \(1-a + \ln(\frac{a}\lambda)a\) 
         \\
-        \(\exponential(\lambda)\) & \(\ln(\frac{\lambda}{\lambda - t})\) for \(t < \lambda\)
+        \(\exponential(\lambda)\)
+        & \(\ln(\frac{\lambda}{\lambda - t})\) for \(t < \lambda\)
         & \(\lambda a -1 - \ln(\lambda a)\)
         \\
-        \(\bernoulli(p)\) & \(\ln(1 - p + p e^{t})\)
+        \(\bernoulli(p)\)
+        & \(\ln(1 - p + p e^{t})\)
         & \(a\ln(\frac{a}p) + (1-a)\ln(\frac{1-a}{1-p})\)
         \\
         \bottomrule
@@ -38,21 +41,26 @@
         The derivatives and maximizers \(t^*\) from the first order condition are thus given by
         \begin{center}
         \def\arraystretch{1.2}
-        \begin{tabular}{l l l}
+        \begin{tabular}{l l l l}
             \toprule
             \(\pSym_X\)
-            & \(\CGF_X'(t)\) & \(t^*\)
+            & \(\CGF_X(t)\)
+            & \(\CGF_X'(t)\)
+            & \(t^*=\argmax_t (ta - \CGF_X(t))\)
             \\
             \midrule
             \(\Poisson(\lambda)\)
+            & \(\lambda (e^{t} - 1)\)
             & \(\lambda e^t\)
             & \(\ln\bigl(\frac{a}{\lambda}\bigr)\)
             \\
             \(\exponential(\lambda)\)
+            & \(\ln(\frac{\lambda}{\lambda - t})\) for \(t < \lambda\)
             & \(\frac1{\lambda-t}\) for \(t<\lambda\)
             & \(\lambda - \frac1a\)
             \\
             \(\bernoulli(p)\)
+            & \(\ln(1 - p + p e^{t})\)
             & \(\frac{pe^t}{1-p+p e^t}\)
             & \(\ln(\frac{a}p\frac{1-p}{1-a})\)
             \\
