@@ -4,12 +4,13 @@
     Prove the formulas for the moment generating functions in the following
     table
     \begin{center}
-    \def\arraystretch{1.5}
+    \def\arraystretch{1.2}
     \begin{tabular}{l l l}
+        \toprule
         \(\pSym_X\)
         &  \(\MGF_X(t)\) & \(\charFct_X(t)\)
         \\
-        \hline
+        \midrule
         \(\prob{X=a}=1\) & \(e^{t a}\) & \(e^{i t a}\)
         \\
         \(\bernoulli(p)\) & \(1 - p + p e^{t}\)
@@ -36,6 +37,8 @@
             \\
             1 & t = 0
         \end{cases}\)
+        \\
+        \bottomrule
     \end{tabular}
     \end{center}
     \textbf{Hint:} Use the ``identity theorem'' (e.g. \citep[Satz 12, Section 3.5]{janichFunktionentheorie2004} or \citep[Corollary 1.2.7]{krantzPrimerRealAnalytic2002}) from complex analysis to obtain the the characteristic functions.
