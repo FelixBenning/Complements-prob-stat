@@ -376,9 +376,10 @@ with its definition and the calculation of its characteristic function.
     \]
     This is usually taken as the definition of the normal distribution. However
     this definition does not work for \(\sigma^2=0\) and would prevent the
-    central limit theorem to hold in this case. And the importance of the normal
-    distribution is solely justified by the CLT. Moreover the multivariate normal
-    distribution will be less awkward to define if we allow zero variance.
+    central limit theorem to hold in this case. Since the CLT is the main
+    reason we are interested in the normal distribution this is a good
+    reason to allow zero variance. Moreover the multivariate normal distribution
+    will be much less awkward to define if we allow for zero variance.
 \end{remark}
 \begin{proof}[Proof (Definition \ref{def: univariate normal distribution} is well defined)]
     We delay the proof that the density \eqref{eq: standard normal density} integrates to one
@@ -420,7 +421,7 @@ with its definition and the calculation of its characteristic function.
     for all \(t\in \real\). For the characteristic function observe that
     \(t\mapsto e^{\mu t + \frac12 \sigma^2 t^2}\) is an entire analytic function
     on \(\complex\).  Since \(\MGF_X\) is also analytic by Lemma \ref{lem:
-    moment generating function representation} that coincides with \(e^{\mu t +
+    moment generating function representation} and coincides with \(e^{\mu t +
     \frac12 \sigma^2 t^2}\) on the real line, the ``identity theorem'' for
     analytic functions (e.g. \citep[Satz 12, Section
     3.5]{janichFunktionentheorie2004} or \citep[Corollary
@@ -461,7 +462,7 @@ We are finally ready to prove the univariate central limit theorem.
         = \Biggl[\sum_{k=0}^2 \E{X^k}\frac{(i\frac{t}{\sqrt{n}})^k}{k!} + o\Bigl(\frac{t^2}{n}\Bigr)\Biggr]
         = 1 - \frac{\sigma^2 t^2}{2 n} + o\Bigl(\frac{t^2}{n}\Bigr).
     \]
-    Consequently we have by Lemma \ref{lem: compound interest}
+    Consequently we have by the compound interest limit (Lemma \ref{lem: compound interest})
     \[
         \charFct_{\sqrt{n} \mean{X}_n}(t)
         = \Bigl(1 - \tfrac{\sigma^2 t^2}{2 n} + o(\tfrac{t^2}{n})\Bigr)^n
@@ -795,6 +796,7 @@ With a lot more work it is possible to prove a quantitative version
 of the CLT, the so called Berry-Esseen theorem. 
 
 \begin{fact}[Multivariate Berry-Esseen theorem {\citep{raicMultivariateBerryEsseen2019}}]
+    \label{fact: multivariate berry esseen}
     Let \(I\) be a finite or countable index set and \((X_i)_{i\in I}\) be iid
     random vectors in \(\real^\dims\) with zero mean and
     \[
@@ -892,6 +894,7 @@ is infinite otherwise and we obtain a convergence rate of order \(O(n^{-\frac12}
         \density(x_1) = \frac{g(x_1^2)}{\density(0)} = \frac{c}{\density(0)} \exp(\lambda x_1^2)
         = \density(0) \exp(\lambda x_1^2).
     \]
+    For the last equality plug in \(x_1=0\) to see that \(c = \density(0)^2\).
     Since the density must integrate to one we rule out \(\lambda \ge 0\) and
     arrive at the normal distribution. An actual proof would
     however need to justify the existence of a density.
@@ -934,7 +937,7 @@ The Jacobian determinant of this transformation is
 Therefore,
 \[
 I^2 = 
-\int_{0}^\infty \int_{0}^{2\pi} e^{-\frac{r^2}{2}} \, r \, d\theta dr
+\int_{0}^\infty\! \int_{0}^{2\pi} e^{-\frac{r^2}{2}} \, r \, d\theta dr
 =  2\pi \int_0^\infty e^{-\frac{r^2}{2}} \, r \, dr 
 = 2\pi \left[-e^{-\frac{r^2}{2}}\right]_{0}^{\infty}
 = 2\pi.

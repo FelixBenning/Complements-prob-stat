@@ -13,8 +13,8 @@ approximation of the distribution at finite \(n\).
     ``In the long run we are all dead'' -- John Maynard Keynes 
 \end{quotation}
 It is a lucky coincidence that the tools to analyze large deviations are also
-better suited to provide quantitative bounds. Quantitative versions of the CLT
-also exist, but they come at the price of much greater difficulty.
+better suited to provide quantitative bounds. Recall that the quantitative
+version of the CLT is the Berry-Esseen theorem (Fact \ref{fact: multivariate berry esseen}).
 
 With a quantitative bound we mean that we want an explicit upper bound
 \[
@@ -651,6 +651,7 @@ this case.
 
 
 \begin{lemma}[Basic properties of variance proxy]
+    \label{lem: properties of variance proxy}
     Let \(X\) and \(Y\) be \underline{centered} random variables with variance proxies \(\varProx{X}\) and \(\varProx{Y}\), then
     \begin{enumerate}[label=(\roman*), noitemsep]
         \item\label{it: var proxy scaling} \(\varProx{a X} = a^2 \varProx{X}\) for any \(a\in \real\), in particular \(\varProx{-X} = \varProx{X}\),
@@ -787,7 +788,7 @@ variables the variance proxy may be bounded.
         &= ta + \log(pe^{t(b-a)}+1-p).
     \end{aligned}
     \]
-    Taylor's theorem with mean value reminder implies for some \(\xi\)
+    Taylor's theorem with mean value reminder implies for some \(\xi\in [0,t]\)
     \[
         \CGF_Y(t) = \CGF_Y(0) + \CGF_Y'(0)t + \CGF_Y''(\xi)\tfrac{t^2}{2}.
     \]
@@ -911,7 +912,15 @@ equivalent characterizations of subgaussian random variables.
     \end{enumerate} 
     The parameters \(K_i>0\) appearing in these statements differ from
     each other by at most a constant factor that is independent from the
-    specific \(X\).
+    specific \(X\). Specifically, if you \underline{want} \(K_i\) and
+    \underline{have} \(K_j\), then the following table lists a \(c_{ij}\) such
+    that
+    \[
+        K_i^* \le c_{ij} K_j,
+    \]
+    where \(K_i^*\) denotes the smallest \(K_i\) that
+    satisfies the definition of \(K_i\) in the statements above,
+    In particular \(K_i = c_{ij} K_j\) satisfies the requirements.
     \begin{center}
         \hspace{-1em}
         \scalebox{0.9}{
@@ -923,7 +932,7 @@ equivalent characterizations of subgaussian random variables.
             \\
             \cline{2-8}
             \multirow{6}{*}{\rotatebox{90}{\normalfont want}}
-            & \(K_1\)
+            & \(K_1^*\)
             & \(\textcolor{gray}1\)
             & \textcolor{gray}{\(\sqrt{3}\)}
             & \textcolor{gray}{\(\frac{2\sqrt{e}}{\sqrt{\ln 2}}\)}
@@ -931,14 +940,14 @@ equivalent characterizations of subgaussian random variables.
             & \textcolor{magenta}{\(1\)}
             & \textcolor{magenta}{\(2\)}
             \\
-            & \(K_2\)
+            & \(K_2^*\)
             & \textcolor{magenta}{\(1\)}
             & \(\textcolor{gray}1\)
             & \textcolor{gray}{\(\frac{2\sqrt{e}}{\sqrt{\ln 2}}\)}
             & \textcolor{gray}{\(\frac1{\sqrt{\ln 2}}\)}
             & \textcolor{gray}{\(1\)} & \textcolor{gray}{\(2\)}
             \\ 
-            & \(K_2'\)
+            & \((K_2')^*\)
             & \textcolor{gray}{\(\frac{3}{\sqrt{2}}\)}
             & \textcolor{magenta}{\(\frac{3}{\sqrt{2}}\)}
             & \(\textcolor{gray}1\)
@@ -946,7 +955,7 @@ equivalent characterizations of subgaussian random variables.
             & \textcolor{gray}{\(\frac{3}{\sqrt{2}}\)}
             & \textcolor{gray}{\(3\sqrt{2}\)}
             \\
-            & \(K_3\)
+            & \(K_3^*\)
             & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
             & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
             & \textcolor{magenta}{\(2\sqrt{e}\)}
@@ -954,7 +963,7 @@ equivalent characterizations of subgaussian random variables.
             & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
             & \textcolor{gray}{\(\frac{12\sqrt{e}}{\sqrt{2}}\)}
             \\
-            & \(\mathllap{\norm{X}_{\psi_2}\! \le}K_4\)
+            & \(\mathllap{\norm{X}_{\psi_2}\! =}K_4^*\)
             & \textcolor{gray}{\(\sqrt{3}\)}
             & \textcolor{blue}{\(\sqrt{3}\)}
             & \textcolor{gray}{\(\frac{2\sqrt{e}}{\sqrt{\ln 2}}\)}
@@ -962,7 +971,7 @@ equivalent characterizations of subgaussian random variables.
             & \(\textcolor{gray}1\)
             & \textcolor{gray}{\(2\sqrt{3}\)}
             \\
-            & \(\mathllap{\sqrt{\frac{\varProx{X}}2} \le} K_5\)
+            & \(\mathllap{\sqrt{\frac{\varProx{X}}2}=} K_5^*\)
             & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
             & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
             & \textcolor{gray}{\(2\sqrt{e}\)}
@@ -972,14 +981,11 @@ equivalent characterizations of subgaussian random variables.
         \end{tabular}
         \hspace{0.1em}
         \begin{minipage}{0.32\textwidth}
-        If you \underline{want} \(K_i\) and \underline{have}
-        \(K_j\), then the table lists a \(c_{ij}\) such that
-        \[
-            K_i \le c_{ij} K_j.
-        \]
-        The \textcolor{gray}{gray} entries follow from the other entries. The \textcolor{magenta}{magenta}
+        The \textcolor{magenta}{magenta}
         entries are proven below and the
         \textcolor{blue}{blue} entry is Exercise \ref{ex: subgaussian bound improvement}.
+        The \textcolor{gray}{gray} entries follow from the other entries with
+        sandwich arguments.
         \end{minipage}
         }
     \end{center}
@@ -1096,46 +1102,44 @@ equivalent characterizations of subgaussian random variables.
 \end{proof}
 
 \begin{remark}[Sums of (in)dependent subgaussian random variables]
-    Since the Orcliz norm is a norm
+    Since the Orlicz norm is a norm
     (Theorem \ref{thm: orlicz seminorm}), it holds for all (possibly dependent)
     random variables \(X\) and \(Y\)
     \[
         \norm{X+Y}_{\psi_2} \le \norm{X}_{\psi_2} + \norm{Y}_{\psi_2}.
     \]
-    In comparison the sum stability of the variance proxy only holds for
-    independent random variables, that is
+    In comparison the sum stability of the variance proxy (Lemma \ref{lem: properties of variance proxy} \ref{it: variance proxy independent sums})
     \[
         \varProx{X+Y} \le \varProx{X} + \varProx{Y}
-        \qquad \text{for } X, Y \text{ independent}.
+        \qquad \text{for } X, Y \text{ independent}
     \]
-    This may look like an advantage of the Orcliz norm but note that \(\varProx{X}\)
-    is something like a squared norm, as \(\varProx{aX} = a^2 \varProx{X}\),
-    while \(\norm{aX}_{\psi_2} = \abs{a} \norm{X}_{\psi_2}\).
-    Put another way, since \(\norm{X}_{\psi_2}\) is the smallest \(K_4\),
-    and \(\sqrt{\varProx{X}}\) is the smallest \(K_5\) up to the constant
-    \(\sqrt{2}\) due to \(\sqrt{\varProx{X}}\le 2K_5^2\), we have by
-    the equivalence of constants
+    only holds in the independent case.
+    The advantage of the Orlicz norm is that it can be applied in the general case.
+    The advantage of the variance proxy is that it is a sharper inequality since the
+    variance proxy is something like a squared norm. Indeed,
+    since \(K_4^* = \norm{X}_{\psi_2}\) and \(K_5^* = \sqrt{\varProx{X}/2}\),
+    we get for independent \(X_i\)
     \[
-        \norm{X}_{\psi_2} \le c_0 \sqrt{\varProx{X}} \le c_1 \norm{X}_{\psi_2}
+        \norm[\Big]{\sum_{i=1}^n X_i}_{\psi_2}^2
+        \le \frac{c_{45}^2}{2} \varProx{\sum_{i=1}^n X_i}
+        \le \frac{c_{45}^2}{2} \sum_{i=1}^n \varProx{X_i}
+        \le (c_{45}c_{54})^2 \sum_{i=1}^n \norm{X_i}_{\psi_2}^2.
     \]
-    and thus for independent \(X\) and \(Y\)
+    This is often sharper than if we applied the triangle inequality inside the square
     \[
-        \norm{X + Y}_{\psi_2}^2 \le c_0^2 \varProx{X+Y} \le c_0^2 (\varProx{X} + \varProx{Y})
-        \le c_1^2 (\norm{X}_{\psi_2}^2 + \norm{Y}_{\psi_2}^2).
+        \norm[\Big]{\sum_{i=1}^n X_i}_{\psi_2}^2 \le \Bigl(\sum_{i=1}^n \norm{X_i}_{\psi_2}\Bigr)^2
+        = \sum_{i=1}^n \norm{X_i}_{\psi_2}^2 + \underbrace{2\sum_{i<j} \norm{X_i}_{\psi_2}\norm{X_j}_{\psi_2}}_{\text{cross terms}}.
     \]
-    This bound is generally better than if we applied the triangle inequality inside
-    the square due to the removal of the cross term
-    \(2\norm{X}_{\psi_2}\norm{Y}_{\psi_2}\), that is
-    \[
-        \norm{X}_{\psi_2}^2 + \norm{Y}_{\psi_2}^2 \le (\norm{X}_{\psi_2} + \norm{Y}_{\psi_2})^2.
-    \]
-    In other words: the sum stability of the squared norm is better than the sum
-    stability of the norm itself. This is particularly visible for the mean in
+    Since there are \(\bigO(n^2)\) cross terms compared to \(\bigO(n)\) squared
+    terms, the cross terms dominate this bound for large \(n\) and
+    make the factor \((c_{45}c_{54})^2\) very much worth it.
+    This is particularly visible for the mean in
     the case of iid \(X_i\)
     \[
-        \norm{\mean{X}_n}_{\psi_2} \le c_0 \sqrt{\varProx{\mean{X}_n}}
-        = c_0 \sqrt{\red{\frac1{n^2}} \sum_{i=1}^n \varProx{X_i}}
-        =  \frac{c_0}{\sqrt{n}} \underbrace{\sqrt{\frac1n \sum_{i=1}^n \varProx{X_i}}}_{= \varProx{X_i}}
+        \norm{\mean{X}_n}_{\psi_2}
+        \le \frac{c_{45}}{\sqrt{2}} \sqrt{\varProx{\mean{X}_n}}
+        \le \frac{c_{45}}{\sqrt{2}} \sqrt{\red{\frac1{n^2}} \sum_{i=1}^n \varProx{X_i}}
+        =  \frac{c_{45}}{\sqrt{2n}} \sqrt{\varProx{X_1}}
         \in \bigO(\tfrac1{\sqrt{n}}),
     \]
     which is a much better bound asymptotically than the general triangle inequality
@@ -1143,9 +1147,9 @@ equivalent characterizations of subgaussian random variables.
         \norm{\mean{X}_n}_{\psi_2} \le \frac1n \sum_{i=1}^n \norm{X_i}_{\psi_2} = \norm{X_i}_{\psi_2} \in \bigO(1).
     \]
     \textbf{Rule of thumb}: work with the variance proxy if the variables are independent
-    and with the Orlicz norm if they are not. The translation between
-    these view points may however introduce constants, which can in certain
-    circumstances be larger than the gains from this change of view.
+    and with the Orlicz norm if they are not. The translation between these view
+    points introduces constants however, which can be larger than the gains from
+    this change of view for small \(n\).
 \end{remark}
 
 

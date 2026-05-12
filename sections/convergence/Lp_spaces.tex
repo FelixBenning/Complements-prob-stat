@@ -12,11 +12,11 @@
     \]
 \end{definition}
 
-We called \(\norm{\cdot}_{L^p}\) a ``seminorm''. For this we need to prove that
-it actually satisfies the seminorm properties. This is the content of the
+We called \(\norm{\cdot}_{L^p}\) a ``semi-norm''. For this we need to prove that
+it actually satisfies the semi-norm properties. This is the content of the
 following theorem.
 
-\begin{theorem}[Seminorm]
+\begin{theorem}[\(L^p\) Semi-norm]
     \label{thm: seminorm properties}
     \(\norm{\cdot}_{L^p}\) satisfies the seminorm properties. That is for \(X,Y
     \in \cL^p(\domain)\) with \((\domain, \norm{\cdot})\) a normed space we have
@@ -43,60 +43,25 @@ following theorem.
     \label{rem: Lp convergence}
     Observe that \(X_n \xrightarrow{L^p} X\) (Definition \ref{def: types of convergence}) if and only if \(\norm{X_n -X}_{L^p} \to
     0\). And Equation \eqref{eq: Lp norm domination} means for \(1\le p\le q\) that \(\norm{X_n - X}_{L^q} \to 0\) implies \(\norm{X_n - X}_{L^p} \to 0\).
+    This proves Theorem \ref{thm: convergence implications} \ref{it: Lq to Lp}.
 \end{remark}
 
-We will prove the semi-norm properties later as a special case of the triangle
-inequality for Orlicz norms (Theorem \ref{thm: orlicz seminorm}). For now we
-will only prove the norm domination property \eqref{eq: Lp norm domination}.
-For this we require Hölder's inequality.
-
-\begin{theorem}[Hölder's inequality]
-    \label{thm: holder's inequality}
-    For \(r,s >1\) with \(\frac1s + \frac1r = 1\) we have
-    \[
-        \E{\abs{XY}} \le \E{\abs{X}^r}^{\frac1r}\E{\abs{Y}^s}^{\frac1s} = \norm{X}_{L^r} \norm{Y}_{L^s}.
-    \]
-    This also holds true if the quantities are not finite!
-\end{theorem}
-
-You will prove this inequality in Exercise \ref{ex: hölder's inequality}.
-
-\begin{proof}[Proof of \eqref{eq: Lp norm domination}]
-    Assume without loss of generality the strict
-    inequality \(p< q\) and define \(r
-    \coloneq \frac{q}p>1\) and \(s \coloneq \frac{p}{q-p}>1\) such
-    that \(\frac1{r} + \frac1{s} = 1\). Then
-    \[
-    \begin{aligned}
-        \norm{X}_{L^p}^p = \E{\norm{X}^p}
-        &= \E{\abs{\norm{X}^p \cdot 1}}
-        \\
-        \overset{\text{Hölder}}&\le \E{\norm{X}^{pr}}^{\frac1r} \E{1^s}^{\frac1s}
-        = \E{\norm{X}^q}^{\frac{p}q}
-        = \norm{X}_{L^q}^p.
-    \end{aligned}\]
-    Taking the \(p\)-th root gives \eqref{eq: Lp norm domination}.
-\end{proof}
 
 \begin{example}[Not positive definite]
     Observe that the missing property for \(\norm{\cdot}_{L^p}\) to be a norm 
-    is that \(\norm{X}_{L^p} = 0\) implies \(X=0\). As an example consider
-    a uniformly distributed \(U\sim \uniform(0,1)\) with density \(f(x) = \ind{[0,1]}\).
-    Define
+    is that \(\norm{X}_{L^p} = 0\) implies \(X=0\). But random variables \(X\)
+    that are zero except for a null set also have zero norm even though they
+    are not zero as functions. For example, consider a uniformly distributed
+    \(U\sim \uniform(0,1)\) and
+    define \(X= \ind*{\frac12}(U)\). Since \(\prob{U=\frac12} = 0\) we have \(X=0\)
+    almost surely, but \(X\) is not the zero function as \(X(\frac12) = 1\).
+    However
     \[
-        X \coloneq \begin{cases}
-            U & U \neq 1
-            \\
-            0 & U = 1.
-        \end{cases}
+        \E{\abs{X}^p}
+        = \int_0^1 \abs{\ind*{\frac12}(u)}^p du
+        = 0
     \]
-    Then clearly \(U\neq X\) but for any \(p\ge 1\)
-    \[
-        \E{\abs{X-U}^p}
-        = \int_0^1 \abs{x^p \ind{[0,1)}(x) - x^p} dx
-        = \int_0^1 \ind{\set{1}} dx = 0,
-    \]
-    and consequently \(\norm{X-U}_{L^p} = 0\).
+    and consequently \(\norm{X}_{L^p} = 0\).
 \end{example}
 
 \begin{fact}
@@ -108,7 +73,8 @@ You will prove this inequality in Exercise \ref{ex: hölder's inequality}.
     implies \(\mu(f\neq 0) = 0\).
 \end{proof}
 
-Using this inequality we can now prove Theorem \ref{thm: seminorm properties}
+With this fact we can now define the \(L^p\) spaces as equivalence classes on which
+the \(L^p\) semi-norm is a proper norm.
 
 
 \begin{definition}[\(L^p\) space]
@@ -131,6 +97,39 @@ Using this inequality we can now prove Theorem \ref{thm: seminorm properties}
         \overset{\text{similarly}}\le \norm{X}_{L^p}.
     \]
 \end{remark}
+
+We will prove the semi-norm properties later as a special case of the triangle
+inequality for Orlicz norms (Theorem \ref{thm: orlicz seminorm}). For now we
+will only prove the norm domination property \eqref{eq: Lp norm domination}.
+For this we require Hölder's inequality.
+
+\begin{theorem}[Hölder's inequality]
+    \label{thm: holder's inequality}
+    For \(r,s >1\) with \(\frac1s + \frac1r = 1\) we have
+    \[
+        \E{\abs{XY}} \le \E{\abs{X}^r}^{\frac1r}\E{\abs{Y}^s}^{\frac1s} = \norm{X}_{L^r} \norm{Y}_{L^s}.
+    \]
+    This also holds true if the quantities are not finite!
+\end{theorem}
+
+You will prove Hölder's inequality in Exercise \ref{ex: hölder's inequality}.
+
+\begin{proof}[Proof of \eqref{eq: Lp norm domination}]
+    Assume without loss of generality the strict
+    inequality \(p< q\) and define \(r
+    \coloneq \frac{q}p>1\) and \(s \coloneq \frac{p}{q-p}>1\) such
+    that \(\frac1{r} + \frac1{s} = 1\). Then
+    \[
+    \begin{aligned}
+        \norm{X}_{L^p}^p = \E{\norm{X}^p}
+        &= \E{\abs{\norm{X}^p \cdot 1}}
+        \\
+        \overset{\text{Hölder}}&\le \E{\norm{X}^{pr}}^{\frac1r} \E{1^s}^{\frac1s}
+        = \E{\norm{X}^q}^{\frac{p}q}
+        = \norm{X}_{L^q}^p.
+    \end{aligned}\]
+    Taking the \(p\)-th root gives \eqref{eq: Lp norm domination}.
+\end{proof}
 
 It turns out that proving the seminorm properties (Theorem \ref{thm: seminorm
 properties}), is easier in a more general setting. Specifically, since
