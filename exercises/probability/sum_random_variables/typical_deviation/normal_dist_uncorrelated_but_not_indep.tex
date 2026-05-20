@@ -1,35 +1,33 @@
 
 \begin{exercise}[subtitle={Uncorrelated but not independent normal \Coffeecup}]
     \label{ex: uncorrelated but not independent normal}
-    Let \(Z \sim \normal{0,1}\) and \(\epsilon \sim \uniform(\set{-1,1})\), that is \(\prob{\epsilon = 1} = \prob{\epsilon = -1} = \frac{1}{2}\), be independent
+    Let \(X \sim \normal{0,1}\) and \(\epsilon \sim \uniform(\set{-1,1})\), that is \(\prob{\epsilon = 1} = \prob{\epsilon = -1} = \frac{1}{2}\), be independent
     random variables and define
-    \[
-        X = Z, \qquad Y = \epsilon Z.
-    \]
+    \(Y \coloneq \epsilon X\).
     Show that \(X\) and \(Y\) are both normal distributed and uncorrelated but not independent.
 \end{exercise}
 
 \begin{solution}
     We have \(X \sim \normal{0,1}\) by definition and \(Y\) is normal
     distributed since it is a product of the independent random variables
-    \(\epsilon\) and \(Z\) where \(Z\) is normal distributed and \(\epsilon\) is
+    \(\epsilon\) and \(X\) and \(\epsilon\) is
     symmetric around zero. More formally
     \[\begin{aligned}
         \prob{Y \le y}
-        &= \prob{\epsilon Z \le y}
+        &= \prob{\epsilon X \le y}
         \\
-        &= \prob{Z \le y \mid \epsilon = 1} \prob{\epsilon = 1} + \prob{-Z \le y \mid \epsilon = -1} \prob{\epsilon = -1}
+        &= \prob{X \le y \mid \epsilon = 1} \prob{\epsilon = 1} + \prob{-X \le y \mid \epsilon = -1} \prob{\epsilon = -1}
         \\
-        &= \frac{1}{2} \prob{Z \le y} + \frac{1}{2} \prob{-Z \le y} 
+        &= \frac{1}{2} \prob{X \le y} + \frac{1}{2} \prob{-X \le y} 
         \\
-        &= \prob{Z \le y}.
+        &= \prob{X \le y}.
     \end{aligned}\]
-    where we used the symmetry of \(Z\) in the last step. Since this is true for all bounded continuous functions \(g\) we have \(Y \overset{d}= Z\).
+    where we used the symmetry of \(X\) in the last step. Since this is true for all bounded continuous functions \(g\) we have \(Y \overset{d}= X\).
     We have
     \[
         \cov{X}{Y}
         = \E{XY} - \E{X}\E{Y}
-        = \E{\epsilon}{Y^2} - \E{\epsilon}\E{Y}^2
+        = \E{\epsilon X^2} - \E{\epsilon}\E{X}^2
         = 0 - 0 = 0,
     \]
     so \(X\) and \(Y\) are uncorrelated.
