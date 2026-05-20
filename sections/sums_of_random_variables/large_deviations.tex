@@ -848,8 +848,20 @@ variables the variance proxy may be bounded.
 \end{proof}
 
 \begin{figure}
-    \input{tikz/hoeffding.tikz}
+    \includegraphics[width=\linewidth]{plots/hoeffding_bound.pdf}
+    \caption{
+        The Hoeffding confidence bound
+        \(\delta=2\exp(-\frac{2n\epsilon^2}{(b-a)^2})\) as a function of the
+        relative approximation error \(\frac{\epsilon}{b-a}\) for various sample
+        sizes \(n\).
+    }
+    \label{fig: hoeffding bound}
 \end{figure}
+
+\begin{remark}[Confidence vs.\ Precision]
+The confidence \(1-\delta\) is cheap, the precision \(\epsilon\) is expensive
+(see Figure \ref{fig: hoeffding bound}).
+\end{remark}
 
 Recall that we have promised that this variance proxy is actually equivalent
 the tail bound
