@@ -1,0 +1,39 @@
+
+\pgfplotscreateplotcyclelist{hoeffding dashes}{
+    {black, thick, no marks, solid},
+    {black, thick, no marks, densely dashed},
+    {black, thick, no marks, dashed},
+    {black, thick, no marks, densely dashdotted},
+    {black, thick, no marks, dashdotted},
+    {black, thick, no marks, densely dotted},
+}
+
+\begin{tikzpicture}
+\begin{semilogyaxis}[
+    width=11cm,
+    height=7cm,
+    xlabel={$\frac\epsilon{(b-a)}$},
+    ylabel={$\delta$},
+    xmin=0,
+    xmax=1,
+    ymin=1e-8,
+    ymax=1,
+    ytick={1,1e-1,1e-2,1e-3,1e-4,1e-5,1e-6,1e-7,1e-8},
+    grid=both,
+    minor grid style={gray!15},
+    major grid style={gray!35},
+    legend pos=south west,
+    legend cell align=left,
+    domain=0:1,
+    samples=300,
+    cycle list name=hoeffding dashes,
+]
+
+\foreach \n in {1,5,10,50,100,500} {
+    \addplot+[thick, no marks]
+        {2*exp(-2*\n*x^2)};
+    \addlegendentryexpanded{$n=\n$}
+}
+
+\end{semilogyaxis}
+\end{tikzpicture}
