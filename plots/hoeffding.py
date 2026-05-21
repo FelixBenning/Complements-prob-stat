@@ -49,12 +49,16 @@ def plot_hoeffding_bound(n_max_power=9, ymin=1e-8):
             marker=None,
             color="black",
             linewidth=1.3 if k > 1 else 1.7,
-            label=f"$10^{k}$"
+            label=f"$10^{k}$" if k > 1 else str(10**k)
         )
         # line= ax.get_lines()[-1]
         # labelLine(line, )
 
-    labelLines(ax.get_lines(), zorder=2.5)
+    labelLines(
+        ax.get_lines(),
+        zorder=2.5,
+        xvals=0.8
+    )
     ax.set_xscale("log")
     ax.set_yscale("log")
 
