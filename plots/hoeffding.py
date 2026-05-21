@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
 from matplotlib.colors import LogNorm
-from labellines import labelLine, labelLines
+from labellines import labelLines
 
 
 plt.rcParams.update({
