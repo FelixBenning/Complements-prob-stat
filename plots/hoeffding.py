@@ -69,11 +69,11 @@ def plot_hoeffding_bound(n_max_power=9, ymin=1e-8):
     ax.xaxis.tick_top()
     ax.xaxis.set_label_position("top")
     ax.xaxis.labelpad = 15
-    ax.set_xlabel(r"$\frac{\epsilon}{b-a}$", fontsize=14)
+    ax.set_xlabel(r"relative error $\frac{\epsilon}{b-a}$", fontsize=14)
 
     ax.yaxis.tick_right()
     ax.yaxis.set_label_position("right")
-    ax.set_ylabel(r"$\delta$", fontsize=14)
+    ax.set_ylabel(r"$\delta$", fontsize=14, labelpad=10, rotation="horizontal")
 
     ax.grid(True, which="both", alpha=0.3)
 
@@ -83,7 +83,7 @@ def plot_hoeffding_bound(n_max_power=9, ymin=1e-8):
     # ax.set_xticks(np.arange(0, 1.1, step=0.1))
 
     cbar = fig.colorbar(lc, ax=ax, location="left", pad=0.02)
-    cbar.set_label(r"$n$", fontsize=14)
+    cbar.set_label(r"$n$", fontsize=14, labelpad=10, rotation="horizontal")
 
     plt.tight_layout()
     fig.savefig("plots/hoeffding_bound.pdf", bbox_inches="tight")

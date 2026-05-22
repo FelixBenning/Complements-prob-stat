@@ -858,7 +858,7 @@ variables the variance proxy may be bounded.
     \label{fig: hoeffding bound}
 \end{figure}
 
-\begin{remark}[Confidence vs.\ Precision]
+\begin{remark}[Confidence vs.\ precision]
 The confidence \(1-\delta\) is cheap, the precision \(\epsilon\) is expensive
 (see Figure \ref{fig: hoeffding bound}). For \(n=10^6\) you can see for example that
 for  one gets precision of order \(10^{-3}\) no matter the desired
@@ -1173,6 +1173,17 @@ equivalent characterizations of subgaussian random variables.
 
 \subsection{Subexponential random variables}
 
+Subexponential random variables are interesting for two reasons:
+The first reason is that they occur naturally, like the exponential distribution or
+the squares of subgaussian random variables (Lemma \ref{lem: products of
+subgaussian}), which are considered in variance estimation. Bounds on these types
+of distributions are therefore useful. The second reason
+is that they they are the most heavy tailed distributions that may still be
+analyzed using the moment generating function. This analysis provides a better
+understanding of the difference between the typical deviations governed by the
+CLT and the large deviation regime.
+
+\begin{mdframed}[innertopmargin=0pt]
 \begin{theorem}[Subexponential characterization]
     Let \(X\) be a random variable in \(\real\). The following are equivalent; the
     constants \(K_i\) again differ from each other by at most an absolute constant
@@ -1227,12 +1238,24 @@ equivalent characterizations of subgaussian random variables.
         \]
     \end{enumerate}
 \end{theorem}
+\end{mdframed}
 \begin{proof}
     Similar to the proof of Theorem \ref{thm: subgaussian equivalences}.
     See also \citep[Prop.~2.7.1]{vershyninHighDimensionalProbabilityIntroduction2018}.
 \end{proof}
 
-\begin{lemma}[Products of Sub-gaussians]
+\begin{remark}[Why the bounds look locally like the subgaussian bounds]
+    By the Taylor approximation
+    \[
+        \CGF_X(t) = \underbrace{\CGF_X(0)}_{=0} + \underbrace{\CGF_X'(0)}_{=\E{X}\mathrlap{=0}}t + \tfrac{\CGF''(0)}{2}t^2
+        + o(t^3)
+        \le K_5^2 t^2
+    \]
+    for small \(t\) -- specifically \(t\in [0, \frac1{K_5}]\) in the subexponential case.
+\end{remark}
+
+\begin{lemma}[Products of subgaussians]
+    \label{lem: products of subgaussian}
     Let \(X\) and \(Y\) be sub-gaussian random variables. Then
     \(XY\) is sub-exponential with
     \[
@@ -1270,9 +1293,60 @@ equivalent characterizations of subgaussian random variables.
     \end{align*}
 \end{proof}
 
-\begin{theorem}[Bernstein inequality]
-    
+\begin{mdframed}[innertopmargin=0pt]
+\begin{theorem}[Bernstein's inequality]
+    There exists an absolute constant \(c>0\) such that
+    for any \(X_1, \dots, X_n\) independent, centered, subexponential random variables in \(\real\)
+    and every \(t\ge 0\) we have
+    \begin{equation}
+        \label{eq: general Bernstein}
+        \prob[\Big]{\abs[\Big]{\sum_{i=1}^n X_i} \ge t}
+        \le 2 \exp\Bigl(-c \min\set[\Big]{\frac{t^2}{\sum_{i=1}^n \norm{X_i}_{\psi_1}^2}, \frac{t}{\max_{i} \norm{X_i}_{\psi_1} }}\Bigr).
+    \end{equation}
+    In particular, we have for \(K= \max_{i} \norm{X_i}_{\psi_1}\)
+    \begin{equation}
+        \label{eq: mean Bernstein}        
+        \prob{\abs{\mean{X}_n} \ge \epsilon}
+        \le 2 \exp\bigl(-c \min\set[\big]{\tfrac{\epsilon^2}{K^2}, \tfrac{\epsilon}{K}}n\bigr).
+    \end{equation}
 \end{theorem}
+\end{mdframed}
+
+\begin{proof}
+    The general Bernstein's inequality and variants may be found in \citep[Thm.~2.8.1]{vershyninHighDimensionalProbabilityIntroduction2018}.
+    The version for the mean follows from applying this inequality to \(t=n\epsilon\)
+    and \(\sum_{i=1}^n \norm{X_i}_{\psi_2}^2 \le nK^2\).
+\end{proof}
+
+\begin{figure}
+    \centering
+    \input{tikz/subexponential.tikz}
+    \caption{
+        A plot of the upper bound of \eqref{eq: mean Bernstein} at the
+        scale of typical deviations.
+    }
+    \label{fig: subexponential}
+\end{figure}
+\begin{remark}[The CLT does not get rid of exponential tails]
+    Recall that typical deviations are of order \(\frac{t}{\sqrt{n}}=\epsilon\sqrt{n}\).
+    The distribution \(\prob{\abs{\sqrt{n}\mean{X}_n} \ge \epsilon \sqrt{n}}\)
+    therefore stabilizes in the scale \(\epsilon\sqrt{n}\). In Figure~\ref{fig:
+    subexponential} you can see the switch
+    between the regimes of \eqref{eq: mean Bernstein} that happens at \(\epsilon =
+    \pm K\), i.e.\ \(\epsilon\sqrt{n} = \pm K\sqrt{n}\). You can see how the typical deviations
+    regime expands as \(n\to\infty\). However for any finite \(n\) the tails
+    are still exponential. In fact, the subexponential part of
+    \eqref{eq: general Bernstein} is simply the tail of a single random
+    variable \(X_i\) with maximum subexponential norm \(\norm{X_i}_{\psi_1}\),
+    which already has tail
+    \[
+        \prob{X_i \ge t} \le \exp(-c \tfrac{t}{\norm{X_i}_{\psi_1}})
+    \]
+    No amount of averaging can get rid of the subexponential chance that a single component
+    of the sum has a large deviation. Intuitively the same holds true
+    for distributions with heavier tails than subexponential. The CLT
+    cannot get rid of these tails that characterize large deviations.
+\end{remark}
 
 
 \subsection*{Exercises \thesection}
