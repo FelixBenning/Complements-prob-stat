@@ -860,7 +860,9 @@ variables the variance proxy may be bounded.
 
 \begin{remark}[Confidence vs.\ Precision]
 The confidence \(1-\delta\) is cheap, the precision \(\epsilon\) is expensive
-(see Figure \ref{fig: hoeffding bound}).
+(see Figure \ref{fig: hoeffding bound}). For \(n=10^6\) you can see for example that
+for  one gets precision of order \(10^{-3}\) no matter the desired
+confidence \(\delta\).
 \end{remark}
 
 Recall that we have promised that this variance proxy is actually equivalent
@@ -878,7 +880,7 @@ equivalent characterizations of subgaussian random variables.
 \begin{mdframed}[innertopmargin=0pt]
 \begin{theorem}[Subgaussian characterization]
     \label{thm: subgaussian equivalences}
-    Let \(X\) be a random variable. The following are equivalent:
+    Let \(X\) be a random variable in \(\real\). The following are equivalent:
     \begin{enumerate}[label=(\roman*), noitemsep]
         \item\label{it: subgaussian tail decay}
         \textbf{Tail decay:} There exists \(K_1 > 0\) such that the tails of \(X\) satisfy
@@ -1172,8 +1174,101 @@ equivalent characterizations of subgaussian random variables.
 \subsection{Subexponential random variables}
 
 \begin{theorem}[Subexponential characterization]
-    
+    Let \(X\) be a random variable in \(\real\). The following are equivalent; the
+    constants \(K_i\) again differ from each other by at most an absolute constant
+    factor.
+    \begin{enumerate}[label=(\roman*), noitemsep]
+        \item\label{it: (sub-exponential) tail decay}
+        \textbf{Tail decay:} There exists \(K_1>0\) such that
+        \[
+            \prob{\abs{X} \ge t}
+            \le 2\exp(-\tfrac{t}{K_1})
+            \qquad \text{for all } t\ge 0.
+        \]
+
+        \item\label{it: (sub-exponential) moment decay}
+        \textbf{Moment decay:} There exists \(K_2 > 0\) such that
+        the moments of \(X\) satisfy
+        \[
+            \norm{X}_{L^p} = (\E{\abs{X}^p})^{\frac1p} \le K_2 p
+            \qquad \text{for all } p\ge 1.
+        \]
+
+        \item\label{it: (sub-exponential) MGF of |X|}
+        \textbf{MGF of \(\abs{X}\):}
+        There exists \(K_3>0\) such that
+        \[
+            \MGF_{\abs{X}}(t)
+            \le \exp(K_3 t)
+            \qquad \text{for all } t\in [0, \tfrac1{K_3}].
+        \]
+
+        \item\label{it: (sub-exponential) Orlicz norm}
+        \textbf{Orlicz norm:} There exists \(K_4>0\) such that
+        \[
+            \E{\exp\bigl(\tfrac{\abs{X}}{K_4}\bigr)} \le 2.
+        \]
+        In other words: The Orlicz norm (Definition \ref{def: orlicz norm})
+        corresponding to the convex function \(\psi_1(x) \coloneq \exp(x) - 1\) is finite
+        \[
+            \norm{X}_{\psi_1} \coloneq \inf\set{t > 0 :
+            \E{\psi_1\bigl(\tfrac{\abs{X}}t\bigr)} \le 1}
+            \le K_4 < \infty.
+        \]
+
+    \end{enumerate}
+    If \(\E{X} = 0\), then these are also equivalent to
+    \begin{enumerate}[resume, label=(\roman*), noitemsep]
+        \item\label{it: (sub-exponential) CGF bound}
+        \textbf{CGF bound:} There exists \(K_5>0\) such that
+        \[
+            \CGF_X(t) \le K_5^2 t^2
+            \qquad \text{for all } t\in [0, \tfrac1{K_5}].
+        \]
+    \end{enumerate}
 \end{theorem}
+\begin{proof}
+    Similar to the proof of Theorem \ref{thm: subgaussian equivalences}.
+    See also \citep[Prop.~2.7.1]{vershyninHighDimensionalProbabilityIntroduction2018}.
+\end{proof}
+
+\begin{lemma}[Products of Sub-gaussians]
+    Let \(X\) and \(Y\) be sub-gaussian random variables. Then
+    \(XY\) is sub-exponential with
+    \[
+        \norm{XY}_{\psi_1} \le \norm{X}_{\psi_2} \norm{Y}_{\psi_2}
+    \]
+    For \(X=Y\) we moreover have \(\norm{X^2}_{\psi_1} = \norm{X}_{\psi_2}^2\).
+\end{lemma}
+\begin{proof}
+    The case \(X=Y\) follows directly from inspecting the definition.
+    For the general case we may assume without loss of generality
+    \(\norm{X}_{\psi_2} = \norm{Y}_{\psi_2} = 1\)
+    using \(\tilde X \coloneq \frac{X}{\norm{X}_{\psi_2}}\)
+    and \(\tilde Y \coloneq \frac{Y}{\norm{Y}_{\psi_2}}\)
+    and the scaling property of the Orlicz norm (Thm.~\ref{thm: orlicz seminorm}).
+    With this assumption we need to prove
+    \(\E{\exp(\abs{XY})} \le 2\) using
+    \begin{equation}
+        \label{eq: product of sub-gaussian assumption}
+        \E{\exp(X^2)} \le 2
+        \quad\text{and}\quad
+        \E{\exp(Y^2)} \le 2.
+    \end{equation}
+    Using Young's inequality \(\abs{ab} \le \frac{a^2}2 + \frac{b^2}2\), which
+    follows from \(\frac12(a\pm b)^2 \ge 0\), we have this claim
+    \begin{align*}
+        \E{\exp(\abs{XY})}
+        \overset{\text{Young}}&\le \E{\exp\bigl(\tfrac{X^2}2 + \tfrac{Y^2}2\bigr)}
+        \\
+        \overset{\eqref{eq: product of sub-gaussian assumption}}&= \E{\exp\bigl(\tfrac{X^2}2\bigr)\exp\bigl(\tfrac{Y^2}2\bigr)}
+        \\
+        \overset{\text{Young}}&\le
+        \tfrac12\E{\exp(X^2) + \exp(Y^2)}
+        \le 2.
+        \qedhere
+    \end{align*}
+\end{proof}
 
 \begin{theorem}[Bernstein inequality]
     
