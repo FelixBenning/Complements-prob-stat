@@ -923,10 +923,10 @@ equivalent characterizations of subgaussian random variables.
         \item\label{it: subgaussian variance proxy}
         \textbf{Variance proxy:} There exists \(K_5 > 0\) such that the MGF of \(X\) satisfies
         \[
-            \CGF_X(t) \le K_5^2 t^2
+            \CGF_X(t) \le K_5^2 \tfrac{t^2}2
             \qquad\text{for all } t\in \real.
         \]
-        That is \(\varProx{X} \le 2K_5^2 < \infty\).
+        That is \(\varProx{X} \le K_5^2 < \infty\).
     \end{enumerate} 
     The parameters \(K_i>0\) appearing in these statements differ from
     each other by at most a constant factor that is independent from the
@@ -941,8 +941,8 @@ equivalent characterizations of subgaussian random variables.
     In particular \(K_i = c_{ij} K_j\) satisfies the requirements.
     \begin{center}
         \hspace{-1em}
-        \scalebox{0.9}{
-        \def\arraystretch{1.4}
+        \scalebox{0.75}{
+        \def\arraystretch{1.3}
         \begin{tabular}{r r | c c c c c c}
             & \multicolumn{1}{c}{} & \multicolumn{6}{c}{\normalfont have}
             \\
@@ -956,14 +956,14 @@ equivalent characterizations of subgaussian random variables.
             & \textcolor{gray}{\(\frac{2\sqrt{e}}{\sqrt{\ln 2}}\)}
             & \textcolor{gray}{\(\frac1{\sqrt{\ln 2}}\)}
             & \textcolor{magenta}{\(1\)}
-            & \textcolor{magenta}{\(2\)}
+            & \textcolor{magenta}{\(\sqrt{2}\)}
             \\
             & \(K_2^*\)
             & \textcolor{magenta}{\(1\)}
             & \(\textcolor{gray}1\)
             & \textcolor{gray}{\(\frac{2\sqrt{e}}{\sqrt{\ln 2}}\)}
             & \textcolor{gray}{\(\frac1{\sqrt{\ln 2}}\)}
-            & \textcolor{gray}{\(1\)} & \textcolor{gray}{\(2\)}
+            & \textcolor{gray}{\(1\)} & \textcolor{gray}{\(\sqrt{2}\)}
             \\ 
             & \((K_2')^*\)
             & \textcolor{gray}{\(\frac{3}{\sqrt{2}}\)}
@@ -971,7 +971,7 @@ equivalent characterizations of subgaussian random variables.
             & \(\textcolor{gray}1\)
             & \textcolor{gray}{\(\frac3{\sqrt{2\ln 2}}\)}
             & \textcolor{gray}{\(\frac{3}{\sqrt{2}}\)}
-            & \textcolor{gray}{\(3\sqrt{2}\)}
+            & \textcolor{gray}{\(3\)}
             \\
             & \(K_3^*\)
             & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
@@ -979,7 +979,7 @@ equivalent characterizations of subgaussian random variables.
             & \textcolor{magenta}{\(2\sqrt{e}\)}
             & \(\textcolor{gray}1\)
             & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
-            & \textcolor{gray}{\(\frac{12\sqrt{e}}{\sqrt{2}}\)}
+            & \textcolor{gray}{\(6\sqrt{e}\)}
             \\
             & \(\mathllap{\norm{X}_{\psi_2}\! =}K_4^*\)
             & \textcolor{gray}{\(\sqrt{3}\)}
@@ -987,14 +987,14 @@ equivalent characterizations of subgaussian random variables.
             & \textcolor{gray}{\(\frac{2\sqrt{e}}{\sqrt{\ln 2}}\)}
             & \textcolor{magenta}{\(\frac1{\sqrt{\ln 2}}\)}
             & \(\textcolor{gray}1\)
-            & \textcolor{gray}{\(2\sqrt{3}\)}
+            & \textcolor{teal}{\(\sqrt{\frac83}\)}
             \\
-            & \(\mathllap{\sqrt{\frac{\varProx{X}}2}=} K_5^*\)
-            & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
-            & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
+            & \(\mathllap{\sqrt{\varProx{X}}=} K_5^*\)
+            & \textcolor{gray}{\(\scriptsize\sqrt{3\ln(2)}\)}
+            & \textcolor{gray}{\(\scriptsize\sqrt{3\ln(2)}\)}
             & \textcolor{gray}{\(2\sqrt{e}\)}
-            & \textcolor{magenta}{\(1\)}
-            & \textcolor{gray}{\(\frac{6\sqrt{e}}{\sqrt{2}}\)}
+            & \textcolor{magenta}{\(\sqrt{2}\)}
+            & \textcolor{teal}{\(\sqrt{\ln(2)}\)}
             & \(\textcolor{gray}1\)
         \end{tabular}
         \hspace{0.1em}
@@ -1003,7 +1003,8 @@ equivalent characterizations of subgaussian random variables.
         entries are proven below and the
         \textcolor{blue}{blue} entry is Exercise \ref{ex: subgaussian bound improvement}.
         The \textcolor{gray}{gray} entries follow from the other entries with
-        sandwich arguments.
+        sandwich arguments. The \textcolor{teal}{teal} entries are proven in \citep{leskelaSharpConstantsRelating2026}
+        and are optimal.
         \end{minipage}
         }
     \end{center}
@@ -1109,14 +1110,18 @@ equivalent characterizations of subgaussian random variables.
         \le e^{\frac{t^2}2} e^{\tfrac12} \overset{\abs{t}\ge 1}\le e^{t^2}
     \]
     The penultimate inequality follows from \(\frac12 \le \frac1{K_3} =1\).
-    As we have covered both case we get \(K_5 \le K_3\).
+    As we have covered both case we get
+    \[
+        \CGF_X(t) \le t^2 = \sqrt{2}^2 \frac{t^2}2
+    \]
+    Consequently, \(K_5 \le \sqrt{2}K_3\).
 
     ``\ref{it: subgaussian variance proxy} \(\Rightarrow\) \ref{it: subgaussian tail decay}''
-    Since \(\varProx{X} \le 2K_5^2\) we have by the general Hoeffding inequality for \(n=1\), that is \eqref{eq: var prox tail bound}
+    Since \(\varProx{X} \le K_5^2\) we have by the general Hoeffding inequality for \(n=1\), that is \eqref{eq: var prox tail bound}
     \[
-        \prob{X \ge t} \le \exp\bigl(-\tfrac{t^2}{4K_5^2}\bigr).
+        \prob{X \ge t} \le \exp\bigl(-\tfrac{t^2}{2K_5^2}\bigr).
     \]
-    Taking the same bound for \(-X\) we get \(K_1^2 \le 4K_5^2\) and thus \(K_1 \le 2 K_5\).
+    Taking the same bound for \(-X\) we get \(K_1^2 \le 2K_5^2\) and thus \(K_1 \le \sqrt{2} K_5\).
 \end{proof}
 
 \begin{remark}[Sums of (in)dependent subgaussian random variables]
