@@ -277,6 +277,7 @@ TSWLatexianTemp*
 # pdf
 *.pdf
 !plots/*.pdf
+!other_lecturers/*.pdf
 
 *.xsim
 
