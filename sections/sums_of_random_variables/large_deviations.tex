@@ -993,18 +993,19 @@ equivalent characterizations of subgaussian random variables.
             & \textcolor{gray}{\(\scriptsize\sqrt{3\ln(2)}\)}
             & \textcolor{gray}{\(\scriptsize\sqrt{3\ln(2)}\)}
             & \textcolor{gray}{\(2\sqrt{e}\)}
-            & \textcolor{magenta}{\(\sqrt{2}\)}
+            & \textcolor{gray}{\(1\)}
             & \textcolor{teal}{\(\sqrt{\ln(2)}\)}
             & \(\textcolor{gray}1\)
         \end{tabular}
         \hspace{0.1em}
         \begin{minipage}{0.32\textwidth}
         The \textcolor{magenta}{magenta}
-        entries are proven below and the
+        entries are proven below, the
         \textcolor{blue}{blue} entry is Exercise \ref{ex: subgaussian bound improvement}.
-        The \textcolor{gray}{gray} entries follow from the other entries with
-        sandwich arguments. The \textcolor{teal}{teal} entries are proven in \citep{leskelaSharpConstantsRelating2026}
+        The \textcolor{teal}{teal} entries are proven in \citep{leskelaSharpConstantsRelating2026}
         and are optimal.
+        The \textcolor{gray}{gray} entries follow from the other entries with
+        sandwich arguments.
         \end{minipage}
         }
     \end{center}
@@ -1140,13 +1141,13 @@ equivalent characterizations of subgaussian random variables.
     The advantage of the Orlicz norm is that it can be applied in the general case.
     The advantage of the variance proxy is that it is a sharper inequality since the
     variance proxy is something like a squared norm. Indeed,
-    since \(K_4^* = \norm{X}_{\psi_2}\) and \(K_5^* = \sqrt{\varProx{X}/2}\),
+    since \(K_4^* = \norm{X}_{\psi_2}\) and \(K_5^* = \sqrt{\varProx{X}}\),
     we get for independent \(X_i\)
     \[
         \norm[\Big]{\sum_{i=1}^n X_i}_{\psi_2}^2
-        \le \frac{c_{45}^2}{2} \varProx{\sum_{i=1}^n X_i}
-        \le \frac{c_{45}^2}{2} \sum_{i=1}^n \varProx{X_i}
-        \le (c_{45}c_{54})^2 \sum_{i=1}^n \norm{X_i}_{\psi_2}^2.
+        \le c_{45}^2 \varProx{\sum_{i=1}^n X_i}
+        \le c_{45}^2 \sum_{i=1}^n \varProx{X_i}
+        \le \underbrace{(c_{45}c_{54})^2}_{=\ln(2)\frac83 \le 1.85} \sum_{i=1}^n \norm{X_i}_{\psi_2}^2.
     \]
     This is often sharper than if we applied the triangle inequality inside the square
     \[
@@ -1155,14 +1156,14 @@ equivalent characterizations of subgaussian random variables.
     \]
     Since there are \(\bigO(n^2)\) cross terms compared to \(\bigO(n)\) squared
     terms, the cross terms dominate this bound for large \(n\) and
-    make the factor \((c_{45}c_{54})^2\) very much worth it.
+    make the factor \((c_{45}c_{54})^2 \le 1.85\) very much worth it.
     This is particularly visible for the mean in
     the case of iid \(X_i\)
     \[
         \norm{\mean{X}_n}_{\psi_2}
-        \le \frac{c_{45}}{\sqrt{2}} \sqrt{\varProx{\mean{X}_n}}
-        \le \frac{c_{45}}{\sqrt{2}} \sqrt{\red{\frac1{n^2}} \sum_{i=1}^n \varProx{X_i}}
-        =  \frac{c_{45}}{\sqrt{2n}} \sqrt{\varProx{X_1}}
+        \le c_{45} \sqrt{\varProx{\mean{X}_n}}
+        \le c_{45} \sqrt{\red{\frac1{n^2}} \sum_{i=1}^n \varProx{X_i}}
+        =  \frac{c_{45}}{\sqrt{n}} \sqrt{\varProx{X_1}}
         \in \bigO(\tfrac1{\sqrt{n}}),
     \]
     which is a much better bound asymptotically than the general triangle inequality
@@ -1250,13 +1251,16 @@ CLT and the large deviation regime.
 \end{proof}
 
 \begin{remark}[Why the bounds look locally like the subgaussian bounds]
-    By the Taylor approximation
+    Any distribution has a finite MGF/CGF around zero if and only its tails
+    decay at least exponentially. If that is the case, then by the Taylor
+    approximation
     \[
         \CGF_X(t) = \underbrace{\CGF_X(0)}_{=0} + \underbrace{\CGF_X'(0)}_{=\E{X}\mathrlap{=0}}t + \tfrac{\CGF''(0)}{2}t^2
         + o(t^3)
         \le K_5^2 t^2
     \]
-    for small \(t\) -- specifically \(t\in [0, \frac1{K_5}]\) in the subexponential case.
+    for small \(t\in [0, \frac1{K_5}]\). In other words, \(K_5\) can always be chosen
+    based on the Taylor approximation if the CGF is finite around zero.
 \end{remark}
 
 \begin{lemma}[Products of subgaussians]
