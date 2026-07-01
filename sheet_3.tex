@@ -1,0 +1,320 @@
+% !TeX spellcheck = en_US
+\documentclass[11pt]{article}
+\usepackage{exerciseHead}
+\input{packages.tex}
+
+\input{macros.tex} % AFTER the solution true/false macro !!
+
+% \editmodetrue
+
+\input{exercise_setup.tex}
+  \xsimsetup{
+      exercise/the-counter = \arabic{exercise},
+      solution/print=true,
+  }
+
+
+% Meta Information %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{semester_info.tex} % (file) for one update per semester
+\sheetNumber{3}
+
+%%%% Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+
+\input{exam-disclaimer.tex}
+
+\begin{exercise}[subtitle={Convergence in distribution but not probability}]
+    \label{ex: convergence in distribution but not in probability}
+    Let \(X\) be a random variable with \(\prob{X=-1} = \frac12\) and \(\prob{X=1}=\frac12\).
+    \[
+        X_n \coloneq (-1)^n X
+    \]
+    Prove that
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item\label{it: (conv in dist but not in prob) in dist} \(X_n \xrightarrow{d} X\)
+        \item \label{it: (conv in dist but not in prob) not in prob}\(X_n\) does not converge in probability to \(X\).
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: (conv in dist but not in prob) in dist}]
+    Observe that the distribution of \(X\) is symmetric, that is
+    \[
+        \prob{-X \le x} = \prob{X \le x} \qquad \forall x\in \real.
+    \]
+    Consequently, for any \(x \in \real\) we have \(\prob{X_n \le x} = \prob{X \le x}\).
+    In particular this implies \(\prob{X_n \le x} \to \prob{X \le x}\) for all \(x\).
+
+    \item[\ref{it: (conv in dist but not in prob) not in prob}]
+    We have for \(\epsilon = 1\) and every odd \(n\)
+    \[
+        \prob{\abs{X - X_n} \ge \epsilon}
+        = \prob{2\abs{X} \ge 1} = 1
+    \]
+    The sequence \(\prob{|X_n - X| \ge \epsilon}\) thus does not converge to \(0\).
+    \qedhere
+\end{enumerate}
+\end{solution}
+
+
+
+
+\begin{exercise}[subtitle={Borel's \(0\)-\(1\) law}]
+    \label{ex: borel cantelli 0-1 law}
+    Let \((A_n)_{n=1}^\infty\) be a sequence of independent events. Prove that 
+    the probability of their liminf and limsup are either zero or one, that is
+    \[
+        \prob[\Big]{\limsup_{n\to \infty} A_n} \in \{0,1\}
+        \quad\text{and}\quad
+        \prob[\Big]{\liminf_{n\to \infty} A_n} \in \{0,1\}.
+    \]
+    Consequently, if the probability is greater zero it must be one!
+\end{exercise}
+
+\begin{solution}
+    Observe that there are only two possibilities, either
+    \[
+        \sum_{n=1}^\infty \prob{A_n} < \infty
+            \quad\text{or}\quad
+        \sum_{n=1}^\infty \prob{A_n} = \infty.
+    \]
+    In the first case we have by the first Borel-Cantelli lemma \eqref{eq: borel cantelli 1} that
+    \[
+        \prob[\Big]{\limsup_{n\to \infty} A_n} = 0.
+    \]
+    in the second case we have by the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2} that
+    \[
+        \prob[\Big]{\limsup_{n\to \infty} A_n} = 1.
+    \]
+    Consequently, we have the claim for \(\limsup_n A_n\). Due to
+    \[
+        \liminf_n A_n = \limsup_n A_n^\complement
+    \]
+    and the independence of
+    \(A_n^\complement\), the
+    same arguments apply to \(A_n^\complement\) so we also have the claim for
+    \(\liminf_n A_n\).
+    \qedhere
+\end{solution}
+
+
+
+\begin{exercise}[subtitle={Delta method}]
+    \label{ex: delta method}
+    Let \(X_n\) be a sequence of random variables in \(\real\) such that
+    \[
+        \sqrt{n}(X_n - \mu) \overset{d}\to \normal{0, \sigma^2}
+    \]
+    for some \(\mu\in \real\) and \(\sigma^2 > 0\). Let \(g\colon\real\to\real\)
+    be a function that is continuously differentiable at \(\mu\) with \(g'(\mu)\neq 0\).
+    We will prove the \textbf{delta method} together, which states
+    \begin{equation}
+        \label{eq: delta method}    
+        \sqrt{n}(g(X_n) - g(\mu)) \overset{d}\to \normal[\big]{0, (g'(\mu))^2\sigma^2}.
+    \end{equation}
+    The following steps will guide you through the proof:
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item\label{it: (delta-method) X_n to mu} Prove that \(X_n \overset{p}\to \mu\).
+        \item\label{it: (delta-method) taylor expansion} For the mean value Taylor expansion at \(\mu\)
+        \[
+            g(X_n) = g(\mu) + g'(\xi_n)(X_n - \mu)
+        \]
+        with \(\xi_n \in \set{\lambda X_n + (1-\lambda)\mu : \lambda \in [0,1]}\)
+        prove that \(\xi_n \overset{p}\to \mu\) and deduce that \(g'(\xi_n) \overset{p}\to g'(\mu)\).
+        \item\label{it: (delta-method) proof} Prove the delta method \eqref{eq: delta method}.
+    \end{enumerate}
+\end{exercise}
+\begin{solution}
+    \begin{enumerate}[wide=0pt]
+        \item[\ref{it: (delta-method) X_n to mu}] For \(N\sim \normal{0,\sigma^2}\) we have 
+        by Slutzky
+        and continuous mapping that
+        \[
+            X_n -\mu
+            = \underbrace{\tfrac1{\sqrt{n}}}_{\overset{p}\to 0}
+            \underbrace{\sqrt{n}(X_n - \mu)}_{\overset{d}\to N}
+            \overset{d}\to 0 \cdot N = 0,
+        \]
+        Since convergence in distribution to a constant implies convergence in probability
+        we have \(X_n - \mu\overset{p}\to 0\) and consequently \(\X_n \overset{p}\to \mu\).
+
+        \item[\ref{it: (delta-method) taylor expansion}] For any \(n\in \nat\) we
+        have
+        \[
+            \xi_n = \lambda_n X_n + (1-\lambda_n)\mu
+        \]
+        for a (random) \(\lambda_n \in [0,1]\). Since \(X_n \overset{p}\to
+        \mu\) this implies 
+        \[
+            \norm{\xi_n - \mu}
+            = \abs{\lambda_n} \norm{X_n - \mu}
+            \le \norm{X_n - \mu}
+            \overset{p}\to 0.
+        \]
+        Since \(g'\) is continuous at \(\mu\) we have the claim \(g'(\xi_n)
+        \overset{p}\to g'(\mu)\) by the continuous mapping.
+        
+        \item[\ref{it: (delta-method) proof}] Using the mean value Taylor
+        expansion we have for \(N\sim \normal{0, \sigma^2}\)
+        by Slutzky and continuous mapping that
+        \[
+            \sqrt{n}(g(X_n) - g(\mu))
+            = \underbrace{g'(\xi_n)}_{\overset{p}\to g'(\mu)} \underbrace{\sqrt{n}(X_n - \mu)}_{\overset{d}\to N}
+            \overset{d}\to g'(\mu) N \sim \normal[\big]{0, (g'(\mu))^2\sigma^2}. 
+            \qedhere
+        \]
+    \end{enumerate}
+\end{solution}
+
+
+\begin{exercise}[subtitle={Lévy's continuity theorem in infinite dimensions}]
+    \label{ex: counterexample levy's continuity in infinite dim}
+    To show that Lévy's continuity theorem does not hold in infinite dimensions
+    consider the deterministic sequence \(X_n = e^n\), where \(e^n=(0,\dots,0, 1, 0, \dots)\) is the
+    \(n\)-th unit vector in the Hilbertspace of square summable sequences 
+    \[
+        \ell^2 = \set[\Big]{(x_n)_{n\in \nat} \mid \sum_{n=1}^\infty x_n^2 < \infty}
+        \qquad\text{with}\qquad
+        \scp{x, y} = \sum_{n=1}^\infty x_n y_n.
+    \]
+    Let \(X=0\in \ell^2\) be the deterministic zero vector. Show that
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item\label{it: (counterexample levy's continuity in infinite dim) charfct}
+        \(\charFct_{X_n}(h) \to \charFct_{X}(h)\) for all \(h\in \ell^2\),
+        \item\label{it: (counterexample levy's continuity in infinite dim) convergence in distribution}
+        \(X_n \not\overset{d}\to X\).
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+\begin{enumerate}[wide=0pt, noitemsep]
+    \item[\ref{it: (counterexample levy's continuity in infinite dim) charfct}]
+    For any \(h\in \ell^2\) we have \(h_n \to 0\) and consequently
+    \[
+        \scp{h, e^n} = h_n \to 0.
+    \]
+    By definition of the characteristic function we thus have
+    \[
+        \charFct_{X_n}(h)
+        = \E{e^{i\scp{h, X_n}}}
+        = e^{i\scp{h, e^n}}
+        = e^{i h_n}
+        \overset{n\to\infty}\to 1
+        = e^{i\scp{h, 0}}
+        = \charFct_X(h).
+    \]
+    \item[\ref{it: (counterexample levy's continuity in infinite dim) convergence in distribution}]
+    Since \(X\) is deterministic, \(X_n \overset{d}\to X\) would imply \(X_n
+    \overset{p}\to X\).
+    And since \(\norm{X_n} = 1\) for all \(n\) the \(X_n, X\) are bounded
+    which would imply
+    convergence in \(L^2\). But
+    \[
+        \E{\norm{X_n - X}^2}
+        = \norm{e^n}^2
+        = 1
+        \not\to 0.
+        \qedhere
+    \]
+\end{enumerate}    
+\end{solution}
+
+
+% \begin{exercise}[subtitle={Infinitely often or never successful}]
+%     Let \(X_n \sim \bernoulli(n^{-r})\) be independent Bernoulli random variables,
+%     whose success probability decreases in \(n\) at rate \(r > 0\). Note that we say
+%     that \(X_n\) is a success if \(X_n = 1\). Show that
+%     \begin{enumerate}[label=(\alph*)]
+%         \item\label{it: finitely many successes}
+%         for \(r > 1\) there are finitely many successes with probability one.
+%         That is after some random but finite time \(N\in \nat\) all \(X_n\) are zero.
+
+%         \item\label{it: infinitely many successes}
+%         for \(r \le 1\) there are infinitely many successes with probability one.
+%     \end{enumerate}
+% \end{exercise}
+
+% \begin{solution}
+% \begin{enumerate}[wide=0pt]
+%     \item[\ref{it: finitely many successes}]
+%     Since we have
+%     \[
+%         \sum_{n=1}^\infty \prob{X_n = 1} = \sum_{n=1}^\infty n^{-r} < \infty,
+%     \]
+%     we have by the first Borel-Cantelli lemma \eqref{eq: borel cantelli 1} that
+%     \[
+%         \prob{X_n=1 \text{ for infinitely many } n} = \prob{\limsup_{n\to \infty} \set{X_n = 1}} = 0.
+%     \]
+
+%     \item[\ref{it: infinitely many successes}]
+%     Since we have
+%     \[
+%         \sum_{n=1}^\infty \prob{X_n = 1} = \sum_{n=1}^\infty n^{-r} = \infty,
+%     \]
+%     we have by the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2} that
+%     \[
+%         \prob{X_n=1 \text{ for infinitely many } n} = \prob{\limsup_{n\to \infty} \set{X_n = 1}} = 1.
+%         \qedhere
+%     \]
+% \end{enumerate}
+% \end{solution}
+
+\begin{exercise}[subtitle={Single issue polling}]
+    \label{ex: single issue polling} 
+    Let \(x_1,\ldots, x_N \in \set{\text{no}, \text{yes}} \simeq \set{0,1}\) be the
+    opinions of \(N\) people on a certain decision. In the following we will
+    assume \(x_i \in \set{0,1}\). Let
+    \[
+        p = \frac1N\sum_{i=1}^N x_i
+    \]
+    be the share of people that agree with the decision.
+
+    Assume that you can randomly sample \(n\) people from the population and
+    and that they truthfully tell you their opinions \(X_1, \dots, X_n\).  That
+    is \(\prob{X_i = x_j} = \frac1N\) for \(j=1, \ldots, N\) and the \(X_i\) are
+    independent.
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item\label{it: (single issue polling) distribution}
+         Prove the \(X_i\) are Bernoulli distributed, specifically \(X_i \sim \bernoulli(p)\). 
+
+        \item\label{it: (single issue polling) PAC bound}
+        Prove that
+        \[
+            \prob[\Big]{\abs[\Big]{\frac1n \sum_{i=1}^n X_i - p} > \epsilon}
+            \le 2\exp(-2n \epsilon^2).
+        \]
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: (single issue polling) distribution}]
+    We have
+    \begin{align*}
+        \prob{X_i = 1}
+        &= \sum_{j=1}^N \prob{X_i = 1, X_i = x_j}
+        \\
+        &= \sum_{j=1}^N \prob{X_i = 1 | X_i = x_j} \prob{X_i = x_j}
+        = \sum_{j=1}^N x_j \frac1N = p.
+    \end{align*}
+
+    \item[\ref{it: (single issue polling) PAC bound}]
+    Since \(X_i \in \set{0,1}\) we can apply Hoeffding's inequality for
+    bounded random variables to get the claim.
+
+    \qedhere
+\end{enumerate} 
+\end{solution}
+
+
+\end{document} 
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
+

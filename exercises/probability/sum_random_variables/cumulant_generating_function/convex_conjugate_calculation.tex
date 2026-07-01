@@ -26,61 +26,62 @@
         \bottomrule
     \end{tabular}
     \end{center}
-    \begin{solution}
-        The formulas for the CGF follow directly from the formulas for the MGF (Exercise \ref{ex: compute mgf}).
-        Since the cumulant generating function is always convex (Lemma \ref{lem: properties of CGF} \ref{it: CGF convex}),
-        the supremum in the definition of the convex conjugate
-        \[
-            \CGF_X^*(a) = \sup_{t \in \real} \{t a - \CGF_X(t)\}
-        \]
-        can be found using the first order condition
-        \[
-            a = \CGF_X'(t).
-        \]
-        Recall: the convex conjugate finds the point \(t\) for the gradient \(a\).
-        The derivatives and maximizers \(t^*\) from the first order condition are thus given by
-        \begin{center}
-        \def\arraystretch{1.2}
-        \begin{tabular}{l l l l}
-            \toprule
-            \(\pSym_X\)
-            & \(\CGF_X(t)\)
-            & \(\CGF_X'(t)\)
-            & \(t^*=\argmax_t (ta - \CGF_X(t))\)
-            \\
-            \midrule
-            \(\Poisson(\lambda)\)
-            & \(\lambda (e^{t} - 1)\)
-            & \(\lambda e^t\)
-            & \(\ln\bigl(\frac{a}{\lambda}\bigr)\)
-            \\
-            \(\exponential(\lambda)\)
-            & \(\ln(\frac{\lambda}{\lambda - t})\) for \(t < \lambda\)
-            & \(\frac1{\lambda-t}\) for \(t<\lambda\)
-            & \(\lambda - \frac1a\)
-            \\
-            \(\bernoulli(p)\)
-            & \(\ln(1 - p + p e^{t})\)
-            & \(\frac{pe^t}{1-p+p e^t}\)
-            & \(\ln(\frac{a}p\frac{1-p}{1-a})\)
-            \\
-            \bottomrule
-        \end{tabular}
-        \end{center}
-        where \(t^*\) of the Bernoulli distribution follows from
-        \begin{align*}
-            a \overset{!}= \frac{pe^t}{1-p+p e^t}
-            &\iff a(1-p+p e^t) = pe^t
-            \\
-            &\iff a(1-p) = pe^t(1 - a)
-            \iff t = \ln(\tfrac{a}p\tfrac{1-p}{1-a}).
-        \end{align*}
-        Plugging the maximizers \(t^*\) into \(ta - \CGF_X(t)\) yields the desired formulas.
-        For example for the Bernoulli distribution, we have
-        \[
-            \CGF_X^*(a) = a \ln(\tfrac{a}p\tfrac{1-p}{1-a}) - \ln(\underbrace{1 - p + p \tfrac{a}p\tfrac{1-p}{1-a}}_{= (1-p)(1+\frac{a}{1-a})\mathrlap{=\frac{1-p}{1-a}}})
-            = a\ln(\tfrac{a}p) + (1-a)\ln(\tfrac{1-a}{1-p}).
-            \qedhere
-        \]
-    \end{solution}
 \end{exercise}
+
+\begin{solution}
+    The formulas for the CGF follow directly from the formulas for the MGF (Exercise \ref{ex: compute mgf}).
+    Since the cumulant generating function is always convex (Lemma \ref{lem: properties of CGF} \ref{it: CGF convex}),
+    the supremum in the definition of the convex conjugate
+    \[
+        \CGF_X^*(a) = \sup_{t \in \real} \{t a - \CGF_X(t)\}
+    \]
+    can be found using the first order condition
+    \[
+        a = \CGF_X'(t).
+    \]
+    Recall: the convex conjugate finds the point \(t\) for the gradient \(a\).
+    The derivatives and maximizers \(t^*\) from the first order condition are thus given by
+    \begin{center}
+    \def\arraystretch{1.2}
+    \begin{tabular}{l l l l}
+        \toprule
+        \(\pSym_X\)
+        & \(\CGF_X(t)\)
+        & \(\CGF_X'(t)\)
+        & \(t^*=\argmax_t (ta - \CGF_X(t))\)
+        \\
+        \midrule
+        \(\Poisson(\lambda)\)
+        & \(\lambda (e^{t} - 1)\)
+        & \(\lambda e^t\)
+        & \(\ln\bigl(\frac{a}{\lambda}\bigr)\)
+        \\
+        \(\exponential(\lambda)\)
+        & \(\ln(\frac{\lambda}{\lambda - t})\) for \(t < \lambda\)
+        & \(\frac1{\lambda-t}\) for \(t<\lambda\)
+        & \(\lambda - \frac1a\)
+        \\
+        \(\bernoulli(p)\)
+        & \(\ln(1 - p + p e^{t})\)
+        & \(\frac{pe^t}{1-p+p e^t}\)
+        & \(\ln(\frac{a}p\frac{1-p}{1-a})\)
+        \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+    where \(t^*\) of the Bernoulli distribution follows from
+    \begin{align*}
+        a \overset{!}= \frac{pe^t}{1-p+p e^t}
+        &\iff a(1-p+p e^t) = pe^t
+        \\
+        &\iff a(1-p) = pe^t(1 - a)
+        \iff t = \ln(\tfrac{a}p\tfrac{1-p}{1-a}).
+    \end{align*}
+    Plugging the maximizers \(t^*\) into \(ta - \CGF_X(t)\) yields the desired formulas.
+    For example for the Bernoulli distribution, we have
+    \[
+        \CGF_X^*(a) = a \ln(\tfrac{a}p\tfrac{1-p}{1-a}) - \ln(\underbrace{1 - p + p \tfrac{a}p\tfrac{1-p}{1-a}}_{= (1-p)(1+\frac{a}{1-a})\mathrlap{=\frac{1-p}{1-a}}})
+        = a\ln(\tfrac{a}p) + (1-a)\ln(\tfrac{1-a}{1-p}).
+        \qedhere
+    \]
+\end{solution}

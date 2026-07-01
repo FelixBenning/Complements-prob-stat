@@ -1,0 +1,352 @@
+% !TeX spellcheck = en_US
+\documentclass[11pt]{article}
+\usepackage{exerciseHead}
+\input{packages.tex}
+
+\input{macros.tex} % AFTER the solution true/false macro !!
+
+% \editmodetrue
+
+\input{exercise_setup.tex}
+  \xsimsetup{
+      exercise/the-counter = \arabic{exercise},
+      solution/print=true,
+  }
+
+
+% Meta Information %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{semester_info.tex} % (file) for one update per semester
+\sheetNumber{1}
+
+%%%% Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+
+\input{exam-disclaimer.tex}
+
+
+\begin{exercise}[subtitle={Convergence in probability but not \(L^p\)}]
+    \label{ex: convergence in probability but not in Lp}
+    Let \(U\sim \uniform(0,1)\) be a standard uniform random variable and define
+    \[
+        X_n \coloneq n \ind{[0, 1/n)}(U)
+    \]
+    Show that
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item\label{it: (conv in prob but not in Lp) in prob}
+        the sequence \((X_n)_{n\in \nat}\) converges to \(0\) in probability,
+
+        \item\label{it: (conv in prob but not in Lp) not in L1}
+        the sequence \((X_n)_{n\in \nat}\) does not converge to \(0\) in \(L^1\),
+
+        \item\label{it: (conv in prob but not in Lp) for all q}
+        For every \(p \ge 1\) construct a sequence \((Y_n)_{n\in \nat}\) such that
+        \(Y_n\xrightarrow{L^q} 0\) for all \(q < p\) but not for \(q \ge p\).
+    \end{enumerate}
+\end{exercise}
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: (conv in prob but not in Lp) in prob}]
+    We have for any \(\epsilon > 0\)
+    \[
+        \prob{|X_n - 0| \ge \epsilon}
+        \le \prob{X_n \neq 0}
+        = \prob[\big]{U\le \tfrac1n}
+        = \tfrac1n
+        \to 0.
+    \]
+
+    \item[\ref{it: (conv in prob but not in Lp) not in L1}]
+    We have
+    \[
+        \E{|X_n - 0|}
+        = \E{X_n}
+        = n \cdot \prob[\big]{U \in [0, 1/n)}
+        = n \cdot \frac1n
+        = 1 \not\to 0.
+    \]            
+
+    \item[\ref{it: (conv in prob but not in Lp) for all q}]
+    Define \(Y_n \coloneq X_n^{1/p}\) with \(X_n\) as above. Then
+    \[
+        \E{|Y_n - 0|^q} = \E{X_n^{q/p}} = n^{q/p} \cdot \prob[\big]{U \in [0, 1/n)} = n^{q/p - 1}.
+    \]
+    This converges to \(0\) for all \(q < p\) but not for \(q \ge p\).
+\end{enumerate}    
+\end{solution}
+
+
+\begin{exercise}[subtitle={Random vectors in high dimension}]
+    In this exercise we will see that high-dimensional spaces have some counter-intuitive
+    properties. Let \((X^n)_{n\in \nat}\) and \((Y^n)_{n\in \nat}\) be two independent
+    sequences of independent identically distributed random variables with mean
+    zero and finite variance \(\sigma_X^2\) and \(\sigma_Y^2\) respectively. Let \(X_\dims \coloneq (X^1, \ldots, X^\dims)\)
+    and \(Y_\dims \coloneq (Y^1, \ldots, Y^\dims)\) be the corresponding random vectors in
+    \(\real^\dims\).
+    Prove that
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item\label{it: (random vectors in high dim) norms}
+        asymptotically and in relative terms both vectors have the same
+        length in high dimension, that is
+        \[
+            \frac{\norm{X_\dims}^2}{\norm{Y_\dims}^2} \overset\as\to \frac{\sigma_X^2}{\sigma_Y^2} \qquad (\dims \to \infty).
+        \]
+        \item\label{it: (random vectors in high dim) angle} their cosine angle is zero asymptotically, that is
+        \[
+            \scp[\Big]{\frac{X_\dims}{\norm{X_\dims}}, \frac{Y_\dims}{\norm{Y_\dims}}} \overset\as\to 0 \qquad (\dims \to \infty).
+        \]
+        In other words: random vectors are asymptotically orthogonal in high dimension.
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: (random vectors in high dim) norms}]
+    By definition we have
+    \[
+        \frac1\dims\norm{X_\dims}^2
+        = \frac1\dims \sum_{i=1}^\dims (X^i)^2
+        \overset{\as}\to \E{(X^i)^2}
+        = \sigma_X^2
+    \]
+    By a similar argument we have \(\frac1\dims\norm{Y_\dims}^2\overset{\as}\to \sigma_Y^2\)
+    and therefore by continuous mapping and joint convergence
+    \[
+        \frac{\norm{X_\dims}^2}{\norm{Y_\dims}^2}
+        = \frac{\frac1\dims\norm{X_\dims}^2}{\frac1\dims\norm{Y_\dims}^2}
+        \overset{\as}\to \frac{\sigma_X^2}{\sigma_Y^2}.
+    \]
+    \item[\ref{it: (random vectors in high dim) angle}]
+    By continuous mapping we have \(\sqrt{\frac1\dims \norm{X_\dims}^2} \to \sigma_X\)
+    and consequently
+    \[
+        \frac{\scp{X_\dims, Y_\dims}}{\norm{X_\dims} \norm{Y_\dims}}
+        = \frac{\frac1\dims \sum_{i=1}^\dims X^i Y^i}{\sqrt{\frac1\dims \norm{X_\dims}^2} \sqrt{\frac1\dims \norm{Y_\dims}^2}}
+        \overset{\as}\to \frac{\E{X^i Y^i}}{\sigma_X\sigma_Y}
+        = 0.
+    \]
+\end{enumerate}
+\end{solution}
+
+
+
+\begin{exercise}[subtitle={Find the mistake}]
+    Let \((X_n)_{n\in \nat}\) and \(X\) be random variables in \(\real^\dims\).
+    Which step in the following chain of implications is \textbf{wrong}?
+    \[
+        X_n \overset{d}\to X
+        \overset{?}\implies X_n - X \overset{d}\to 0
+        \overset{?}\implies X_n - X \overset{p}\to 0
+        \overset{?}\implies X_n \overset{p}\to X.
+    \]
+    Justify all other steps and find a counterexample for the wrong step.
+\end{exercise}
+
+\begin{solution}
+    The first step is wrong. Consider \(X_n = -X\) with
+    \(\prob{X=-1}=\prob{X=1}=\frac12\). Then
+    as in  Exercise \ref{ex: convergence in distribution but not in
+    probability} \(X_n \to X\), but \(X_n - X = -2X\) does not converge to
+    zero in distribution.
+
+    All the other steps are correct. The second step is the special case
+    that convergence in distribution to a constant implies convergence in
+    probability to that constant. The third step follows from 
+    \[
+        \prob{\norm{X_n - X} > \epsilon}
+        =\prob[\big]{\norm{(X_n - X) - 0} > \epsilon}
+        \to 0.
+        \qedhere
+    \]
+\end{solution}
+
+
+
+\begin{exercise}[subtitle={Uncorrelated but not independent normal}]
+    \label{ex: uncorrelated but not independent normal}
+    Let \(X \sim \normal{0,1}\) and \(\epsilon \sim \uniform(\set{-1,1})\), that is \(\prob{\epsilon = 1} = \prob{\epsilon = -1} = \frac{1}{2}\), be independent
+    random variables and define
+    \(Y \coloneq \epsilon X\).
+    Show that \(X\) and \(Y\) are both normal distributed and uncorrelated but not independent.
+\end{exercise}
+
+\begin{solution}
+    We have \(X \sim \normal{0,1}\) by definition and \(Y\) is normal
+    distributed since it is a product of the independent random variables
+    \(\epsilon\) and \(X\) and \(\epsilon\) is
+    symmetric around zero. More formally
+    \[\begin{aligned}
+        \prob{Y \le y}
+        &= \prob{\epsilon X \le y}
+        \\
+        &= \prob{X \le y \mid \epsilon = 1} \prob{\epsilon = 1} + \prob{-X \le y \mid \epsilon = -1} \prob{\epsilon = -1}
+        \\
+        &= \frac{1}{2} \prob{X \le y} + \frac{1}{2} \prob{-X \le y} 
+        \\
+        &= \prob{X \le y}.
+    \end{aligned}\]
+    where we used the symmetry of \(X\) in the last step. Since this is true for all bounded continuous functions \(g\) we have \(Y \overset{d}= X\).
+    We have
+    \[
+        \cov{X}{Y}
+        = \E{XY} - \E{X}\E{Y}
+        = \E{\epsilon X^2} - \E{\epsilon}\E{X}^2
+        = 0 - 0 = 0,
+    \]
+    so \(X\) and \(Y\) are uncorrelated.
+    However, they are not independent since
+    \[
+        \prob{\abs{X} > 1, \abs{Y} < 1}
+        = \prob{\abs{Y} >1, \abs{Y} < 1} = 0
+        < \prob{\abs{X} > 1}\prob{\abs{Y} < 1}.
+        \qedhere
+    \]
+\end{solution}
+
+
+
+\begin{exercise}[subtitle={Infinite Monkey Theorem}]
+    The infinite monkey theorem states that an immortal monkey hitting keys at
+    random on a typewriter keyboard for an infinite amount of time will
+    eventually type any arbitrarily long text -- for example all the
+    works of William Shakespeare -- with probability one.  It is also known as
+    the ``law of truly large numbers''.
+    Prove it!
+    \begin{enumerate}[label={\emph{Level \arabic*:}},ref={Level \arabic*},leftmargin=4em,noitemsep]
+        \item Assume the hit keys are independent and uniformly distributed.
+        \item\label{it: level iid} Assume the hit keys are iid with a probability distribution that
+        assigns each of the (finite) keys a positive probability.
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+    Let \(\alphabet\) be a finite alphabet of keys and let \(X_n\in
+    \alphabet\) be the letter typed at time \(n\). Let \(y\in \alphabet^m\)
+    be the desired text of length \(m\). We essentially assume \(m=1\)
+    without loss of generality with the definition of
+    \[
+        Y_n = (X_{nm}, X_{nm+1}, \ldots, X_{m(n+1)-1}) \in \alphabet^m,
+    \]
+    which is still a sequence of iid random variables in \ref{it: level iid}
+    (or still a Markov chain in \ref{it: level markov chain}).  Let us consider \ref{it: level iid}
+    first. Since
+    \[\begin{aligned}
+        \delta \coloneq \prob{Y_n = y}
+        &= \prob{X_{nm} = y_1, X_{nm+1} = y_2, \ldots, X_{m(n+1)-1} = y_m}
+        \\
+        &= \prod_{i=1}^m \prob{X_{nm+i-1} = y_i} > 0,
+    \end{aligned}
+    \]
+    Due to \(\sum_{n=1}^\infty \prob{Y_n = y} = \sum_{n=1}^\infty \delta = \infty\)
+    we may apply the second Borel-Cantelli lemma \eqref{eq: borel cantelli 2} to get
+    \[
+        \prob[\big]{Y_n = y \text{ for infinitely many } n}
+        = \prob[\big]{\limsup_{n\to\infty} \set{Y_n = y}}
+        \overset{\text{\eqref{eq: borel cantelli 2}}}= 1.
+    \]
+    Observe that we have proven more than the desired claim: The monkey will
+    not only type the desired text \(y\) at least once but infinitely many
+    times with probability one!
+\end{solution}
+
+
+
+\begin{exercise}[subtitle={CGF and convex conjugate calculations}]
+    \label{ex: convex conjugate calculations}
+    Prove the formulas for CGF and their convex conjugates in the following
+    table
+    \begin{center}
+    \def\arraystretch{1.2}
+    \begin{tabular}{l l l}
+        \toprule
+        \(\pSym_X\)
+        &  \(\CGF_X(t)\) & \(\CGF_X^*(a)\)
+        \\
+        \midrule
+        \(\Poisson(\lambda)\)
+        & \(\lambda (e^{t} - 1)\)
+        & \(1-a + \ln(\frac{a}\lambda)a\) 
+        \\
+        \(\exponential(\lambda)\)
+        & \(\ln(\frac{\lambda}{\lambda - t})\) for \(t < \lambda\)
+        & \(\lambda a -1 - \ln(\lambda a)\)
+        \\
+        \(\bernoulli(p)\)
+        & \(\ln(1 - p + p e^{t})\)
+        & \(a\ln(\frac{a}p) + (1-a)\ln(\frac{1-a}{1-p})\)
+        \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+\end{exercise}
+\begin{solution}
+    The formulas for the CGF follow directly from the formulas for the MGF (Exercise \ref{ex: compute mgf}).
+    Since the cumulant generating function is always convex (Lemma \ref{lem: properties of CGF} \ref{it: CGF convex}),
+    the supremum in the definition of the convex conjugate
+    \[
+        \CGF_X^*(a) = \sup_{t \in \real} \{t a - \CGF_X(t)\}
+    \]
+    can be found using the first order condition
+    \[
+        a = \CGF_X'(t).
+    \]
+    Recall: the convex conjugate finds the point \(t\) for the gradient \(a\).
+    The derivatives and maximizers \(t^*\) from the first order condition are thus given by
+    \begin{center}
+    \def\arraystretch{1.2}
+    \begin{tabular}{l l l l}
+        \toprule
+        \(\pSym_X\)
+        & \(\CGF_X(t)\)
+        & \(\CGF_X'(t)\)
+        & \(t^*=\argmax_t (ta - \CGF_X(t))\)
+        \\
+        \midrule
+        \(\Poisson(\lambda)\)
+        & \(\lambda (e^{t} - 1)\)
+        & \(\lambda e^t\)
+        & \(\ln\bigl(\frac{a}{\lambda}\bigr)\)
+        \\
+        \(\exponential(\lambda)\)
+        & \(\ln(\frac{\lambda}{\lambda - t})\) for \(t < \lambda\)
+        & \(\frac1{\lambda-t}\) for \(t<\lambda\)
+        & \(\lambda - \frac1a\)
+        \\
+        \(\bernoulli(p)\)
+        & \(\ln(1 - p + p e^{t})\)
+        & \(\frac{pe^t}{1-p+p e^t}\)
+        & \(\ln(\frac{a}p\frac{1-p}{1-a})\)
+        \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+    where \(t^*\) of the Bernoulli distribution follows from
+    \begin{align*}
+        a \overset{!}= \frac{pe^t}{1-p+p e^t}
+        &\iff a(1-p+p e^t) = pe^t
+        \\
+        &\iff a(1-p) = pe^t(1 - a)
+        \iff t = \ln(\tfrac{a}p\tfrac{1-p}{1-a}).
+    \end{align*}
+    Plugging the maximizers \(t^*\) into \(ta - \CGF_X(t)\) yields the desired formulas.
+    For example for the Bernoulli distribution, we have
+    \[
+        \CGF_X^*(a) = a \ln(\tfrac{a}p\tfrac{1-p}{1-a}) - \ln(\underbrace{1 - p + p \tfrac{a}p\tfrac{1-p}{1-a}}_{= (1-p)(1+\frac{a}{1-a})\mathrlap{=\frac{1-p}{1-a}}})
+        = a\ln(\tfrac{a}p) + (1-a)\ln(\tfrac{1-a}{1-p}).
+        \qedhere
+    \]
+\end{solution}
+
+
+% \input{exercises/probability/sum_random_variables/concentration/randomized_linear_algebra.tex}
+% \input{exercises/probability/sum_random_variables/cumulant_generating_function/properties.tex}
+
+\end{document} 
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
+

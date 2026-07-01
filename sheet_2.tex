@@ -1,0 +1,278 @@
+% !TeX spellcheck = en_US
+\documentclass[11pt]{article}
+\usepackage{exerciseHead}
+\input{packages.tex}
+
+\input{macros.tex} % AFTER the solution true/false macro !!
+
+% \editmodetrue
+
+\input{exercise_setup.tex}
+  \xsimsetup{
+      exercise/the-counter = \arabic{exercise},
+    %   solution/print=true,
+  }
+
+
+% Meta Information %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{semester_info.tex} % (file) for one update per semester
+\sheetNumber{2}
+
+%%%% Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+
+\input{exam-disclaimer.tex}
+
+% \input{exercises/probability/sum_random_variables/cumulant_generating_function/properties.tex}
+
+
+\begin{exercise}[subtitle={Almost sure but not \(L^p\) convergence}]
+    \label{ex: as but not Lp}
+    Let \(U\sim \uniform(0,1)\) and define
+    \[
+        X_n = 2^n \ind{[0, 2^{-n})}(U).
+    \]
+    Show that \(X_n \overset{\as}\to 0\) but \(X_n\) does not converge to \(0\)
+    in \(L^1\) and hence in no other \(L^p\) space with \(p \ge 1\).
+\end{exercise}
+
+\begin{solution}
+    First, we show that \(X_n \overset{\as}\to 0\). For any \(\epsilon > 0\)
+    we have
+    \[\begin{aligned}
+        \sum_{n=0}^\infty \prob{\abs{X_n - 0} \ge \epsilon}
+        &\le \sum_{n=0}^\infty \prob{X_n \ge \min\set{\epsilon, 1}}
+        \\
+        &= \sum_{n=0}^\infty\prob{U < 2^{-n}} = \sum_{n=0}^\infty 2^{-n} < \infty.
+    \end{aligned}
+    \]
+    Consequently we have \(X_n \overset{\as}\to 0\) by the characterization of almost sure convergence.
+    To see that \(X_n\) does not converge to \(0\) in \(L^1\) we observe
+    \[
+        \E{\abs{X_n - 0}}
+        = \E{X_n}
+        = 2^n \prob{U < 2^{-n}} = 1
+        \not\to 0.
+        \qedhere
+    \]
+\end{solution}
+
+
+\begin{exercise}[subtitle={Products of random variables}]
+    For \((X_n)_{n\in \nat}\) independent and identically distributed random
+    variables with \(X_n > 0\) and \(\E{|\ln(X_1)|} < \infty\) prove that the
+    `geometric mean' converges almost surely to the `geometric expectation',
+    that is'
+    \[
+        \Bigl(\prod_{i=1}^n X_i \Bigr)^\frac1n
+        \overset{\as}\to \exp\bigl(\E[\big]{\ln(X_1)}\bigr).
+    \]
+\end{exercise}
+
+\begin{solution}
+    Observe that the logarithm of the geometric mean converges by the law of
+    large numbers to the expectation of the logarithm, that is
+    \[
+        \ln\Bigl(\Bigl(\prod_{i=1}^n X_i \Bigr)^\frac1n\Bigr)
+        = \frac1n \sum_{i=1}^n \ln(X_i)
+        \overset{\as}\to \E[\big]{\ln(X_1)}.
+    \]
+    Since \(\exp(x)\) is continuous the claim follows from continuous mapping.
+\end{solution}
+
+\begin{exercise}[subtitle={Properties of cumulants}]
+    \label{ex: properties cumulants}
+    Prove that cumulants have the following properties: 
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item\label{it: (cumulants) accumulate} \textbf{Accumulation.}
+        If \(X\) and \(Y\) are independent, then
+        the cumulants ``accumulate''
+        \[
+            \cumulant_n[X+Y] = \cumulant_n[X] + \cumulant_n[Y].
+        \]
+
+        \item\label{it: (cumulants) homogeneity}\textbf{Homogeneity.} For any \(a \in \real\) we have
+        \[
+            \cumulant_n[aX] = a^n \cumulant_n[X].
+        \]
+
+        \item\label{it: (cumulants) constant} Prove that the cumulant generating function of a constant random variable \(Y=\mu\)
+        is given by
+        \[
+            \CGF_Y(t) = \mu t.
+        \]
+        For a random variable \(X\) with \(\E{X} = \mu\) deduce that
+        \(\cumulant_k[X-\mu] = \cumulant_k[X]\) for all \(k \ge 2\) and
+        \(\cumulant_1[X-\mu]=0\).
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: (cumulants) accumulate}]
+    We have by the sum property for the cumulant generating function
+    \begin{align*}
+        \sum_{n=1}^\infty \cumulant_n[X+Y] \frac{t^n}{n!}
+        &= \CGF_{X+Y}(t)
+        \\
+        &= \CGF_X(t) + \CGF_Y(t)
+        = \sum_{n=1}^\infty \cumulant_n[X] \frac{t^n}{n!} + \sum_{n=1}^\infty \cumulant_n[Y] \frac{t^n}{n!}.
+        \\
+        &= \sum_{n=1}^\infty \bigl(\cumulant_n[X] + \cumulant_n[Y]\bigr) \frac{t^n}{n!}.
+    \end{align*}
+    A comparison of the coefficients proves the claim.
+
+    \item[\ref{it: (cumulants) homogeneity}]
+    By the scaling property of the cumulant generating function we have
+    \[
+        \sum_{n=1}^\infty \cumulant_n[aX] \frac{t^n}{n!}
+        = \CGF_{aX}(t)
+        = \CGF_X(at)
+        = \sum_{n=1}^\infty \cumulant_n[X] \frac{(at)^n}{n!}
+        = \sum_{n=1}^\infty a^n \cumulant_n[X] \frac{t^n}{n!}
+    \]
+    and the claim follows again by comparing the coefficients.
+
+    \item[\ref{it: (cumulants) constant}] We have
+    for a constant random variable \(Y=\mu\) that
+    \[
+        \MGF_Y(t) = e^{t \mu} \implies \CGF_Y(t) = t \mu.
+    \]
+    Comparing coefficients with the series expansion we consequently have
+    \(\cumulant_1[Y] = \mu\) and \(\cumulant_k[Y] = 0\) for \(k \ge 2\).
+    Since a constant random variable is independent of every other random variable,
+    we have by the accumulation property that
+    \[
+        \cumulant_k[X-\mu]
+        = \cumulant_k[X] + \cumulant_k[-\mu]
+        = \cumulant_k[X]
+        \quad\text{for } k \ge 2,
+    \]
+    and \(\cumulant_1[X-\mu] = \cumulant_1[X] + \cumulant_1[-\mu] = 0\).
+    \qedhere
+    \end{enumerate}
+\end{solution}
+
+\begin{exercise}[subtitle={Cumulant CLT}]
+    \label{ex: cumulant CLT}
+    Let \(X_1, X_2, \ldots\) be independent copies of a random variable
+    \(X\) with mean \(\mu\), variance \(\sigma^2\) and finite moments of all orders.
+    Let \(\mean{X}_n = \frac1n \sum_{i=1}^n X_i\) be the empirical mean.
+    Show that the cumulants \(\cumulant_k[\sqrt{n}(\mean{X}_n - \mu)]\)
+    of the random variable \(\sqrt{n}(\mean{X}_n - \mu)\) satisfy
+    \begin{align*}
+        \cumulant_1[\sqrt{n}(\mean{X}_n - \mu)] &= 0,
+        \\
+        \cumulant_2[\sqrt{n}(\mean{X}_n - \mu)] &= \sigma^2,
+        \\
+        \cumulant_k[\sqrt{n}(\mean{X}_n - \mu)] &\to 0
+        \quad\text{for } k \ge 3.
+    \end{align*}
+    Conclude that the cumulant generating function of
+    \(\sqrt{n}(\mean{X}_n - \mu)\) converges to the cumulant generating function
+    of the normal distribution \(\normal{0, \sigma^2}\).
+\end{exercise}
+
+\begin{solution}
+    The first and second cumulant are the expectation and variance
+    respectively and therefore
+    \begin{align*}
+        \cumulant_1[\sqrt{n}(\mean{X}_n - \mu)]
+        &= \E{\sqrt{n}(\mean{X}_n - \mu)} = 0,
+        \\
+        \cumulant_2[\sqrt{n}(\mean{X}_n - \mu)]
+        &= \var{\sqrt{n}(\mean{X}_n - \mu)}
+        = n \var{\mean{X}_n}
+        = n \tfrac{\sigma^2}{n} = \sigma^2.
+    \end{align*}
+    For the higher order cumulants we have we use the accumulation property
+    and homogeneity of Exercise \ref{ex: properties cumulants} to get
+    \begin{align*}
+        \cumulant_k[\sqrt{n}(\mean{X}_n - \mu)]
+        &= \cumulant_k\Bigl[\frac1{\sqrt{n}} \sum_{i=1}^n (X_i - \mu)\Bigr]
+        \\
+        \overset{\text{accum.}}&= n\, \cumulant_k[\tfrac1{\sqrt{n}} (X_1 - \mu)]
+        \\
+        \overset{\text{hom.}}&= n^{1-\frac{k}{2}} \cumulant_k[X_1 - \mu].
+        \\
+        &= n^{1-\frac{k}{2}} \cumulant_k[X_1] \qquad \forall k \ge 2.
+    \end{align*}
+    Clearly for \(k\ge 3\) the cumulants decay to zero. Convergence of the
+    cumulant generating function then follows by dominated convergence since the
+    series of analytic functions converges absolutely in a neighborhood of zero.
+\end{solution}
+
+
+\begin{exercise}[subtitle={Monte Carlo}]
+    \label{ex: monte carlo}
+    In this exercise we will devise a way to compute the integral
+    \[
+        I \coloneq \int_{[0,1]^\dims} f(x) dx
+    \]
+    of a continuous function \(f\colon [0,1]^\dims \to \real\).  Let
+    \((U_n)_{n\in \nat}\) be independent and uniformly distributed on
+    \([0,1]^\dims\).
+    \begin{enumerate}[label=(\alph*), noitemsep]
+        \item\label{it: (monte carlo) convergence}
+        Prove that \(\hat I_n \coloneq \frac1n\sum_{i=1}^n f(U_i) \overset\as\to I\).
+
+        \item\label{it: (monte carlo) PAC bound}
+        Using \(\norm{f}_\infty = \sup_{x\in [0,1]^\dims} \abs{f(x)}\) Prove that
+        \[
+            \prob[\big]{\abs{\hat I_n - I} > \epsilon} \le 2\exp\Bigl(-\frac{n \epsilon^2}{2\norm{f}_\infty^2}\Bigr)
+        \]
+
+        \item\label{it: (monte carlo) sample complexity}
+        Let \(n = n(\epsilon, \delta)\) be the smallest \(n\) such that the following
+        PAC bound holds
+        \[
+            \prob[\big]{\abs{\hat I_n - I} > \epsilon} \le \delta
+        \]
+        Prove that
+        \[
+            n(\epsilon, \delta)
+            \le \ceil[\Big]{2\norm{f}_\infty^2\frac{\ln(\tfrac2\delta)}{\epsilon^2}}
+            \in \bigO\Bigl(\norm{f}_\infty^2\frac{\log(\frac1\delta)}{\epsilon^2}\Bigr)
+        \]
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+\begin{enumerate}[wide=0pt]
+    \item[\ref{it: (monte carlo) convergence}]
+    Since \(I= \E{f(U)}\) this is the strong law of large numbers.
+
+    \item[\ref{it: (monte carlo) PAC bound}]
+    Since \(f\) is continuous, it is bounded on the compact set \([0,1]^\dims\)
+    and thereby \(f(U) \in [-\norm{f}_\infty, \norm{f}_\infty]\).
+    By Hoeffding's inequality 
+    for bounded random variables we therefore have the claim.
+
+    \item[\ref{it: (monte carlo) sample complexity}]
+    By the previous exercise it is sufficient to have
+    \begin{align*}
+        2\exp\Bigl(-\frac{n\epsilon^2}{2\norm{f}_\infty^2}\Bigr) \le \delta
+        &\iff -\frac{n\epsilon^2}{2\norm{f}_\infty^2} \le \ln(\tfrac{\delta}2)
+        \\
+        &\iff \ln(\tfrac{2}\delta) \le \frac{n \epsilon^2}{2\norm{f}_\infty^2}
+        \\
+        &\iff 2\norm{f}_\infty^2 \frac{\ln(\tfrac2\delta)}{\epsilon^2} \le n
+    \end{align*}
+    Since this is a sufficient condition, the smallest \(n(\delta, \epsilon)\)
+    is smaller than the first natural number that satisfies it, leading
+    to the claim.
+    \qedhere
+\end{enumerate}
+\end{solution}
+
+
+\end{document} 
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
+
